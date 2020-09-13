@@ -239,6 +239,10 @@ label {
   }
 }
 @media screen and (max-width: 400px) {
+  .form-section {
+    width: 85%;
+    margin-top: 0px;
+  }
   .name-section {
     display: flex;
     flex-direction: column;
