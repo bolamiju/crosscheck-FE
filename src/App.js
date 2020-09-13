@@ -1,6 +1,6 @@
 import React from "react";
 import Register from "./component/auth/Register";
-import "./App.css";
+import "./component/auth/auth.css";
 
 function App() {
   return (

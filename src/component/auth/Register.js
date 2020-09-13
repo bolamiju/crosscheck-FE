@@ -23,11 +23,11 @@ function Register() {
       <div className="form-section">
         <form>
           <h3 style={{ color: "#FF2600" }}>Create An Account</h3>
-          <p style={{ fontSize: "12px", width: "100%", marginBottom: "30px" }}>
+          <p className="intro-text">
             Created for job applicants and hiring managers who wants to stay
             ahead
           </p>
-          <div className="name-section">
+          <div className="name-section fields">
             <div className="firstname-input">
               <label htmlFor="firstName">First Name</label>
               <input
@@ -37,7 +37,7 @@ function Register() {
                 className="input"
               />
             </div>
-            <div className="lastname-input">
+            <div className="lastname-input ">
               <label htmlFor="lastName">Last Name</label>
               <input
                 type="text"
@@ -47,27 +47,26 @@ function Register() {
               />
             </div>
           </div>
-          <div className="email-input">
+          <div className="email-input fields">
             <label htmlFor="email">Email</label>
             <input type="email" name="email" id="email" className="input" />
           </div>
-          <div className="select-input">
+          <div className="select-input fields">
             <label htmlFor="email">Are you an</label>
             <select className="input" style={{ height: "40px" }}>
               <option>Organization</option>
               <option>Individual</option>
             </select>
           </div>
-          <div className="country-phone">
+          <div className="country-phone fields">
             <div className="country-input">
               <label htmlFor="country">Country</label>
               <CountryDropdown
                 name="country"
                 id="country"
-                className="input"
+                className="country"
                 //   value={country}
                 //   onChange={(val) => this.selectCountry(val)}
-                style={{ height: "33px" }}
               />
             </div>
             <div className="phone">
@@ -75,7 +74,10 @@ function Register() {
               <input type="text" name="phone" id="phone" className="input" />
             </div>
           </div>
-          <div className="password-input" style={{ position: "relative" }}>
+          <div
+            className="password-input fields"
+            style={{ position: "relative" }}
+          >
             <label>Enter password</label>
 
             <input type={!visibility ? "text" : "password"} className="input" />
@@ -99,17 +101,16 @@ function Register() {
               <input
                 type="checkbox"
                 name="check"
+                className="check"
                 style={{ marginRight: "10px" }}
               />
-              <span style={{ fontSize: "14px" }}>
-                I agree to the terms and conditions
-              </span>
+              <span>I agree to the terms and conditions</span>
             </div>
             <a
               href="https://google.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none", fontSize: "14px" }}
+              //   style={{ textDecoration: "none", fontSize: "14px" }}
             >
               forgot password
             </a>
@@ -154,7 +155,7 @@ function Register() {
                 Google
               </button>
             </div>
-            <p style={{ marginTop: "40px", fontSize: "14px" }}>
+            <p className="paragraph">
               Already have an account?
               <a
                 href="https://google.com"

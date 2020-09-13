@@ -15,6 +15,13 @@ body {
   background-repeat: no-repeat;
 }
 
+.country {
+  height: 33px;
+  border: 2px solid #e2e2e2;
+  outline: none;
+  border-radius: 9px;
+}
+
 .form-section {
   width: 50%;
   width: 28%;
@@ -23,7 +30,7 @@ body {
   padding: 20px;
   margin-left: 60px;
   margin-top: 20px;
-  border-radius: 5px;
+  border-radius: 12px;
 }
 
 label {
@@ -118,7 +125,12 @@ label {
 .terms {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
+}
+
+.terms .accept span {
+  font-size: 14px;
 }
 
 .facebook {
@@ -131,6 +143,16 @@ label {
   border: 1px solid #0092e0;
   color: white;
 }
+.intro-text {
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.paragraph {
+  font-size: 14px;
+  margin-top: 40px;
+}
 
 .google {
   width: 48%;
@@ -141,4 +163,132 @@ label {
   height: 38px;
   border: 1px solid #ff2600;
   color: white;
+}
+
+.terms .accept span {
+  font-size: 14px;
+}
+
+.terms a {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 800px) {
+  /* .App {
+    width: 800px;
+    margin: 0 auto;
+  } */
+  .image-section {
+    display: none;
+  }
+  .container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .form-section {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 50px;
+    height: 850px;
+  }
+  label {
+    font-size: 16px;
+  }
+
+  .input {
+    font-size: 18px;
+    height: 38px;
+  }
+  .intro-text {
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+  }
+  .fields {
+    margin-bottom: 30px;
+  }
+
+  .register-button {
+    height: 55px;
+    margin-top: -5px;
+  }
+  .country {
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .custom-icon {
+    top: 38px;
+  }
+  .paragraph {
+    font-size: 18px;
+  }
+
+  .terms .accept span {
+    font-size: 18px;
+  }
+
+  .terms a {
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+  .check {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .name-section {
+    display: flex;
+    flex-direction: column;
+  }
+  .country-phone {
+    display: flex;
+    flex-direction: column;
+  }
+  .firstname-input,
+  .lastname-input,
+  .input {
+    width: 100%;
+  }
+  .firstname-input {
+    margin-bottom: 30px;
+  }
+
+  .phone {
+    width: 100%;
+  }
+  .country-input,
+  .select-input {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .fields {
+    margin-bottom: 30px;
+  }
+  .register-button {
+    height: 35px;
+    width: 100%;
+    margin-top: -5px;
+  }
+  .terms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .terms .accept span {
+    font-size: 12px;
+    width: 100%;
+  }
+  .terms a {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+  .paragraph {
+    font-size: 12px;
+  }
+  .intro-text {
+    font-size: 14px;
+  }
 }
