@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -322,14 +323,9 @@ function Register() {
             </div>
             <p className="paragraph">
               Already have an account?
-              <a
-                href="https://google.com"
-                style={{
-                  textDecoration: "none",
-                }}
-              >
+              <Link style={{ color: "#0092e0", textDecoration: "none" }} to="/">
                 Login here
-              </a>
+              </Link>
             </p>
           </div>
         </form>
