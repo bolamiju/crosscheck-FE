@@ -63,8 +63,8 @@ function Register() {
       //   }),
       //   // employmentStopDate: Yup.string().required("date is required"),
       //   hrComment: Yup.string().required("Comment is required"),
-      firstName: Yup.string().required("Reason is required"),
-      lastName: Yup.string().required("last name is required"),
+      firstName: Yup.string().required("First Name is required"),
+      lastName: Yup.string().required("Last name is required"),
       email: Yup.string().required("Email is required"),
       password: Yup.string().required("Password is required"),
       country: Yup.string().required("Country is required"),
@@ -80,11 +80,8 @@ function Register() {
     <div className="container">
       <div className="form-section">
         <form>
-          <h3 style={{ color: "#FF2600" }}>Create An Account</h3>
-          <p className="intro-text">
-            Created for job applicants and hiring managers who wants to stay
-            ahead
-          </p>
+          <h5 className="text-header">Create An Account</h5>
+
           {error.length > 0 && <p style={{ color: "red" }}>{error}</p>}
           <div className="name-section fields">
             <div className="firstname-input">
@@ -132,12 +129,11 @@ function Register() {
           </div>
           <div className="country-phone fields">
             <div className="country-input">
-              <label htmlFor="email">Are you an</label>
+              <label htmlFor="email">Is this an</label>
               <select
                 name="accountType"
                 id="accountType"
                 className="input"
-                style={{ height: "35px" }}
                 value={formik.values.accountType}
                 onChange={formik.handleChange}
               >
@@ -272,14 +268,6 @@ function Register() {
               />
               <span>I agree to the terms and conditions</span>
             </div>
-            <a
-              href="https://google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              //   style={{ textDecoration: "none", fontSize: "14px" }}
-            >
-              forgot password
-            </a>
           </div>
           <div
             style={{
@@ -289,7 +277,7 @@ function Register() {
               alignItems: "center",
             }}
           >
-            <p>Sign up with</p>
+            <p className="signup-with">Sign up with</p>
 
             <div
               style={{
