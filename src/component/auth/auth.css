@@ -184,6 +184,7 @@ label {
 .terms a {
   font-size: 14px;
   text-decoration: none;
+  color: #0092e0;
 }
 
 @media screen and (max-width: 800px) {
@@ -300,6 +301,7 @@ label {
   .terms a {
     font-size: 12px;
     margin-top: 15px;
+    color: #0092e0;
   }
   .paragraph {
     font-size: 12px;

@@ -11,7 +11,7 @@ function App() {
   return (
     <Provider store={store}>
       <Route exact path="/register" component={Register} />
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
       <Route exact path="/dashboard/:id" component={UserDashboard} />
     </Provider>
   );

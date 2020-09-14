@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -180,14 +181,15 @@ const Login = () => {
             </div>
             <p className="paragraph">
               Don't have an account?
-              <a
-                href="https://google.com"
+              <Link
+                to="/register"
                 style={{
                   textDecoration: "none",
+                  color: "#0092e0",
                 }}
               >
                 Create one here
-              </a>
+              </Link>
             </p>
           </div>
         </form>
