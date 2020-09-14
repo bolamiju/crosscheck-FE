@@ -7,6 +7,11 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.error {
+  color: red;
+  font-size: 10px;
+}
 .image-section {
   width: 72%;
   height: 830px;
@@ -22,15 +27,22 @@ body {
   border-radius: 9px;
 }
 
+#pass {
+  margin-bottom: 10px;
+}
+
 .form-section {
   width: 50%;
   width: 28%;
-  height: 680px;
+  height: 750px;
   background: #ffffff 0% 0% no-repeat padding-box;
   padding: 20px;
   margin-left: 60px;
   margin-top: 20px;
   border-radius: 12px;
+}
+#login-section {
+  height: 470px;
 }
 
 label {
@@ -145,7 +157,7 @@ label {
 }
 .intro-text {
   font-size: 12px;
-  width: 100%;
+  /* width: 100%; */
   margin-bottom: 30px;
 }
 
