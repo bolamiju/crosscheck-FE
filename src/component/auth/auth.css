@@ -14,14 +14,22 @@ body {
 }
 .image-section {
   width: 72%;
-  height: 830px;
+  /* height: 830px; */
+
+  background-image: url("../../asset/ManHiRes.png");
+  background-repeat: no-repeat;
+}
+
+.login-image-section {
+  width: 72%;
+  height: 570px;
 
   background-image: url("../../asset/ManHiRes.png");
   background-repeat: no-repeat;
 }
 
 .country {
-  height: 33px;
+  height: 28px;
   border: 2px solid #e2e2e2;
   outline: none;
   border-radius: 9px;
@@ -34,15 +42,15 @@ body {
 .form-section {
   width: 50%;
   width: 28%;
-  height: 750px;
+  height: 100%;
   background: #ffffff 0% 0% no-repeat padding-box;
   padding: 20px;
   margin-left: 60px;
-  margin-top: 20px;
+  margin-top: 5px;
   border-radius: 12px;
 }
 #login-section {
-  height: 470px;
+  /* height: 470px; */
 }
 
 label {
@@ -54,7 +62,7 @@ label {
   border: 2px solid #e2e2e2;
   outline: none;
   border-radius: 9px;
-  height: 28px;
+  height: 24px;
 }
 .firstname-input {
   width: 48%;
@@ -94,7 +102,7 @@ label {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .country-input {
@@ -138,20 +146,23 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-.terms .accept span {
-  font-size: 14px;
+/* .accept .agree {
+  font-size: 12px;
+} */
+
+#accountType {
+  height: 28px;
 }
 
 .facebook {
   width: 48%;
-  height: 30px;
+  height: 32px;
   background: #0092e0 0% 0% no-repeat padding-box;
   border-radius: 9px;
   outline: none;
-  height: 38px;
   border: 1px solid #0092e0;
   color: white;
 }
@@ -160,25 +171,30 @@ label {
   /* width: 100%; */
   margin-bottom: 30px;
 }
-
+.signup-with {
+  font-size: 12px;
+}
 .paragraph {
-  font-size: 14px;
-  margin-top: 40px;
+  font-size: 12px;
+  margin-top: 15px;
 }
 
 .google {
   width: 48%;
-  height: 30px;
+  height: 32px;
   background: #ff2600 0% 0% no-repeat padding-box;
   border-radius: 9px;
   outline: none;
-  height: 38px;
   border: 1px solid #ff2600;
   color: white;
 }
 
 .terms .accept span {
-  font-size: 14px;
+  font-size: 12px;
+}
+
+.terms .link {
+  font-size: 12px;
 }
 
 .terms a {
@@ -187,17 +203,36 @@ label {
   color: #0092e0;
 }
 
+.text-header {
+  display: flex;
+  justify-content: center;
+  color: #ff2600;
+  margin-top: -15px;
+  /* margin-bottom: 5px; */
+}
+
 @media screen and (max-width: 800px) {
-  /* .App {
-    width: 800px;
-    margin: 0 auto;
-  } */
+  .text-header {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
   .image-section {
+    display: none;
+  }
+
+  .login-image-section {
     display: none;
   }
   .container {
     width: 100%;
     margin: 0 auto;
+  }
+
+  #accountType {
+    height: 40px;
+  }
+  .signup-with {
+    font-size: 16px;
   }
   .form-section {
     width: 70%;
@@ -225,6 +260,7 @@ label {
   .register-button {
     height: 55px;
     margin-top: -5px;
+    font-size: 18px;
   }
   .country {
     height: 42px;
@@ -232,7 +268,7 @@ label {
   }
 
   .custom-icon {
-    top: 38px;
+    top: 34px;
   }
   .paragraph {
     font-size: 18px;
@@ -248,6 +284,14 @@ label {
   }
 
   .check {
+    font-size: 18px;
+  }
+  .google {
+    height: 45px;
+    font-size: 18px;
+  }
+  .facebook {
+    height: 45px;
     font-size: 18px;
   }
 }

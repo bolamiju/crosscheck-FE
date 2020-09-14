@@ -66,7 +66,7 @@ const Login = () => {
               marginTop: "-10px",
             }}
           >
-            <h3 style={{ color: "#FF2600" }}>Great to see you again</h3>
+            <h5 style={{ color: "#FF2600" }}>Great to see you again</h5>
             <p style={{ fontSize: "14px", marginTop: "-5px" }}>
               Sign in to your account
             </p>
@@ -194,7 +194,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <div className="image-section">{/* <img src={men} /> */}</div>
+      <div className="login-image-section">{/* <img src={men} /> */}</div>
     </div>
   );
 };
