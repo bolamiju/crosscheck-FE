@@ -1,14 +1,56 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { login, setLoading, setErrorMessage } from "../../state/actions/users";
 //import css module
 import "react-flags-select/css/react-flags-select.css";
 
 const Login = () => {
   const [visibility, setVisibility] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const { error } = useSelector((state) => state.user);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    onSubmit: async (values) => {
+      console.log(values);
+      dispatch(setLoading(true));
+      dispatch(setErrorMessage(""));
+      try {
+        const res = await login(values);
+        // formik.resetForm();
+        console.log("RES", res.data);
+        if (res.data.message && res.data.message === "Logged in successfully") {
+          window.location.href = `/dashboard/${res.data.user.id}`;
+        }
+        dispatch(setLoading(false));
+      } catch (err) {
+        if (
+          err.response.data.message &&
+          err.response.data.message === "invalid email or password"
+        ) {
+          dispatch(setErrorMessage("invalid email or password"));
+        }
+        console.log("error", err.response);
+        dispatch(setLoading(false));
+      }
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().required("email is required"),
+      password: Yup.string().required("password is required"),
+      //   }),
+    }),
+  });
 
   return (
     <div className="container">
@@ -27,11 +69,19 @@ const Login = () => {
             <p style={{ fontSize: "14px", marginTop: "-5px" }}>
               Sign in to your account
             </p>
+            {error.length > 0 && <p style={{ color: "red" }}>{error}</p>}
           </div>
 
           <div className="email-input fields">
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" className="input" />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="input"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
           </div>
 
           <div
@@ -40,7 +90,14 @@ const Login = () => {
           >
             <label>Enter password</label>
 
-            <input type={!visibility ? "text" : "password"} className="input" />
+            <input
+              type={!visibility ? "text" : "password"}
+              name="password"
+              id="password"
+              className="input"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
             {!visibility ? (
               <FontAwesomeIcon
                 icon={faEyeSlash}
@@ -55,7 +112,13 @@ const Login = () => {
               />
             )}
           </div>
-          <button className="register-button">LOGIN</button>
+          <button
+            type="button"
+            onClick={formik.handleSubmit}
+            className="register-button"
+          >
+            LOGIN
+          </button>
           <div className="terms">
             <div className="accept">
               <input

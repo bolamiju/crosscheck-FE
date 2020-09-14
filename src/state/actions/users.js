@@ -16,3 +16,6 @@ export const setErrorMessage = (payload) => {
 };
 export const signUp = (user) =>
   axios.post("http://localhost:5000/api/v1/users/register", user);
+
+export const login = (user) =>
+  axios.post(`https://croscheck.herokuapp.com/api/v1/users/login`, user);
