@@ -7,7 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { login, setLoading, setErrorMessage } from "../../state/actions/users";
+import { login, setLoading, setLoginError } from "../../state/actions/users";
 //import css module
 import "react-flags-select/css/react-flags-select.css";
 
@@ -16,7 +16,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const { error } = useSelector((state) => state.user);
+  const { loginError, loading } = useSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,21 +26,22 @@ const Login = () => {
     onSubmit: async (values) => {
       console.log(values);
       dispatch(setLoading(true));
-      dispatch(setErrorMessage(""));
+      dispatch(setLoginError(""));
       try {
         const res = await login(values);
-        // formik.resetForm();
+
         console.log("RES", res.data);
         if (res.data.message && res.data.message === "Logged in successfully") {
+          formik.resetForm();
           window.location.href = `/dashboard/${res.data.user.id}`;
         }
         dispatch(setLoading(false));
       } catch (err) {
         if (
           err.response.data.message &&
-          err.response.data.message === "invalid email or password"
+          err.response.data.message === "Invalid email or password"
         ) {
-          dispatch(setErrorMessage("invalid email or password"));
+          dispatch(setLoginError("invalid email or password"));
         }
         console.log("error", err.response);
         dispatch(setLoading(false));
@@ -66,11 +67,10 @@ const Login = () => {
               marginTop: "-10px",
             }}
           >
-            <h5 style={{ color: "#FF2600" }}>Great to see you again</h5>
-            <p style={{ fontSize: "14px", marginTop: "-5px" }}>
-              Sign in to your account
-            </p>
-            {error.length > 0 && <p style={{ color: "red" }}>{error}</p>}
+            <p style={{ fontSize: "14px" }}>Sign in to your account</p>
+            {loginError.length > 0 && (
+              <p style={{ color: "red" }}>{loginError}</p>
+            )}
           </div>
 
           <div className="email-input fields">
@@ -92,7 +92,7 @@ const Login = () => {
             <label>Enter password</label>
 
             <input
-              type={!visibility ? "text" : "password"}
+              type={!visibility ? "password" : "text"}
               name="password"
               id="password"
               className="input"
@@ -118,7 +118,7 @@ const Login = () => {
             onClick={formik.handleSubmit}
             className="register-button"
           >
-            LOGIN
+            {loading ? "Signing in..." : "LOGIN"}
           </button>
           <div className="terms">
             <div className="accept">

@@ -2,7 +2,8 @@ import * as types from "../actionTypes/users";
 
 const initialState = {
   loading: false,
-  error: "",
+  registerError: "",
+  loginError: "",
 };
 
 export default function userReducer(state = initialState, action) {
@@ -15,7 +16,14 @@ export default function userReducer(state = initialState, action) {
     case types.SET_ERROR:
       return {
         ...state,
-        error: action.payload,
+        registerError: action.payload,
+      };
+
+    case types.LOGIN_ERROR:
+      return {
+        ...state,
+        registerError: "",
+        loginError: action.payload,
       };
     default:
       return state;
