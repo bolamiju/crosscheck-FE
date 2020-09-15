@@ -16,7 +16,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const { loginError } = useSelector((state) => state.user);
+  const { loginError, loading } = useSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -117,7 +117,7 @@ const Login = () => {
             onClick={formik.handleSubmit}
             className="register-button"
           >
-            LOGIN
+            {loading ? "Signing in..." : "LOGIN"}
           </button>
           <div className="terms">
             <div className="accept">
