@@ -15,13 +15,17 @@ import {
 
 //import css module
 import "react-flags-select/css/react-flags-select.css";
-import { signUp, setLoading, setErrorMessage } from "../../state/actions/users";
+import {
+  signUp,
+  setLoading,
+  setRegisterError,
+} from "../../state/actions/users";
 
 function Register() {
   const [visibility, setVisibility] = useState(false);
   const dispatch = useDispatch();
-  let acctType;
-  const { error } = useSelector((state) => state.user);
+
+  const { registerError, loading } = useSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -31,17 +35,25 @@ function Register() {
       accountType: "",
       password: "",
       country: "",
-
-      ...(acctType === "organization"
-        ? { companyWebsite: "", organizationName: "" }
-        : null),
+      companyWebsite: "",
+      organizationName: "",
       // ...(employeeStatus === "DISABLED" ? { employmentStartDate: "" } : null),
     },
 
     onSubmit: async (values) => {
+      for (var propName in values) {
+        if (
+          values[propName] === null ||
+          values[propName] === undefined ||
+          values[propName] === ""
+        ) {
+          delete values[propName];
+        }
+      }
+
       console.log(values);
       dispatch(setLoading(true));
-      dispatch(setErrorMessage(""));
+      dispatch(setRegisterError(""));
       try {
         const res = await signUp(values);
         formik.resetForm();
@@ -53,36 +65,38 @@ function Register() {
           err.response.data.message &&
           err.response.data.message === "user already exist"
         ) {
-          dispatch(setErrorMessage("Email already exist"));
+          dispatch(setRegisterError("Email already exist"));
+          dispatch(setLoading(false));
         }
       }
     },
-    validationSchema: Yup.object({
-      //   ...(employeeStatus === "DISABLED" && {
-      //     employmentStartDate: Yup.string().required("date is required"),
-      //   }),
-      //   // employmentStopDate: Yup.string().required("date is required"),
-      //   hrComment: Yup.string().required("Comment is required"),
+    validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First Name is required"),
-      lastName: Yup.string().required("Last name is required"),
+      lastName: Yup.string().required("Last Name is required"),
       email: Yup.string().required("Email is required"),
       password: Yup.string().required("Password is required"),
       country: Yup.string().required("Country is required"),
       phone: Yup.string().required("Phone is required"),
       accountType: Yup.string().required("Account type is required"),
-      //   ...(formik.values.accountType === "organization" && {
-      //     companyWebsite: Yup.string().required("website is required"),
-      //   }),
+
+      companyWebsite: Yup.string().when("accountType", {
+        is: "organization",
+        then: Yup.string().required("company website is required"),
+      }),
+      organizationName: Yup.string().when("accountType", {
+        is: "organization",
+        then: Yup.string().required("Organization name is required"),
+      }),
     }),
   });
-  acctType = formik.values.accountType;
+
   return (
     <div className="container">
       <div className="form-section">
         <form>
           <h5 className="text-header">Create An Account</h5>
 
-          {error.length > 0 && <p style={{ color: "red" }}>{error}</p>}
+          {registerError.length > 0 && <p className="error">{registerError}</p>}
           <div className="name-section fields">
             <div className="firstname-input">
               <label htmlFor="firstName">First Name</label>
@@ -140,11 +154,12 @@ function Register() {
                 <option value="" disabled selected>
                   Select an Option
                 </option>
-                <option selected value="individual">
-                  Individual
-                </option>
+                <option value="individual">Individual</option>
                 <option value="organization">Organization</option>
               </select>
+              {formik.touched.accountType && formik.errors.accountType ? (
+                <div className="error">{formik.errors.accountType}</div>
+              ) : null}
             </div>
             {formik.values.accountType === "organization" && (
               <div className="phone">
@@ -157,12 +172,12 @@ function Register() {
                   value={formik.values.organizationName}
                   onChange={formik.handleChange}
                 />
+                {formik.touched.organizationName &&
+                formik.errors.organizationName ? (
+                  <div className="error">{formik.errors.organizationName}</div>
+                ) : null}
               </div>
             )}
-
-            {formik.touched.accountType && formik.errors.accountType ? (
-              <div className="error">{formik.errors.accountType}</div>
-            ) : null}
           </div>
           <div className="country-phone fields">
             <div className="country-input">
@@ -207,7 +222,7 @@ function Register() {
             <input
               name="password"
               id="password"
-              type={!visibility ? "text" : "password"}
+              type={!visibility ? "password" : "text"}
               className="input"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -256,7 +271,7 @@ function Register() {
             className="register-button"
             onClick={formik.handleSubmit}
           >
-            REGISTER
+            {loading ? "CREATING..." : "REGISTER"}
           </button>
           <div className="terms">
             <div className="accept">
