@@ -29,9 +29,10 @@ const Login = () => {
       dispatch(setLoginError(""));
       try {
         const res = await login(values);
-        // formik.resetForm();
+
         console.log("RES", res.data);
         if (res.data.message && res.data.message === "Logged in successfully") {
+          formik.resetForm();
           window.location.href = `/dashboard/${res.data.user.id}`;
         }
         dispatch(setLoading(false));
