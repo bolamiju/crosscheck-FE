@@ -73,15 +73,20 @@ function Register() {
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
-      email: Yup.string().required("Email is required"),
+      email: Yup.string().email().required("Enter valid email"),
       password: Yup.string().required("Password is required"),
       country: Yup.string().required("Country is required"),
-      phone: Yup.string().required("Phone is required"),
+      phone: Yup.string().length(11).required("Phone number is required"),
       accountType: Yup.string().required("Account type is required"),
 
       companyWebsite: Yup.string().when("accountType", {
         is: "organization",
-        then: Yup.string().required("company website is required"),
+        then: Yup.string()
+          .matches(
+            /^((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+            "Enter correct url!"
+          )
+          .required("Please enter company's website"),
       }),
       organizationName: Yup.string().when("accountType", {
         is: "organization",
@@ -107,6 +112,7 @@ function Register() {
                 className="input"
                 value={formik.values.firstName}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.firstName && formik.errors.firstName ? (
                 <div className="error">{formik.errors.firstName}</div>
@@ -121,6 +127,7 @@ function Register() {
                 className="input"
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.lastName && formik.errors.lastName ? (
                 <div className="error">{formik.errors.lastName}</div>
@@ -136,6 +143,7 @@ function Register() {
               className="input"
               value={formik.values.email}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
             {formik.touched.email && formik.errors.email ? (
               <div className="error">{formik.errors.email}</div>
@@ -150,6 +158,7 @@ function Register() {
                 className="input"
                 value={formik.values.accountType}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               >
                 <option value="" disabled selected>
                   Select an Option
@@ -171,6 +180,7 @@ function Register() {
                   className="input"
                   value={formik.values.organizationName}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 {formik.touched.organizationName &&
                 formik.errors.organizationName ? (
@@ -188,6 +198,7 @@ function Register() {
                 className="country"
                 value={formik.values.country}
                 onChange={(_, e) => formik.handleChange(e)}
+                onBlur={formik.handleBlur}
               />
               {/* <RegionDropdown
                 country={country}
@@ -207,6 +218,7 @@ function Register() {
                 className="input"
                 value={formik.values.phone}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.phone && formik.errors.phone ? (
                 <div className="error">{formik.errors.phone}</div>
@@ -226,6 +238,7 @@ function Register() {
               className="input"
               value={formik.values.password}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
             {!visibility ? (
               <FontAwesomeIcon
@@ -259,6 +272,7 @@ function Register() {
                 id="companyWebsite"
                 value={formik.values.companyWebsite}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.companyWebsite && formik.errors.companyWebsite ? (
                 <div className="error">{formik.errors.companyWebsite}</div>
