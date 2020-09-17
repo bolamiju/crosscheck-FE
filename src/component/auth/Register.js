@@ -12,6 +12,8 @@ import {
   //   RegionDropdown,
   //   CountryRegionData,
 } from "react-country-region-selector";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 //import css module
 import "react-flags-select/css/react-flags-select.css";
@@ -52,14 +54,14 @@ function Register() {
       }
 
       console.log(values);
-      dispatch(setLoading(true));
-      dispatch(setRegisterError(""));
+      //   dispatch(setLoading(true));
+      //   dispatch(setRegisterError(""));
       try {
-        const res = await signUp(values);
-        formik.resetForm();
-        console.log("RES", res.data);
-        dispatch(setLoading(false));
-        window.location.href = "/login";
+        // const res = await signUp(values);
+        // formik.resetForm();
+        // console.log("RES", res.data);
+        // dispatch(setLoading(false));
+        // window.location.href = "/login";
       } catch (err) {
         if (
           err.response.data.message &&
@@ -74,9 +76,9 @@ function Register() {
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
       email: Yup.string().email().required("Enter valid email"),
-      password: Yup.string().required("Password is required"),
+      password: Yup.string().min(8).required("Password is required"),
       country: Yup.string().required("Country is required"),
-      phone: Yup.string().length(11).required("Phone number is required"),
+      phone: Yup.string().required("Phone number is required"),
       accountType: Yup.string().required("Account type is required"),
 
       companyWebsite: Yup.string().when("accountType", {
@@ -94,6 +96,9 @@ function Register() {
       }),
     }),
   });
+
+  const [country, setCountry] = useState("us");
+  console.log(country, "country");
 
   return (
     <div className="container">
@@ -197,8 +202,13 @@ function Register() {
                 id="country"
                 className="country"
                 value={formik.values.country}
-                onChange={(_, e) => formik.handleChange(e)}
+                onChange={(_, e) => {
+                  formik.handleChange(e);
+                  console.log(e.currentTarget.value);
+                  setCountry(e.currentTarget.value);
+                }}
                 onBlur={formik.handleBlur}
+                ReactFlagsSelect
               />
               {/* <RegionDropdown
                 country={country}
@@ -211,14 +221,18 @@ function Register() {
             </div>
             <div className="phone">
               <label htmlFor="phone">Phone Number</label>
-              <input
+              <PhoneInput
+                country={country}
                 type="text"
                 name="phone"
                 id="phone"
-                className="input"
+                // className="input"
                 value={formik.values.phone}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.setFieldValue("phone", e);
+                }}
                 onBlur={formik.handleBlur}
+                searchPlaceholder
               />
               {formik.touched.phone && formik.errors.phone ? (
                 <div className="error">{formik.errors.phone}</div>

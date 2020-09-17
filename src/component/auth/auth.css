@@ -1,5 +1,7 @@
 body {
-  font-family: "Rubik";
+  font-family: "OrkneyRegular";
+  font-weight: normal;
+  font-style: normal;
   background: #fafafa;
 }
 .container {
@@ -11,7 +13,11 @@ body {
 #login-section {
   margin-top: 30px;
 }
-
+.form-control {
+  width: 180px !important;
+  border-radius: 9px;
+  height: 28px !important;
+}
 .error {
   display: flex;
   justify-content: center;
@@ -20,8 +26,8 @@ body {
 }
 .image-section {
   width: 72%;
-  /* height: 830px; */
-
+  height: 570px;
+  /* position: fixed; */
   background-image: url("../../asset/ManHiRes.png");
   background-repeat: no-repeat;
 }
