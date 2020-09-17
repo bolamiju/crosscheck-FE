@@ -54,14 +54,14 @@ function Register() {
       }
 
       console.log(values);
-      //   dispatch(setLoading(true));
-      //   dispatch(setRegisterError(""));
+      dispatch(setLoading(true));
+      dispatch(setRegisterError(""));
       try {
-        // const res = await signUp(values);
-        // formik.resetForm();
-        // console.log("RES", res.data);
-        // dispatch(setLoading(false));
-        // window.location.href = "/login";
+        const res = await signUp(values);
+        formik.resetForm();
+        console.log("RES", res.data);
+        dispatch(setLoading(false));
+        window.location.href = "/login";
       } catch (err) {
         if (
           err.response.data.message &&
