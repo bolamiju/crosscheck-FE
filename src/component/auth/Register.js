@@ -61,15 +61,15 @@ function Register() {
         formik.resetForm();
         console.log("RES", res.data);
         dispatch(setLoading(false));
-        window.location.href = "/login";
+        // window.location.href = "/login";
       } catch (err) {
         if (
           err.response.data.message &&
           err.response.data.message === "user already exist"
         ) {
           dispatch(setRegisterError("Email already exist"));
-          dispatch(setLoading(false));
         }
+        dispatch(setLoading(false));
       }
     },
     validationSchema: Yup.object().shape({
@@ -98,7 +98,6 @@ function Register() {
   });
 
   const [country, setCountry] = useState("us");
-  console.log(country, "country");
 
   return (
     <div className="container">
@@ -361,7 +360,9 @@ function Register() {
           </div>
         </form>
       </div>
-      <div className="image-section">{/* <img src={men} /> */}</div>
+      <div className="image-section">
+        {/* <img src="../../asset/ManHiRes.png" /> */}
+      </div>
     </div>
   );
 }
