@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import {
   resetPassword,
-  setLoading,
-  setLoginError,
+  //   setLoading,
+  //   setLoginError,
 } from "../../state/actions/users";
 import * as Yup from "yup";
 
@@ -17,8 +17,8 @@ function ResetPassword({ match, location }) {
   useEffect(() => {
     console.log("pass token", token);
     setPasswordToken(token);
-  }, []);
-  const dispatch = useDispatch();
+  }, [token]);
+  //   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
