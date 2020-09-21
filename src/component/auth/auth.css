@@ -4,12 +4,31 @@ body {
   font-style: normal;
   background: #fafafa;
 }
+.forgot-password {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  background: white;
+  margin: auto;
+  margin-top: 80px;
+  border-radius: 9px;
+}
+.reset-create {
+  display: flex;
+  justify-content: space-between;
+}
 
+.email-text {
+  font-size: 14px;
+}
+.reset-create p {
+  font-size: 14px;
+}
 .container {
   display: flex;
   height: 100%;
   width: 100%;
-  position: fixed;
+  /* position: fixed; */
 }
 
 #login-section {
@@ -28,7 +47,7 @@ body {
 }
 .image-section {
   width: 72%;
-  height: auto;
+  height: 590px;
   /* position: fixed; */
   background-image: url("../../asset/ManHiRes.png");
   background-repeat: no-repeat;
@@ -141,6 +160,14 @@ label {
   top: 28px;
 }
 
+.newpassword-input {
+  border: 2px solid #e2e2e2;
+  outline: none;
+  border-radius: 9px;
+  height: 30px;
+  width: 100%;
+}
+
 .register-button {
   width: 100%;
   background: #0092e0 0% 0% no-repeat padding-box;
@@ -148,6 +175,17 @@ label {
   outline: none;
   height: 38px;
   border: 1px solid #0092e0;
+  margin-top: 20px;
+  color: white;
+}
+
+.resetpassword-button {
+  width: 100% !important;
+  background: #0092e0 0% 0% no-repeat padding-box;
+  border-radius: 9px;
+  outline: none;
+  height: 38px;
+  border: 2px solid #0092e0;
   margin-top: 20px;
   color: white;
 }

@@ -35,7 +35,6 @@ const ForgotPassword = () => {
         ) {
           dispatch(setLoginError("No account found"));
         }
-
         dispatch(setLoading(false));
       }
     },
@@ -97,7 +96,7 @@ const ForgotPassword = () => {
               onClick={formik.handleSubmit}
               style={{ fontSize: "14px" }}
             >
-              {loading ? "Requesting" : "RESET PASSWORD"}
+              {loading ? "Requesting" : "SUBMIT"}
             </button>
             <div className="reset-create">
               <p>
