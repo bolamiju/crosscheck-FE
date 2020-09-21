@@ -27,3 +27,6 @@ export const signUp = (user) =>
 
 export const login = (user) =>
   axios.post(`http://localhost:5000/api/v1/users/login`, user);
+
+export const forgotPassword = (email) =>
+  axios.post(`http://localhost:5000/api/v1/users/forgot`, email);
