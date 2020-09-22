@@ -130,14 +130,15 @@ const Login = () => {
               />
               <span>Remember me</span>
             </div>
-            <a
-              href="https://google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              //   style={{ textDecoration: "none", fontSize: "14px" }}
+            <Link
+              to="/forgotpassword"
+              style={{
+                textDecoration: "none",
+                color: "#0092e0",
+              }}
             >
-              forgot password
-            </a>
+              Forgot password
+            </Link>
           </div>
           <div
             style={{

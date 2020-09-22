@@ -32,7 +32,7 @@ export const forgotPassword = (email) =>
   axios.post(`https://croscheck.herokuapp.com/api/v1/users/forgot`, email);
 
 export const resetPassword = (token, passwords) =>
-  axios.post(
+  axios.put(
     `https://croscheck.herokuapp.com/api/v1/users/reset/${token}`,
     passwords
   );
