@@ -25,6 +25,7 @@ import {
 
 function Register() {
   const [visibility, setVisibility] = useState(false);
+  const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
 
   const { registerError, loading } = useSelector((state) => state.user);
@@ -61,6 +62,7 @@ function Register() {
         formik.resetForm();
         console.log("RES", res.data);
         dispatch(setLoading(false));
+        setSuccess(true);
         // window.location.href = "/login";
       } catch (err) {
         if (
@@ -106,10 +108,12 @@ function Register() {
           <h5 className="text-header">Create An Account</h5>
 
           {registerError.length > 0 && <p className="error">{registerError}</p>}
-          <p className="activation-text">
-            An account activation link has been sent to your email, check your
-            inbox or spam folder
-          </p>
+          {success && (
+            <p className="activation-text">
+              An account activation link has been sent to your email, check your
+              inbox or spam folder
+            </p>
+          )}
           <div className="name-section fields">
             <div className="firstname-input">
               <label htmlFor="firstName">First Name</label>
