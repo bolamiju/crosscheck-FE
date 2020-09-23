@@ -4,6 +4,10 @@ body {
   font-style: normal;
   background: #fafafa;
 }
+.activation-text {
+  font-size: 12px;
+  color: green;
+}
 .forgot-password {
   display: flex;
   justify-content: center;

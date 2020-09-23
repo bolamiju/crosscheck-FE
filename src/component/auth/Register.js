@@ -106,6 +106,10 @@ function Register() {
           <h5 className="text-header">Create An Account</h5>
 
           {registerError.length > 0 && <p className="error">{registerError}</p>}
+          <p className="activation-text">
+            An account activation link has been sent to your email, check your
+            inbox or spam folder
+          </p>
           <div className="name-section fields">
             <div className="firstname-input">
               <label htmlFor="firstName">First Name</label>
