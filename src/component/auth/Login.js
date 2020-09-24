@@ -88,7 +88,7 @@ const Login = () => {
       data: { accessToken: response.accessToken, userID: response.userID },
     }).then((response) => {
       console.log("backend res", response);
-      window.location.href = `/dashboard/${response.data.user.id}`;
+      // window.location.href = `/dashboard/${response.data.user.id}`;
     });
   };
 
