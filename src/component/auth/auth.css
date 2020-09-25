@@ -56,7 +56,7 @@ body {
 .image-section {
   width: 72%;
   height: 100vh;
-  background-image: url(/static/media/ManHiRes.ab168834.png);
+  background-image: url("../../asset/ManHiRes.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
