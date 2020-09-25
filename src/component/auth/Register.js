@@ -7,6 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+// import ManHires from "../../asset/ManHiRes.png";
 import {
   CountryDropdown,
   //   RegionDropdown,
@@ -395,9 +396,7 @@ function Register() {
           </form>
         </div>
       </div>
-      <div className="image-section">
-        {/* <img src="../../asset/ManHiRes.png" /> */}
-      </div>
+      <div className="image-section">{/* <img src={ManHires} /> */}</div>
     </div>
   );
 }
