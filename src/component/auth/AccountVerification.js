@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function AccountVerification({ match, location }) {
-  // let
   const {
     params: { email },
   } = match;
   console.log("EMAIL", email);
   useEffect(() => {
-    axios.put(`http://localhost:5000/api/v1/users/${email}`).then((data) => {
-      console.log(data);
-    });
+    axios
+      .put(`https://croscheck.herokuapp.com/api/v1/users/${email}`)
+      .then((data) => {
+        console.log(data);
+      });
   }, [email]);
 
   return (

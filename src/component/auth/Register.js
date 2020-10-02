@@ -351,7 +351,7 @@ function Register() {
                 alignItems: "center",
               }}
             >
-              <p className="signup-with">Sign up with</p>
+              {/* <p className="signup-with">Sign up with</p>
 
               <div
                 style={{
@@ -382,7 +382,7 @@ function Register() {
                   />{" "}
                   Google
                 </button>
-              </div>
+              </div> */}
               <p className="paragraph">
                 Already have an account?
                 <Link
