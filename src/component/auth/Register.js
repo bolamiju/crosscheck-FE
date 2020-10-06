@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
+// import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import ManHires from "../../asset/ManHiRes.png";

@@ -20,5 +20,5 @@ const Main = styled.main`
   right: 0;
   height: calc(100% - 70px);
   bottom: 0;
-  width: calc(100% - 250px);
+  width: calc(100% - 230px);
 `;

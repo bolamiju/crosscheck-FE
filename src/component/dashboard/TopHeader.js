@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { BellFilled } from "@ant-design/icons";
+import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
 
 function TopHeader() {
@@ -9,16 +9,17 @@ function TopHeader() {
       <h5>search bar</h5>
       <div className="right-con">
         <div className="nots">
-          <BellFilled
-            style={{ fontSize: "1.5em", color: "#E2E2EA", width: "20px" }}
+          <img
+            src={Bell}
+            alt="bellimage"
+            style={{ fontSize: "0.8em", color: "#2C3E50", width: "18px" }}
           />
-          <div className="red-circle"></div>
         </div>
         <div className="user-avatar">
           <img src={Avatar} alt="Avatar" />
           <div className="user-info">
-            <p>Temidayo JayKay</p>
-            <p>Administrator</p>
+            <p>John Kumuyi</p>
+            <p>johnkumuyi@gmail.com</p>
           </div>
         </div>
       </div>
@@ -36,7 +37,7 @@ const HeadContainer = styled.div`
   padding: 10px 60px 10px 40px;
   border-bottom: 1px solid #eaeaea;
   opacity: 1;
-  height: 70px;
+  height: 50px;
 
   h5 {
     letter-spacing: 0.12px;
@@ -52,23 +53,16 @@ const HeadContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+  .bell {
+    width: 0.8em !important;
+    height: 0.8em !important;
+  }
 
   .nots {
     position: relative;
     margin-left: 20px;
     margin-right: 20px;
     display: inline-block;
-
-    .red-circle {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #f42753;
-      border: 2.2px solid #fff;
-    }
   }
 
   .profile-icon {
@@ -102,6 +96,7 @@ const HeadContainer = styled.div`
         opacity: 0.85;
         font-weight: 500;
         font-size: 12px;
+        margin: 0;
       }
 
       &:nth-child(2) {
@@ -110,6 +105,7 @@ const HeadContainer = styled.div`
         opacity: 0.95;
         font-weight: 500;
         font-size: 10px;
+        margin: 0;
       }
     }
   }

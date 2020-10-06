@@ -13,7 +13,7 @@ const DashHeader = () => {
 export default DashHeader;
 
 const Header = styled.div`
-  width: calc(100% - 250px);
+  width: calc(100% - 230px);
   top: 0;
   right: 0;
   position: fixed;
