@@ -8,6 +8,7 @@ import ResetPassword from "./component/auth/ResetPassword";
 import AccountVerification from "./component/auth/AccountVerification";
 import UserDashboard from "./component/dashboard/DashboardContent";
 import { Route } from "react-router-dom";
+import NewVerification from "./component/dashboard/NewVerifications";
 import "./component/auth/auth.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Route exact path="/verify/:email" component={AccountVerification} />
       <Route exact path="/forgotpassword" component={ForgotPassword} />
       <Route exact path="/reset/:token" component={ResetPassword} />
+      <Route exact path="/new" component={NewVerification} />
     </Provider>
   );
 }

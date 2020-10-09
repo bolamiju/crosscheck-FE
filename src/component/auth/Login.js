@@ -198,7 +198,7 @@ const Login = () => {
                 alignItems: "center",
               }}
             >
-              <p className="signup-with">Sign up with</p>
+              <p className="signup-with">Login with</p>
 
               <div
                 style={{

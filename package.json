@@ -57,6 +57,7 @@
     "react-scripts": "3.4.3",
     "react-scroll-horizontal": "^1.6.4",
     "react-select": "^3.1.0",
+    "react-select-search": "^2.1.1",
     "react-simple-maps": "^0.12.1",
     "react-switch": "^3.0.4",
     "react-table": "^7.5.0",

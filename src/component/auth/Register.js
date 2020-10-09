@@ -28,6 +28,7 @@ function Register() {
   const [visibility, setVisibility] = useState(false);
   const [success, setSuccess] = useState(false);
   const [terms, setTerms] = useState(false);
+  const [counstrySelected, setCountrySelected] = useState("us");
   const dispatch = useDispatch();
 
   const { registerError, loading } = useSelector((state) => state.user);
@@ -108,8 +109,6 @@ function Register() {
       }),
     }),
   });
-
-  const [country, setCountry] = useState("us");
 
   return (
     <div className="container">
@@ -223,20 +222,17 @@ function Register() {
                   name="country"
                   id="country"
                   className="country"
+                  valueType="short"
                   value={formik.values.country}
                   onChange={(_, e) => {
                     formik.handleChange(e);
-                    console.log(e.currentTarget.value);
-                    setCountry(e.currentTarget.value);
+                    console.log(e.target.value);
+                    setCountrySelected(e.target.value.toLowerCase());
                   }}
                   onBlur={formik.handleBlur}
                   ReactFlagsSelect
                 />
-                {/* <RegionDropdown
-                country={country}
-                value={region}
-                onChange={selectRegion}
-              /> */}
+
                 {formik.touched.country && formik.errors.country ? (
                   <div className="error">{formik.errors.country}</div>
                 ) : null}
@@ -244,7 +240,7 @@ function Register() {
               <div className="phone">
                 <label htmlFor="phone">Phone Number</label>
                 <PhoneInput
-                  country={country}
+                  country={counstrySelected}
                   type="text"
                   name="phone"
                   id="phone"
@@ -252,6 +248,7 @@ function Register() {
                   value={formik.values.phone}
                   onChange={(e) => {
                     formik.setFieldValue("phone", e);
+                    console.log(e);
                   }}
                   onBlur={formik.handleBlur}
                   searchPlaceholder
@@ -316,14 +313,6 @@ function Register() {
                 ) : null}
               </div>
             )}
-
-            <button
-              type="button"
-              className="register-button"
-              onClick={formik.handleSubmit}
-            >
-              {loading ? "CREATING..." : "REGISTER"}
-            </button>
             <div className="terms">
               <div className="accept">
                 <input
@@ -343,6 +332,14 @@ function Register() {
                 ) : null}
               </div>
             </div>
+            <button
+              type="button"
+              className="register-button"
+              onClick={formik.handleSubmit}
+            >
+              {loading ? "CREATING..." : "REGISTER"}
+            </button>
+
             <div
               style={{
                 width: "100%",

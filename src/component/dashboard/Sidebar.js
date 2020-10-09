@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Logo from "../../asset/CrossCheckLogo.png";
 import dashboard from "../../asset/dashboard.svg";
 import contact from "../../asset/contact.svg";
@@ -20,34 +21,34 @@ function Sidebar() {
       </LogoSection>
       <ListSection>
         <ul>
-          <span>
+          <Link className="link" to="/dashboard/:id">
             {" "}
             <img src={dashboard} alt="dash" />
             <li>DASHBOARD</li>
-          </span>
-          <span>
+          </Link>
+          <Link className="link" to="/new">
             {" "}
             <img src={newVer} alt="verification" />
             <li>NEW VERIFICATION</li>
-          </span>
-          <span>
+          </Link>
+          <Link className="link">
             {" "}
             <img src={history} alt="history" />
             <li>VERIFICATION HISTORY</li>
-          </span>
-          <span>
+          </Link>
+          <Link className="link">
             {" "}
             <img src={contact} alt="account" /> <li>MY ACCOUNT</li>
-          </span>
-          <span>
+          </Link>
+          <Link className="link">
             {" "}
             <img src={receipt} alt="receipt" />
             <li>RECEIPTS</li>
-          </span>
-          <span>
+          </Link>
+          <Link className="link" to="/">
             {" "}
             <img src={logout} alt="logout" /> <li>LOGOUT</li>
-          </span>
+          </Link>
         </ul>
       </ListSection>
     </Container>
@@ -77,8 +78,9 @@ const ListSection = styled.div`
     list-style-type: none;
     padding-inline-start: 20px !important;
   }
-  span {
-    padding-bottom: 50px;
+  .link {
+    padding-bottom: 50px !important;
+    text-decoration: none !important;
     display: flex;
     align-items: center;
     cursor: pointer;
