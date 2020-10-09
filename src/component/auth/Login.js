@@ -57,6 +57,12 @@ const Login = (props) => {
           dispatch(setLoginError("invalid email or password"));
         }
         console.log("error", err.response);
+        if (
+          err.response.data.message &&
+          err.response.data.message === "Account not activated"
+        ) {
+          toast.error("Account not activated");
+        }
         dispatch(setLoading(false));
       }
     },
