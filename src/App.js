@@ -6,9 +6,8 @@ import Login from "./component/auth/Login";
 import ForgotPassword from "./component/auth/ForgotPassword";
 import ResetPassword from "./component/auth/ResetPassword";
 import AccountVerification from "./component/auth/AccountVerification";
-import UserDashboard from "./component/dashboard/DashboardContent";
+import MainContent from "./component/dashboard/MainContent";
 import { Route } from "react-router-dom";
-import NewVerification from "./component/dashboard/NewVerifications";
 import "./component/auth/auth.css";
 
 function App() {
@@ -16,11 +15,11 @@ function App() {
     <Provider store={store}>
       <Route exact path="/register" component={Register} />
       <Route exact path="/" component={Login} />
-      <Route exact path="/dashboard/:id" component={UserDashboard} />
+      <Route exact path="/dashboard/:id" component={MainContent} />
       <Route exact path="/verify/:email" component={AccountVerification} />
       <Route exact path="/forgotpassword" component={ForgotPassword} />
       <Route exact path="/reset/:token" component={ResetPassword} />
-      <Route exact path="/new" component={NewVerification} />
+      <Route exact path="/new" component={MainContent} />
     </Provider>
   );
 }

@@ -88,6 +88,7 @@ const NewVerifications = () => {
         .then(({ data }) => {
           console.log("res", data);
           toast.success("verification requested");
+          formik.resetForm();
         })
         .catch((err) => {
           console.log(err);

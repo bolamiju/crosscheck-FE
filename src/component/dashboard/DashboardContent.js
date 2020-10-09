@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CountryDropdown } from "react-country-region-selector";
@@ -70,7 +71,14 @@ function DashboardContent() {
                 <p>Education Check</p>
                 <p>Verify educational credentials</p>
               </div>
-              <button>Start New</button>
+              <button>
+                <Link
+                  to="/new"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Start New
+                </Link>
+              </button>
             </div>
           </Card>
           <Card className="transcript-card">

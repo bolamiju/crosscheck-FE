@@ -9,8 +9,10 @@ const fetchInstitutes = (payload) => {
 };
 
 export const getAllInstitutions = () => (dispatch) => {
-  axios.get(`http://localhost:5000/api/v1/institutions`).then(({ data }) => {
-    console.log("see insti", data);
-    dispatch(fetchInstitutes(data.institution));
-  });
+  axios
+    .get(`https://croscheck.herokuapp.com/api/v1/institutions`)
+    .then(({ data }) => {
+      console.log("see insti", data);
+      dispatch(fetchInstitutes(data.institution));
+    });
 };
