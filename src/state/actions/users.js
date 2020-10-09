@@ -22,6 +22,13 @@ export const setLoginError = (payload) => {
   };
 };
 
+export const setUser = (payload) => {
+  return {
+    type: types.SET_USER,
+    payload,
+  };
+};
+
 export const signUp = (user) =>
   axios.post("http://localhost:5000/api/v1/users/register", user);
 

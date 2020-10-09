@@ -12,11 +12,16 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { login, setLoading, setLoginError } from "../../state/actions/users";
+import {
+  login,
+  setLoading,
+  setLoginError,
+  setUser,
+} from "../../state/actions/users";
 //import css module
 import "react-flags-select/css/react-flags-select.css";
 
-const Login = () => {
+const Login = (props) => {
   const [visibility, setVisibility] = useState(false);
 
   const dispatch = useDispatch();
@@ -37,8 +42,11 @@ const Login = () => {
 
         console.log("RES", res.data);
         if (res.data.message && res.data.message === "Logged in successfully") {
+          dispatch(setUser(res.data.user));
           formik.resetForm();
-          window.location.href = `/dashboard/${res.data.user.id}`;
+
+          // window.location.href = `/dashboard/${res.data.user.id}`;
+          props.history.push(`/dashboard/${res.data.user.id}`);
         }
         dispatch(setLoading(false));
       } catch (err) {

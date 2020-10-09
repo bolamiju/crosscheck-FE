@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   registerError: "",
   loginError: "",
+  user: {},
 };
 
 export default function userReducer(state = initialState, action) {
@@ -25,6 +26,13 @@ export default function userReducer(state = initialState, action) {
         registerError: "",
         loginError: action.payload,
       };
+    case types.SET_USER:
+      return {
+        user: action.payload,
+        registerError: "",
+        loginError: "",
+      };
+
     default:
       return state;
   }

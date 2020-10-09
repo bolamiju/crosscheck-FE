@@ -12,6 +12,7 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 function DashboardContent() {
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
+
   const [input, setInput] = useState("");
   const [selectedInst, setSelectedInst] = useState({});
   const [hideTable, setHideTable] = useState(false);

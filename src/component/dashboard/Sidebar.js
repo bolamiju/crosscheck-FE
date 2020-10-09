@@ -31,7 +31,7 @@ function Sidebar() {
             <img src={newVer} alt="verification" />
             <li>NEW VERIFICATION</li>
           </Link>
-          <Link className="link">
+          <Link to="/dashboard/:id" className="link">
             {" "}
             <img src={history} alt="history" />
             <li>VERIFICATION HISTORY</li>

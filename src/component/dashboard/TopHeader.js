@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
 
 function TopHeader() {
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   return (
     <HeadContainer className="top-header">
       <h5>search bar</h5>
@@ -18,8 +21,10 @@ function TopHeader() {
         <div className="user-avatar">
           <img src={Avatar} alt="Avatar" />
           <div className="user-info">
-            <p>John Kumuyi</p>
-            <p>johnkumuyi@gmail.com</p>
+            <p>
+              {user.firstName} {user.lastName}
+            </p>
+            <p>{user.email}</p>
           </div>
         </div>
       </div>

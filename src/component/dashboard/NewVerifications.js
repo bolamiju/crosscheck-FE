@@ -143,6 +143,34 @@ const NewVerifications = () => {
     console.log("mounted");
   }, [dispatch]);
 
+  const handleQualificationTab = () => {
+    if (
+      formik.values.firstName.length === 0 ||
+      formik.values.lastName.length === 0 ||
+      formik.values.middleName.length === 0 ||
+      formik.values.dateOfBirth.length === 0
+    ) {
+      toast.error("please fill required fields");
+      return;
+    }
+    setActiveTab("qualification-details");
+  };
+
+  const handleDocumentTab = () => {
+    if (
+      formik.values.course.length === 0 ||
+      formik.values.qualification.length === 0 ||
+      formik.values.classification.length === 0 ||
+      formik.values.admissionYear.length === 0 ||
+      formik.values.graduationYear.length === 0 ||
+      formik.values.studentId.length === 0
+    ) {
+      toast.error("please fill required fields");
+      return;
+    }
+    setActiveTab("documents");
+  };
+
   return (
     <div>
       <Layout>
@@ -303,7 +331,7 @@ const NewVerifications = () => {
                     &nbsp; Individual details
                   </li>
                   <li
-                    onClick={() => setActiveTab("qualification-details")}
+                    onClick={handleQualificationTab}
                     className={
                       activeTab === "qualification-details" ? "activeTab" : ""
                     }
@@ -312,7 +340,7 @@ const NewVerifications = () => {
                     &nbsp; Qualification details
                   </li>
                   <li
-                    onClick={() => setActiveTab("documents")}
+                    onClick={handleDocumentTab}
                     className={activeTab === "documents" ? "activeTab" : ""}
                   >
                     <img src={document} alt="details" />
