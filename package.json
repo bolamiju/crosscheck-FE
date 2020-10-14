@@ -21,6 +21,7 @@
     "chart.js": "^2.9.3",
     "csv": "^5.3.2",
     "customize-cra": "^1.0.0",
+    "flutterwave-react-v3": "^1.0.7",
     "font-awesome": "^4.7.0",
     "formik": "^2.1.5",
     "history": "^5.0.0",

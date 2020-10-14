@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import FlutterWave from "./UseFlutterwave";
 import "./ver.css";
 import styled from "styled-components";
 import Switch from "react-switch";
@@ -38,7 +39,6 @@ const NewVerifications = () => {
 
   const handleImage = (e) => {
     setCertImage(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   const handleSelected = (institute) => {
@@ -62,7 +62,7 @@ const NewVerifications = () => {
       enrollmentStatus: false,
     },
 
-    onSubmit: async (values) => {
+    onSubmit: async (values, status) => {
       for (var propName in values) {
         if (
           values[propName] === null ||
@@ -76,6 +76,7 @@ const NewVerifications = () => {
       var formData = new FormData();
       formData.append("certImage", certImage);
       formData.append("institution", selectedInst.name);
+      formData.append("status", status);
       for (var key in values) {
         formData.append(key, values[key]);
       }
@@ -116,7 +117,6 @@ const NewVerifications = () => {
       }),
     }),
   });
-  console.log("inst", selectedInst.name);
   // const handleChange = (e) => {
   //   console.log(e.target.value);
   //   setFirstName(e.target.value);
@@ -131,9 +131,15 @@ const NewVerifications = () => {
   //   console.log("clicked", checked);
   // };
 
+  const submitRequest = (status) => {
+    console.log("submitting req...");
+    formik.handleSubmit(status);
+  };
+
   function handleInputChange(e) {
     setInput(e.target.value);
-    console.log(e.target.value);
+    setHideTable(false);
+    // console.log(e.target.value);
   }
 
   const filteredItems = institutions.filter((item) =>
@@ -171,6 +177,8 @@ const NewVerifications = () => {
     }
     setActiveTab("documents");
   };
+  console.log("filtered", filteredItems);
+  console.log("input", input);
 
   return (
     <div>
@@ -286,8 +294,8 @@ const NewVerifications = () => {
             {filteredItems.length > 0 && input.length > 0 && (
               <div className="new-table">
                 <table
-                  cellspacing="0"
-                  cellpadding="0"
+                  cellSpacing="0"
+                  cellPadding="0"
                   border="0"
                   className={hideTable ? "hide-table" : ""}
                 >
@@ -301,14 +309,14 @@ const NewVerifications = () => {
                   </thead>
                   <tbody>
                     {filteredItems.map((ite) => (
-                      <tr onClick={() => handleSelected(ite)}>
-                        <th class="mobile-header">Number</th>
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
                         <td>{ite.name}</td>
-                        <th class="mobile-header">Market rate</th>
+                        <th className="mobile-header">Market rate</th>
                         <td>{ite.country}</td>
-                        <th class="mobile-header">Weight</th>
+                        <th className="mobile-header">Weight</th>
                         <td>{ite.category}</td>
-                        <th class="mobile-header">Value</th>
+                        <th className="mobile-header">Value</th>
                         <td>{ite.amount}</td>
                       </tr>
                       // <tr className="space"></tr>
@@ -751,8 +759,7 @@ const NewVerifications = () => {
                         : "btn"
                     }
                     type="submmit"
-                    // onClick={() => setActiveTab("documents")}
-                    onClick={formik.handleSubmit}
+                    onClick={() => setActiveTab("documents")}
                   >
                     Next
                     <img src={arrow} alt="right" />
@@ -797,13 +804,19 @@ const NewVerifications = () => {
                       </div>
                     </Document>
                   </UploadSection>
-                  <button
+                  {/* <button
                     type="submit"
                     onClick={formik.handleSubmit}
                     className="btn"
-                  >
-                    Finish
-                  </button>
+                  > */}
+                  <FlutterWave
+                    submitRequest={submitRequest}
+                    type="submit"
+                    // onClick={formik.handleSubmit}
+                    className="btn"
+                    amount={selectedInst.amount}
+                  />
+                  {/* </button> */}
                 </FormDiv>
               )}
             </form>
