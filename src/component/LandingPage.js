@@ -623,7 +623,7 @@ const NavBar = styled.nav`
     display: none;
     @media (max-width: 400px) {
       display: block;
-      /* float: right; */
+      padding-right: 3px;
       color: white;
       font-size: 28px;
     }
