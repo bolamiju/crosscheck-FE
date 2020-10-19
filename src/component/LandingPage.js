@@ -5,6 +5,18 @@ import Avatar from "../asset/Avatar.png";
 import Mail from "../asset/mail.svg";
 import phone from "../asset/phone.svg";
 import Address from "../asset/Address.svg";
+import Computer from "../asset/Computer.png";
+import Tie from "../asset/manintie.png";
+import cash from "../asset/cash.svg";
+import enquiry from "../asset/enter_enquiry_dets.svg";
+import service from "../asset/select_service.svg";
+import pay from "../asset/pay_send.svg";
+import register from "../asset/register_login.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  //  faTimes
+} from "@fortawesome/free-solid-svg-icons";
 
 const LandingPage = () => {
   return (
@@ -12,7 +24,7 @@ const LandingPage = () => {
       <FirstSection>
         <NavBar>
           <div>
-            <img src={Logo} alt="" style={{ width: "150px", height: "30px" }} />
+            <img className="crosschecklogo" src={Logo} alt="" />
           </div>
           <div className="navs">
             <ul>
@@ -24,14 +36,17 @@ const LandingPage = () => {
               <button>LOGIN</button>
             </ul>
           </div>
+          <FontAwesomeIcon icon={faBars} className="menu-icon" />
         </NavBar>
         <Main>
           <div className="intro-text">
             <h1>
-              Your unfair advantage to get
+              Your unfair
+              <br /> advantage to get
               <br />
-              ahead starts here
+              ahead starts <h1 className="here">here</h1>
             </h1>
+            <h2>Your unfair advantage to get ahead starts here</h2>
             <p>
               We are Africa’s most comprehensive online, automated verification
               service for academic qualifications.
@@ -41,23 +56,52 @@ const LandingPage = () => {
               <button>How it Works</button>
             </div>
           </div>
-          {/* <img src={header} alt="headerimage" /> */}
+          <img
+            src={Computer}
+            alt="headerimage"
+            style={{ width: "700px", height: "350px" }}
+          />
         </Main>
       </FirstSection>
       <About>
         <h1>A few things you should know about us</h1>
+        <h2>About Us</h2>
         <div className="tabs">
-          <h3>CONFIDENTIAL</h3> <h3>FASTEST RESPONSE TIME</h3>{" "}
-          <h3>COST EFFECTIVE</h3>
+          <h3>OUR MISSION</h3> <h3>WHO WE ARE</h3> <h3>OUR VISION</h3>
+        </div>
+        <div className="mobile-about">
+          <h3>Who We Are</h3>
+          <span>
+            lorem ipsum is our response to the African verification dilemma. Our
+            diverse offerings are the result of continuous technological
+            innovation, constant customer feedback and a drive to offer
+          </span>
+        </div>
+        <div className="mobile-about">
+          <h3>Our Mission</h3>
+          <span>
+            lorem ipsum is our response to the African verification dilemma. Our
+            diverse offerings are the result of continuous technological
+            innovation, constant customer feedback and a drive to offer
+          </span>
+        </div>
+        <div className="mobile-about">
+          <h3>Our Vision</h3>
+          <span>
+            lorem ipsum is our response to the African verification dilemma. Our
+            diverse offerings are the result of continuous technological
+            innovation, constant customer feedback and a drive to offer
+          </span>
         </div>
         <p>
-          CrossCheck is Trapezoid’s response to the African verification
-          dilemma. Our diverse offerings are the result of continuous
-          technological innovation, constant customer feedback and a drive to
-          offer the industry’s best solutions. CrossCheck offers a centralised
-          platform for degree verification that connects employers, agencies,
+          CrossCheck is our response to the African verification dilemma. Our
+          diverse offerings are the result of continuous technological
+          innovation, constant customer feedback and a drive to offer the
+          industry’s best solutions. CrossCheck offers a centralised platform
+          for degree verification that connects employers, agencies,
           universities, embassies and councils.
         </p>
+        <img src={Tie} alt="manintie" />
       </About>
       <Div>
         <h2>How it Works</h2>
@@ -68,28 +112,32 @@ const LandingPage = () => {
       </Div>
       <Blocks>
         <div className="blocks">
-          <h4>Regiser/Login</h4>
+          <img src={register} alt="regi" />
+          <h4>Regiser</h4>
           <p>
             To take a trivial example, which of us ever undertakes laborious
             physical exercise and stuff.
           </p>
         </div>
         <div className="blocks">
-          <h4>Regiser/Login</h4>
+          <img src={service} alt="regi" />
+          <h4>Select Service</h4>
           <p>
             To take a trivial example, which of us ever undertakes laborious
             physical exercise and stuff.
           </p>
         </div>
         <div className="blocks">
-          <h4>Regiser/Login</h4>
+          <img src={enquiry} alt="enq" />
+          <h4>Search institution</h4>
           <p>
             To take a trivial example, which of us ever undertakes laborious
             physical exercise and stuff.
           </p>
         </div>
         <div className="blocks">
-          <h4>Regiser/Login</h4>
+          <img src={enquiry} alt="enq" />
+          <h4>Enter Enquiry Details</h4>
           <p>
             To take a trivial example, which of us ever undertakes laborious
             physical exercise and stuff.
@@ -97,7 +145,16 @@ const LandingPage = () => {
         </div>
 
         <div className="blocks">
-          <h4>Regiser/Login</h4>
+          <img src={cash} alt="pay" />
+          <h4>Pay</h4>
+          <p>
+            To take a trivial example, which of us ever undertakes laborious
+            physical exercise and stuff.
+          </p>
+        </div>
+        <div className="blocks">
+          <img src={pay} alt="paysend" />
+          <h4>Send</h4>
           <p>
             To take a trivial example, which of us ever undertakes laborious
             physical exercise and stuff.
@@ -123,7 +180,7 @@ const LandingPage = () => {
               <p className="role">CTO Herculanum</p>
             </div>
           </div>
-          <div className="testimony">
+          {/* <div className="testimony">
             <p>
               {" "}
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -146,7 +203,7 @@ const LandingPage = () => {
               <p>Bertha Johnson</p>
               <p className="role">Applicant</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </Testimonies>
       <Cover>
@@ -167,7 +224,6 @@ const LandingPage = () => {
         <div className="footer-logo">
           <img src={Logo} alt="crosscheck" />
           <ul>
-            <li>HOME</li>
             <li>HOME</li>
             <li>ABOUT</li>
             <li>COVERAGE</li>
@@ -215,14 +271,24 @@ const LandingPage = () => {
 export default LandingPage;
 
 const Footer = styled.div`
+  @media only screen and (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    background: #001538 0% 0% no-repeat padding-box;
+  }
   width: 100%;
-  height: 350px;
+  /* height: 350px; */
   background: #173049 0% 0% no-repeat padding-box;
   .bottom-content {
     display: flex;
     justify-content: space-between;
     padding-left: 30px;
     padding-right: 30px;
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+    }
     p {
       color: grey;
       font-size: 12px;
@@ -230,6 +296,7 @@ const Footer = styled.div`
     ul {
       display: flex;
       list-style-type: none;
+
       li {
         margin-right: 7px;
         color: grey;
@@ -245,6 +312,11 @@ const Footer = styled.div`
     padding-top: 40px;
     padding-bottom: 30px;
     border-bottom: 1px solid grey;
+    @media (max-width: 400px) {
+      display: block;
+      flex-direction: column;
+      padding-top: 0px;
+    }
     .email {
       display: flex;
       img {
@@ -256,23 +328,48 @@ const Footer = styled.div`
       .text {
         color: grey;
         font-size: 12px;
+        @media (max-width: 400px) {
+          font-size: 16px;
+        }
       }
     }
   }
   .footer-logo {
-    width: 100%;
+    /* width: 100%; */
     padding-top: 60px;
     display: flex;
     flex-direction: space-between;
     padding-left: 60px;
+    @media (max-width: 400px) {
+      padding-left: 15px;
+      display: flex;
+      /* align-items: flex-start; */
+
+      flex-direction: column;
+    }
+    img {
+      @media (max-width: 400px) {
+        width: 150px;
+        height: 30px;
+      }
+    }
     ul {
       margin-left: 250px;
       list-style-type: none;
       display: flex;
+      @media (max-width: 400px) {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0px;
+        padding: 0 !important;
+      }
       li {
         margin-right: 15px;
         color: grey;
         font-size: 12px;
+        @media (max-width: 400px) {
+          margin-bottom: 20px;
+        }
       }
     }
   }
@@ -286,6 +383,11 @@ const Cover = styled.div`
   .cover {
     display: flex;
     justify-content: center;
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     h2 {
       color: #0092e0;
       font-size: 42px;
@@ -294,6 +396,9 @@ const Cover = styled.div`
     }
     .count {
       padding-right: 250px;
+      @media (max-width: 400px) {
+        padding-right: 0px;
+      }
     }
   }
 `;
@@ -366,7 +471,16 @@ const Blocks = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
+  @media (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .blocks {
+    @media (max-width: 400px) {
+      width: 100%;
+      margin-bottom: 40px;
+    }
     width: 33.33%;
     display: flex;
     flex-direction: column;
@@ -392,6 +506,9 @@ const Div = styled.div`
     width: 50%;
     text-align: center;
     color: #676f79;
+    @media (max-width: 400px) {
+      width: 100%;
+    }
   }
 `;
 
@@ -401,16 +518,76 @@ const About = styled.div`
   width: 80%;
   align-items: center;
   margin: 0 auto;
+  margin-top: 50px;
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+  .mobile-about {
+    display: none;
+    h3 {
+      color: #0092e0;
+      margin: 0px 0px 15px 0px;
+    }
+    span {
+      text-align: center;
+      padding-left: 3px;
+      padding-right: 9px;
+    }
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+  }
+  h2 {
+    display: none;
+    @media (max-width: 400px) {
+      display: block;
+      font-size: 30px;
+      font-weight: bolder;
+    }
+  }
+  @media (max-width: 400px) {
+    margin-left: 0px;
+    margin-top: 30px;
+  }
+  h1 {
+    @media (max-width: 400px) {
+      display: none;
+    }
+  }
+  img {
+    width: 700px;
+    height: 500px;
+    @media (max-width: 500px) {
+      width: 300px;
+      height: 250px;
+    }
+  }
   p {
     color: #676f79;
+    @media (max-width: 400px) {
+      display: none;
+    }
   }
   .tabs {
     display: flex;
     justify-content: space-between;
     width: 70%;
+    @media (max-width: 400px) {
+      display: none;
+    }
+
     h3 {
       letter-spacing: 0.6px;
       color: #173049;
+      cursor: pointer;
+
+      &:nth-child(2) {
+        color: #0092e0;
+        border-bottom: 4px solid #0092e0;
+      }
     }
   }
   p {
@@ -420,20 +597,50 @@ const About = styled.div`
 `;
 
 const FirstSection = styled.div`
+  @media (max-width: 400px) {
+    min-width: 60%;
+  }
   width: 100%;
   background: #0092e0;
-  height: 500px;
   background: transparent linear-gradient(180deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #00000029;
 `;
 
 const NavBar = styled.nav`
+  @media (max-width: 500px) {
+    padding: 0px 3px 0px 3px;
+    display: flex;
+    justify-content: space-between;
+    /* max-width: 380px%; */
+  }
   display: flex;
   padding-left: 90px;
   align-items: center;
-
+  /* position: fixed; */
+  /* width: 100%; */
+  .menu-icon {
+    display: none;
+    @media (max-width: 400px) {
+      display: block;
+      /* float: right; */
+      color: white;
+      font-size: 28px;
+    }
+  }
+  img {
+    width: 150px;
+    height: 30px;
+    @media (max-width: 400px) {
+      /* float: left; */
+      width: 100px;
+      height: 25px;
+    }
+  }
   .navs {
+    @media only screen and (max-width: 400px) {
+      display: none;
+    }
     ul {
       display: flex;
       padding-left: 180px;
@@ -442,9 +649,10 @@ const NavBar = styled.nav`
       button {
         margin-top: -5px;
         background: #ff0000;
-        border-radius: 2px;
+        border-radius: 3px;
         color: white;
         outline: none;
+        cursor: pointer;
         border: 1px solid #ff0000;
         padding: 10px 20px 7px 20px;
       }
@@ -458,18 +666,37 @@ const NavBar = styled.nav`
 `;
 
 const Main = styled.main`
+  @media (max-width: 400px) {
+    padding-top: 20px;
+  }
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  h1 {
+    &:nth-child(1) {
+      font-size: 3em;
+      margin: 0 !important;
+    }
+  }
 
   .register {
     width: 100%;
     display: flex;
+    @media (max-width: 500px) {
+      display: flex;
+      justify-content: center;
+    }
 
     button {
       font-size: 18px;
+      outline: none;
       &:nth-child(1) {
+        @media (max-width: 500px) {
+          margin-right: 0;
+        }
         background: white;
         color: #0092e0;
         outline: none;
@@ -485,6 +712,9 @@ const Main = styled.main`
         }
       }
       &:nth-child(2) {
+        @media (max-width: 500px) {
+          display: none;
+        }
         border: 1px solid white;
         color: white;
         background: none;
@@ -501,13 +731,56 @@ const Main = styled.main`
 
   img {
     height: 68%;
+    @media (max-width: 400px) {
+      display: none;
+    }
   }
   .intro-text {
+    @media (max-width: 400px) {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-left: 0px;
+    }
     color: white;
     width: 38%;
-    padding-left: 0px;
+    padding-left: 65px;
+    h2 {
+      display: none;
+      @media (max-width: 400px) {
+        display: block;
+        color: #66c8ed;
+        font-weight: lighter;
+        font-size: 30px;
+        text-align: center;
+      }
+    }
+    h1 {
+      /* font-family: "Quicksand"; */
+      @media (max-width: 400px) {
+        display: none;
+      }
+      color: #66c8ed;
+      font-weight: lighter;
+      font-size: 42px;
+      .here {
+        color: white;
+        cursor: pointer;
+        display: inline;
+        font-weight: lighter;
+      }
+    }
     p {
       font-size: 20px;
+      text-align: left;
+      font: normal normal 400 20px/24px Segoe UI;
+      letter-spacing: 0px;
+      color: #ffffff;
+      @media (max-width: 500px) {
+        text-align: center;
+      }
     }
   }
 `;

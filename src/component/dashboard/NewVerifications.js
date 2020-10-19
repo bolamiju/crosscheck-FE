@@ -3,7 +3,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import FlutterWave from "./UseFlutterwave";
 import "./ver.css";
 import styled from "styled-components";
 import Switch from "react-switch";
@@ -26,6 +25,8 @@ import uparrow from "../../asset/format.svg";
 import documentAttach from "../../asset/attach.svg";
 import download from "../../asset/download.svg";
 
+import { PaystackButton } from "react-paystack";
+
 const NewVerifications = () => {
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
@@ -33,6 +34,7 @@ const NewVerifications = () => {
   const [hideTable, setHideTable] = useState(false);
 
   const [input, setInput] = useState("");
+  const [pay, setPay] = useState(false);
 
   const [certImage, setCertImage] = useState(undefined);
   const [selectedInst, setSelectedInst] = useState({});
@@ -63,6 +65,8 @@ const NewVerifications = () => {
     },
 
     onSubmit: async (values, status) => {
+      console.log("submit......", values);
+
       for (var propName in values) {
         if (
           values[propName] === null ||
@@ -107,33 +111,36 @@ const NewVerifications = () => {
       classification: Yup.string().required("classification is required"),
       enrollmentStatus: Yup.bool().oneOf([true, false]),
 
-      admissionYear: Yup.string().when("enrollmentStatus", {
-        is: false,
-        then: Yup.string().required("Please enter admission year"),
-      }),
-      graduationYear: Yup.string().when("enrollmentStatus", {
-        is: false,
-        then: Yup.string().required("Please enter graduation year"),
-      }),
+      // admissionYear: Yup.string().when("enrollmentStatus", {
+      //   is: false,
+      //   then: Yup.string().required("Please enter admission year"),
+      // }),
+      // graduationYear: Yup.string().when("enrollmentStatus", {
+      //   is: false,
+      //   then: Yup.string().required("Please enter graduation year"),
+      // }),
     }),
   });
-  // const handleChange = (e) => {
-  //   console.log(e.target.value);
-  //   setFirstName(e.target.value);
-  // };
-
-  // function onChange(checked) {
-  //   console.log(`switch to ${checked}`);
-  // }
-
-  // const handleCheck = (checked) => {
-  //   setEnrollmentStatus(!enrollmentStatus);
-  //   console.log("clicked", checked);
-  // };
 
   const submitRequest = (status) => {
     console.log("submitting req...");
-    formik.handleSubmit(status);
+    formik.handleSubmit("paid");
+  };
+  const componentProps = {
+    email: "tolaked@yahoo.com",
+    amount: 100,
+    metadata: {
+      name: "Tola",
+      phone: "080932215257",
+    },
+    publicKey: "pk_test_459249dba27b1d3d5b6e12bce222f62c95accae9",
+    text: "Pay Now",
+    onSuccess: () => {
+      console.log("paying");
+      return submitRequest("paid");
+      // alert("Verification request submitted!!");
+    },
+    onClose: () => {},
   };
 
   function handleInputChange(e) {
@@ -147,7 +154,6 @@ const NewVerifications = () => {
   );
   useEffect(() => {
     dispatch(getAllInstitutions());
-    console.log("mounted");
   }, [dispatch]);
 
   const handleQualificationTab = () => {
@@ -160,25 +166,32 @@ const NewVerifications = () => {
       toast.error("please fill required fields");
       return;
     }
+    let presentYear = new Date().getFullYear();
+    let DOB = Number(formik.values.dateOfBirth.substr(0, 4));
+    let age = presentYear - DOB;
+    console.log(age < 15);
+    if (age < 15) {
+      return toast.error("Age cannot be less than 17");
+    }
     setActiveTab("qualification-details");
+    setPay(false);
   };
 
   const handleDocumentTab = () => {
-    if (
-      formik.values.course.length === 0 ||
-      formik.values.qualification.length === 0 ||
-      formik.values.classification.length === 0 ||
-      formik.values.admissionYear.length === 0 ||
-      formik.values.graduationYear.length === 0 ||
-      formik.values.studentId.length === 0
-    ) {
-      toast.error("please fill required fields");
-      return;
-    }
+    // if (
+    //   formik.values.course.length === 0 ||
+    //   formik.values.qualification.length === 0 ||
+    //   formik.values.classification.length === 0 ||
+    //   formik.values.admissionYear.length === 0 ||
+    //   formik.values.graduationYear.length === 0 ||
+    //   formik.values.studentId.length === 0
+    // ) {
+    //   toast.error("please fill required fields");
+    //   return;
+    // }
     setActiveTab("documents");
+    setPay(true);
   };
-  console.log("filtered", filteredItems);
-  console.log("input", input);
 
   return (
     <div>
@@ -331,7 +344,10 @@ const NewVerifications = () => {
               <div className="tabs">
                 <ul>
                   <li
-                    onClick={() => setActiveTab("individual-details")}
+                    onClick={() => {
+                      setActiveTab("individual-details");
+                      setPay(false);
+                    }}
                     className={
                       activeTab === "individual-details" ? "activeTab" : ""
                     }
@@ -490,13 +506,19 @@ const NewVerifications = () => {
                       formik.values.firstName.length === 0 ||
                       formik.values.lastName.length === 0 ||
                       formik.values.middleName.length === 0 ||
-                      formik.values.dateOfBirth.length === 0
+                      formik.values.dateOfBirth.length === 0 ||
+                      new Date().getFullYear() -
+                        Number(formik.values.dateOfBirth.substr(0, 4)) <
+                        17
                     }
                     className={
                       formik.values.firstName.length === 0 ||
                       formik.values.lastName.length === 0 ||
                       formik.values.middleName.length === 0 ||
-                      formik.values.dateOfBirth.length === 0
+                      formik.values.dateOfBirth.length === 0 ||
+                      new Date().getFullYear() -
+                        Number(formik.values.dateOfBirth.substr(0, 4)) <
+                        17
                         ? "btn notallowed"
                         : "btn"
                     }
@@ -759,7 +781,10 @@ const NewVerifications = () => {
                         : "btn"
                     }
                     type="submmit"
-                    onClick={() => setActiveTab("documents")}
+                    onClick={() => {
+                      setActiveTab("documents");
+                      setPay(true);
+                    }}
                   >
                     Next
                     <img src={arrow} alt="right" />
@@ -804,22 +829,10 @@ const NewVerifications = () => {
                       </div>
                     </Document>
                   </UploadSection>
-                  {/* <button
-                    type="submit"
-                    onClick={formik.handleSubmit}
-                    className="btn"
-                  > */}
-                  <FlutterWave
-                    submitRequest={submitRequest}
-                    type="submit"
-                    // onClick={formik.handleSubmit}
-                    className="btn"
-                    amount={selectedInst.amount}
-                  />
-                  {/* </button> */}
                 </FormDiv>
               )}
             </form>
+            {pay && <PaystackButton {...componentProps} className="btn" />}
           </FormContainer>
         </RequisitionBody>
       </Layout>
@@ -1007,6 +1020,25 @@ const FormContainer = styled.div`
   overflow-x: hidden;
   margin-bottom: 10px;
   padding-bottom: 20px;
+  .btn {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 80px;
+    color: white;
+    margin-right: 20px;
+    background: #0092e0 0% 0% no-repeat padding-box !important;
+    border-radius: 10px;
+    opacity: 1;
+    height: 30px;
+    outline: none;
+    border-color: #0092e0;
+  }
+  .notallowed {
+    cursor: not-allowed;
+  }
   .tabs {
     width: 100%;
     height: 35px;
@@ -1048,7 +1080,7 @@ const FormDiv = styled.div`
     width: 80px;
     color: white;
     margin-right: 20px;
-    background: #0092e0 0% 0% no-repeat padding-box;
+    background: #0092e0 0% 0% no-repeat padding-box !important;
     border-radius: 10px;
     opacity: 1;
     height: 30px;

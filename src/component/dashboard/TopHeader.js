@@ -6,7 +6,6 @@ import Avatar from "../../asset/Avatar.png";
 
 function TopHeader() {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
   return (
     <HeadContainer className="top-header">
       <h5>search bar</h5>
