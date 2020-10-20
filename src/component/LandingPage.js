@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Carousel from "react-elastic-carousel";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
@@ -16,6 +17,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LandingPage = () => {
+  const style = {
+    textAlign: "center",
+    background: "teal",
+    padding: "200px 0",
+    fontSize: "30px",
+  };
   const [show, setShow] = useState(false);
   const handleMenuIcon = () => {
     setShow(!show);
@@ -186,7 +193,7 @@ const LandingPage = () => {
         </div>
       </Blocks>
       <Testimonies>
-        <h2>What our people say abouut us</h2>
+        <h2>What people say about us</h2>
         <p>
           We are quite fond of the people and organizations we serve, here's
           what they have to say about us.
@@ -204,7 +211,7 @@ const LandingPage = () => {
               <p className="role">CTO Herculanum</p>
             </div>
           </div>
-          {/* <div className="testimony">
+          <div className="testimony">
             <p>
               {" "}
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -227,8 +234,48 @@ const LandingPage = () => {
               <p>Bertha Johnson</p>
               <p className="role">Applicant</p>
             </div>
-          </div> */}
+          </div>
         </div>
+
+        {/* MOBILE TESTIMONIES */}
+        <Carousel itemsToShow={1} className="carousels">
+          <div className="testimony">
+            <p>
+              {" "}
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt omnis iste natus.
+            </p>
+            <div className="profile">
+              <img src={Avatar} alt="avatar" />
+              <p>Bertha Johnson</p>
+              <p className="role">Applicant</p>
+            </div>
+          </div>
+          <div className="testimony">
+            <p>
+              {" "}
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt omnis iste natus.
+            </p>
+            <div className="profile">
+              <img src={Avatar} alt="avatar" />
+              <p>Bertha Johnson</p>
+              <p className="role">Applicant</p>
+            </div>
+          </div>
+          <div className="testimony">
+            <p>
+              {" "}
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt omnis iste natus.
+            </p>
+            <div className="profile">
+              <img src={Avatar} alt="avatar" />
+              <p>Bertha Johnson</p>
+              <p className="role">Applicant</p>
+            </div>
+          </div>
+        </Carousel>
       </Testimonies>
       <Cover>
         <h2>We Cover Over</h2>
@@ -437,6 +484,9 @@ const Testimonies = styled.div`
   padding-top: 40px;
   background: transparent linear-gradient(308deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
+  @media (max-width: 400px) {
+    padding-bottom: 40px;
+  }
   p {
     /* font: normal normal 300 16px/29px Montserrat; */
     width: 40%;
@@ -444,10 +494,57 @@ const Testimonies = styled.div`
     letter-spacing: 0px;
     color: #ffffff;
   }
+  .carousels {
+    display: none;
+    @media (max-width: 400px) {
+      display: flex;
+      justify-content: space-between;
+      .testimony {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 120px;
+        background: #ffffff 0% 0% no-repeat padding-box;
+        border-radius: 8px;
+        margin-right: 10px;
+        .profile {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          bottom: -60px;
+          .role {
+            color: #676f79;
+          }
+          p {
+            width: 100%;
+            color: white;
+          }
+          img {
+            width: 70px;
+            height: 70px;
+          }
+        }
+        p {
+          letter-spacing: 0px;
+          color: #676f79;
+          width: 90%;
+          text-align: center;
+          margin: 0;
+        }
+      }
+    }
+  }
   .testimonies {
     display: flex;
     justify-content: space-between;
     width: 90%;
+    @media (max-width: 400px) {
+      display: none;
+    }
 
     .testimony {
       width: 300px;
