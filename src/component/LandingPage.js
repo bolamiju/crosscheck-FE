@@ -493,6 +493,12 @@ const Testimonies = styled.div`
     @media (max-width: 400px) {
       display: flex;
       justify-content: space-between;
+      .hVmIQZ,
+      .eMUgLX {
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 50% !important;
+      }
       .testimony {
         width: 300px;
         display: flex;
