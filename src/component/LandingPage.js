@@ -495,7 +495,7 @@ const Testimonies = styled.div`
       .hVmIQZ,
       .eMUgLX {
         width: 1rem !important;
-        height: 1rem !important;
+        height: 2rem !important;
         border-radius: 50% !important;
       }
       .testimony {
