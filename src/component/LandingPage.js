@@ -17,12 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LandingPage = () => {
-  const style = {
-    textAlign: "center",
-    background: "teal",
-    padding: "200px 0",
-    fontSize: "30px",
-  };
   const [show, setShow] = useState(false);
   const handleMenuIcon = () => {
     setShow(!show);
