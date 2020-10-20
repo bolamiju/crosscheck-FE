@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
@@ -13,12 +13,13 @@ import service from "../asset/select_service.svg";
 import pay from "../asset/pay_send.svg";
 import register from "../asset/register_login.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  //  faTimes
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LandingPage = () => {
+  const [show, setShow] = useState(false);
+  const handleMenuIcon = () => {
+    setShow(!show);
+  };
   return (
     <div>
       <FirstSection>
@@ -36,8 +37,31 @@ const LandingPage = () => {
               <button>LOGIN</button>
             </ul>
           </div>
-          <FontAwesomeIcon icon={faBars} className="menu-icon" />
+
+          {!show ? (
+            <FontAwesomeIcon
+              icon={faBars}
+              className="menu-icon"
+              onClick={handleMenuIcon}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="menu-icon"
+              onClick={handleMenuIcon}
+            />
+          )}
         </NavBar>
+        <div className={show ? "hide-show" : "hide"}>
+          <ul>
+            <li>Home</li>
+            <li>Coverage</li>
+            <li>About Us</li>
+            <li>How it works</li>
+            <li>Contact</li>
+            {/* <button>LOGIN</button> */}
+          </ul>
+        </div>
         <Main>
           <div className="intro-text">
             <h1>
@@ -605,6 +629,27 @@ const FirstSection = styled.div`
   background: transparent linear-gradient(180deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #00000029;
+  .hide-show {
+    display: none;
+    @media (max-width: 400px) {
+      display: flex;
+      width: 80%;
+      ul {
+        width: 100%;
+        list-style-type: none;
+        li {
+          width: 100%;
+          color: #eceff3;
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+          border-bottom: 1px solid #333;
+        }
+      }
+    }
+  }
+  .hide {
+    display: none;
+  }
 `;
 
 const NavBar = styled.nav`
@@ -637,10 +682,12 @@ const NavBar = styled.nav`
       height: 25px;
     }
   }
+
   .navs {
     @media only screen and (max-width: 400px) {
       display: none;
     }
+
     ul {
       display: flex;
       padding-left: 180px;
