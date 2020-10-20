@@ -495,8 +495,8 @@ const Testimonies = styled.div`
       justify-content: space-between;
       .hVmIQZ,
       .eMUgLX {
-        width: 2px !important;
-        height: 5px !important;
+        width: 1rem !important;
+        height: 1rem !important;
         border-radius: 50% !important;
       }
       .testimony {
