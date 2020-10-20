@@ -482,7 +482,6 @@ const Testimonies = styled.div`
     padding-bottom: 40px;
   }
   p {
-    /* font: normal normal 300 16px/29px Montserrat; */
     width: 40%;
     text-align: center;
     letter-spacing: 0px;
