@@ -93,20 +93,13 @@ function DashboardContent() {
           <div className="req-trans">
             <img src={Institution} alt="select a sch" />
 
-            <div>
+            <div className="paragraph">
               <p>Select an institution</p>
               <p>Request transcript from schools</p>
             </div>
           </div>
           <div className="selects">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingLeft: "20px",
-                width: "46%",
-              }}
-            >
+            <div className="country-select">
               <label style={{ paddingLeft: "5px" }}>Country</label>
               <CountryDropdown
                 style={{
@@ -118,15 +111,7 @@ function DashboardContent() {
                 }}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingRight: "20px",
-                paddingLeft: "20px",
-                width: "48%",
-              }}
-            >
+            <div className="sch-select">
               <label style={{ paddingLeft: "5px" }}>Select Institution</label>
               <input
                 type="text"
@@ -235,6 +220,10 @@ const CardsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  @media (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+  }
   .transcript-card {
     display: block;
     height: 98px;
@@ -258,6 +247,30 @@ const SelectSch = styled.div`
     display: flex;
     margin-top: 25px;
     width: 100%;
+    .sch-select {
+      display: flex;
+      flex-direction: column;
+      padding-right: 20px;
+      padding-left: 20px;
+      width: 48%;
+      @media (max-width: 400px) {
+        width: 86%;
+      }
+    }
+    .country-select {
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      width: 46%;
+      @media (max-width: 400px) {
+        width: 90%;
+        margin-bottom: 15px;
+      }
+    }
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
   .req-trans {
     display: flex;
@@ -265,6 +278,15 @@ const SelectSch = styled.div`
     padding-left: 20px;
     justify-content: space-between;
     margin-top: 10px;
+    @media (max-width: 400px) {
+      width: 100%;
+      padding-left: 10px;
+    }
+    .paragraph {
+      @media (max-width: 400px) {
+        padding-right: 20px;
+      }
+    }
 
     p {
       &:nth-child(1) {
@@ -295,6 +317,9 @@ const Card = styled.div`
   border-radius: 7px;
   height: 100px;
   opacity: 3;
+  @media (max-width: 400px) {
+    margin-bottom: 20px;
+  }
   .total-verification {
     height: 30%;
     background: #ef0a0a;

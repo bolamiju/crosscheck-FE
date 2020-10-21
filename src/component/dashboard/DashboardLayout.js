@@ -21,4 +21,7 @@ const Main = styled.main`
   height: calc(100% - 70px);
   bottom: 0;
   width: calc(100% - 230px);
+  @media (max-width: 400px) {
+    width: 100%;
+  }
 `;

@@ -61,6 +61,9 @@ const Container = styled.div`
   height: 100vh;
   width: 230px;
   background-color: #0092e0;
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;
 
 const LogoSection = styled.div`
