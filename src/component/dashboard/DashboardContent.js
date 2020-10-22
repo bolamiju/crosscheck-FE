@@ -115,14 +115,7 @@ function DashboardContent() {
               <label style={{ paddingLeft: "5px" }}>Select Institution</label>
               <input
                 type="text"
-                style={{
-                  height: "30px",
-                  border: "2px solid #e2e2e2",
-                  outline: "none",
-                  width: "100%",
-                  borderRadius: "14px",
-                  paddingLeft: "5px",
-                }}
+                className="schl-input"
                 onChange={handleInputChange}
                 value={input}
                 name="input"
@@ -133,8 +126,8 @@ function DashboardContent() {
           {filteredItems.length > 0 && input.length > 0 && (
             <div className="new-table">
               <table
-                cellspacing="0"
-                cellpadding="0"
+                cellSpacing="0"
+                cellPadding="0"
                 border="0"
                 className={hideTable ? "hide-table" : ""}
               >
@@ -148,14 +141,14 @@ function DashboardContent() {
                 </thead>
                 <tbody>
                   {filteredItems.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)}>
-                      <th class="mobile-header">Number</th>
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                      <th className="mobile-header">Number</th>
                       <td>{ite.name}</td>
-                      <th class="mobile-header">Market rate</th>
+                      <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
-                      <th class="mobile-header">Weight</th>
+                      <th className="mobile-header">Weight</th>
                       <td>{ite.category}</td>
-                      <th class="mobile-header">Value</th>
+                      <th className="mobile-header">Value</th>
                       <td>{ite.amount}</td>
                     </tr>
                     // <tr className="space"></tr>
@@ -253,6 +246,17 @@ const SelectSch = styled.div`
       padding-right: 20px;
       padding-left: 20px;
       width: 48%;
+      .schl-input {
+        height: 30px;
+        border: 2px solid #e2e2e2;
+        outline: none;
+        width: 100%;
+        border-radius: 14px;
+        padding-left: 5px;
+        @media screen and (max-width: 400px) {
+          font-size: 16px;
+        }
+      }
       @media (max-width: 400px) {
         width: 86%;
       }
