@@ -108,6 +108,7 @@ function DashboardContent() {
                   outline: "none",
                   width: "100%",
                   borderRadius: "14px",
+                  fontSize: "16px",
                 }}
               />
             </div>
