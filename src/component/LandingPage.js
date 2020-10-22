@@ -13,28 +13,60 @@ import enquiry from "../asset/enter_enquiry_dets.svg";
 import service from "../asset/select_service.svg";
 import pay from "../asset/pay_send.svg";
 import register from "../asset/register_login.svg";
+import whitelogo from "../asset/whitelogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
+  const [navbar, setNavbar] = useState(false);
   const handleMenuIcon = () => {
     setShow(!show);
   };
+
+  const changeBackground = () => {
+    if (window.scrollY >= 420) {
+      setNavbar(true);
+      console.log("navbar");
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeBackground);
   return (
     <div>
       <FirstSection>
-        <NavBar>
+        <NavBar
+          style={{
+            position: `${navbar ? "fixed" : ""}`,
+            width: "100%",
+            background: `${navbar ? "white" : ""}`,
+            color: `${navbar ? "blue" : "white"}`,
+          }}
+        >
           <div>
-            <img className="crosschecklogo" src={Logo} alt="" />
+            <img
+              className="crosschecklogo"
+              src={navbar ? Logo : whitelogo}
+              alt=""
+            />
           </div>
           <div className="navs">
             <ul>
-              <li>Home</li>
-              <li>Coverage</li>
-              <li>About Us</li>
-              <li>How it works</li>
-              <li>Contact</li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
+                Coverage
+              </li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
+                About Us
+              </li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
+                How it works
+              </li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
+                Contact
+              </li>
               <button>LOGIN</button>
             </ul>
           </div>
@@ -749,6 +781,11 @@ const FirstSection = styled.div`
 `;
 
 const NavBar = styled.nav`
+  /* .show {
+    position: fixed !important;
+    background: white !important;
+    color: #0092e0 !important;
+  } */
   @media (max-width: 500px) {
     padding: 0px 3px 0px 3px;
     display: flex;
