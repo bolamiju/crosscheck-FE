@@ -11,7 +11,7 @@ import history from "../../asset/history.svg";
 
 function Sidebar() {
   return (
-    <Container>
+    <Container className="hideshow">
       <LogoSection>
         <img
           src={Logo}
@@ -61,9 +61,8 @@ const Container = styled.div`
   height: 100vh;
   width: 230px;
   background-color: #0092e0;
-  @media (max-width: 400px) {
-    display: none;
-  }
+  position: fixed;
+  z-index: 2;
 `;
 
 const LogoSection = styled.div`

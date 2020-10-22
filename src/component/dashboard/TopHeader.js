@@ -3,9 +3,14 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function TopHeader() {
+function TopHeader({ setShow, show }) {
   const { user } = useSelector((state) => state.user);
+  const handleMenuIcon = () => {
+    setShow(!show);
+  };
   return (
     <HeadContainer className="top-header">
       <h5>search bar</h5>
@@ -27,6 +32,19 @@ function TopHeader() {
           </div>
         </div>
       </div>
+      {!show ? (
+        <FontAwesomeIcon
+          icon={faBars}
+          className="menu-icon"
+          onClick={handleMenuIcon}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="menu-icon"
+          onClick={handleMenuIcon}
+        />
+      )}
     </HeadContainer>
   );
 }
@@ -42,6 +60,18 @@ const HeadContainer = styled.div`
   border-bottom: 1px solid #eaeaea;
   opacity: 1;
   height: 50px;
+  @media screen and (max-width: 400px) {
+    padding: 10px 40px 10px 40px;
+  }
+  .menu-icon {
+    display: none;
+    @media (max-width: 400px) {
+      display: block;
+      /* padding-right: 3px; */
+      color: #171725;
+      font-size: 28px;
+    }
+  }
 
   h5 {
     letter-spacing: 0.12px;
@@ -56,6 +86,9 @@ const HeadContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
   }
   .bell {
     width: 0.8em !important;

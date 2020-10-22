@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import TopHeader from "./TopHeader";
 
-const DashHeader = () => {
+const DashHeader = ({ setShow, show }) => {
   return (
     <Header className="dash-header">
-      <TopHeader />
+      <TopHeader show={show} setShow={setShow} />
     </Header>
   );
 };
