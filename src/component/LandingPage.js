@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Carousel from "react-elastic-carousel";
+// import Carousel from "react-elastic-carousel";
 import {Link} from 'react-router-dom'
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
@@ -263,7 +263,7 @@ const LandingPage = () => {
         </div>
 
         {/* MOBILE TESTIMONIES */}
-        <Carousel itemsToShow={1} className="carousels">
+        {/* <Carousel itemsToShow={1} className="carousels"> */}
           <div className="testimony">
             <p>
               {" "}
@@ -300,7 +300,7 @@ const LandingPage = () => {
               <p className="role">Applicant</p>
             </div>
           </div>
-        </Carousel>
+        {/* </Carousel> */}
       </Testimonies>
       <Cover>
         <h2>We Cover Over</h2>
