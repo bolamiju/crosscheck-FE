@@ -273,7 +273,7 @@ const LandingPage = () => {
             </p>
             <div className="profile">
               <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
+              <p>Benedict Johnson</p>
               <p className="role">Applicant</p>
             </div>
           </div>
@@ -563,7 +563,8 @@ const Testimonies = styled.div`
           align-items: center;
           position: absolute;
           @media(max-width:400px){
-            margin-bottom:-70px
+           position:relative;
+           top: 60px;
           }
           .role {
             color: #676f79;
@@ -583,6 +584,9 @@ const Testimonies = styled.div`
           width: 90%;
           text-align: center;
           margin: 0;
+          @media(max-width:400px){
+            margin-bottom: -30px;
+          }
         }
       }
     }
