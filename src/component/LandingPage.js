@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Carousel from "react-elastic-carousel";
+import {Link} from 'react-router-dom'
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
 import Mail from "../asset/mail.svg";
 import phone from "../asset/phone.svg";
-import Address from "../asset/Address.svg";
 import Computer from "../asset/Computer.png";
 import Tie from "../asset/manintie.png";
 import cash from "../asset/cash.svg";
@@ -27,7 +27,6 @@ const LandingPage = () => {
   const changeBackground = () => {
     if (window.scrollY >= 420) {
       setNavbar(true);
-      console.log("navbar");
     } else {
       setNavbar(false);
     }
@@ -40,7 +39,7 @@ const LandingPage = () => {
         <NavBar
           style={{
             position: `${navbar ? "fixed" : ""}`,
-            width: "100%",
+            width: `${navbar ? "100%" : ""}`,
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
           }}
@@ -67,7 +66,7 @@ const LandingPage = () => {
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
                 Contact
               </li>
-              <button>LOGIN</button>
+              <button><Link className="link-to" to='/'>LOGIN</Link></button>
             </ul>
           </div>
 
@@ -345,14 +344,9 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div className="email">
-            <img src={Address} alt="mail" />
-            <div>
-              <p>Address</p>
-              <p className="text">31 Opebi, Street, Ikeja, Lagos.</p>
-            </div>
-          </div>
+        
         </div>
+        <div className="line"></div>
         <div className="bottom-content">
           <p>© 2020 Crosscheck. All Rights Reserved</p>
           <ul>
@@ -376,6 +370,11 @@ const Footer = styled.div`
   width: 100%;
   /* height: 350px; */
   background: #173049 0% 0% no-repeat padding-box;
+  .line{
+      width:90%;
+      margin:0 auto;
+    border-bottom:1px solid grey
+    }
   .bottom-content {
     display: flex;
     justify-content: space-between;
@@ -402,13 +401,13 @@ const Footer = styled.div`
     }
   }
   .contact {
-    width: 95%;
+    width: 55%;
     display: flex;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     justify-content: space-around;
     padding-top: 40px;
     padding-bottom: 30px;
-    border-bottom: 1px solid grey;
+    margin-left:550px;
     @media (max-width: 400px) {
       display: block;
       flex-direction: column;
@@ -424,7 +423,7 @@ const Footer = styled.div`
       }
       .text {
         color: grey;
-        font-size: 12px;
+        font-size: 16px;
         @media (max-width: 400px) {
           font-size: 16px;
         }
@@ -437,6 +436,7 @@ const Footer = styled.div`
     display: flex;
     flex-direction: space-between;
     padding-left: 60px;
+  
     @media (max-width: 400px) {
       padding-left: 15px;
       display: flex;
@@ -451,7 +451,7 @@ const Footer = styled.div`
       }
     }
     ul {
-      margin-left: 250px;
+      margin-left: 350px;
       list-style-type: none;
       display: flex;
       @media (max-width: 400px) {
@@ -835,6 +835,10 @@ const NavBar = styled.nav`
         cursor: pointer;
         border: 1px solid #ff0000;
         padding: 10px 20px 7px 20px;
+      }
+      .link-to{
+        color:white;
+        text-decoration:none
       }
       li {
         margin-right: 50px;
