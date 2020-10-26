@@ -55,7 +55,7 @@
   opacity: 0;
 }
 
-.navbar {
+/* .navbar {
   width: 100%;
   padding: 10px;
   position: fixed;
@@ -65,4 +65,4 @@
 
 .navbar--hidden {
   top: -50px;
-}
+} */

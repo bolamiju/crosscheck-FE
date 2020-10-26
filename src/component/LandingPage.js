@@ -580,7 +580,7 @@ const Testimonies = styled.div`
             width: 70px;
             height: 70px;
             @media(max-width:400px){
-              margin-bottom:10px
+              /* margin-bottom:10px */
             }
           }
         }
