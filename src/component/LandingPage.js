@@ -564,10 +564,13 @@ const Testimonies = styled.div`
           position: absolute;
           @media(max-width:400px){
            position:relative;
-           top: 60px;
+           top: 50px;
           }
           .role {
             color: #676f79;
+            @media(max-width:400px){
+              margin-top:5px
+            }
           }
           p {
             width: 100%;
@@ -576,6 +579,9 @@ const Testimonies = styled.div`
           img {
             width: 70px;
             height: 70px;
+            @media(max-width:400px){
+              margin-bottom:10px
+            }
           }
         }
         p {
