@@ -564,7 +564,7 @@ const Testimonies = styled.div`
           position: absolute;
           /* margin-bottom: 170px; */
           @media(max-width:400px){
-            margin-bottom:-120px
+            margin-bottom:-160px
           }
           .role {
             color: #676f79;
