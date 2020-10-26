@@ -264,6 +264,7 @@ const LandingPage = () => {
 
         {/* MOBILE TESTIMONIES */}
         {/* <Carousel itemsToShow={1} className="carousels"> */}
+        <div className="carousels">
           <div className="testimony">
             <p>
               {" "}
@@ -276,7 +277,8 @@ const LandingPage = () => {
               <p className="role">Applicant</p>
             </div>
           </div>
-          <div className="testimony">
+          </div>
+          {/* <div className="testimony second">
             <p>
               {" "}
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -288,7 +290,7 @@ const LandingPage = () => {
               <p className="role">Applicant</p>
             </div>
           </div>
-          <div className="testimony">
+          <div className="testimony third">
             <p>
               {" "}
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -299,7 +301,7 @@ const LandingPage = () => {
               <p>Bertha Johnson</p>
               <p className="role">Applicant</p>
             </div>
-          </div>
+          </div> */}
         {/* </Carousel> */}
       </Testimonies>
       <Cover>
@@ -412,6 +414,7 @@ const Footer = styled.div`
       display: block;
       flex-direction: column;
       padding-top: 0px;
+      margin-left:0
     }
     .email {
       display: flex;
@@ -518,6 +521,9 @@ const Testimonies = styled.div`
     text-align: center;
     letter-spacing: 0px;
     color: #ffffff;
+    @media(max-width:400px){
+      width:80%
+    }
   }
   .carousels {
     display: none;
@@ -529,6 +535,16 @@ const Testimonies = styled.div`
         width: 0.2rem !important;
         height: 1rem !important;
         border-radius: 50% !important;
+      }
+      .second{
+        @media(max-width:400px){
+          display:none
+        }
+        .third{
+          @media(max-width:400px){
+            display:none
+          }
+        }
       }
       .testimony {
         width: 300px;
@@ -546,7 +562,10 @@ const Testimonies = styled.div`
           justify-content: center;
           align-items: center;
           position: absolute;
-          bottom: -60px;
+          /* margin-bottom: 170px; */
+          @media(max-width:400px){
+            margin-top:160px
+          }
           .role {
             color: #676f79;
           }
