@@ -108,7 +108,7 @@ const LandingPage = () => {
               service for academic qualifications.
             </p>
             <div className="register">
-              <button>Sign Up Now</button>
+              <button><Link className="reg" to="/register">Sign Up Now</Link></button>
               <button>How it Works</button>
             </div>
           </div>
@@ -353,7 +353,7 @@ const LandingPage = () => {
           <p>© 2020 Crosscheck. All Rights Reserved</p>
           <ul>
             <li>Privacy Policy</li>
-            <li>Terms of Service</li>
+            <li><Link to="/terms" className="termsof"> Terms of Service</Link></li>
           </ul>
         </div>
       </Footer>
@@ -382,6 +382,12 @@ const Footer = styled.div`
     justify-content: space-between;
     padding-left: 30px;
     padding-right: 30px;
+    .termsof{
+      text-decoration:none;
+      color:grey;
+      cursor:pointer
+
+    }
     @media (max-width: 400px) {
       display: flex;
       flex-direction: column-reverse;
@@ -897,6 +903,14 @@ const Main = styled.main`
   .register {
     width: 100%;
     display: flex;
+    .reg{
+      color:#0092e0;
+      text-decoration:none;
+      cursor:pointer;
+      &:hover{
+        color:white
+      }
+    }
     @media (max-width: 500px) {
       display: flex;
       justify-content: center;

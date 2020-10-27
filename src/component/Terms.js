@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -42,7 +43,7 @@ const Terms = () => {
           </div>
           <div className="navs">
             <ul>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}><Link className="home" to="/home">Home</Link></li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
                 Coverage
               </li>
@@ -210,7 +211,11 @@ const NavBar = styled.nav`
     @media only screen and (max-width: 400px) {
       display: none;
     }
-
+.home{
+  color:white;
+  text-decoration:none;
+  cursor:pointer
+}
     ul {
       display: flex;
       padding-left: 300px;
