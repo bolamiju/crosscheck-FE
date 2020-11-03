@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import styled from 'styled-components'
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Logo from "../../asset/CrossCheckLogo.png";
 
 import {
   forgotPassword,
@@ -63,23 +65,23 @@ const ForgotPassword = () => {
             </p>
           </>
         ) : (
-          <>
-            <h3 style={{ textAlign: "center" }}>Password Reset</h3>
+          <Div>
+          <img src={Logo} alt="CrossCheck" style={{width:'200px',height:'40px'}}/>
+            <h3 style={{ textAlign: "center" }}>Having troubles with your password?</h3>
             {loginError.length > 0 && (
               <p style={{ color: "red", textAlign: "center" }}>{loginError}</p>
             )}
-            <p className="email-text">
-              Enter your email address to receive reset link
+            <p className="enter-email">
+            Please enter the email address with which you registered, and we’ll send you an email with further instructions.
             </p>
             <div
               className="password-input fields"
               style={{ marginTop: "10px" }}
             >
-              <label>Enter email</label>
 
               <input
                 type="text"
-                className="input"
+                // className="input"
                 name="email"
                 id="email"
                 value={formik.values.email}
@@ -109,7 +111,7 @@ const ForgotPassword = () => {
               </p>
               <p style={{ color: "#0092e0" }}>Home</p>
             </div>
-          </>
+          </Div>
         )}
       </form>
     </div>
@@ -117,3 +119,25 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
+const Div =styled.div`
+display:flex;
+flex-direction:column;
+align-items:center;
+.enter-email{
+width:80%;
+text-align:center;
+font: normal normal normal 12px Montserrat;
+letter-spacing: 0.4px;
+color: #707070;
+.password-input{
+  input{
+ border: 2px solid #e2e2e2;
+  outline: none;
+  border-radius: 9px;
+  height: 32px;
+  }
+}
+
+}
+`

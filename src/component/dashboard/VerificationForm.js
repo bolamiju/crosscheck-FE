@@ -1,8 +1,9 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import axios from "axios";
-import {  toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from "react-switch";
 import styled from "styled-components";
@@ -13,49 +14,48 @@ import document from "../../asset/document-attach.svg";
 import form from "../../asset/form-line.svg";
 import uparrow from "../../asset/format.svg";
 import documentAttach from "../../asset/attach.svg";
+import cap from "../../asset/graduation-cap.svg";
 import download from "../../asset/download.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
-function VerificationForm({initialValues, updateFormValues}) {
+function VerificationForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
-  const [certImage, setCertImage] = useState(undefined);
+  const [details, setDetails] = useState(true);
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
-  const [schCard,setSchCard] = useState(false)
+  const [schCard, setSchCard] = useState(false);
 
-  const handleInputChange =(e)=> {
-      setInput(e.target.value);
-      setHideTable(false);
-      // console.log(e.target.value);
-    }
-
-  const filteredItems = institutions.filter((item) =>
-  item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
-);
-
-const handleSelected = (institute) => {
-  setSelectedInst(institute);
-  setHideTable(true);
-  setInput(institute.name);
-  setSchCard(true)
-};
-
-
-useEffect(() => {
-  dispatch(getAllInstitutions());
-}, [dispatch]);
-
-  const handleImage = (e) => {
-    setCertImage(e.target.files[0]);
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    setHideTable(false);
+    // console.log(e.target.value);
   };
 
+  const filteredItems = institutions.filter((item) =>
+    item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+  );
+
+  const handleSelected = (institute) => {
+    setSelectedInst(institute);
+    setHideTable(true);
+    setInput(institute.name);
+    setSchCard(true);
+  };
+
+  useEffect(() => {
+    dispatch(getAllInstitutions());
+  }, [dispatch]);
+
+  // const handleImage = (e) => {
+  //   setCertImage(e.target.files[0]);
+  // };
   const formik = useFormik({
     initialValues,
 
@@ -73,38 +73,39 @@ useEffect(() => {
       }
 
       var formData = new FormData();
-      formData.append("certImage", certImage);
-      //   formData.append("institution", selectedInst.name);
-      formData.append("status", status);
+      formData.append("institution", selectedInst.name);
+      formData.append("amount", selectedInst.amount);
       for (var key in values) {
         formData.append(key, values[key]);
       }
-
+      // console.log('form data',formData)
+      for (var pair of formData.entries()) {
+        console.log("awon form", pair[0] + ", " + pair[1]);
+      }
+      console.log("all forms", formData instanceof FormData);
       updateFormValues(formData);
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
-      middleName: Yup.string().required("Middle name is required"),
       dateOfBirth: Yup.string().required("DOB required"),
       studentId: Yup.string().required("studentID is required"),
       course: Yup.string().required("course is required"),
       qualification: Yup.string().required("Qualification is required"),
       classification: Yup.string().required("classification is required"),
       enrollmentStatus: Yup.bool().oneOf([true, false]),
-
-      
     }),
   });
-  const submitRequest = (status) => {
-    console.log("submitting req...");
+  const submitRequest = (e) => {
+    e.preventDefault();
     formik.handleSubmit("paid");
+
+    // updateFormValues(initialValues);
   };
   const handleQualificationTab = () => {
     if (
       formik.values.firstName.length === 0 ||
       formik.values.lastName.length === 0 ||
-      formik.values.middleName.length === 0 ||
       formik.values.dateOfBirth.length === 0
     ) {
       toast.error("please fill required fields");
@@ -138,604 +139,637 @@ useEffect(() => {
   };
 
   return (
-    <>{
-      schCard ? <SelectSch>
-        <p className="institution-details">Institution Details</p>
-        <div className="inst-name"><span>Institution name</span>
-    <span>{ selectedInst.name}</span>
-    <span className="change" onClick={()=>setSchCard(false)}><small>change</small></span>
-        </div>
-        <div className="sch-country"><span>Country</span>
-    <span>{ selectedInst.country}</span></div>
-      </SelectSch> : 
- 
-      <SelectSch>
-        <div className="req-trans">
-          <img src={Institution} alt="select a sch" />
-
+    <SingleCheck
+      style={{
+        paddingBottom: !details ? "20px" : "",
+        marginBottom: !details ? "40px" : "",
+      }}
+    >
+      {schCard && (
+        <SelectCheck
+          onClick={() => {
+            setDetails(!details);
+          }}
+        >
           <div>
-            <p>Select an institute</p>
-            <p style={{ fontSize: "12px" }}>
-              Select preferred institute to conduct verification
-            </p>
+            <img src={cap} alt="graduation cap" />
+            <h3>Education Check - {selectedInst.name}</h3>
           </div>
-        </div>
-        <div className="selects">
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingLeft: "20px",
-              width: "46%",
-            }}
-          >
-            <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
-            <CountryDropdown
-              style={{
-                height: "34px",
-                border: "2px solid #e2e2e2",
-                outline: "none",
-                width: "100%",
-                borderRadius: "14px",
-              }}
-            />
+          <FontAwesomeIcon
+            icon={details ? faCaretDown : faCaretRight}
+            className="arrow"
+          />{" "}
+        </SelectCheck>
+      )}
+      {schCard ? (
+        <SelectSch style={{ display: !details ? "none" : "" }}>
+          <p className="institution-details">Institution Details</p>
+          <div className="inst-name">
+            <span>Institution name</span>
+            <span>{selectedInst.name}</span>
+            <span className="change" onClick={() => setSchCard(false)}>
+              <small>change</small>
+            </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingRight: "20px",
-              paddingLeft: "20px",
-              width: "48%",
-            }}
-          >
-            <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-            <input
-              type="text"
-              style={{
-                height: "30px",
-                border: "2px solid #e2e2e2",
-                outline: "none",
-                width: "100%",
-                borderRadius: "14px",
-                paddingLeft: "5px",
-              }}
-              onChange={handleInputChange}
-              value={input}
-              name="input"
-              placeholder="Search an institute"
-            />
+          <div className="sch-country">
+            <span>Country</span>
+            <span>{selectedInst.country}</span>
           </div>
-        </div>
-        {filteredItems.length > 0 && input.length > 0 && (
-          <div className="new-table">
-            <table
-              cellSpacing="0"
-              cellPadding="0"
-              border="0"
-              className={hideTable ? "hide-table" : ""}
-            >
-              <thead className="table-headers">
-                <tr>
-                  <th>Name</th>
-                  <th>Country</th>
-                  <th>category rate</th>
-                  <th>amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredItems.map((ite) => (
-                  <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                    <th className="mobile-header">Number</th>
-                    <td>{ite.name}</td>
-                    <th className="mobile-header">Market rate</th>
-                    <td>{ite.country}</td>
-                    <th className="mobile-header">Weight</th>
-                    <td>{ite.category}</td>
-                    <th className="mobile-header">Value</th>
-                    <td>{ite.amount}</td>
-                  </tr>
-                  // <tr className="space"></tr>
-                ))}
-              </tbody>
-            </table>
+          {/* <div className="sch-country"><span>Price</span>
+    <span>{ selectedInst.amount}</span></div> */}
+        </SelectSch>
+      ) : (
+        <SelectSch>
+          <div className="req-trans">
+            <img src={Institution} alt="select a sch" />
+
+            <div>
+              <p>Select an institute</p>
+              <p style={{ fontSize: "12px" }}>
+                Select preferred institute to conduct verification
+              </p>
+            </div>
           </div>
-        )}
-      </SelectSch>
-         }
-    <FormContainer>
-      <form>
-        <div className="tabs">
-          <ul>
-            <li
-              onClick={() => {
-                setActiveTab("individual-details");
-                setPay(false);
-              }}
-              className={activeTab === "individual-details" ? "activeTab" : ""}
-            >
-              <img src={account} alt="details" />
-              &nbsp; Individual details
-            </li>
-            <li
-              onClick={handleQualificationTab}
-              className={
-                activeTab === "qualification-details" ? "activeTab" : ""
-              }
-            >
-              <img src={qualifications} alt="details" />
-              &nbsp; Qualification details
-            </li>
-            <li
-              onClick={handleDocumentTab}
-              className={activeTab === "documents" ? "activeTab" : ""}
-            >
-              <img src={document} alt="details" />
-              &nbsp; Documents
-            </li>
-          </ul>
-        </div>
-        {activeTab === "individual-details" && (
-          <FormDiv>
-            <Field>
-              <label>
-                First Name
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className={
-                    formik.touched.firstName && formik.errors.firstName
-                      ? "first-input err"
-                      : "first-input"
-                  }
-                />
-                {formik.touched.firstName && formik.errors.firstName ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.firstName}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Middle Name
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.middleName && formik.errors.middleName
-                      ? "middle-input err"
-                      : "middle-input"
-                  }
-                  name="middleName"
-                  value={formik.values.middleName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.middleName && formik.errors.middleName ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.middleName}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Last Name
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.lastName && formik.errors.lastName
-                      ? "last-input err"
-                      : "last-input"
-                  }
-                  name="lastName"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.lastName && formik.errors.lastName ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.lastName}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Date of Birth
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="date"
-                  className={
-                    formik.touched.dateOfBirth && formik.errors.dateOfBirth
-                      ? "date-input err"
-                      : "date-input"
-                  }
-                  name="dateOfBirth"
-                  value={formik.values.dateOfBirth}
-                  onChange={formik.handleChange}
-                />
-                {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.dateOfBirth}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>Reference ID</label>
-              <input type="text" className="ref-input" />
-            </Field>
-            <p>
-              The reference number will be used to track this case in your
-              internal system if you have one
-            </p>
-            <button
-              disabled={
-                formik.values.firstName.length === 0 ||
-                formik.values.lastName.length === 0 ||
-                formik.values.middleName.length === 0 ||
-                formik.values.dateOfBirth.length === 0 ||
-                new Date().getFullYear() -
-                  Number(formik.values.dateOfBirth.substr(0, 4)) <
-                  17
-              }
-              className={
-                formik.values.firstName.length === 0 ||
-                formik.values.lastName.length === 0 ||
-                formik.values.middleName.length === 0 ||
-                formik.values.dateOfBirth.length === 0 ||
-                new Date().getFullYear() -
-                  Number(formik.values.dateOfBirth.substr(0, 4)) <
-                  17
-                  ? "btn notallowed"
-                  : "btn"
-              }
-              onClick={() => {
-                setActiveTab("qualification-details");
-              }}
-            >
-              Next
-              <img src={arrow} alt="right" />
-            </button>
-          </FormDiv>
-        )}
-        {/* =======QUALIFICATION DETAILS===== */}
-        {activeTab === "qualification-details" && (
-          <FormDiv>
+          <div className="selects">
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
-                paddingLeft: "40px",
-                paddingBottom: "40px",
+                flexDirection: "column",
+                paddingLeft: "20px",
+                width: "46%",
               }}
             >
-              <label>Enrollment status &nbsp; &nbsp;</label>
-              <span>Alumni &nbsp;</span>
-              <Switch
-                checked={formik.values.enrollmentStatus}
-                onChange={(checked, e) => {
-                  formik.setFieldValue("enrollmentStatus", checked);
-                  console.log(checked);
+              <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
+              <CountryDropdown
+                style={{
+                  height: "34px",
+                  border: "2px solid #e2e2e2",
+                  outline: "none",
+                  width: "100%",
+                  borderRadius: "14px",
                 }}
-                value={formik.values.enrollmentStatus}
-                name="enrollmentStatus"
-                onColor="#0092E0"
-                onHandleColor="#2693e6"
-                handleDiameter={28}
-                uncheckedIcon={false}
-                checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                height={20}
-                width={48}
-                className="react-switch"
-                id="material-switch"
               />
-              <span>&nbsp;Current student</span>
             </div>
-            <p>
-              Must be the student ID issued by the institute at the time of
-              study
-            </p>
-            <Field>
-              <label>
-                Student ID
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.studentId && formik.errors.studentId
-                      ? "student-input err"
-                      : "student-input"
-                  }
-                  name="studentId"
-                  value={formik.values.studentId}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.studentId && formik.errors.studentId ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.studentId}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Course
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.course && formik.errors.course
-                      ? "course-input err"
-                      : "course-input"
-                  }
-                  name="course"
-                  value={formik.values.course}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.course && formik.errors.course ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.course}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Qualification
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.qualification && formik.errors.qualification
-                      ? "qualification-input err"
-                      : "qualification-input"
-                  }
-                  name="qualification"
-                  value={formik.values.qualification}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.qualification && formik.errors.qualification ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.qualification}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-
-            <Field>
-              <label>
-                Classificaton
-                <span>*</span>
-              </label>
-              <>
-                <input
-                  type="text"
-                  className={
-                    formik.touched.classification &&
-                    formik.errors.classification
-                      ? "class-input err"
-                      : "class-input"
-                  }
-                  name="classification"
-                  value={formik.values.classification}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.classification &&
-                formik.errors.classification ? (
-                  <div
-                    className="error"
-                    style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                  >
-                    {formik.errors.classification}
-                  </div>
-                ) : null}
-              </>
-            </Field>
-            {!formik.values.enrollmentStatus && (
-              <>
-                <Field>
-                  <label>
-                    Admission Year<span>*</span>
-                  </label>
-                  <>
-                    <input
-                      type="text"
-                      className={
-                        formik.touched.admissionYear &&
-                        formik.errors.admissionYear
-                          ? "admission-input err"
-                          : "admission-input"
-                      }
-                      name="admissionYear"
-                      value={formik.values.admissionYear}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.admissionYear &&
-                    formik.errors.admissionYear ? (
-                      <div
-                        className="error"
-                        style={{
-                          marginLeft: "-620px",
-                          paddingTop: "3px",
-                        }}
-                      >
-                        {formik.errors.admissionYear}
-                      </div>
-                    ) : null}
-                  </>
-                </Field>
-                <Field>
-                  <label>
-                    Graduation Year<span>*</span>
-                  </label>
-                  <>
-                    <input
-                      type="text"
-                      className={
-                        formik.touched.graduationYear &&
-                        formik.errors.graduationYear
-                          ? "graduation-input err"
-                          : "graduation-input"
-                      }
-                      name="graduationYear"
-                      value={formik.values.graduationYear}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.graduationYear &&
-                    formik.errors.graduationYear ? (
-                      <div
-                        className="error"
-                        style={{
-                          marginLeft: "-620px",
-                          paddingTop: "3px",
-                        }}
-                      >
-                        {formik.errors.graduationYear}
-                      </div>
-                    ) : null}
-                  </>
-                </Field>
-              </>
-            )}
-            <p>
-              The reference number will be used to track this case in your
-              internal system if you have one
-            </p>
-            <button
-              disabled={
-                formik.values.course.length === 0 ||
-                formik.values.qualification.length === 0 ||
-                formik.values.classification.length === 0 ||
-                formik.values.admissionYear.length === 0 ||
-                formik.values.graduationYear.length === 0 ||
-                formik.values.studentId.length === 0
-              }
-              className={
-                formik.values.course.length === 0 ||
-                formik.values.qualification.length === 0 ||
-                formik.values.classification.length === 0 ||
-                formik.values.admissionYear.length === 0 ||
-                formik.values.graduationYear.length === 0 ||
-                formik.values.studentId.length === 0
-                  ? "btn notallowed"
-                  : "btn"
-              }
-              type="submmit"
-              onClick={() => {
-                setActiveTab("documents");
-                setPay(true);
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingRight: "20px",
+                paddingLeft: "20px",
+                width: "48%",
               }}
             >
-              Next
-              <img src={arrow} alt="right" />
-            </button>
-          </FormDiv>
-        )}
-        {activeTab === "documents" && (
-          <FormDiv>
-            <Field>
-              <p className="upload-text">
-                Mandatory documents that are required by the institute in order
-                to process a verification are marked with asterik below.
-                <br /> You can also use 'Add another document' to add any
-                further documentation you feel might be useful
+              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
+              <input
+                type="text"
+                style={{
+                  height: "30px",
+                  border: "2px solid #e2e2e2",
+                  outline: "none",
+                  width: "100%",
+                  borderRadius: "14px",
+                  paddingLeft: "5px",
+                }}
+                onChange={handleInputChange}
+                value={input}
+                name="input"
+                placeholder="Search an institute"
+              />
+            </div>
+          </div>
+          {filteredItems.length > 0 && input.length > 0 && (
+            <div className="new-table">
+              <table
+                cellSpacing="0"
+                cellPadding="0"
+                border="0"
+                className={hideTable ? "hide-table" : ""}
+              >
+                <thead className="table-headers">
+                  <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>category rate</th>
+                    <th>amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredItems.map((ite) => (
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                      <th className="mobile-header">Number</th>
+                      <td>{ite.name}</td>
+                      <th className="mobile-header">Market rate</th>
+                      <td>{ite.country}</td>
+                      <th className="mobile-header">Weight</th>
+                      <td>{ite.category}</td>
+                      <th className="mobile-header">Value</th>
+                      <td>{ite.amount}</td>
+                    </tr>
+                    // <tr className="space"></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </SelectSch>
+      )}
+      <FormContainer style={{ display: !details ? "none" : "" }}>
+        <form>
+          <div className="tabs">
+            <ul>
+              <li
+                onClick={() => {
+                  setActiveTab("individual-details");
+                  setPay(false);
+                }}
+                className={
+                  activeTab === "individual-details" ? "activeTab" : ""
+                }
+              >
+                <img src={account} alt="details" />
+                &nbsp; Individual details
+              </li>
+              <li
+                onClick={handleQualificationTab}
+                className={
+                  activeTab === "qualification-details" ? "activeTab" : ""
+                }
+              >
+                <img src={qualifications} alt="details" />
+                &nbsp; Qualification details
+              </li>
+              <li
+                onClick={handleDocumentTab}
+                className={activeTab === "documents" ? "activeTab" : ""}
+              >
+                <img src={document} alt="details" />
+                &nbsp; Documents
+              </li>
+            </ul>
+          </div>
+          {activeTab === "individual-details" && (
+            <FormDiv>
+              <Field>
+                <label>
+                  First Name
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formik.values.firstName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={
+                      formik.touched.firstName && formik.errors.firstName
+                        ? "first-input err"
+                        : "first-input"
+                    }
+                  />
+                  {formik.touched.firstName && formik.errors.firstName ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.firstName}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>Middle Name</label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.middleName && formik.errors.middleName
+                        ? "middle-input err"
+                        : "middle-input"
+                    }
+                    name="middleName"
+                    value={formik.values.middleName}
+                    onChange={formik.handleChange}
+                  />
+                </>
+              </Field>
+
+              <Field>
+                <label>
+                  Last Name
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.lastName && formik.errors.lastName
+                        ? "last-input err"
+                        : "last-input"
+                    }
+                    name="lastName"
+                    value={formik.values.lastName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.lastName && formik.errors.lastName ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.lastName}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>
+                  Date of Birth
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="date"
+                    className={
+                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
+                        ? "date-input err"
+                        : "date-input"
+                    }
+                    name="dateOfBirth"
+                    value={formik.values.dateOfBirth}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.dateOfBirth}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>Reference ID</label>
+                <input type="text" className="ref-input" />
+              </Field>
+              <p>
+                The reference number will be used to track this case in your
+                internal system if you have one
               </p>
-            </Field>
-            <UploadSection>
-              <Document>
-                <div className="consent">
-                  <p>Download & sign a consent form</p>
-                  <img src={form} alt="forms_document" />
-                </div>
-                <div className="icons">
-                  <img src={download} alt="download_icon" />
-                  <img src={documentAttach} alt="download_icon" />
-                </div>
-              </Document>
+              <button
+                disabled={
+                  formik.values.firstName.length === 0 ||
+                  formik.values.lastName.length === 0 ||
+                  formik.values.dateOfBirth.length === 0 ||
+                  new Date().getFullYear() -
+                    Number(formik.values.dateOfBirth.substr(0, 4)) <
+                    17
+                }
+                className={
+                  formik.values.firstName.length === 0 ||
+                  formik.values.lastName.length === 0 ||
+                  formik.values.dateOfBirth.length === 0 ||
+                  new Date().getFullYear() -
+                    Number(formik.values.dateOfBirth.substr(0, 4)) <
+                    17
+                    ? "btn notallowed"
+                    : "btn"
+                }
+                onClick={() => {
+                  setActiveTab("qualification-details");
+                }}
+              >
+                Next
+                <img src={arrow} alt="right" />
+              </button>
+            </FormDiv>
+          )}
+          {/* =======QUALIFICATION DETAILS===== */}
+          {activeTab === "qualification-details" && (
+            <FormDiv>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "40px",
+                  paddingBottom: "40px",
+                }}
+              >
+                <label>Enrollment status &nbsp; &nbsp;</label>
+                <span>Alumni &nbsp;</span>
+                <Switch
+                  checked={formik.values.enrollmentStatus}
+                  onChange={(checked, e) => {
+                    formik.setFieldValue("enrollmentStatus", checked);
+                    console.log(checked);
+                  }}
+                  value={formik.values.enrollmentStatus}
+                  name="enrollmentStatus"
+                  onColor="#0092E0"
+                  onHandleColor="#2693e6"
+                  handleDiameter={28}
+                  uncheckedIcon={false}
+                  checkedIcon={false}
+                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                  activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                  height={20}
+                  width={48}
+                  className="react-switch"
+                  id="material-switch"
+                />
+                <span>&nbsp;Current student</span>
+              </div>
+              <p>
+                Must be the student ID issued by the institute at the time of
+                study
+              </p>
+              <Field>
+                <label>
+                  Student ID
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.studentId && formik.errors.studentId
+                        ? "student-input err"
+                        : "student-input"
+                    }
+                    name="studentId"
+                    value={formik.values.studentId}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.studentId && formik.errors.studentId ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.studentId}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
 
-              <Document className="second-upload">
-                <div className="consent">
-                  <p>Upload a third party document</p>
-                  <img src={uparrow} alt="forms_document" />
-                </div>
+              <Field>
+                <label>
+                  Course
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.course && formik.errors.course
+                        ? "course-input err"
+                        : "course-input"
+                    }
+                    name="course"
+                    value={formik.values.course}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.course && formik.errors.course ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.course}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
 
-                <div className="file_button_container">
-                  <input type="file" name="certImage" onChange={handleImage} />
-                </div>
-              </Document>
-            </UploadSection>
-            <button pay={pay} onClick={submitRequest} className="btn submit">
-       Submit details
-      </button>
-          </FormDiv>
-        )}
-      </form>
-      {/* {pay && <PaystackButton {...componentProps} className="btn" />} */}
-    
-    </FormContainer>
-    </>
+              <Field>
+                <label>
+                  Qualification
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.qualification &&
+                      formik.errors.qualification
+                        ? "qualification-input err"
+                        : "qualification-input"
+                    }
+                    name="qualification"
+                    value={formik.values.qualification}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.qualification &&
+                  formik.errors.qualification ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.qualification}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>
+                  Classificaton
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.classification &&
+                      formik.errors.classification
+                        ? "class-input err"
+                        : "class-input"
+                    }
+                    name="classification"
+                    value={formik.values.classification}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.classification &&
+                  formik.errors.classification ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.classification}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+              {!formik.values.enrollmentStatus && (
+                <>
+                  <Field>
+                    <label>
+                      Admission Year<span>*</span>
+                    </label>
+                    <>
+                      <input
+                        type="text"
+                        className={
+                          formik.touched.admissionYear &&
+                          formik.errors.admissionYear
+                            ? "admission-input err"
+                            : "admission-input"
+                        }
+                        name="admissionYear"
+                        value={formik.values.admissionYear}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.touched.admissionYear &&
+                      formik.errors.admissionYear ? (
+                        <div
+                          className="error"
+                          style={{
+                            marginLeft: "-620px",
+                            paddingTop: "3px",
+                          }}
+                        >
+                          {formik.errors.admissionYear}
+                        </div>
+                      ) : null}
+                    </>
+                  </Field>
+                  <Field>
+                    <label>
+                      Graduation Year<span>*</span>
+                    </label>
+                    <>
+                      <input
+                        type="text"
+                        className={
+                          formik.touched.graduationYear &&
+                          formik.errors.graduationYear
+                            ? "graduation-input err"
+                            : "graduation-input"
+                        }
+                        name="graduationYear"
+                        value={formik.values.graduationYear}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.touched.graduationYear &&
+                      formik.errors.graduationYear ? (
+                        <div
+                          className="error"
+                          style={{
+                            marginLeft: "-620px",
+                            paddingTop: "3px",
+                          }}
+                        >
+                          {formik.errors.graduationYear}
+                        </div>
+                      ) : null}
+                    </>
+                  </Field>
+                </>
+              )}
+              <p>
+                The reference number will be used to track this case in your
+                internal system if you have one
+              </p>
+              <button
+                disabled={
+                  formik.values.course.length === 0 ||
+                  formik.values.qualification.length === 0 ||
+                  formik.values.classification.length === 0 ||
+                  formik.values.admissionYear.length === 0 ||
+                  formik.values.graduationYear.length === 0 ||
+                  formik.values.studentId.length === 0
+                }
+                className={
+                  formik.values.course.length === 0 ||
+                  formik.values.qualification.length === 0 ||
+                  formik.values.classification.length === 0 ||
+                  formik.values.admissionYear.length === 0 ||
+                  formik.values.graduationYear.length === 0 ||
+                  formik.values.studentId.length === 0
+                    ? "btn notallowed"
+                    : "btn"
+                }
+                type="submmit"
+                onClick={() => {
+                  setActiveTab("documents");
+                  setPay(true);
+                }}
+              >
+                Next
+                <img src={arrow} alt="right" />
+              </button>
+            </FormDiv>
+          )}
+          {activeTab === "documents" && (
+            <FormDiv>
+              <Field>
+                <p className="upload-text">
+                  Mandatory documents that are required by the institute in
+                  order to process a verification are marked with asterik below.
+                  <br /> You can also use 'Add another document' to add any
+                  further documentation you feel might be useful
+                </p>
+              </Field>
+              <UploadSection>
+                <Document>
+                  <div className="consent">
+                    <p>Download & sign a consent form</p>
+                    <img src={form} alt="forms_document" />
+                  </div>
+                  <div className="icons">
+                    <img src={download} alt="download_icon" />
+                    <img src={documentAttach} alt="download_icon" />
+                  </div>
+                </Document>
+
+                <Document className="second-upload">
+                  <div className="consent">
+                    <p>Upload a third party document</p>
+                    <img src={uparrow} alt="forms_document" />
+                  </div>
+
+                  <div className="file_button_container">
+                    <input
+                      type="file"
+                      name="certImage"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "certImage",
+                          event.currentTarget.files[0]
+                        );
+                      }}
+                    />
+                  </div>
+                </Document>
+              </UploadSection>
+              <button pay={pay} onClick={submitRequest} className="btn submit">
+                Submit details
+              </button>
+            </FormDiv>
+          )}
+        </form>
+      </FormContainer>
+    </SingleCheck>
   );
 }
 
 export default VerificationForm;
+
+const SingleCheck = styled.div`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  padding: 10px 20px 5px 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
 
 const UploadSection = styled.div`
   width: 80%;
@@ -783,11 +817,11 @@ const Document = styled.div`
 const FormContainer = styled.div`
   margin-top: 15px;
   width: 100%;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: #fafafb 0% 0% no-repeat padding-box;
   border-radius: 7px;
   box-shadow: 0px 0px 10px #00000029;
   overflow-x: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   padding-bottom: 20px;
   .btn {
     float: right;
@@ -856,8 +890,8 @@ const FormDiv = styled.div`
     outline: none;
     border-color: #0092e0;
   }
-  .submit{
-    width:150px
+  .submit {
+    width: 150px;
   }
   .notallowed {
     cursor: not-allowed;
@@ -895,7 +929,7 @@ const Field = styled.div`
     margin-left: 30px;
   }
   .middle-input {
-    margin-left: 20px;
+    margin-left: 23px;
   }
   .last-input {
     margin-left: 33px;
@@ -925,74 +959,92 @@ const Field = styled.div`
     margin-left: 3px;
   }
 `;
-
+const SelectCheck = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: #fafafb 0% 0% no-repeat padding-box;
+  border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 10px #00000029;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  div {
+    display: flex;
+    margin-left: 5px;
+  }
+  .arrow {
+    margin-right: 5px;
+  }
+`;
 const SelectSch = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: #fafafb 0% 0% no-repeat padding-box;
   border-radius: 7px;
   /* height: 150px; */
   box-shadow: 0px 0px 10px #00000029;
   margin-top: 20px;
-  
-  .institution-details{
-    margin-left:30px;
-    border-bottom:1px solid gray;
-    width:90%;
-     p{
-padding-bottom:10px
-     }
+
+  .institution-details {
+    margin-left: 30px;
+    border-bottom: 1px solid gray;
+    width: 90%;
+    p {
+      padding-bottom: 10px;
+    }
   }
-.sch-country {
-    padding-left:30px;
-    padding-top:10px;
-    padding-bottom:40px;
-    span{
-      &:nth-child(1){
-
+  .sch-country {
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    span {
+      &:nth-child(1) {
         font: normal normal bold 12px/14px Montserrat;
-    letter-spacing: 0.32px;
-    color: #707070
+        letter-spacing: 0.32px;
+        color: #707070;
       }
-      &:nth-child(2){
-padding-left:100px;
-font: normal normal normal 12/14px Montserrat;
-letter-spacing: 0.32px;
-color: #707070;
+      &:nth-child(2) {
+        padding-left: 100px;
+        font: normal normal normal 12/14px Montserrat;
+        letter-spacing: 0.32px;
+        color: #707070;
       }
     }
-    }
-  .inst-name{
-    padding-left:30px;
-    padding-top:10px;
-    span{
-      &:nth-child(1){
-
+  }
+  .inst-name {
+    padding-left: 30px;
+    padding-top: 10px;
+    span {
+      &:nth-child(1) {
         font: normal normal bold 12px/14px Montserrat;
-    letter-spacing: 0.32px;
-    color: #707070
+        letter-spacing: 0.32px;
+        color: #707070;
       }
-      &:nth-child(2){
-padding-left:40px;
-font: normal normal normal 12/14px Montserrat;
-letter-spacing: 0.32px;
-color: #707070;
+      &:nth-child(2) {
+        padding-left: 40px;
+        font: normal normal normal 12/14px Montserrat;
+        letter-spacing: 0.32px;
+        color: #707070;
       }
     }
-    .change{
-      margin-left:7px;
-      background: #FF0000 0% 0% no-repeat padding-box;
-border-radius: 3px;
-padding-left:5px;
-padding-right:5px;
-cursor:pointer;
-small{
-  font: normal normal bold 12px/14px Montserrat;
-letter-spacing: 0.24px;
-color: #B30000;
-opacity: 1;
-}
+    .change {
+      margin-left: 7px;
+      background: #ff0000 0% 0% no-repeat padding-box;
+      border-radius: 3px;
+      padding-left: 5px;
+      padding-right: 5px;
+      cursor: pointer;
+      small {
+        font: normal normal bold 12px/14px Montserrat;
+        letter-spacing: 0.24px;
+        color: #b30000;
+        opacity: 1;
+      }
     }
   }
 

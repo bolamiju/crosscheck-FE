@@ -4,17 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-// import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import ManHires from "../../asset/ManHiRes.png";
-import {
-  CountryDropdown,
-  //   RegionDropdown,
-  //   CountryRegionData,
-} from "react-country-region-selector";
+import { CountryDropdown } from "react-country-region-selector";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import ManHiRes from "../../asset/ManHiRes.png";
 
 //import css module
 import "react-flags-select/css/react-flags-select.css";
@@ -348,38 +343,6 @@ function Register() {
                 alignItems: "center",
               }}
             >
-              {/* <p className="signup-with">Sign up with</p>
-
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <button className="facebook">
-                  <FontAwesomeIcon
-                    icon={faFacebookF}
-                    style={{
-                      background: "#0092e0",
-                      color: "white",
-                      fontSize: "16px",
-                    }}
-                  />{" "}
-                  Facebook
-                </button>
-                <button className="google">
-                  <FontAwesomeIcon
-                    icon={faGoogle}
-                    style={{
-                      background: "#FF2600",
-                      color: "white",
-                      fontSize: "16px",
-                    }}
-                  />{" "}
-                  Google
-                </button>
-              </div> */}
               <p className="paragraph">
                 Already have an account?
                 <Link
@@ -393,7 +356,9 @@ function Register() {
           </form>
         </div>
       </div>
-      <div className="image-section">{/* <img src={ManHires} /> */}</div>
+      <div className="image-section">
+        <img src={ManHiRes} alt="man" style={{ height: "100vh" }} />
+      </div>
     </div>
   );
 }
