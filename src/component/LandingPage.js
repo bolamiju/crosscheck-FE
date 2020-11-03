@@ -970,7 +970,7 @@ const NavBar = styled.nav`
 
     ul {
       display: flex;
-      padding-left: 180px;
+      padding-left: 350px;
 
       list-style-type: none;
       button {

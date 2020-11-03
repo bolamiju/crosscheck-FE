@@ -290,7 +290,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="image-section">
-        <img src={ManHiRes} alt="man" />
+        <img src={ManHiRes} style={{ height: "100vh" }} alt="man" />
       </div>
     </div>
   );
