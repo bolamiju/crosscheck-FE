@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
+import ManHiRes from "../../asset/ManHiRes.png";
 import * as Yup from "yup";
 import {
   login,
@@ -120,7 +121,7 @@ const Login = (props) => {
         pauseOnHover
       />
       <div className="form-section">
-        <div className="form-surround">
+        <div className="login-container">
           <form>
             <div
               style={{
@@ -221,26 +222,9 @@ const Login = (props) => {
                   justifyContent: "space-between",
                 }}
               >
-                {/* <button className="facebook">
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  style={{
-                    background: "#0092e0",
-                    color: "white",
-                    fontSize: "16px",
-                  }}
-                />{" "}
-                <a
-                  href={facebookLoginUrl}
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  Facebook
-                </a>
-              </button> */}
                 <FacebookLogin
                   appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
                   callback={responseFacebook}
-                  // className="facebook"
                   textButton={
                     <>
                       <FontAwesomeIcon
@@ -305,7 +289,9 @@ const Login = (props) => {
           </form>
         </div>
       </div>
-      <div className="image-section">{/* <img src={men} /> */}</div>
+      <div className="image-section">
+        <img src={ManHiRes} style={{ height: "100vh" }} alt="man" />
+      </div>
     </div>
   );
 };

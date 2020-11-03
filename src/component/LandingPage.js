@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 // import Carousel from "react-elastic-carousel";
-import {Link} from 'react-router-dom'
+import CountUp from "react-countup";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
 import Mail from "../asset/mail.svg";
 import phone from "../asset/phone.svg";
 import Computer from "../asset/Computer.png";
-import Tie from "../asset/manintie.png";
 import cash from "../asset/cash.svg";
-import enquiry from "../asset/enter_enquiry_dets.svg";
-import service from "../asset/select_service.svg";
+import enquiry from "../asset/enq.svg";
+import service from "../asset/serv.svg";
 import pay from "../asset/pay_send.svg";
-import register from "../asset/register_login.svg";
+import register from "../asset/reg.svg";
 import whitelogo from "../asset/whitelogo.png";
+import verified from "../asset/verified.svg";
+import intelligence from "../asset/intelligence.svg";
+import knowledge from "../asset/knowledge.svg";
+import planet from "../asset/planet.svg";
+import insight from "../asset/insight.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import VisibilitySensor from "react-visibility-sensor";
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
@@ -26,6 +32,7 @@ const LandingPage = () => {
 
   const changeBackground = () => {
     if (window.scrollY >= 420) {
+      console.log(window.scrollY);
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -33,6 +40,16 @@ const LandingPage = () => {
   };
 
   window.addEventListener("scroll", changeBackground);
+
+  const checkHeight = () => {
+    if (window.scrollY >= 2500) {
+      return true;
+    }
+    // else {
+    //   return false
+    // }
+  };
+
   return (
     <div>
       <FirstSection>
@@ -66,7 +83,11 @@ const LandingPage = () => {
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
                 Contact
               </li>
-              <button><Link className="link-to" to='/'>LOGIN</Link></button>
+              <button>
+                <Link className="link-to" to="/">
+                  LOGIN
+                </Link>
+              </button>
             </ul>
           </div>
 
@@ -108,56 +129,70 @@ const LandingPage = () => {
               service for academic qualifications.
             </p>
             <div className="register">
-              <button><Link className="reg" to="/register">Sign Up Now</Link></button>
+              <button>
+                <Link className="reg" to="/register">
+                  Sign Up Now
+                </Link>
+              </button>
               <button>How it Works</button>
             </div>
           </div>
           <img
             src={Computer}
             alt="headerimage"
-            style={{ width: "700px", height: "350px" }}
+            style={{ width: "730px", height: "350px" }}
           />
         </Main>
       </FirstSection>
       <About>
         <h1>A few things you should know about us</h1>
-        <h2>About Us</h2>
-        <div className="tabs">
-          <h3>OUR MISSION</h3> <h3>WHO WE ARE</h3> <h3>OUR VISION</h3>
+        <div className="cardss">
+          <div className="card">
+            <h3>OUR VISION</h3>
+            <div className="line"></div>
+            <p>To be Africa's leading expert in background checks industry</p>
+          </div>
+          <div className="card">
+            <h3>WHO WE ARE</h3>
+            <div className="line"></div>
+            <p>
+              CrossCheck is Africa’s most comprehensive online, automated
+              verification service for academic qualifications and professional
+              body memberships.
+            </p>
+          </div>
+          <div className="card">
+            <h3>OUR MISSION</h3>
+            <div className="line"></div>
+            <p>
+              An exceptional team committed to providing innovative solutions
+              and services to our clients for better hiring or engagement
+              decision making
+            </p>
+          </div>
         </div>
-        <div className="mobile-about">
-          <h3>Who We Are</h3>
-          <span>
-            lorem ipsum is our response to the African verification dilemma. Our
-            diverse offerings are the result of continuous technological
-            innovation, constant customer feedback and a drive to offer
-          </span>
+        <div className="image-icons">
+          <div className="sec">
+            <img src={insight} alt="insight" />
+            <p>Global Research</p>
+          </div>
+          <div className="sec">
+            <img src={planet} alt="planet" />
+            <p>Local Insights</p>
+          </div>
+          <div className="sec">
+            <img src={intelligence} alt="intelligence" />
+            <p>Expertise and Knowledge</p>
+          </div>
+          <div className="sec">
+            <img src={knowledge} alt="knowledge" />
+            <p>Primary source verifications</p>
+          </div>
+          <div className="sec">
+            <img src={verified} alt="verified" />
+            <p>Technologically relevant</p>
+          </div>
         </div>
-        <div className="mobile-about">
-          <h3>Our Mission</h3>
-          <span>
-            lorem ipsum is our response to the African verification dilemma. Our
-            diverse offerings are the result of continuous technological
-            innovation, constant customer feedback and a drive to offer
-          </span>
-        </div>
-        <div className="mobile-about">
-          <h3>Our Vision</h3>
-          <span>
-            lorem ipsum is our response to the African verification dilemma. Our
-            diverse offerings are the result of continuous technological
-            innovation, constant customer feedback and a drive to offer
-          </span>
-        </div>
-        <p>
-          CrossCheck is our response to the African verification dilemma. Our
-          diverse offerings are the result of continuous technological
-          innovation, constant customer feedback and a drive to offer the
-          industry’s best solutions. CrossCheck offers a centralised platform
-          for degree verification that connects employers, agencies,
-          universities, embassies and councils.
-        </p>
-        <img src={Tie} alt="manintie" />
       </About>
       <Div>
         <h2>How it Works</h2>
@@ -277,8 +312,8 @@ const LandingPage = () => {
               <p className="role">Applicant</p>
             </div>
           </div>
-          </div>
-          {/* <div className="testimony second">
+        </div>
+        {/* <div className="testimony second">
             <p>
               {" "}
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -304,16 +339,42 @@ const LandingPage = () => {
           </div> */}
         {/* </Carousel> */}
       </Testimonies>
-      <Cover>
+      <Cover imgUrl={process.env.PUBLIC_URL + "/map.svg"}>
         <h2>We Cover Over</h2>
         <div className="cover">
-          <div className="count">
-            <h2>100</h2>
+          <div className="count" data-target="100">
+            {/* <h2 className="counter" >0</h2> */}
+            <CountUp
+              start={0}
+              end={100}
+              duration={5}
+              onStart={checkHeight}
+              className="counter"
+            >
+              {({ countUpRef, start }) => (
+                <VisibilitySensor onChange={start} delayedCall={true}>
+                  <span ref={countUpRef} className="counter" />
+                </VisibilitySensor>
+              )}
+            </CountUp>
             <p>COUNTRIES</p>
           </div>
 
           <div className="inst">
-            <h2>200</h2>
+            {/* <h2 className="counter" >200</h2> */}
+            <CountUp
+              start={0}
+              end={400}
+              duration={5}
+              onStart={checkHeight}
+              className="counter"
+            >
+              {({ countUpRef, start }) => (
+                <VisibilitySensor onChange={start} delayedCall={true}>
+                  <span ref={countUpRef} className="counter" />
+                </VisibilitySensor>
+              )}
+            </CountUp>
             <p>INSTITUTIONS</p>
           </div>
         </div>
@@ -345,15 +406,31 @@ const LandingPage = () => {
               <p className="text">(01) 479-642-7461 (01)</p>
             </div>
           </div>
-
-        
         </div>
         <div className="line"></div>
         <div className="bottom-content">
           <p>© 2020 Crosscheck. All Rights Reserved</p>
           <ul>
             <li>Privacy Policy</li>
-            <li><Link to="/terms" className="termsof"> Terms of Service</Link></li>
+            <li>
+              <Link to="/terms" className="termsof">
+                {" "}
+                Terms of Service
+              </Link>
+            </li>
+            <li>
+              <i
+                class="fa fa-twitter"
+                aria-hidden="true"
+                style={{ fontSize: "16px" }}
+              ></i>
+              &nbsp; &nbsp;
+              <i
+                class="fa fa-facebook"
+                aria-hidden="true"
+                style={{ fontSize: "16px" }}
+              ></i>
+            </li>
           </ul>
         </div>
       </Footer>
@@ -372,21 +449,20 @@ const Footer = styled.div`
   width: 100%;
   /* height: 350px; */
   background: #173049 0% 0% no-repeat padding-box;
-  .line{
-      width:90%;
-      margin:0 auto;
-    border-bottom:1px solid grey
-    }
+  .line {
+    width: 90%;
+    margin: 0 auto;
+    border-bottom: 1px solid grey;
+  }
   .bottom-content {
     display: flex;
     justify-content: space-between;
-    padding-left: 30px;
-    padding-right: 30px;
-    .termsof{
-      text-decoration:none;
-      color:grey;
-      cursor:pointer
-
+    margin-left: 70px;
+    margin-right: 70px;
+    .termsof {
+      text-decoration: none;
+      color: grey;
+      cursor: pointer;
     }
     @media (max-width: 400px) {
       display: flex;
@@ -415,12 +491,12 @@ const Footer = styled.div`
     justify-content: space-around;
     padding-top: 40px;
     padding-bottom: 30px;
-    margin-left:550px;
+    margin-left: 550px;
     @media (max-width: 400px) {
       display: block;
       flex-direction: column;
       padding-top: 0px;
-      margin-left:0
+      margin-left: 0;
     }
     .email {
       display: flex;
@@ -445,7 +521,7 @@ const Footer = styled.div`
     display: flex;
     flex-direction: space-between;
     padding-left: 60px;
-  
+
     @media (max-width: 400px) {
       padding-left: 15px;
       display: flex;
@@ -484,8 +560,9 @@ const Footer = styled.div`
 const Cover = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  background: url(${(props) => props.imgUrl});
   .cover {
     display: flex;
     justify-content: center;
@@ -494,7 +571,7 @@ const Cover = styled.div`
       flex-direction: column;
       align-items: center;
     }
-    h2 {
+    .counter {
       color: #0092e0;
       font-size: 42px;
       font-weight: bolder;
@@ -527,8 +604,8 @@ const Testimonies = styled.div`
     text-align: center;
     letter-spacing: 0px;
     color: #ffffff;
-    @media(max-width:400px){
-      width:80%
+    @media (max-width: 400px) {
+      width: 80%;
     }
   }
   .carousels {
@@ -542,13 +619,13 @@ const Testimonies = styled.div`
         height: 1rem !important;
         border-radius: 50% !important;
       }
-      .second{
-        @media(max-width:400px){
-          display:none
+      .second {
+        @media (max-width: 400px) {
+          display: none;
         }
-        .third{
-          @media(max-width:400px){
-            display:none
+        .third {
+          @media (max-width: 400px) {
+            display: none;
           }
         }
       }
@@ -568,14 +645,14 @@ const Testimonies = styled.div`
           justify-content: center;
           align-items: center;
           position: absolute;
-          @media(max-width:400px){
-           position:relative;
-           top: 50px;
+          @media (max-width: 400px) {
+            position: relative;
+            top: 50px;
           }
           .role {
-            color: #676f79;
-            @media(max-width:400px){
-              margin-top:5px
+            color: #66c8ed;
+            @media (max-width: 400px) {
+              margin-top: 5px;
             }
           }
           p {
@@ -585,7 +662,7 @@ const Testimonies = styled.div`
           img {
             width: 70px;
             height: 70px;
-            @media(max-width:400px){
+            @media (max-width: 400px) {
               /* margin-bottom:10px */
             }
           }
@@ -596,7 +673,7 @@ const Testimonies = styled.div`
           width: 90%;
           text-align: center;
           margin: 0;
-          @media(max-width:400px){
+          @media (max-width: 400px) {
             margin-bottom: -30px;
           }
         }
@@ -651,7 +728,7 @@ const Testimonies = styled.div`
 `;
 
 const Blocks = styled.div`
-  width: 75%;
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -667,11 +744,15 @@ const Blocks = styled.div`
       width: 100%;
       margin-bottom: 40px;
     }
-    width: 33.33%;
+    width: 31.33%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 60px;
+    padding: 0;
+    &:hover {
+      border: 1px solid #4a86ff;
+    }
     p {
       width: 85%;
       text-align: center;
@@ -704,28 +785,64 @@ const About = styled.div`
   width: 80%;
   align-items: center;
   margin: 0 auto;
-  margin-top: 50px;
-  @media (max-width: 400px) {
+  .image-icons {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-  }
-  .mobile-about {
-    display: none;
-    h3 {
-      color: #0092e0;
-      margin: 0px 0px 15px 0px;
-    }
-    span {
-      text-align: center;
-      padding-left: 3px;
-      padding-right: 9px;
-    }
-    @media (max-width: 400px) {
+    margin-top: 40px;
+    .sec {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 15px;
     }
   }
+  .cardss {
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+
+    .card {
+      background: #ffffff 0% 0% no-repeat padding-box;
+      border-radius: 7px;
+      box-shadow: 0px 0px 10px #00000029;
+      height: 275px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      &:hover {
+        box-shadow: 0px 12px 30px 0px rgba(0, 0, 0, 0.2);
+        transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+        h3 {
+          color: #0092e0;
+        }
+      }
+      .line {
+        border-bottom: 1px solid grey;
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 30px;
+      }
+      p {
+        width: 85%;
+        letter-spacing: 0.32px;
+        color: #173049;
+        font-size: 15px;
+        text-align: left;
+        margin-left: 30px;
+        /* margin-right: 30px; */
+      }
+      h3 {
+        color: #173049;
+        letter-spacing: 0.7px;
+        margin-left: 30px;
+        margin-top: 30px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+
   h2 {
     display: none;
     @media (max-width: 400px) {
@@ -743,14 +860,14 @@ const About = styled.div`
       display: none;
     }
   }
-  img {
-    width: 700px;
-    height: 500px;
+  /* img {
+    width: 60px;
+    height: 60px;
     @media (max-width: 500px) {
       width: 300px;
       height: 250px;
     }
-  }
+  } */
   p {
     color: #676f79;
     @media (max-width: 400px) {
@@ -787,6 +904,7 @@ const FirstSection = styled.div`
     min-width: 60%;
   }
   width: 100%;
+  height: 100vh;
   background: #0092e0;
   background: transparent linear-gradient(180deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
@@ -815,11 +933,6 @@ const FirstSection = styled.div`
 `;
 
 const NavBar = styled.nav`
-  /* .show {
-    position: fixed !important;
-    background: white !important;
-    color: #0092e0 !important;
-  } */
   @media (max-width: 500px) {
     padding: 0px 3px 0px 3px;
     display: flex;
@@ -857,7 +970,7 @@ const NavBar = styled.nav`
 
     ul {
       display: flex;
-      padding-left: 180px;
+      padding-left: 350px;
 
       list-style-type: none;
       button {
@@ -870,14 +983,17 @@ const NavBar = styled.nav`
         border: 1px solid #ff0000;
         padding: 10px 20px 7px 20px;
       }
-      .link-to{
-        color:white;
-        text-decoration:none
+      .link-to {
+        color: white;
+        text-decoration: none;
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
+        &:hover {
+          color: #66c8ed !important;
+        }
       }
     }
   }
@@ -903,12 +1019,12 @@ const Main = styled.main`
   .register {
     width: 100%;
     display: flex;
-    .reg{
-      color:#0092e0;
-      text-decoration:none;
-      cursor:pointer;
-      &:hover{
-        color:white
+    .reg {
+      color: #0092e0;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: white;
       }
     }
     @media (max-width: 500px) {
@@ -999,11 +1115,13 @@ const Main = styled.main`
       }
     }
     p {
-      font-size: 20px;
+      font-size: 14px;
       text-align: left;
-      font: normal normal 400 20px/24px Segoe UI;
+      /* font-family: Segoe UI; */
       letter-spacing: 0px;
+      font-weight: lighter;
       color: #ffffff;
+      opacity: 1;
       @media (max-width: 500px) {
         text-align: center;
       }
