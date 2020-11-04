@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -28,6 +28,24 @@ const LandingPage = () => {
   const [navbar, setNavbar] = useState(false);
   const [testimony, setTestimony] = useState("first");
 
+  const slides = ["first", "second", "third"];
+
+  const [seconds, setSeconds] = useState(0);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setSeconds((seconds) => seconds + 1);
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setTestimony(slides[seconds], 1000);
+  //   });
+  //   return () => clearInterval(interval);
+  // }, [seconds]);
   const handleActiveTestimony = (value) => {
     setTestimony(value);
   };
@@ -162,6 +180,7 @@ const LandingPage = () => {
       <a id="about">
         <About>
           <h1>A few things you should know about us</h1>
+          <h3 className="about-us">About Us</h3>
           <div className="cardss">
             <div className="card">
               <h3>OUR VISION</h3>
@@ -815,6 +834,11 @@ const About = styled.div`
   width: 80%;
   align-items: center;
   margin: 0 auto;
+  .about-us {
+    @media (min-width: 500px) {
+      display: none;
+    }
+  }
   .image-icons {
     @media (max-width: 400px) {
       display: none;
@@ -940,6 +964,8 @@ const About = styled.div`
 const FirstSection = styled.div`
   @media (max-width: 400px) {
     min-width: 60%;
+    min-height: 100vh;
+    height: 700px;
   }
   width: 100%;
   height: 100vh;
@@ -962,7 +988,7 @@ const FirstSection = styled.div`
     img {
       float: right;
       padding-top: 30px;
-      /* padding-right: 10px; */
+      padding-right: 10px;
     }
     ul {
       display: flex;
