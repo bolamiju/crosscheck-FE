@@ -5,7 +5,6 @@ import DashHeader from "./DashHeader";
 
 function DashboardLayout({ children }) {
   const [show, setShow] = useState(false);
-  console.log("show", show);
 
   return (
     <Div>

@@ -108,8 +108,8 @@ function Register() {
   return (
     <div className="container">
       <div className="form-section">
-        <div className="form-surround">
-          <form>
+        <div className="form-wrapper">
+          <form className="form-surround">
             <h5 className="text-header">Create An Account</h5>
 
             {registerError.length > 0 && (
@@ -357,7 +357,7 @@ function Register() {
         </div>
       </div>
       <div className="image-section">
-        <img src={ManHiRes} alt="man" style={{ height: "100vh" }} />
+        {/* <img src={ManHiRes} alt="man" style={{ height: "100vh" }} /> */}
       </div>
     </div>
   );
