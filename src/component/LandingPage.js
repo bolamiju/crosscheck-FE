@@ -966,6 +966,7 @@ const FirstSection = styled.div`
     min-width: 60%;
     min-height: 100vh;
     height: 700px;
+    margin-bottom: 30px;
   }
   width: 100%;
   height: 100vh;
