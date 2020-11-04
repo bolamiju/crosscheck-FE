@@ -77,7 +77,8 @@ const Login = (props) => {
     console.log("response", response);
     axios({
       method: "POST",
-      url: "http://localhost:5000/api/v1/users/googlelogin",
+      url:
+        "https://croscheck.herokuapp.com/api/v1/users/register/api/v1/users/googlelogin",
       data: { tokenId: response.tokenId },
     })
       .then((response) => {
@@ -96,14 +97,12 @@ const Login = (props) => {
       });
   };
   const responseFacebook = (response) => {
-    console.log("facebook", response);
     axios({
       method: "POST",
-      url: "http://localhost:5000/api/v1/users/facebooklogin",
+      url: "https://croscheck.herokuapp.com/api/v1/users/facebooklogin",
       data: { accessToken: response.accessToken, userID: response.userID },
     }).then((response) => {
-      console.log("backend res", response);
-      // window.location.href = `/dashboard/${response.data.user.id}`;
+      window.location.href = `/dashboard/${response.data.user.id}`;
     });
   };
 
