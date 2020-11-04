@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Carousel from "react-elastic-carousel";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -14,6 +13,7 @@ import service from "../asset/serv.svg";
 import pay from "../asset/pay_send.svg";
 import register from "../asset/reg.svg";
 import whitelogo from "../asset/whitelogo.png";
+import Menu from "../asset/Menu.svg";
 import verified from "../asset/verified.svg";
 import intelligence from "../asset/intelligence.svg";
 import knowledge from "../asset/knowledge.svg";
@@ -26,13 +26,17 @@ import VisibilitySensor from "react-visibility-sensor";
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
+  const [testimony, setTestimony] = useState("first");
+
+  const handleActiveTestimony = (value) => {
+    setTestimony(value);
+  };
   const handleMenuIcon = () => {
     setShow(!show);
   };
 
   const changeBackground = () => {
-    if (window.scrollY >= 420) {
-      console.log(window.scrollY);
+    if (window.scrollY >= 420 && window.innerWidth > 600) {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -72,16 +76,16 @@ const LandingPage = () => {
             <ul>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                Coverage
+                <a href="#coverage"> Coverage</a>
               </li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                About Us
+                <a href="#about"> About Us</a>
               </li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                How it works
+                <a href="#work">How it works</a>
               </li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                Contact
+                <a href="#contact">Contact </a>
               </li>
               <button>
                 <Link className="link-to" to="/">
@@ -98,21 +102,36 @@ const LandingPage = () => {
               onClick={handleMenuIcon}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="menu-icon"
-              onClick={handleMenuIcon}
-            />
+            ""
           )}
         </NavBar>
         <div className={show ? "hide-show" : "hide"}>
+          <img src={Menu} alt="close" onClick={handleMenuIcon} />
           <ul>
-            <li>Home</li>
-            <li>Coverage</li>
-            <li>About Us</li>
-            <li>How it works</li>
-            <li>Contact</li>
-            {/* <button>LOGIN</button> */}
+            <li onClick={handleMenuIcon}>Home</li>
+            <li onClick={handleMenuIcon}>
+              <a href="#coverage">Coverage</a>{" "}
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#about">About Us</a>
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#testimony">Testimonials</a>
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#contact">Contact us</a>
+            </li>
+            <li className="divider"></li>
+            <li>
+              <Link className="auth" to="/">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link className="auth" to="/register">
+                Sign up
+              </Link>
+            </li>
           </ul>
         </div>
         <Main>
@@ -137,63 +156,62 @@ const LandingPage = () => {
               <button>How it Works</button>
             </div>
           </div>
-          <img
-            src={Computer}
-            alt="headerimage"
-            style={{ width: "730px", height: "350px" }}
-          />
+          <img src={Computer} alt="headerimage" />
         </Main>
       </FirstSection>
-      <About>
-        <h1>A few things you should know about us</h1>
-        <div className="cardss">
-          <div className="card">
-            <h3>OUR VISION</h3>
-            <div className="line"></div>
-            <p>To be Africa's leading expert in background checks industry</p>
+      <a id="about">
+        <About>
+          <h1>A few things you should know about us</h1>
+          <div className="cardss">
+            <div className="card">
+              <h3>OUR VISION</h3>
+              <div className="line"></div>
+              <p>To be Africa's leading expert in background checks industry</p>
+            </div>
+            <div className="card">
+              <h3>WHO WE ARE</h3>
+              <div className="line"></div>
+              <p>
+                CrossCheck is Africa’s most comprehensive online, automated
+                verification service for academic qualifications and
+                professional body memberships.
+              </p>
+            </div>
+            <div className="card">
+              <h3>OUR MISSION</h3>
+              <div className="line"></div>
+              <p>
+                An exceptional team committed to providing innovative solutions
+                and services to our clients for better hiring or engagement
+                decision making
+              </p>
+            </div>
           </div>
-          <div className="card">
-            <h3>WHO WE ARE</h3>
-            <div className="line"></div>
-            <p>
-              CrossCheck is Africa’s most comprehensive online, automated
-              verification service for academic qualifications and professional
-              body memberships.
-            </p>
+          <div className="image-icons">
+            <div className="sec">
+              <img src={insight} alt="insight" />
+              <p>Global Research</p>
+            </div>
+            <div className="sec">
+              <img src={planet} alt="planet" />
+              <p>Local Insights</p>
+            </div>
+            <div className="sec">
+              <img src={intelligence} alt="intelligence" />
+              <p>Expertise and Knowledge</p>
+            </div>
+            <div className="sec">
+              <img src={knowledge} alt="knowledge" />
+              <p>Primary source verifications</p>
+            </div>
+            <div className="sec">
+              <img src={verified} alt="verified" />
+              <p>Technologically relevant</p>
+            </div>
           </div>
-          <div className="card">
-            <h3>OUR MISSION</h3>
-            <div className="line"></div>
-            <p>
-              An exceptional team committed to providing innovative solutions
-              and services to our clients for better hiring or engagement
-              decision making
-            </p>
-          </div>
-        </div>
-        <div className="image-icons">
-          <div className="sec">
-            <img src={insight} alt="insight" />
-            <p>Global Research</p>
-          </div>
-          <div className="sec">
-            <img src={planet} alt="planet" />
-            <p>Local Insights</p>
-          </div>
-          <div className="sec">
-            <img src={intelligence} alt="intelligence" />
-            <p>Expertise and Knowledge</p>
-          </div>
-          <div className="sec">
-            <img src={knowledge} alt="knowledge" />
-            <p>Primary source verifications</p>
-          </div>
-          <div className="sec">
-            <img src={verified} alt="verified" />
-            <p>Technologically relevant</p>
-          </div>
-        </div>
-      </About>
+        </About>
+      </a>
+
       <Div>
         <h2>How it Works</h2>
         <p>
@@ -201,244 +219,303 @@ const LandingPage = () => {
           obtain pain and anything else to finish this sentence.
         </p>
       </Div>
-      <Blocks>
-        <div className="blocks">
-          <img src={register} alt="regi" />
-          <h4>Regiser</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-        <div className="blocks">
-          <img src={service} alt="regi" />
-          <h4>Select Service</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-        <div className="blocks">
-          <img src={enquiry} alt="enq" />
-          <h4>Search institution</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-        <div className="blocks">
-          <img src={enquiry} alt="enq" />
-          <h4>Enter Enquiry Details</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-
-        <div className="blocks">
-          <img src={cash} alt="pay" />
-          <h4>Pay</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-        <div className="blocks">
-          <img src={pay} alt="paysend" />
-          <h4>Send</h4>
-          <p>
-            To take a trivial example, which of us ever undertakes laborious
-            physical exercise and stuff.
-          </p>
-        </div>
-      </Blocks>
-      <Testimonies>
-        <h2>What people say about us</h2>
-        <p>
-          We are quite fond of the people and organizations we serve, here's
-          what they have to say about us.
-        </p>
-        <div className="testimonies">
-          <div className="testimony">
+      <a id="work">
+        <Blocks>
+          <div className="blocks">
+            <img src={register} alt="regi" />
+            <h4>Regiser</h4>
             <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.{" "}
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
             </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
-              <p className="role">CTO Herculanum</p>
-            </div>
           </div>
-          <div className="testimony">
+          <div className="blocks">
+            <img src={service} alt="regi" />
+            <h4>Select Service</h4>
             <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.{" "}
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
             </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
-              <p className="role">HR Manager/Confetti Group</p>
-            </div>
           </div>
-          <div className="testimony">
+          <div className="blocks">
+            <img src={enquiry} alt="enq" />
+            <h4>Search institution</h4>
             <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
             </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
-              <p className="role">Applicant</p>
-            </div>
           </div>
-        </div>
-
-        {/* MOBILE TESTIMONIES */}
-        {/* <Carousel itemsToShow={1} className="carousels"> */}
-        <div className="carousels">
-          <div className="testimony">
+          <div className="blocks">
+            <img src={enquiry} alt="enq" />
+            <h4>Enter Enquiry Details</h4>
             <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
             </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Benedict Johnson</p>
-              <p className="role">Applicant</p>
-            </div>
-          </div>
-        </div>
-        {/* <div className="testimony second">
-            <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.
-            </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
-              <p className="role">Applicant</p>
-            </div>
-          </div>
-          <div className="testimony third">
-            <p>
-              {" "}
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt omnis iste natus.
-            </p>
-            <div className="profile">
-              <img src={Avatar} alt="avatar" />
-              <p>Bertha Johnson</p>
-              <p className="role">Applicant</p>
-            </div>
-          </div> */}
-        {/* </Carousel> */}
-      </Testimonies>
-      <Cover imgUrl={process.env.PUBLIC_URL + "/map.svg"}>
-        <h2>We Cover Over</h2>
-        <div className="cover">
-          <div className="count" data-target="100">
-            {/* <h2 className="counter" >0</h2> */}
-            <CountUp
-              start={0}
-              end={100}
-              duration={5}
-              onStart={checkHeight}
-              className="counter"
-            >
-              {({ countUpRef, start }) => (
-                <VisibilitySensor onChange={start} delayedCall={true}>
-                  <span ref={countUpRef} className="counter" />
-                </VisibilitySensor>
-              )}
-            </CountUp>
-            <p>COUNTRIES</p>
           </div>
 
-          <div className="inst">
-            {/* <h2 className="counter" >200</h2> */}
-            <CountUp
-              start={0}
-              end={400}
-              duration={5}
-              onStart={checkHeight}
-              className="counter"
-            >
-              {({ countUpRef, start }) => (
-                <VisibilitySensor onChange={start} delayedCall={true}>
-                  <span ref={countUpRef} className="counter" />
-                </VisibilitySensor>
-              )}
-            </CountUp>
-            <p>INSTITUTIONS</p>
+          <div className="blocks">
+            <img src={cash} alt="pay" />
+            <h4>Pay</h4>
+            <p>
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
+            </p>
           </div>
-        </div>
-      </Cover>
-      <Footer>
-        <div className="footer-logo">
-          <img src={Logo} alt="crosscheck" />
-          <ul>
-            <li>HOME</li>
-            <li>ABOUT</li>
-            <li>COVERAGE</li>
-            <li>TESTIMONIALS</li>
-            <li>CONTACT US</li>
-          </ul>
-        </div>
-        <div className="contact">
-          <div className="email">
-            <img src={Mail} alt="mail" />
-            <div>
-              <p>Email</p>
-              <p className="text">support@crosscheck.africa</p>
+          <div className="blocks">
+            <img src={pay} alt="paysend" />
+            <h4>Send</h4>
+            <p>
+              To take a trivial example, which of us ever undertakes laborious
+              physical exercise and stuff.
+            </p>
+          </div>
+        </Blocks>
+      </a>
+      <a id="testimonies">
+        <Testimonies>
+          <h2>What people say about us</h2>
+          <p>
+            We are quite fond of the people and organizations we serve, here's
+            what they have to say about us.
+          </p>
+          <div className="testimonies">
+            <div className="testimony">
+              <p>
+                Just used CrossCheck for the first time, and It’s was amazing! I
+                was able to order my transcript almost immediately and before
+                every other applicant.
+              </p>
+              <div className="profile">
+                <img src={Avatar} alt="avatar" />
+                <p>Bertha Johnson</p>
+                <p className="role">CTO Herculanum</p>
+              </div>
+            </div>
+            <div className="testimony">
+              <p>
+                Hiring exercises can be tedious. CrossCheck helps us optimize
+                candidate verifications during hiring processes, while still
+                staying on top of things.
+              </p>
+              <div className="profile">
+                <img src={Avatar} alt="avatar" />
+                <p>Bertha Johnson</p>
+                <p className="role">HR Manager/Confetti Group</p>
+              </div>
+            </div>
+            <div className="testimony">
+              <p>
+                For the past few weeks, our small team has used CrossCheck to
+                conduct seamless verifications without the hassle of multiple
+                phone calls and emails.
+              </p>
+              <div className="profile">
+                <img src={Avatar} alt="avatar" />
+                <p>Bertha Johnson</p>
+                <p className="role">Applicant</p>
+              </div>
             </div>
           </div>
 
-          <div className="email">
-            <img src={phone} alt="mail" />
-            <div className="text">
-              <p>Phone</p>
-              <p className="text">(01) 479-642-7461 (01)</p>
+          {/* MOBILE TESTIMONIES */}
+          <Slides>
+            {testimony === "first" && (
+              <div className="w3-container w3-center w3-animate-left">
+                <p className="testimony-test">
+                  {" "}
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt omnis iste natus.{" "}
+                </p>
+                <div className="profile">
+                  <img src={Avatar} alt="avatar" />
+                  <span>Bertha Johnson</span>
+                  <span>CTO Herculum</span>
+                </div>
+              </div>
+            )}
+            {testimony === "second" && (
+              <div className="w3-container w3-center w3-animate-left">
+                <p className="testimony-test">
+                  {" "}
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt omnis iste natus.{" "}
+                </p>
+                <div className="profile">
+                  <img src={Avatar} alt="avatar" />
+                  <span>John Johsua</span>
+                  <span>CTO Herculum</span>
+                </div>
+              </div>
+            )}
+            {testimony === "third" && (
+              <div className="w3-container w3-center w3-animate-left">
+                <p className="testimony-test">
+                  {" "}
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt omnis iste natus.{" "}
+                </p>
+                <div className="profile">
+                  <img src={Avatar} alt="avatar" />
+                  <span>Mike Dean</span>
+                  <span>CTO Herculum</span>
+                </div>
+              </div>
+            )}
+          </Slides>
+          <div className="circles">
+            <div
+              onClick={() => handleActiveTestimony("first")}
+              className={testimony === "first" ? "circle active" : "circle"}
+            ></div>
+            <div
+              onClick={() => handleActiveTestimony("second")}
+              className={testimony === "second" ? "circle active" : "circle"}
+            ></div>
+            <div
+              onClick={() => handleActiveTestimony("third")}
+              className={testimony === "third" ? "circle active" : "circle"}
+            ></div>
+          </div>
+        </Testimonies>
+      </a>
+      <a id="coverage">
+        <Cover imgUrl={process.env.PUBLIC_URL + "/map.svg"}>
+          <h2>We Cover Over</h2>
+          <div className="cover">
+            <div className="count" data-target="100">
+              {/* <h2 className="counter" >0</h2> */}
+              <CountUp
+                start={0}
+                end={100}
+                duration={5}
+                onStart={checkHeight}
+                className="counter"
+              >
+                {({ countUpRef, start }) => (
+                  <VisibilitySensor onChange={start} delayedCall={true}>
+                    <span ref={countUpRef} className="counter" />
+                  </VisibilitySensor>
+                )}
+              </CountUp>
+              <p>COUNTRIES</p>
+            </div>
+
+            <div className="inst">
+              {/* <h2 className="counter" >200</h2> */}
+              <CountUp
+                start={0}
+                end={400}
+                duration={5}
+                onStart={checkHeight}
+                className="counter"
+              >
+                {({ countUpRef, start }) => (
+                  <VisibilitySensor onChange={start} delayedCall={true}>
+                    <span ref={countUpRef} className="counter" />
+                  </VisibilitySensor>
+                )}
+              </CountUp>
+              <p>INSTITUTIONS</p>
             </div>
           </div>
-        </div>
-        <div className="line"></div>
-        <div className="bottom-content">
-          <p>© 2020 Crosscheck. All Rights Reserved</p>
-          <ul>
-            <li>Privacy Policy</li>
-            <li>
-              <Link to="/terms" className="termsof">
-                {" "}
-                Terms of Service
-              </Link>
-            </li>
-            <li>
-              <i
-                class="fa fa-twitter"
-                aria-hidden="true"
-                style={{ fontSize: "16px" }}
-              ></i>
-              &nbsp; &nbsp;
-              <i
-                class="fa fa-facebook"
-                aria-hidden="true"
-                style={{ fontSize: "16px" }}
-              ></i>
-            </li>
-          </ul>
-        </div>
-      </Footer>
+        </Cover>
+      </a>
+      <a id="contact">
+        <Footer>
+          <div className="footer-logo">
+            <img src={Logo} alt="crosscheck" />
+            <ul>
+              <li>HOME</li>
+              <li>ABOUT</li>
+              <li>COVERAGE</li>
+              <li>TESTIMONIALS</li>
+              <li>CONTACT US</li>
+            </ul>
+          </div>
+          <div className="contact">
+            <div className="email">
+              <img src={Mail} alt="mail" />
+              <div>
+                <p>Email</p>
+                <p className="text">support@crosscheck.africa</p>
+              </div>
+            </div>
+
+            <div className="email">
+              <img src={phone} alt="mail" />
+              <div className="text">
+                <p>Phone</p>
+                <p className="text">(01) 479-642-7461 (01)</p>
+              </div>
+            </div>
+          </div>
+          <div className="line"></div>
+          <div className="bottom-content">
+            <p>© 2020 Crosscheck. All Rights Reserved</p>
+            <ul>
+              <li>Privacy Policy</li>
+              <li>
+                <Link to="/terms" className="termsof">
+                  {" "}
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <i
+                  class="fa fa-twitter"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                ></i>
+                &nbsp; &nbsp;
+                <i
+                  class="fa fa-facebook"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                ></i>
+              </li>
+            </ul>
+          </div>
+        </Footer>
+      </a>
     </div>
   );
 };
 
 export default LandingPage;
+
+const Slides = styled.div`
+  display: none;
+
+  @media (max-width: 400px) {
+    display: flex;
+
+    .w3-container {
+      display: flex;
+      flex-direction: column;
+
+      .testimony-test {
+        background: white;
+        color: black;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        border-radius: 4px;
+      }
+      .profile {
+        position: relative;
+        top: -40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+      }
+    }
+  }
+`;
 
 const Footer = styled.div`
   @media only screen and (max-width: 400px) {
@@ -581,6 +658,7 @@ const Cover = styled.div`
       padding-right: 250px;
       @media (max-width: 400px) {
         padding-right: 0px;
+        margin-bottom: 50px;
       }
     }
   }
@@ -588,7 +666,7 @@ const Cover = styled.div`
 
 const Testimonies = styled.div`
   width: 100%;
-  height: 400px;
+  height: 500px;
   color: white;
   display: flex;
   align-items: center;
@@ -596,8 +674,27 @@ const Testimonies = styled.div`
   padding-top: 40px;
   background: transparent linear-gradient(308deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
+  .circles {
+    display: none;
+    @media (max-width: 400px) {
+      display: flex;
+      margin-top: 30px;
+    }
+
+    .circle {
+      border: 1px solid white;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+    .active {
+      background: white;
+    }
+  }
   @media (max-width: 400px) {
     padding-bottom: 40px;
+    height: auto !important;
   }
   p {
     width: 40%;
@@ -608,78 +705,7 @@ const Testimonies = styled.div`
       width: 80%;
     }
   }
-  .carousels {
-    display: none;
-    @media (max-width: 400px) {
-      display: flex;
-      justify-content: space-between;
-      .hVmIQZ,
-      .eMUgLX {
-        width: 0.2rem !important;
-        height: 1rem !important;
-        border-radius: 50% !important;
-      }
-      .second {
-        @media (max-width: 400px) {
-          display: none;
-        }
-        .third {
-          @media (max-width: 400px) {
-            display: none;
-          }
-        }
-      }
-      .testimony {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 120px;
-        background: #ffffff 0% 0% no-repeat padding-box;
-        border-radius: 8px;
-        margin-right: 10px;
-        .profile {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          @media (max-width: 400px) {
-            position: relative;
-            top: 50px;
-          }
-          .role {
-            color: #66c8ed;
-            @media (max-width: 400px) {
-              margin-top: 5px;
-            }
-          }
-          p {
-            width: 100%;
-            color: white;
-          }
-          img {
-            width: 70px;
-            height: 70px;
-            @media (max-width: 400px) {
-              /* margin-bottom:10px */
-            }
-          }
-        }
-        p {
-          letter-spacing: 0px;
-          color: #676f79;
-          width: 90%;
-          text-align: center;
-          margin: 0;
-          @media (max-width: 400px) {
-            margin-bottom: -30px;
-          }
-        }
-      }
-    }
-  }
+
   .testimonies {
     display: flex;
     justify-content: space-between;
@@ -694,11 +720,11 @@ const Testimonies = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 120px;
+      /* height: 120px; */
       background: #ffffff 0% 0% no-repeat padding-box;
       border-radius: 8px;
       .profile {
-        margin-bottom: -70px;
+        margin-bottom: -90px;
         padding-top: 10px;
         display: flex;
         flex-direction: column;
@@ -719,7 +745,8 @@ const Testimonies = styled.div`
       p {
         letter-spacing: 0px;
         color: #676f79;
-        width: 90%;
+        width: 100%;
+        padding: 7px 7px 0px 7px;
         text-align: center;
         margin: 0;
       }
@@ -757,6 +784,9 @@ const Blocks = styled.div`
       width: 85%;
       text-align: center;
       color: #676f79;
+      @media (max-width: 400px) {
+        line-height: 1.6;
+      }
     }
   }
 `;
@@ -786,10 +816,14 @@ const About = styled.div`
   align-items: center;
   margin: 0 auto;
   .image-icons {
+    @media (max-width: 400px) {
+      display: none;
+    }
     display: flex;
     justify-content: space-between;
     width: 100%;
     margin-top: 40px;
+
     .sec {
       display: flex;
       flex-direction: column;
@@ -800,8 +834,15 @@ const About = styled.div`
     display: flex;
     width: 85%;
     justify-content: space-between;
-
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+      width: auto;
+    }
     .card {
+      @media (max-width: 400px) {
+        margin-bottom: 25px;
+      }
       background: #ffffff 0% 0% no-repeat padding-box;
       border-radius: 7px;
       box-shadow: 0px 0px 10px #00000029;
@@ -809,6 +850,7 @@ const About = styled.div`
       width: 300px;
       display: flex;
       flex-direction: column;
+
       &:hover {
         box-shadow: 0px 12px 30px 0px rgba(0, 0, 0, 0.2);
         transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
@@ -829,7 +871,10 @@ const About = styled.div`
         font-size: 15px;
         text-align: left;
         margin-left: 30px;
-        /* margin-right: 30px; */
+        @media (max-width: 400px) {
+          font-size: 16px;
+          line-height: 1.4;
+        }
       }
       h3 {
         color: #173049;
@@ -860,19 +905,12 @@ const About = styled.div`
       display: none;
     }
   }
-  /* img {
-    width: 60px;
-    height: 60px;
-    @media (max-width: 500px) {
-      width: 300px;
-      height: 250px;
-    }
-  } */
+
   p {
     color: #676f79;
-    @media (max-width: 400px) {
+    /* @media (max-width: 400px) {
       display: none;
-    }
+    } */
   }
   .tabs {
     display: flex;
@@ -910,20 +948,45 @@ const FirstSection = styled.div`
     0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #00000029;
   .hide-show {
-    display: none;
-    @media (max-width: 400px) {
+    @media (min-width: 500px) {
+      display: none;
+    }
+    position: fixed;
+    z-index: 50;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+
+    background: #0092e0 0% 0% no-repeat padding-box;
+    opacity: 0.95;
+    img {
+      float: right;
+      padding-top: 30px;
+      /* padding-right: 10px; */
+    }
+    ul {
       display: flex;
-      width: 80%;
-      ul {
-        width: 100%;
-        list-style-type: none;
-        li {
-          width: 100%;
-          color: #eceff3;
-          padding-bottom: 15px;
-          margin-bottom: 15px;
-          border-bottom: 1px solid #333;
+      flex-direction: column;
+      list-style-type: none;
+      margin-top: 70px;
+      .divider {
+        width: 270px;
+        border: 1px solid white;
+      }
+      li {
+        letter-spacing: 1.6px;
+        color: #ffffff;
+        text-transform: uppercase;
+        opacity: 1;
+        margin-bottom: 40px;
+        a {
+          text-decoration: none;
         }
+      }
+      .auth {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
       }
     }
   }
@@ -991,6 +1054,9 @@ const NavBar = styled.nav`
         margin-right: 50px;
         color: white;
         cursor: pointer;
+        a {
+          text-decoration: none;
+        }
         &:hover {
           color: #66c8ed !important;
         }
@@ -1009,6 +1075,11 @@ const Main = styled.main`
   align-items: flex-start;
   padding-top: 100px;
   padding-bottom: 30px;
+  @media (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   h1 {
     &:nth-child(1) {
       font-size: 3em;
@@ -1072,9 +1143,12 @@ const Main = styled.main`
   }
 
   img {
-    height: 68%;
+    width: 730px;
+    height: 350px;
     @media (max-width: 400px) {
-      display: none;
+      width: 350px;
+      height: 200px;
+      margin-top: 40px;
     }
   }
   .intro-text {
@@ -1095,7 +1169,7 @@ const Main = styled.main`
         display: block;
         color: #66c8ed;
         font-weight: lighter;
-        font-size: 30px;
+        font-size: 34px;
         text-align: center;
       }
     }
@@ -1106,7 +1180,7 @@ const Main = styled.main`
       }
       color: #66c8ed;
       font-weight: lighter;
-      font-size: 42px;
+      font-size: 40px;
       .here {
         color: white;
         cursor: pointer;
@@ -1115,15 +1189,17 @@ const Main = styled.main`
       }
     }
     p {
-      font-size: 14px;
+      font-size: 16px;
       text-align: left;
       /* font-family: Segoe UI; */
-      letter-spacing: 0px;
+      letter-spacing: 1px;
       font-weight: lighter;
       color: #ffffff;
-      opacity: 1;
+      opacity: 0.8;
       @media (max-width: 500px) {
         text-align: center;
+        font-size: 18px;
+        line-height: 1.6;
       }
     }
   }
