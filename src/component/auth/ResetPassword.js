@@ -56,7 +56,7 @@ function ResetPassword({ match, location }) {
   });
   return (
     <div class="forgot-password">
-      <form style={{ width: "70%" }}>
+      <form>
         <Div>
           <img src={Logo} alt="CrossCheck" className="forgot-pass-img" />
           <h3 style={{ textAlign: "center" }}>Create a New Password</h3>
@@ -102,7 +102,7 @@ function ResetPassword({ match, location }) {
             RESET PASSWORD
           </button>
 
-          {/* <div className="recover-pass">
+          <div className="recover-pass">
             <p>
               If you are having problems recovering your password
               <Link
@@ -120,7 +120,7 @@ function ResetPassword({ match, location }) {
                 &nbsp; Home
               </Link>
             </p>
-          </div> */}
+          </div>
         </Div>
       </form>
     </div>
@@ -138,16 +138,17 @@ const Div = styled.div`
       font-size: 28px;
     }
   }
-  /* .recover-pass {
+  .recover-pass {
     p {
       text-align: center;
       letter-spacing: 0.32px;
       opacity: 1;
       @media (max-width: 400px) {
         font-size: 16px;
+        width: 100%;
       }
     }
-  } */
+  }
   .enter-email {
     width: 80%;
     text-align: center;
@@ -179,7 +180,7 @@ const Div = styled.div`
       padding-left: 20px;
       @media (max-width: 400px) {
         font-size: 16px;
-        height: 55px;
+        height: 50px;
       }
     }
     .passw-error {
@@ -201,9 +202,12 @@ const Div = styled.div`
     color: white;
     letter-spacing: 1px;
     cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
     @media (max-width: 400px) {
       height: 60px;
       font-size: 18px;
+      width: 300px;
     }
   }
 `;
