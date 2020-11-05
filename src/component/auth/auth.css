@@ -445,6 +445,7 @@ label {
   .form-wrapper {
     width: 90% !important;
     left: 20px !important;
+    top: 15px !important;
   }
   .forgot-password {
     max-width: 350px !important;
