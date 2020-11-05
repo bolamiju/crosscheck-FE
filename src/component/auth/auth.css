@@ -416,8 +416,7 @@ label {
     font-size: 18px;
   }
   .google {
-    height: 32px;
-    width: 120px;
+    height: 45px;
     font-size: 18px;
   }
   .facebook {
@@ -488,17 +487,18 @@ label {
   }
   .terms {
     display: flex;
-    flex-direction: column;
     align-items: center;
   }
   .terms .accept span {
-    font-size: 14px;
+    font-size: 15px;
     width: 100%;
   }
 
+  .kep-login-facebook {
+    padding: 20px;
+  }
   .terms a {
-    font-size: 12px;
-    margin-top: 15px;
+    font-size: 14px;
     color: #0092e0;
   }
   .paragraph {
@@ -506,5 +506,9 @@ label {
   }
   .intro-text {
     font-size: 14px;
+  }
+  .google {
+    height: 42px;
+    width: 120px;
   }
 }
