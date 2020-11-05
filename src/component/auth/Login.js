@@ -183,13 +183,7 @@ const Login = (props) => {
                 />
                 <span>Remember me</span>
               </div>
-              <Link
-                to="/forgotpassword"
-                style={{
-                  textDecoration: "none",
-                  color: "#0092e0",
-                }}
-              >
+              <Link to="/forgotpassword" className="fogt-pass">
                 Forgot password
               </Link>
             </div>

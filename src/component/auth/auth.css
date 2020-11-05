@@ -317,7 +317,10 @@ label {
 .terms .accept span {
   font-size: 12px;
 }
-
+.fot-pass {
+  text-decoration: none;
+  color: #0092e0;
+}
 .terms .link {
   font-size: 12px;
 }
@@ -413,7 +416,8 @@ label {
     font-size: 18px;
   }
   .google {
-    height: 45px;
+    height: 32px;
+    width: 120px;
     font-size: 18px;
   }
   .facebook {
@@ -422,10 +426,21 @@ label {
   }
 }
 @media screen and (max-width: 400px) {
+  .visible-icon {
+    position: absolute;
+    left: auto;
+    right: 20px;
+    top: 42px;
+  }
+
   .form-section {
-    width: 85%;
+    width: 100%;
     margin-top: 0px;
-    margin-right: 10px;
+    max-height: 100vh;
+  }
+  .login-wrapper {
+    width: 90% !important;
+    left: 20px !important;
   }
   .forgot-password {
     max-width: 350px !important;
@@ -477,16 +492,17 @@ label {
     align-items: center;
   }
   .terms .accept span {
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
   }
+
   .terms a {
     font-size: 12px;
     margin-top: 15px;
     color: #0092e0;
   }
   .paragraph {
-    font-size: 14px;
+    font-size: 15px;
   }
   .intro-text {
     font-size: 14px;
