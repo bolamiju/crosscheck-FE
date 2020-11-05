@@ -12,7 +12,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
 import ManHiRes from "../../asset/ManHiRes.png";
-import * as Yup from "yup";
+import { loginValidation } from "./Validation";
 import {
   login,
   setLoading,
@@ -67,11 +67,7 @@ const Login = (props) => {
         dispatch(setLoading(false));
       }
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email().required("email is required"),
-      password: Yup.string().required("password is required"),
-      //   }),
-    }),
+    validationSchema: loginValidation,
   });
   const responseGoogle = (response) => {
     console.log("response", response);
@@ -120,17 +116,10 @@ const Login = (props) => {
         pauseOnHover
       />
       <div className="form-section">
-        <div className="login-container">
-          <form>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "-10px",
-              }}
-            >
+        <div className="form-wrapper login-wrapper">
+          <form className="form-surround">
+            <div className="info-container">
+              <h3 className="great">Great to See you again</h3>
               <p style={{ fontSize: "14px" }}>Sign in to your account</p>
               {loginError.length > 0 && (
                 <p style={{ color: "red" }}>{loginError}</p>
@@ -143,7 +132,7 @@ const Login = (props) => {
                 type="email"
                 name="email"
                 id="email"
-                className="input"
+                className="input logininput"
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
@@ -159,20 +148,20 @@ const Login = (props) => {
                 type={!visibility ? "password" : "text"}
                 name="password"
                 id="password"
-                className="input"
+                className="input passwordinput"
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
               {!visibility ? (
                 <FontAwesomeIcon
                   icon={faEyeSlash}
-                  className="custom-icon"
+                  className="visible-icon"
                   onClick={() => setVisibility(!visibility)}
                 />
               ) : (
                 <FontAwesomeIcon
                   icon={faEye}
-                  className="custom-icon"
+                  className="visible-icon"
                   onClick={() => setVisibility(!visibility)}
                 />
               )}
@@ -288,9 +277,7 @@ const Login = (props) => {
           </form>
         </div>
       </div>
-      <div className="image-section">
-        <img src={ManHiRes} style={{ height: "100vh" }} alt="man" />
-      </div>
+      <div className="image-section"></div>
     </div>
   );
 };
