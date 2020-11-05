@@ -147,6 +147,7 @@ const Div = styled.div`
       margin: 0 auto;
       border: 2px solid #70707061;
       border-radius: 35px;
+      padding-left: 20px;
       @media (max-width: 400px) {
         font-size: 16px;
       }
