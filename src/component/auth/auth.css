@@ -107,7 +107,7 @@ body {
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 30px #00000014;
   border-radius: 15px;
-  top: 20px;
+  top: 40px;
   left: 100px;
 }
 .login-wrapper {
@@ -502,7 +502,7 @@ label {
   .kep-login-facebook {
     height: 42px !important;
     padding: 0px;
-    padding-top: 0px !important;
+    padding-top: 10px !important;
   }
   .terms a {
     font-size: 14px;
