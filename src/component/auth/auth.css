@@ -442,6 +442,10 @@ label {
     width: 90% !important;
     left: 20px !important;
   }
+  .form-wrapper {
+    width: 90% !important;
+    left: 20px !important;
+  }
   .forgot-password {
     max-width: 350px !important;
   }
@@ -497,7 +501,8 @@ label {
 
   .kep-login-facebook {
     height: 42px !important;
-    padding: 20px !important;
+    padding: 0px;
+    padding-top: 0px !important;
   }
   .terms a {
     font-size: 14px;
