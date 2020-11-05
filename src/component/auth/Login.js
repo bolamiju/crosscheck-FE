@@ -169,7 +169,7 @@ const Login = (props) => {
             <button
               type="button"
               onClick={formik.handleSubmit}
-              className="register-button"
+              className="register-button loginbtn"
             >
               {loading ? "Signing in..." : "LOGIN"}
             </button>
