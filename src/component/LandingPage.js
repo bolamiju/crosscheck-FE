@@ -32,6 +32,19 @@ const LandingPage = () => {
 
   const [seconds, setSeconds] = useState(0);
 
+  var myIndex = 0;
+
+  // function carousel() {
+  //   var i;
+  //   for (i = 0; i < slides.length; i++) {}
+  //   myIndex++;
+  //   if (myIndex > slides.length) {
+  //     myIndex = 1;
+  //   }
+  //   setTestimony(slides[myIndex - 1]);
+  //   setTimeout(carousel, 2000); // Change image every 2 seconds
+  // }
+  // carousel();
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     setSeconds((seconds) => seconds + 1);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -50,14 +50,12 @@ const ForgotPassword = () => {
       <form>
         {success ? (
           <>
-            <p
-              style={{ fontSize: "14px", width: "450px", textAlign: "center" }}
-            >
+            <p className="forgot-password-content">
               Check your inbox for the next steps. If you don't receive an
               email, and it's not in your spam folder this could mean you signed
               up with a different address.
             </p>
-            <p style={{ textAlign: "center", fontSize: "14px" }}>
+            <p className="has-account">
               Have an account?
               <Link to="/" style={{ color: "#0092e0", textDecoration: "none" }}>
                 Login
@@ -66,22 +64,24 @@ const ForgotPassword = () => {
           </>
         ) : (
           <Div>
-          <img src={Logo} alt="CrossCheck" style={{width:'200px',height:'40px'}}/>
-            <h3 style={{ textAlign: "center" }}>Having troubles with your password?</h3>
+            <img src={Logo} alt="CrossCheck" className="forgot-pass-img" />
+            <h3 style={{ textAlign: "center" }}>
+              Having troubles with your password?
+            </h3>
             {loginError.length > 0 && (
               <p style={{ color: "red", textAlign: "center" }}>{loginError}</p>
             )}
             <p className="enter-email">
-            Please enter the email address with which you registered, and we’ll send you an email with further instructions.
+              Please enter the email address with which you registered, and
+              we’ll send you an email with further instructions.
             </p>
             <div
               className="password-input fields"
               style={{ marginTop: "10px" }}
             >
-
               <input
                 type="text"
-                // className="input"
+                className="forgot-pass-input"
                 name="email"
                 id="email"
                 value={formik.values.email}
@@ -89,12 +89,12 @@ const ForgotPassword = () => {
                 onBlur={formik.handleBlur}
               />
               {formik.touched.email && formik.errors.email ? (
-                <div className="error">{formik.errors.email}</div>
+                <div className="passw-error">{formik.errors.email}</div>
               ) : null}
             </div>
             <button
               type="button"
-              className="register-button"
+              className="submit-button"
               onClick={formik.handleSubmit}
               style={{ fontSize: "14px" }}
             >
@@ -120,24 +120,48 @@ const ForgotPassword = () => {
 
 export default ForgotPassword;
 
-const Div =styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-.enter-email{
-width:80%;
-text-align:center;
-font: normal normal normal 12px Montserrat;
-letter-spacing: 0.4px;
-color: #707070;
-.password-input{
-  input{
- border: 2px solid #e2e2e2;
-  outline: none;
-  border-radius: 9px;
-  height: 32px;
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .enter-email {
+    width: 80%;
+    text-align: center;
+    font: normal normal normal 12px Montserrat;
+    letter-spacing: 0.4px;
+    color: #707070;
+    opacity: 0.8;
   }
-}
-
-}
-`
+  .password-input {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    input {
+      outline: 0;
+      height: 40px;
+      width: 80%;
+      margin: 0 auto;
+      border: 2px solid #70707061;
+      border-radius: 35px;
+      @media (max-width: 400px) {
+        font-size: 16px;
+      }
+    }
+    .passw-error {
+      color: red;
+      font-size: 14;
+      text-align: center;
+    }
+  }
+  .submit-button {
+    outline: 0;
+    height: 40px;
+    border-radius: 15px;
+    width: 350px;
+    margin-top: 25px;
+    background: #0092e0 0% 0% no-repeat padding-box;
+    border: 2px solid #0092e0;
+    border-radius: 35px;
+    color: white;
+  }
+`;
