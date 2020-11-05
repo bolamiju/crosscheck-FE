@@ -131,6 +131,10 @@ const Div = styled.div`
     letter-spacing: 0.4px;
     color: #707070;
     opacity: 0.8;
+    @media (max-width: 400px) {
+      width: 100%;
+      font-size: 14px;
+    }
   }
   .password-input {
     display: flex;
@@ -163,5 +167,9 @@ const Div = styled.div`
     border: 2px solid #0092e0;
     border-radius: 35px;
     color: white;
+    @media (max-width: 400px) {
+      margin-top: 0 !important;
+      width: 200px;
+    }
   }
 `;
