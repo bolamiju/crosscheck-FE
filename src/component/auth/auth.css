@@ -112,7 +112,6 @@ body {
 }
 .login-wrapper {
   min-height: auto !important;
-  top: 40px !important;
 }
 
 .logininput {
@@ -495,7 +494,7 @@ label {
   }
 
   .kep-login-facebook {
-    padding: 20px;
+    height: 42px !important;
   }
   .terms a {
     font-size: 14px;
