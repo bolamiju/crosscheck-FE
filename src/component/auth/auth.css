@@ -497,6 +497,7 @@ label {
 
   .kep-login-facebook {
     height: 42px !important;
+    padding: 20px !important;
   }
   .terms a {
     font-size: 14px;
