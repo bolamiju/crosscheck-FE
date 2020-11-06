@@ -16,6 +16,7 @@ import {
   signUp,
   setLoading,
   setRegisterError,
+  setLoginError,
 } from "../../state/actions/users";
 
 function Register() {
@@ -23,7 +24,7 @@ function Register() {
   const [success, setSuccess] = useState(false);
   const [terms, setTerms] = useState(false);
   const [counstrySelected, setCountrySelected] = useState("us");
-  const [formErr, setFormErr] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const dispatch = useDispatch();
 
   const { registerError, loading } = useSelector((state) => state.user);
@@ -66,6 +67,7 @@ function Register() {
           res.data.message === "Please check your email for an activation link"
         ) {
           setSuccess(true);
+          setUserEmail(values.email);
         }
         dispatch(setLoading(false));
 
@@ -85,255 +87,274 @@ function Register() {
 
   return (
     <div className="container">
-      <div className="form-section">
-        <div className="form-wrapper">
-          <form className="form-surround">
-            <h5 className="text-header">Create An Account</h5>
+      {success ? (
+        <div className="activated-section">
+          <div className="activated-wrapper">
+            <h3>Account created successfuly</h3>
+            <p>
+              We've sent an account activation link to
+              <br />
+              <span>{userEmail}</span>{" "}
+            </p>
 
-            {registerError.length > 0 && (
-              <p className="error">{registerError}</p>
-            )}
-            {success && (
-              <p className="activation-text">
-                An account activation link has been sent to your email, check
-                your inbox or spam folder
-              </p>
-            )}
-            <div className="name-section fields">
-              <div className="firstname-input">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  className="input"
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.firstName && formik.errors.firstName ? (
-                  <div className="error">{formik.errors.firstName}</div>
-                ) : null}
-              </div>
-              <div className="lastname-input ">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  className="input"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.lastName && formik.errors.lastName ? (
-                  <div className="error">{formik.errors.lastName}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="email-input fields">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="input"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className="error">{formik.errors.email}</div>
-              ) : null}
-            </div>
-            <div className="country-phone fields">
-              <div className="country-input">
-                <label htmlFor="email">Is this an</label>
-                <select
-                  name="accountType"
-                  id="accountType"
-                  className="input"
-                  value={formik.values.accountType}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value="" disabled selected>
-                    Select an Option
-                  </option>
-                  <option value="individual">Individual</option>
-                  <option value="organization">Organization</option>
-                </select>
-                {formik.touched.accountType && formik.errors.accountType ? (
-                  <div className="error">{formik.errors.accountType}</div>
-                ) : null}
-              </div>
-              {formik.values.accountType === "organization" && (
-                <div className="phone">
-                  <label htmlFor="email">Company Name</label>
+            <p>Click on the link to activate your account</p>
+            <button>
+              <Link
+                className="login-redirect"
+                to="/"
+                onClick={() => dispatch(setLoginError(""))}
+              >
+                Login
+              </Link>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="form-section">
+          <div className="form-wrapper">
+            <form className="form-surround">
+              <h5 className="text-header">Create An Account</h5>
+
+              {registerError.length > 0 && (
+                <p className="error">{registerError}</p>
+              )}
+
+              <div className="name-section fields">
+                <div className="firstname-input">
+                  <label htmlFor="firstName">First Name</label>
                   <input
                     type="text"
-                    name="organizationName"
-                    id="organizationName"
+                    name="firstName"
+                    id="firstName"
                     className="input"
-                    value={formik.values.organizationName}
+                    value={formik.values.firstName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.organizationName &&
-                  formik.errors.organizationName ? (
-                    <div className="error">
-                      {formik.errors.organizationName}
-                    </div>
+                  {formik.touched.firstName && formik.errors.firstName ? (
+                    <div className="error">{formik.errors.firstName}</div>
                   ) : null}
                 </div>
-              )}
-            </div>
-            <div className="country-phone fields">
-              <div className="country-input">
-                <label htmlFor="country">Country</label>
-                <CountryDropdown
-                  name="country"
-                  id="country"
-                  className="country"
-                  valueType="short"
-                  value={formik.values.country}
-                  onChange={(_, e) => {
-                    formik.handleChange(e);
-                    console.log(e.target.value);
-                    setCountrySelected(e.target.value.toLowerCase());
-                  }}
-                  onBlur={formik.handleBlur}
-                  ReactFlagsSelect
-                />
-
-                {formik.touched.country && formik.errors.country ? (
-                  <div className="error">{formik.errors.country}</div>
-                ) : null}
+                <div className="lastname-input ">
+                  <label htmlFor="lastName">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    className="input"
+                    value={formik.values.lastName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.lastName && formik.errors.lastName ? (
+                    <div className="error">{formik.errors.lastName}</div>
+                  ) : null}
+                </div>
               </div>
-              <div className="phone">
-                <label htmlFor="phone">Phone Number</label>
-                <PhoneInput
-                  country={counstrySelected}
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="react-phone"
-                  value={formik.values.phone}
-                  onChange={(e) => {
-                    formik.setFieldValue("phone", e);
-                    console.log(e);
-                  }}
-                  onBlur={formik.handleBlur}
-                  searchPlaceholder
-                />
-                {formik.touched.phone && formik.errors.phone ? (
-                  <div className="error">{formik.errors.phone}</div>
-                ) : null}
-              </div>
-            </div>
-            <div
-              className="password-input fields"
-              style={{ position: "relative" }}
-            >
-              <label>Enter password</label>
-
-              <input
-                name="password"
-                id="password"
-                type={!visibility ? "password" : "text"}
-                className="input"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {!visibility ? (
-                <FontAwesomeIcon
-                  icon={faEyeSlash}
-                  className="custom-icon"
-                  onClick={() => setVisibility(!visibility)}
-                />
-              ) : (
-                <FontAwesomeIcon
-                  icon={faEye}
-                  className="custom-icon"
-                  onClick={() => setVisibility(!visibility)}
-                />
-              )}
-              {formik.touched.password && formik.errors.password ? (
-                <div className="error">{formik.errors.password}</div>
-              ) : null}
-            </div>
-
-            {formik.values.accountType === "organization" && (
-              <div
-                className="password-input fields"
-                style={{ marginTop: "10px" }}
-              >
-                <label>Company's website</label>
-
+              <div className="email-input fields">
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
+                  id="email"
                   className="input"
-                  name="companyWebsite"
-                  id="companyWebsite"
-                  value={formik.values.companyWebsite}
+                  value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.companyWebsite &&
-                formik.errors.companyWebsite ? (
-                  <div className="error">{formik.errors.companyWebsite}</div>
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="error">{formik.errors.email}</div>
                 ) : null}
               </div>
-            )}
-            <div className="terms">
-              <div className="accept">
-                <input
-                  type="checkbox"
-                  name="accept"
-                  id="terms"
-                  className="check"
-                  style={{ marginRight: "10px" }}
-                  onChange={(e) => {
-                    formik.handleChange(e);
-                    setTerms(!terms);
-                  }}
-                />
-                <span>I agree to the terms and conditions</span>
-                {formik.touched.accept && formik.errors.accept ? (
-                  <div className="error">{formik.errors.accept}</div>
-                ) : null}
+              <div className="country-phone fields">
+                <div className="country-input">
+                  <label htmlFor="email">Is this an</label>
+                  <select
+                    name="accountType"
+                    id="accountType"
+                    className="input"
+                    value={formik.values.accountType}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  >
+                    <option value="" disabled selected>
+                      Select an Option
+                    </option>
+                    <option value="individual">Individual</option>
+                    <option value="organization">Organization</option>
+                  </select>
+                  {formik.touched.accountType && formik.errors.accountType ? (
+                    <div className="error">{formik.errors.accountType}</div>
+                  ) : null}
+                </div>
+                {formik.values.accountType === "organization" && (
+                  <div className="phone">
+                    <label htmlFor="email">Company Name</label>
+                    <input
+                      type="text"
+                      name="organizationName"
+                      id="organizationName"
+                      className="input"
+                      value={formik.values.organizationName}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.organizationName &&
+                    formik.errors.organizationName ? (
+                      <div className="error">
+                        {formik.errors.organizationName}
+                      </div>
+                    ) : null}
+                  </div>
+                )}
               </div>
-            </div>
-            <button
-              type="button"
-              className="register-button"
-              onClick={formik.handleSubmit}
-            >
-              {loading ? "CREATING..." : "REGISTER"}
-            </button>
+              <div className="country-phone fields">
+                <div className="country-input">
+                  <label htmlFor="country">Country</label>
+                  <CountryDropdown
+                    name="country"
+                    id="country"
+                    className="country"
+                    valueType="short"
+                    value={formik.values.country}
+                    onChange={(_, e) => {
+                      formik.handleChange(e);
+                      console.log(e.target.value);
+                      setCountrySelected(e.target.value.toLowerCase());
+                    }}
+                    onBlur={formik.handleBlur}
+                    ReactFlagsSelect
+                  />
 
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <p className="paragraph">
-                Already have an account?
-                <Link
-                  style={{ color: "#0092e0", textDecoration: "none" }}
-                  to="/"
+                  {formik.touched.country && formik.errors.country ? (
+                    <div className="error">{formik.errors.country}</div>
+                  ) : null}
+                </div>
+                <div className="phone">
+                  <label htmlFor="phone">Phone Number</label>
+                  <PhoneInput
+                    country={counstrySelected}
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    className="react-phone"
+                    value={formik.values.phone}
+                    onChange={(e) => {
+                      formik.setFieldValue("phone", e);
+                      console.log(e);
+                    }}
+                    onBlur={formik.handleBlur}
+                    searchPlaceholder
+                  />
+                  {formik.touched.phone && formik.errors.phone ? (
+                    <div className="error">{formik.errors.phone}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div
+                className="password-input fields"
+                style={{ position: "relative" }}
+              >
+                <label>Enter password</label>
+
+                <input
+                  name="password"
+                  id="password"
+                  type={!visibility ? "password" : "text"}
+                  className="input"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {!visibility ? (
+                  <FontAwesomeIcon
+                    icon={faEyeSlash}
+                    className="custom-icon"
+                    onClick={() => setVisibility(!visibility)}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    className="custom-icon"
+                    onClick={() => setVisibility(!visibility)}
+                  />
+                )}
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="error">{formik.errors.password}</div>
+                ) : null}
+              </div>
+
+              {formik.values.accountType === "organization" && (
+                <div
+                  className="password-input fields"
+                  style={{ marginTop: "10px" }}
                 >
-                  Login here
-                </Link>
-              </p>
-            </div>
-          </form>
+                  <label>Company's website</label>
+
+                  <input
+                    type="text"
+                    className="input"
+                    name="companyWebsite"
+                    id="companyWebsite"
+                    value={formik.values.companyWebsite}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.companyWebsite &&
+                  formik.errors.companyWebsite ? (
+                    <div className="error">{formik.errors.companyWebsite}</div>
+                  ) : null}
+                </div>
+              )}
+              <div className="terms">
+                <div className="accept">
+                  <input
+                    type="checkbox"
+                    name="accept"
+                    id="terms"
+                    className="check"
+                    style={{ marginRight: "10px" }}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      setTerms(!terms);
+                    }}
+                  />
+                  <span>I agree to the terms and conditions</span>
+                  {formik.touched.accept && formik.errors.accept ? (
+                    <div className="error">{formik.errors.accept}</div>
+                  ) : null}
+                </div>
+              </div>
+              <button
+                type="button"
+                className="register-button"
+                onClick={formik.handleSubmit}
+              >
+                {loading ? "CREATING..." : "REGISTER"}
+              </button>
+
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p className="paragraph">
+                  Already have an account?
+                  <Link
+                    style={{ color: "#0092e0", textDecoration: "none" }}
+                    to="/"
+                  >
+                    Login here
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
       <div className="image-section"></div>
     </div>
   );

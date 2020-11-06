@@ -23,10 +23,12 @@ const ForgotPassword = () => {
 
     onSubmit: async (values) => {
       console.log(values);
+      dispatch(setLoginError(""));
       dispatch(setLoading(true));
       try {
         const res = await forgotPassword(values);
         console.log("RES", res.data);
+
         setSucces(true);
         dispatch(setLoading(false));
       } catch (err) {
@@ -48,7 +50,7 @@ const ForgotPassword = () => {
   return (
     <div class="forgot-password">
       <form>
-        {success ? (
+        {!success ? (
           <>
             <p className="forgot-password-content">
               Check your inbox for the next steps. If you don't receive an
@@ -103,7 +105,7 @@ const ForgotPassword = () => {
             <div className="reset-create">
               <p>
                 <Link
-                  to="/register"
+                  to="/"
                   style={{ textDecoration: "none", color: "#0092e0" }}
                 >
                   Login to your account
@@ -148,6 +150,7 @@ const Div = styled.div`
       border: 2px solid #70707061;
       border-radius: 35px;
       padding-left: 20px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       @media (max-width: 400px) {
         font-size: 16px;
       }

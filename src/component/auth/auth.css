@@ -28,8 +28,9 @@ body {
 
 .forgot-password-content {
   font-size: 14px;
-  width: 450px;
+  width: 350px;
   text-align: center;
+  margin: 0 auto;
 }
 .reset-create {
   width: 50%;
@@ -91,6 +92,54 @@ body {
 
 #pass {
   margin-bottom: 10px;
+}
+.activated-section {
+  background: white;
+  width: 30%;
+}
+.activated-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 250px;
+  overflow: auto;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 30px #00000014;
+  border-radius: 15px;
+  top: 60px;
+  left: 100px;
+}
+.activated-wrapper button .login-redirect {
+  text-decoration: none;
+}
+.activated-wrapper button {
+  width: 70%;
+  color: white;
+  background: #0092e0 0% 0% no-repeat padding-box !important;
+  border-radius: 13px;
+  opacity: 1;
+  outline: 0;
+  border: 1px solid #0092e0;
+  cursor: pointer;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+.activated-wrapper h3 {
+  color: #0092e0;
+}
+.activated-wrapper p {
+  text-align: center;
+  letter-spacing: 0.44px;
+  color: #173049;
+  margin: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.activated-wrapper span {
+  font-weight: bolder !important;
 }
 
 .form-section {
@@ -518,5 +567,8 @@ label {
   .google {
     height: 42px;
     width: 120px;
+  }
+  .activated-section {
+    display: none;
   }
 }

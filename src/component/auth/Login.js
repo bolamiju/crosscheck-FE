@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
-import ManHiRes from "../../asset/ManHiRes.png";
+import { BASE_URL } from "../../state/constant/constants";
 import { loginValidation } from "./Validation";
 import {
   login,
@@ -73,8 +73,7 @@ const Login = (props) => {
     console.log("response", response);
     axios({
       method: "POST",
-      url:
-        "https://croscheck.herokuapp.com/api/v1/users/register/api/v1/users/googlelogin",
+      url: `${BASE_URL}/api/v1/users/googlelogin`,
       data: { tokenId: response.tokenId },
     })
       .then((response) => {
@@ -82,12 +81,11 @@ const Login = (props) => {
         window.location.href = `/dashboard/${response.data.user.id}`;
       })
       .catch((err) => {
-        console.log("error", err.response);
+        console.log("error", err);
         if (
           err.response.data.message ===
           "No account associated with this google account"
         ) {
-          console.log("error ni ooo");
           return toast.error("No account associated with gmail account");
         }
       });

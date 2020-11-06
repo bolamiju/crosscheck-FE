@@ -81,7 +81,6 @@ const NewVerifications = () => {
     }
     verifRequest.push(obj);
   }
-  console.log(verifRequest);
   let total = verifRequest.reduce(
     (accumulator, currentValue) => accumulator + Number(currentValue.amount),
     0
@@ -178,7 +177,7 @@ const NewVerifications = () => {
             </div>
           ))}
           <div className={requestList ? "none" : "bottom-button"}>
-            <button onClick={addNewForm} className="add-btn">
+            <button onClick={addNewForm} className="add-new-btn">
               Add New Verification <FontAwesomeIcon icon={faPlus} />
             </button>
             <div className="line"></div>
@@ -196,7 +195,7 @@ const NewVerifications = () => {
             </div>
             <button
               onClick={verify}
-              className={!checked ? "notallowed btn proceed" : "btn proceed"}
+              className={!checked ? "notallowed proceed" : "proceed"}
               disabled={!checked}
             >
               Proceed to pay <img src={arrow} alt="right" />
@@ -291,7 +290,6 @@ const VerificationBody = styled.div`
     width: 100%;
     background: #ffffff 0% 0% no-repeat padding-box;
     border-radius: 7px;
-    height: 150px;
     box-shadow: 0px 0px 10px #00000029;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -344,13 +342,12 @@ const VerificationBody = styled.div`
     border: 1px solid #0092e0;
   }
   .add-btn {
-    width: 170px;
+    width: 250px;
     color: #0092e0;
     margin-right: 20px;
     background: #ffffff 0% 0% no-repeat padding-box !important;
-    border-radius: 13px;
+    border-radius: 20px;
     opacity: 1;
-    height: 30px;
     outline: 0;
     border: 1px solid #0092e0;
     cursor: pointer;
@@ -364,10 +361,16 @@ const VerificationBody = styled.div`
     }
   }
   .proceed {
-    width: 140px;
-    padding-top: 8px;
-    padding-bottom: 10px;
+    width: 200px;
+    padding: 8px;
     border-radius: 17px;
+    cursor: pointer;
+    color: white;
+    margin-right: 20px;
+    background: #0092e0 0% 0% no-repeat padding-box !important;
+    opacity: 1;
+    outline: none;
+    border: 1px solid #0092e0;
   }
   .notallowed {
     cursor: not-allowed;
@@ -415,23 +418,6 @@ const SelectSch = styled.div`
       height: 30px;
       outline: none;
       border: 1px solid #0092e0;
-    }
-    .add-btn {
-      width: 200px;
-      color: #0092e0;
-      margin-right: 20px;
-      background: #ffffff 0% 0% no-repeat padding-box !important;
-      border-radius: 13px;
-      opacity: 1;
-      height: 30px;
-      outline: 0;
-      border: 1px solid #0092e0;
-      cursor: pointer;
-      margin-bottom: 20px;
-      &:hover {
-        background: #0092e0 0% 0% no-repeat padding-box !important;
-        color: white;
-      }
     }
   }
   .new-table {

@@ -26,42 +26,46 @@ import VisibilitySensor from "react-visibility-sensor";
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
-  const [testimony, setTestimony] = useState("first");
+  const [testimonyIndex, setTestimonyIndex] = useState(0);
 
-  const slides = ["first", "second", "third"];
+  const testimonies = [
+    {
+      text:
+        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      author: {
+        name: "Adetola Akere",
+        organisation: "Lambda School",
+        position: "Student",
+      },
+    },
+    {
+      text:
+        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      author: {
+        name: "Mike Attara",
+        organisation: "Lambda School",
+        position: "Student",
+      },
+    },
+    {
+      text:
+        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      author: {
+        name: "Babatunde",
+        organisation: "Paystack",
+        position: "Software Engineer",
+      },
+    },
+  ];
 
-  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTestimonyIndex((index) => (index + 1) % testimonies.length);
+    }, 3000);
 
-  var myIndex = 0;
+    return () => clearInterval(interval);
+  }, []);
 
-  // function carousel() {
-  //   var i;
-  //   for (i = 0; i < slides.length; i++) {}
-  //   myIndex++;
-  //   if (myIndex > slides.length) {
-  //     myIndex = 1;
-  //   }
-  //   setTestimony(slides[myIndex - 1]);
-  //   setTimeout(carousel, 2000); // Change image every 2 seconds
-  // }
-  // carousel();
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setSeconds((seconds) => seconds + 1);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setTestimony(slides[seconds], 1000);
-  //   });
-  //   return () => clearInterval(interval);
-  // }, [seconds]);
-  const handleActiveTestimony = (value) => {
-    setTestimony(value);
-  };
   const handleMenuIcon = () => {
     setShow(!show);
   };
@@ -84,6 +88,8 @@ const LandingPage = () => {
     //   return false
     // }
   };
+
+  const testimony = testimonies[testimonyIndex];
 
   return (
     <div>
@@ -352,62 +358,23 @@ const LandingPage = () => {
 
           {/* MOBILE TESTIMONIES */}
           <Slides>
-            {testimony === "first" && (
-              <div className="w3-container w3-center w3-animate-left">
-                <p className="testimony-test">
-                  {" "}
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                  qui officia deserunt omnis iste natus.{" "}
-                </p>
-                <div className="profile">
-                  <img src={Avatar} alt="avatar" />
-                  <span>Bertha Johnson</span>
-                  <span>CTO Herculum</span>
-                </div>
+            <div className="w3-container w3-center w3-animate-left">
+              <p className="testimony-test">{testimony.text}</p>
+              <div className="profile">
+                <img src={Avatar} alt="avatar" />
+                <span>{testimony?.author?.name}</span>
+                <span>{`${testimony?.author?.position}, ${testimony?.author?.organisation}`}</span>
               </div>
-            )}
-            {testimony === "second" && (
-              <div className="w3-container w3-center w3-animate-left">
-                <p className="testimony-test">
-                  {" "}
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                  qui officia deserunt omnis iste natus.{" "}
-                </p>
-                <div className="profile">
-                  <img src={Avatar} alt="avatar" />
-                  <span>John Johsua</span>
-                  <span>CTO Herculum</span>
-                </div>
-              </div>
-            )}
-            {testimony === "third" && (
-              <div className="w3-container w3-center w3-animate-left">
-                <p className="testimony-test">
-                  {" "}
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                  qui officia deserunt omnis iste natus.{" "}
-                </p>
-                <div className="profile">
-                  <img src={Avatar} alt="avatar" />
-                  <span>Mike Dean</span>
-                  <span>CTO Herculum</span>
-                </div>
-              </div>
-            )}
+            </div>
           </Slides>
           <div className="circles">
-            <div
-              onClick={() => handleActiveTestimony("first")}
-              className={testimony === "first" ? "circle active" : "circle"}
-            ></div>
-            <div
-              onClick={() => handleActiveTestimony("second")}
-              className={testimony === "second" ? "circle active" : "circle"}
-            ></div>
-            <div
-              onClick={() => handleActiveTestimony("third")}
-              className={testimony === "third" ? "circle active" : "circle"}
-            ></div>
+            {testimonies.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => setTestimonyIndex(i)}
+                className={`circle ${testimonyIndex === i ? "active" : ""}`}
+              />
+            ))}
           </div>
         </Testimonies>
       </a>

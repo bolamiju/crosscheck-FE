@@ -1,5 +1,6 @@
 import * as types from "../actionTypes/users";
 import axios from "axios";
+import { BASE_URL } from "../constant/constants";
 
 export const setLoading = (payload) => {
   return {
@@ -30,16 +31,13 @@ export const setUser = (payload) => {
 };
 
 export const signUp = (user) =>
-  axios.post("https://croscheck.herokuapp.com/api/v1/users/register", user);
+  axios.post(`${BASE_URL}/api/v1/users/register`, user);
 
 export const login = (user) =>
-  axios.post(`https://croscheck.herokuapp.com/api/v1/users/login`, user);
+  axios.post(`${BASE_URL}/api/v1/users/login`, user);
 
 export const forgotPassword = (email) =>
-  axios.post(`https://croscheck.herokuapp.com/api/v1/users/forgot`, email);
+  axios.post(`${BASE_URL}/api/v1/users/forgot`, email);
 
 export const resetPassword = (token, passwords) =>
-  axios.put(
-    `https://croscheck.herokuapp.com/api/v1/users/reset/${token}`,
-    passwords
-  );
+  axios.put(`${BASE_URL}/api/v1/users/reset/${token}`, passwords);

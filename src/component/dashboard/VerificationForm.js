@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +25,7 @@ function VerificationForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
@@ -41,6 +43,18 @@ function VerificationForm({ initialValues, updateFormValues }) {
   const filteredItems = institutions.filter((item) =>
     item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
   );
+
+  const pageSize = 4;
+  const pagesCount = Math.ceil(filteredItems.length / pageSize);
+  console.log("pages co", pagesCount);
+  const handleNavigation = (e, index) => {
+    e.preventDefault();
+    if (index < 0 || index >= pagesCount) {
+      return;
+    } else {
+      setCurrentPage(index);
+    }
+  };
 
   const handleSelected = (institute) => {
     setSelectedInst(institute);
@@ -151,7 +165,7 @@ function VerificationForm({ initialValues, updateFormValues }) {
             setDetails(!details);
           }}
         >
-          <div>
+          <div style={{ width: "100%" }}>
             <img src={cap} alt="graduation cap" />
             <h3>Education Check - {selectedInst.name}</h3>
           </div>
@@ -254,21 +268,64 @@ function VerificationForm({ initialValues, updateFormValues }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                      <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      <td>{ite.category}</td>
-                      <th className="mobile-header">Value</th>
-                      <td>{ite.amount}</td>
-                    </tr>
-                    // <tr className="space"></tr>
-                  ))}
+                  {filteredItems
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{ite.name}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>{ite.category}</td>
+                        <th className="mobile-header">Value</th>
+                        <td>{ite.amount}</td>
+                      </tr>
+                      // <tr className="space"></tr>
+                    ))}
                 </tbody>
               </table>
+              <div className="pagination-line">
+                <p>
+                  Showing{" "}
+                  {
+                    filteredItems.slice(
+                      currentPage * pageSize,
+                      (currentPage + 1) * pageSize
+                    ).length
+                  }{" "}
+                  of {pagesCount} of entries
+                </p>
+                <Pagination aria-label="Page navigation example">
+                  <PaginationItem disabled={currentPage <= 0} className="prev">
+                    <PaginationLink
+                      onClick={(e) => handleNavigation(e, currentPage - 1)}
+                      previous
+                      href={() => false}
+                    />
+                  </PaginationItem>
+
+                  {[...Array(pagesCount)].map((page, i) => (
+                    <PaginationItem active={i === currentPage} key={i}>
+                      <PaginationLink
+                        onClick={(e) => handleNavigation(e, i)}
+                        href={() => false}
+                      >
+                        {i + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+
+                  <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                    <PaginationLink
+                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                      next
+                      href={() => false}
+                      className="next"
+                    />
+                  </PaginationItem>
+                </Pagination>
+              </div>
             </div>
           )}
         </SelectSch>
@@ -1085,7 +1142,7 @@ const SelectSch = styled.div`
       }
 
       th {
-        background-color: #1e2a36;
+        background-color: #0092e0;
         color: white;
       }
 

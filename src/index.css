@@ -25,3 +25,68 @@ html ::-webkit-scrollbar {
     background: white;
   }
 }
+
+.pagination-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+}
+.pagination li {
+  color: #0092e0;
+  border: 1px solid #0092e0;
+  padding: 3px 10px 3px 10px;
+}
+
+.pagination li:hover {
+  background: #0092e0;
+  color: white;
+  cursor: pointer;
+}
+.pagination .active {
+  background: #0092e0;
+  color: white;
+}
+.pagination .disabled {
+  cursor: not-allowed;
+  border: 1px solid grey !important;
+}
+
+.pagination .disabled a {
+  cursor: not-allowed;
+}
+
+.pagination li a {
+  text-decoration: none;
+}
+
+.pagination li a span {
+  font-weight: bold;
+}
+
+.add-new-btn {
+  width: 200px;
+  color: #0092e0;
+  margin-right: 20px;
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  border-radius: 16px;
+  opacity: 1;
+  /* height: 30px; */
+  outline: 0;
+  border: 1px solid #0092e0;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.add-new-btn:hover {
+  background: #0092e0 0% 0% no-repeat padding-box !important;
+  color: white;
+}
