@@ -56,9 +56,7 @@ const Login = (props) => {
           err.response.data.message === "Invalid email or password"
         ) {
           dispatch(setLoginError("invalid email or password"));
-        }
-        console.log("error", err.response);
-        if (
+        } else if (
           err.response.data.message &&
           err.response.data.message === "Account not activated"
         ) {
