@@ -481,6 +481,7 @@ label {
 @media screen and (max-width: 400px) {
   .form-control {
     width: 100% !important;
+    height: 40px !important;
   }
   .custom-icon {
     top: 42px;
