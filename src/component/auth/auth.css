@@ -482,6 +482,9 @@ label {
   .form-control {
     width: 100% !important;
   }
+  .custom-icon {
+    top: 42px;
+  }
   .visible-icon {
     position: absolute;
     left: auto;
@@ -546,7 +549,7 @@ label {
   .register-button {
     height: 35px;
     width: 100%;
-    margin-top: -5px;
+    margin-top: 10px;
     font-size: 14px;
   }
   .terms {
