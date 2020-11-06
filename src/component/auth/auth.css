@@ -538,10 +538,16 @@ label {
   .phone {
     width: 100%;
   }
+
+  .country-input {
+    margin-bottom: 30px;
+  }
+  .acctype {
+    margin-bottom: 0px !important;
+  }
   .country-input,
   .select-input {
     width: 100%;
-    margin-bottom: 30px;
   }
   .fields {
     margin-bottom: 30px;

@@ -167,7 +167,7 @@ function Register() {
                 ) : null}
               </div>
               <div className="country-phone fields">
-                <div className="country-input">
+                <div className="country-input acctype">
                   <label htmlFor="email">Is this an</label>
                   <select
                     name="accountType"
