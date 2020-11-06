@@ -479,6 +479,9 @@ label {
   }
 }
 @media screen and (max-width: 400px) {
+  .form-control {
+    width: 100% !important;
+  }
   .visible-icon {
     position: absolute;
     left: auto;
@@ -506,7 +509,7 @@ label {
     max-width: 350px !important;
   }
   .reset-create {
-    width: 70%;
+    width: 85%;
   }
   #login-section {
     height: 400px;
