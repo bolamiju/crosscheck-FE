@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
+import ava1 from "../asset/ava1.png";
+import ava2 from "../asset/ava2.png";
 import Mail from "../asset/mail.svg";
 import phone from "../asset/phone.svg";
 import Computer from "../asset/Computer.png";
@@ -37,6 +39,7 @@ const LandingPage = () => {
         organisation: "Lambda School",
         position: "Student",
       },
+      avatar: ava1,
     },
     {
       text:
@@ -46,6 +49,7 @@ const LandingPage = () => {
         organisation: "Lambda School",
         position: "Student",
       },
+      avatar: ava2,
     },
     {
       text:
@@ -55,6 +59,7 @@ const LandingPage = () => {
         organisation: "Paystack",
         position: "Software Engineer",
       },
+      avatar: Avatar,
     },
   ];
 
@@ -325,7 +330,7 @@ const LandingPage = () => {
                 every other applicant.
               </p>
               <div className="profile">
-                <img src={Avatar} alt="avatar" />
+                <img src={ava2} alt="avatar" />
                 <p>Bertha Johnson</p>
                 <p className="role">CTO Herculanum</p>
               </div>
@@ -337,7 +342,7 @@ const LandingPage = () => {
                 staying on top of things.
               </p>
               <div className="profile">
-                <img src={Avatar} alt="avatar" />
+                <img src={ava1} alt="avatar" />
                 <p>Bertha Johnson</p>
                 <p className="role">HR Manager/Confetti Group</p>
               </div>
@@ -361,7 +366,7 @@ const LandingPage = () => {
             <div className="w3-container w3-center w3-animate-left">
               <p className="testimony-test">{testimony.text}</p>
               <div className="profile">
-                <img src={Avatar} alt="avatar" />
+                <img src={testimony?.avatar} alt="avatar" />
                 <span>{testimony?.author?.name}</span>
                 <span>{`${testimony?.author?.position}, ${testimony?.author?.organisation}`}</span>
               </div>
