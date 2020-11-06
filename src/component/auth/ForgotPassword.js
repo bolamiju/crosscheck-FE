@@ -50,7 +50,7 @@ const ForgotPassword = () => {
   return (
     <div class="forgot-password">
       <form>
-        {!success ? (
+        {success ? (
           <>
             <p className="forgot-password-content">
               Check your inbox for the next steps. If you don't receive an
@@ -103,7 +103,7 @@ const ForgotPassword = () => {
               {loading ? "Requesting" : "SUBMIT"}
             </button>
             <div className="reset-create">
-              <p>
+              {/* <p>
                 <Link
                   to="/"
                   style={{ textDecoration: "none", color: "#0092e0" }}
@@ -111,7 +111,18 @@ const ForgotPassword = () => {
                   Login to your account
                 </Link>
               </p>
-              <p style={{ color: "#0092e0" }}>Home</p>
+              <p style={{ color: "#0092e0" }}>Home</p> */}
+              <p style={{ width: "100%" }}>
+                If you are having problems recovering your password{" "}
+                <Link to="/home" className="cntct">
+                  contact us
+                </Link>
+                , or go{" "}
+                <Link to="/home" className="cntct">
+                  Home
+                </Link>
+                .
+              </p>
             </div>
           </Div>
         )}

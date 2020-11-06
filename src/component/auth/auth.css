@@ -33,7 +33,7 @@ body {
   margin: 0 auto;
 }
 .reset-create {
-  width: 50%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 }
@@ -56,7 +56,13 @@ body {
   font-size: 14px;
 }
 .reset-create p {
-  font-size: 14px;
+  font-size: 16px;
+  color: #707070;
+  font-weight: 400;
+}
+.reset-create .cntct {
+  color: #0092e0;
+  text-decoration: none;
 }
 .container {
   display: flex;
