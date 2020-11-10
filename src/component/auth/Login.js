@@ -45,10 +45,11 @@ const Login = (props) => {
         console.log("RES", res.data);
         if (res.data.message && res.data.message === "Logged in successfully") {
           dispatch(setUser(res.data.user));
+          localStorage.setItem("user", JSON.stringify(res.data.user));
           formik.resetForm();
 
           // window.location.href = `/dashboard/${res.data.user.id}`;
-          props.history.push(`/dashboard/${res.data.user.id}`);
+          props.history.push("/dashboard");
         }
         dispatch(setLoading(false));
       } catch (err) {

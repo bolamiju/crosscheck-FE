@@ -67,11 +67,11 @@ const NewVerifications = () => {
             );
           }
         }
-      } else {
-        dispatch(addVerificationList(formValues));
-        setRequestList(true);
       }
     }
+    console.log("console sss");
+    dispatch(addVerificationList(formValues));
+    setRequestList(true);
   };
   const processPayment = async () => {
     await Promise.allSettled(formValues.map((value) => request(value)));
@@ -86,9 +86,9 @@ const NewVerifications = () => {
     );
   };
 
-  const deleteOneVerification = (idx) => {
+  const deleteOneVerification = (idx) => () => {
     setFormValues((formValues) =>
-      formValues.filter((value, index) => index !== idx)
+      formValues.filter((value, index) => (index === idx ? null : value))
     );
   };
 
@@ -190,11 +190,10 @@ const NewVerifications = () => {
               {" "}
               <VerificationForm
                 key={idx}
-                id={idx}
                 verificationsLength={verificationsLength}
                 initialValues={values}
                 updateFormValues={updateFormValues(idx)}
-                deleteOneVerification={deleteOneVerification}
+                deleteOneVerification={deleteOneVerification(idx)}
               />
             </div>
           ))}

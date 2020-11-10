@@ -13,16 +13,7 @@ export default function userReducer(state = initialState, action) {
         ...state,
         verifications: [...action.payload],
       };
-    case types.CHANGE_SCH_CARD:
-      return {
-        ...state,
-        schCard: action.payload,
-      };
-    case types.SCH_SELECTED:
-      return {
-        ...state,
-        selectedInst: action.payload,
-      };
+
     case types.DELETE_VERIFICATION:
       let newArr = [];
       state.verifications.filter((verification) => {

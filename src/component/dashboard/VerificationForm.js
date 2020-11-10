@@ -23,13 +23,11 @@ import cap from "../../asset/graduation-cap.svg";
 import download from "../../asset/download.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
-import { changeSchCard, selectSchool } from "../../state/actions/verifications";
 import Institution from "../../asset/institution.svg";
 
 function VerificationForm({
   initialValues,
   updateFormValues,
-  id,
   deleteOneVerification,
   verificationsLength,
 }) {
@@ -40,10 +38,14 @@ function VerificationForm({
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const { schCard, selectedInst } = useSelector((state) => state.verifications);
-  const [input, setInput] = useState(selectedInst?.name || "");
+
+  const [selectedInst, setSelectedInst] = useState({});
+  const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
-  // const [schCard, setSchCard] = useState(false);
+  const [schCard, setSchCard] = useState(false);
+  const [country, setCountry] = useState("");
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -67,10 +69,10 @@ function VerificationForm({
   };
 
   const handleSelected = (institute) => {
-    dispatch(selectSchool(institute));
+    setSelectedInst(institute);
     setHideTable(true);
     setInput(institute.name);
-    dispatch(changeSchCard(true));
+    setSchCard(true);
   };
 
   useEffect(() => {
@@ -96,6 +98,7 @@ function VerificationForm({
       var formData = new FormData();
       formData.append("institution", selectedInst.name);
       formData.append("amount", selectedInst.amount);
+      formData.append("email", user.email);
       for (var key in values) {
         formData.append(key, values[key]);
       }
@@ -192,10 +195,7 @@ function VerificationForm({
           <div className="inst-name">
             <span>Institution name</span>
             <span>{selectedInst.name}</span>
-            <span
-              className="change"
-              onClick={() => dispatch(changeSchCard(false))}
-            >
+            <span className="change" onClick={() => setSchCard(false)}>
               <small>change</small>
             </span>
           </div>
@@ -235,6 +235,13 @@ function VerificationForm({
                   outline: "none",
                   width: "100%",
                   borderRadius: "14px",
+                }}
+                name="country"
+                id="country"
+                className="country"
+                value={country}
+                onChange={(_, e) => {
+                  setCountry(e.target.value);
                 }}
               />
             </div>
@@ -298,6 +305,8 @@ function VerificationForm({
                       // <tr className="space"></tr>
                     ))}
                 </tbody>
+              </table>
+              {!hideTable && (
                 <div className="pagination-line">
                   <p>
                     Showing{" "}
@@ -342,7 +351,7 @@ function VerificationForm({
                     </PaginationItem>
                   </Pagination>
                 </div>
-              </table>
+              )}
             </div>
           )}
         </SelectSch>
@@ -831,7 +840,7 @@ function VerificationForm({
           )}
         </form>
         {verificationsLength > 1 && (
-          <button onClick={() => deleteOneVerification(id)} className="delete">
+          <button onClick={deleteOneVerification} className="delete">
             <FontAwesomeIcon icon={faTrash} /> Delete verification
           </button>
         )}

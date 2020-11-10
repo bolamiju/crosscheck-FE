@@ -9,14 +9,12 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { getAllInstitutions } from "../../state/actions/institutions";
-import { changeSchCard, selectSchool } from "../../state/actions/verifications";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const { selectedInst } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
-  // const [selectedInst, setSelectedInst] = useState({});
+  const [selectedInst, setSelectedInst] = useState({});
   const [hideTable, setHideTable] = useState(false);
   useEffect(() => {
     dispatch(getAllInstitutions());
@@ -32,10 +30,9 @@ const DashboardContent = ({ history }) => {
   );
 
   const handleSelected = (institute) => {
-    dispatch(selectSchool(institute));
+    setSelectedInst(institute);
     setHideTable(true);
     setInput(institute.name);
-    dispatch(changeSchCard(true));
     history.push("/new");
   };
 

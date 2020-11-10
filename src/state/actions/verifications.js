@@ -15,20 +15,6 @@ export const deleteVerification = (payload) => {
   };
 };
 
-export const changeSchCard = (payload) => {
-  return {
-    type: types.CHANGE_SCH_CARD,
-    payload,
-  };
-};
-
-export const selectSchool = (payload) => {
-  return {
-    type: types.SCH_SELECTED,
-    payload,
-  };
-};
-
 export const requestVerification = (val) => {
   console.log(val);
   return axios.post(
