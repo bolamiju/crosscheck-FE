@@ -23,6 +23,7 @@ import {
 import "react-flags-select/css/react-flags-select.css";
 
 const Login = (props) => {
+  console.log(props);
   const [visibility, setVisibility] = useState(false);
 
   const dispatch = useDispatch();

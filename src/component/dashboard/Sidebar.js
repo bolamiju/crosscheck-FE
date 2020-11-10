@@ -28,7 +28,7 @@ function Sidebar() {
       </LogoSection>
       <ListSection>
         <ul>
-          <Link className="link" to="/dashboard/:id">
+          <Link className="link" to="/dashboard">
             {" "}
             <img src={dashboard} alt="dash" />
             <li>DASHBOARD</li>

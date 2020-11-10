@@ -23,6 +23,7 @@ import cap from "../../asset/graduation-cap.svg";
 import download from "../../asset/download.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
+import { changeSchCard, selectSchool } from "../../state/actions/verifications";
 import Institution from "../../asset/institution.svg";
 
 function VerificationForm({
@@ -39,10 +40,10 @@ function VerificationForm({
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const [selectedInst, setSelectedInst] = useState({});
-  const [input, setInput] = useState("");
+  const { schCard, selectedInst } = useSelector((state) => state.verifications);
+  const [input, setInput] = useState(selectedInst?.name || "");
   const [hideTable, setHideTable] = useState(false);
-  const [schCard, setSchCard] = useState(false);
+  // const [schCard, setSchCard] = useState(false);
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -55,7 +56,7 @@ function VerificationForm({
 
   const pageSize = 4;
   const pagesCount = Math.ceil(filteredItems.length / pageSize);
-  console.log("pages co", pagesCount);
+
   const handleNavigation = (e, index) => {
     e.preventDefault();
     if (index < 0 || index >= pagesCount) {
@@ -66,10 +67,10 @@ function VerificationForm({
   };
 
   const handleSelected = (institute) => {
-    setSelectedInst(institute);
+    dispatch(selectSchool(institute));
     setHideTable(true);
     setInput(institute.name);
-    setSchCard(true);
+    dispatch(changeSchCard(true));
   };
 
   useEffect(() => {
@@ -191,7 +192,10 @@ function VerificationForm({
           <div className="inst-name">
             <span>Institution name</span>
             <span>{selectedInst.name}</span>
-            <span className="change" onClick={() => setSchCard(false)}>
+            <span
+              className="change"
+              onClick={() => dispatch(changeSchCard(false))}
+            >
               <small>change</small>
             </span>
           </div>
@@ -294,48 +298,51 @@ function VerificationForm({
                       // <tr className="space"></tr>
                     ))}
                 </tbody>
-              </table>
-              <div className="pagination-line">
-                <p>
-                  Showing{" "}
-                  {
-                    filteredItems.slice(
-                      currentPage * pageSize,
-                      (currentPage + 1) * pageSize
-                    ).length
-                  }{" "}
-                  of {pagesCount} of entries
-                </p>
-                <Pagination aria-label="Page navigation example">
-                  <PaginationItem disabled={currentPage <= 0} className="prev">
-                    <PaginationLink
-                      onClick={(e) => handleNavigation(e, currentPage - 1)}
-                      previous
-                      href={() => false}
-                    />
-                  </PaginationItem>
-
-                  {[...Array(pagesCount)].map((page, i) => (
-                    <PaginationItem active={i === currentPage} key={i}>
+                <div className="pagination-line">
+                  <p>
+                    Showing{" "}
+                    {
+                      filteredItems.slice(
+                        currentPage * pageSize,
+                        (currentPage + 1) * pageSize
+                      ).length
+                    }{" "}
+                    of {pagesCount} of entries
+                  </p>
+                  <Pagination aria-label="Page navigation example">
+                    <PaginationItem
+                      disabled={currentPage <= 0}
+                      className="prev"
+                    >
                       <PaginationLink
-                        onClick={(e) => handleNavigation(e, i)}
+                        onClick={(e) => handleNavigation(e, currentPage - 1)}
+                        previous
                         href={() => false}
-                      >
-                        {i + 1}
-                      </PaginationLink>
+                      />
                     </PaginationItem>
-                  ))}
 
-                  <PaginationItem disabled={currentPage >= pagesCount - 1}>
-                    <PaginationLink
-                      onClick={(e) => handleNavigation(e, currentPage + 1)}
-                      next
-                      href={() => false}
-                      className="next"
-                    />
-                  </PaginationItem>
-                </Pagination>
-              </div>
+                    {[...Array(pagesCount)].map((page, i) => (
+                      <PaginationItem active={i === currentPage} key={i}>
+                        <PaginationLink
+                          onClick={(e) => handleNavigation(e, i)}
+                          href={() => false}
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                      <PaginationLink
+                        onClick={(e) => handleNavigation(e, currentPage + 1)}
+                        next
+                        href={() => false}
+                        className="next"
+                      />
+                    </PaginationItem>
+                  </Pagination>
+                </div>
+              </table>
             </div>
           )}
         </SelectSch>

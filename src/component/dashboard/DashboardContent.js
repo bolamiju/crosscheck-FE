@@ -9,13 +9,14 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { getAllInstitutions } from "../../state/actions/institutions";
+import { changeSchCard, selectSchool } from "../../state/actions/verifications";
 
-function DashboardContent() {
+const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-
+  const { selectedInst } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
-  const [selectedInst, setSelectedInst] = useState({});
+  // const [selectedInst, setSelectedInst] = useState({});
   const [hideTable, setHideTable] = useState(false);
   useEffect(() => {
     dispatch(getAllInstitutions());
@@ -26,21 +27,18 @@ function DashboardContent() {
     setInput(e.target.value);
   }
 
-  // const handleSelected = (institute) => {
-  //   setSelectedInst(institute);
-  //   setInput(institute.name);
-  // };
-
   const filteredItems = institutions.filter((item) =>
     item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
   );
 
   const handleSelected = (institute) => {
-    setSelectedInst(institute);
+    dispatch(selectSchool(institute));
     setHideTable(true);
     setInput(institute.name);
+    dispatch(changeSchCard(true));
+    history.push("/new");
   };
-  console.log(selectedInst);
+
   return (
     <DashboardLayout>
       <RequisitionBody>
@@ -106,7 +104,6 @@ function DashboardContent() {
                   height: "34px",
                   border: "2px solid #e2e2e2",
                   outline: "none",
-                  width: "100%",
                   borderRadius: "14px",
                   fontSize: "16px",
                 }}
@@ -205,7 +202,7 @@ function DashboardContent() {
       </RequisitionBody>
     </DashboardLayout>
   );
-}
+};
 
 export default DashboardContent;
 
@@ -248,12 +245,13 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 97%;
       .schl-input {
-        height: 30px;
+        height: 34px;
         border: 2px solid #e2e2e2;
         outline: none;
         width: 100%;
         border-radius: 14px;
         padding-left: 5px;
+        padding-left: 15px;
         @media screen and (max-width: 400px) {
           font-size: 16px;
         }

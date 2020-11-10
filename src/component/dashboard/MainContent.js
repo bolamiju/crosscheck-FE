@@ -3,7 +3,12 @@ import { useRouteMatch } from "react-router-dom";
 import DashboardContent from "./DashboardContent";
 import NewVerification from "./NewVerifications";
 
-const MainContent = () => {
+const MainContent = (props) => {
+  const {
+    match: { params },
+    history,
+  } = props;
+
   let route = useRouteMatch();
   return (
     // <DashboardLayout>
@@ -12,7 +17,7 @@ const MainContent = () => {
       {route && route.url === "/new" ? (
         <NewVerification />
       ) : (
-        <DashboardContent />
+        <DashboardContent history={history} />
       )}
     </>
   );

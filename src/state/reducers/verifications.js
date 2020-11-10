@@ -2,6 +2,8 @@ import * as types from "../actionTypes/verifications";
 
 const initialState = {
   verifications: [],
+  schCard: false,
+  selectedInst: {},
 };
 
 export default function userReducer(state = initialState, action) {
@@ -10,6 +12,16 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         verifications: [...action.payload],
+      };
+    case types.CHANGE_SCH_CARD:
+      return {
+        ...state,
+        schCard: action.payload,
+      };
+    case types.SCH_SELECTED:
+      return {
+        ...state,
+        selectedInst: action.payload,
       };
     case types.DELETE_VERIFICATION:
       let newArr = [];
