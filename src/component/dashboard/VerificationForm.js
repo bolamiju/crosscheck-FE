@@ -3,7 +3,11 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from "react-switch";
@@ -21,7 +25,13 @@ import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
-function VerificationForm({ initialValues, updateFormValues }) {
+function VerificationForm({
+  initialValues,
+  updateFormValues,
+  id,
+  deleteOneVerification,
+  verificationsLength,
+}) {
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
@@ -37,7 +47,6 @@ function VerificationForm({ initialValues, updateFormValues }) {
   const handleInputChange = (e) => {
     setInput(e.target.value);
     setHideTable(false);
-    // console.log(e.target.value);
   };
 
   const filteredItems = institutions.filter((item) =>
@@ -67,9 +76,6 @@ function VerificationForm({ initialValues, updateFormValues }) {
     dispatch(getAllInstitutions());
   }, [dispatch]);
 
-  // const handleImage = (e) => {
-  //   setCertImage(e.target.files[0]);
-  // };
   const formik = useFormik({
     initialValues,
 
@@ -92,11 +98,9 @@ function VerificationForm({ initialValues, updateFormValues }) {
       for (var key in values) {
         formData.append(key, values[key]);
       }
-      // console.log('form data',formData)
       for (var pair of formData.entries()) {
-        console.log("awon form", pair[0] + ", " + pair[1]);
+        console.log(pair[0] + ", " + pair[1]);
       }
-      console.log("all forms", formData instanceof FormData);
       updateFormValues(formData);
     },
     validationSchema: Yup.object().shape({
@@ -112,7 +116,13 @@ function VerificationForm({ initialValues, updateFormValues }) {
   });
   const submitRequest = (e) => {
     e.preventDefault();
+    if (!formik.values.certImage) {
+      return toast.error("please upload a file");
+    } else if (!selectedInst.name) {
+      return toast.error("please select a school");
+    }
     formik.handleSubmit("paid");
+    toast.success("Verification details saved");
 
     // updateFormValues(initialValues);
   };
@@ -237,7 +247,7 @@ function VerificationForm({ initialValues, updateFormValues }) {
               <input
                 type="text"
                 style={{
-                  height: "30px",
+                  height: "34px",
                   border: "2px solid #e2e2e2",
                   outline: "none",
                   width: "100%",
@@ -770,14 +780,11 @@ function VerificationForm({ initialValues, updateFormValues }) {
             <FormDiv>
               <Field>
                 <p className="upload-text">
-                  Mandatory documents that are required by the institute in
-                  order to process a verification are marked with asterik below.
-                  <br /> You can also use 'Add another document' to add any
-                  further documentation you feel might be useful
+                  Please upload file in (pdf, jpg,jpeg) format only
                 </p>
               </Field>
               <UploadSection>
-                <Document>
+                {/* <Document>
                   <div className="consent">
                     <p>Download & sign a consent form</p>
                     <img src={form} alt="forms_document" />
@@ -786,7 +793,7 @@ function VerificationForm({ initialValues, updateFormValues }) {
                     <img src={download} alt="download_icon" />
                     <img src={documentAttach} alt="download_icon" />
                   </div>
-                </Document>
+                </Document> */}
 
                 <Document className="second-upload">
                   <div className="consent">
@@ -798,6 +805,7 @@ function VerificationForm({ initialValues, updateFormValues }) {
                     <input
                       type="file"
                       name="certImage"
+                      style={{ cursor: "pointer" }}
                       onChange={(event) => {
                         formik.setFieldValue(
                           "certImage",
@@ -808,12 +816,18 @@ function VerificationForm({ initialValues, updateFormValues }) {
                   </div>
                 </Document>
               </UploadSection>
+
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
               </button>
             </FormDiv>
           )}
         </form>
+        {verificationsLength > 1 && (
+          <button onClick={() => deleteOneVerification(id)} className="delete">
+            <FontAwesomeIcon icon={faTrash} /> Delete verification
+          </button>
+        )}
       </FormContainer>
     </SingleCheck>
   );
@@ -846,6 +860,7 @@ const Document = styled.div`
   background: #e9eaed 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
+  margin-bottom: 20px;
 
   .icons {
     height: 17%;
@@ -874,7 +889,7 @@ const Document = styled.div`
 const FormContainer = styled.div`
   margin-top: 15px;
   width: 100%;
-  background: #fafafb 0% 0% no-repeat padding-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 7px;
   box-shadow: 0px 0px 10px #00000029;
   overflow-x: hidden;
@@ -923,6 +938,24 @@ const FormContainer = styled.div`
           color: #0092e0;
         }
       }
+    }
+  }
+  .delete {
+    width: 180px;
+    color: #0092e0;
+    margin-left: 20px;
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    border-radius: 18px;
+    opacity: 1;
+    height: 30px;
+    outline: none;
+    border: 1px solid #0092e0;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    &:hover {
+      background: #0092e0 0% 0% no-repeat padding-box !important;
+      color: white;
     }
   }
 `;
@@ -1041,7 +1074,7 @@ const SelectSch = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: #fafafb 0% 0% no-repeat padding-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 7px;
   /* height: 150px; */
   box-shadow: 0px 0px 10px #00000029;

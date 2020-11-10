@@ -246,7 +246,7 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-right: 20px;
       padding-left: 20px;
-      width: 48%;
+      width: 97%;
       .schl-input {
         height: 30px;
         border: 2px solid #e2e2e2;

@@ -52,13 +52,26 @@ const NewVerifications = () => {
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
+  const verificationsLength = formValues.length;
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
   };
   const verify = async () => {
-    dispatch(addVerificationList(formValues));
-    setRequestList(true);
+    for (let i = 0; i < formValues.length; i++) {
+      if (formValues[i] instanceof FormData === false) {
+        for (const key in formValues[i]) {
+          if (!formValues[i][key]) {
+            return toast.error(
+              "Please complete and submit all verification details"
+            );
+          }
+        }
+      } else {
+        dispatch(addVerificationList(formValues));
+        setRequestList(true);
+      }
+    }
   };
   const processPayment = async () => {
     await Promise.allSettled(formValues.map((value) => request(value)));
@@ -70,6 +83,12 @@ const NewVerifications = () => {
   const updateFormValues = (idx) => (data) => {
     setFormValues((formValues) =>
       formValues.map((value, index) => (index === idx ? data : value))
+    );
+  };
+
+  const deleteOneVerification = (idx) => {
+    setFormValues((formValues) =>
+      formValues.filter((value, index) => index !== idx)
     );
   };
 
@@ -171,8 +190,11 @@ const NewVerifications = () => {
               {" "}
               <VerificationForm
                 key={idx}
+                id={idx}
+                verificationsLength={verificationsLength}
                 initialValues={values}
                 updateFormValues={updateFormValues(idx)}
+                deleteOneVerification={deleteOneVerification}
               />
             </div>
           ))}
@@ -257,8 +279,8 @@ const NewVerifications = () => {
                   className="add-btn"
                   onClick={() => setRequestList(false)}
                 >
-                  Add another Verification &nbsp;{" "}
                   <FontAwesomeIcon icon={faPlus} />
+                  Add another Verification &nbsp;{" "}
                 </button>
 
                 <PaystackButton {...componentProps} className="btn" />

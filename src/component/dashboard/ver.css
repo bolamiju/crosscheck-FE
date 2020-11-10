@@ -49,6 +49,8 @@
   background-color: #0092e0;
   margin-bottom: -10px;
   border-bottom-left-radius: 2px;
+  content: "upload";
+  color: white;
 }
 
 .file_button_container input {
