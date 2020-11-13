@@ -130,7 +130,8 @@ function VerificationForm({
 
     // updateFormValues(initialValues);
   };
-  const handleQualificationTab = () => {
+  const handleQualificationTab = (e) => {
+    e.preventDefault();
     if (
       formik.values.firstName.length === 0 ||
       formik.values.lastName.length === 0 ||
@@ -143,7 +144,7 @@ function VerificationForm({
     let DOB = Number(formik.values.dateOfBirth.substr(0, 4));
     let age = presentYear - DOB;
 
-    if (age < 15) {
+    if (age < 17) {
       return toast.error("Age cannot be less than 17");
     }
     setActiveTab("qualification-details");
@@ -345,7 +346,7 @@ function VerificationForm({
                 &nbsp; Individual details
               </li>
               <li
-                onClick={handleQualificationTab}
+                onClick={(e) => handleQualificationTab(e)}
                 className={
                   activeTab === "qualification-details" ? "activeTab" : ""
                 }
@@ -440,7 +441,7 @@ function VerificationForm({
                 </>
               </Field>
 
-              <Field>
+              <Field className="DOB">
                 <label>
                   Date of Birth
                   <span>*</span>
@@ -477,14 +478,14 @@ function VerificationForm({
                 internal system if you have one
               </p>
               <button
-                disabled={
-                  formik.values.firstName.length === 0 ||
-                  formik.values.lastName.length === 0 ||
-                  formik.values.dateOfBirth.length === 0 ||
-                  new Date().getFullYear() -
-                    Number(formik.values.dateOfBirth.substr(0, 4)) <
-                    17
-                }
+                // disabled={
+                //   formik.values.firstName.length === 0 ||
+                //   formik.values.lastName.length === 0 ||
+                //   formik.values.dateOfBirth.length === 0 ||
+                //   new Date().getFullYear() -
+                //     Number(formik.values.dateOfBirth.substr(0, 4)) <
+                //     17
+                // }
                 className={
                   formik.values.firstName.length === 0 ||
                   formik.values.lastName.length === 0 ||
@@ -495,9 +496,7 @@ function VerificationForm({
                     ? "btn notallowed"
                     : "btn"
                 }
-                onClick={() => {
-                  setActiveTab("qualification-details");
-                }}
+                onClick={handleQualificationTab}
               >
                 Next
                 <img src={arrow} alt="right" />
@@ -889,6 +888,17 @@ const FormContainer = styled.div`
   overflow-x: hidden;
   margin-bottom: 25px;
   padding-bottom: 20px;
+  .DOB {
+    @media (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      @media (max-width: 500px) {
+        width: 100% !important;
+      }
+    }
+  }
   .btn {
     float: right;
     display: flex;
@@ -1016,6 +1026,7 @@ const Field = styled.div`
   width: 100%;
   padding-left: 40px;
   padding-bottom: 20px;
+
   @media (max-width: 500px) {
     padding-left: 15px;
   }
