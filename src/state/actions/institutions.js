@@ -13,5 +13,8 @@ export const getAllInstitutions = () => (dispatch) => {
     .get(`https://croscheck.herokuapp.com/api/v1/institutions`)
     .then(({ data }) => {
       dispatch(fetchInstitutes(data.institution));
+    })
+    .catch((err) => {
+      return err;
     });
 };

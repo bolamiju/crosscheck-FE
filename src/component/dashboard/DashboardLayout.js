@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import DashHeader from "./DashHeader";
 
-function DashboardLayout({ children }) {
+function DashboardLayout({ children, history }) {
   const [show, setShow] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ function DashboardLayout({ children }) {
       <aside> {show && <Sidebar />}</aside>
 
       <section>
-        <Sidebar className="sec" />
+        <Sidebar className="sec" history={history} />
       </section>
 
       <DashHeader setShow={setShow} show={show} />
@@ -23,12 +23,12 @@ function DashboardLayout({ children }) {
 export default DashboardLayout;
 const Div = styled.div`
   aside {
-    @media (min-width: 402px) {
+    @media (min-width: 500px) {
       display: none;
     }
   }
   section {
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
       display: none !important;
     }
   }
@@ -41,7 +41,7 @@ const Main = styled.main`
   bottom: 0;
   width: calc(100% - 230px);
 
-  @media (max-width: 400px) {
+  @media (max-width: 500px) {
     width: 100%;
   }
 `;

@@ -86,9 +86,9 @@ const NewVerifications = () => {
     );
   };
 
-  const deleteOneVerification = (idx) => () => {
+  const deleteOneVerification = (idx) => (data) => {
     setFormValues((formValues) =>
-      formValues.filter((value, index) => (index === idx ? null : value))
+      formValues.filter((value, index) => (index !== idx ? value : null))
     );
   };
 
@@ -168,17 +168,7 @@ const NewVerifications = () => {
             <Line></Line>
             <img src={finish} alt="details" />
           </IconDiv>
-          <div
-            style={{
-              width: "64%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              margin: "0 auto",
-              fontSize: "12px",
-              marginTop: "20px",
-            }}
-          >
+          <div className="step-text">
             <span style={{ paddingLeft: "15px" }}>START</span>
             <span style={{ paddingLeft: "5px" }}>VERIFICATION DETAILS</span>
             <span style={{ paddingRight: "15px" }}>PROCESS PAYMENT</span>
@@ -245,13 +235,13 @@ const NewVerifications = () => {
                       verifRequest.map((ver) => (
                         <tr key={ver.institution}>
                           <th className="mobile-header">Number</th>
-                          <td>{ver.institution}</td>
+                          <td>Universityof Lagos</td>
                           <th className="mobile-header">Market rate</th>
-                          <td>{ver.lastName}</td>
+                          <td>Akere</td>
                           <th className="mobile-header">Weight</th>
-                          <td>{ver.amount}</td>
+                          <td>50000</td>
                           <th className="mobile-header">Value</th>
-                          <td>{ver.graduationYear}</td>
+                          <td>2014</td>
                           <td>
                             <FontAwesomeIcon
                               icon={faTrash}
@@ -301,6 +291,22 @@ const VerificationBody = styled.div`
   padding-right: 30px;
   background: #fafafb;
   font-family: "Rubik", sans-serif;
+  @media (max-width: 500px) {
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+  .step-text {
+    width: 64%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 12px;
+    margin-top: 20px;
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
   .none {
     display: none;
   }
@@ -316,7 +322,7 @@ const VerificationBody = styled.div`
     padding-bottom: 30px;
     .line {
       border-bottom: 1px solid grey;
-      width: 85%;
+      width: 95%;
       margin-left: 40px;
       margin-bottom: 20px;
       margin-top: 10px;
@@ -406,6 +412,9 @@ const IconDiv = styled.div`
   margin: 0 auto;
   margin-top: 15px;
   margin-bottom: 20px;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const Line = styled.div`

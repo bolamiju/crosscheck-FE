@@ -8,15 +8,20 @@ import contact from "../../asset/contact.svg";
 import logout from "../../asset/logout.svg";
 import receipt from "../../asset/receipt.svg";
 import newVer from "../../asset/new.svg";
-import history from "../../asset/history.svg";
+import histry from "../../asset/history.svg";
 import {
   faAngleDoubleDown,
   faAngleDown,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Sidebar() {
+function Sidebar({ history }) {
   const [show, setShow] = useState(false);
+
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/");
+  };
   return (
     <Container className="hideshow">
       <LogoSection>
@@ -58,7 +63,7 @@ function Sidebar() {
           </div>
           <Link to="/dashboard/:id" className="link">
             {" "}
-            <img src={history} alt="history" />
+            <img src={histry} alt="history" />
             <li>VERIFICATION HISTORY</li>
           </Link>
           <Link className="link">
@@ -70,7 +75,7 @@ function Sidebar() {
             <img src={receipt} alt="receipt" />
             <li>RECEIPTS</li>
           </Link>
-          <Link className="link" to="/">
+          <Link className="link" onClick={logOut}>
             {" "}
             <img src={logout} alt="logout" /> <li>LOGOUT</li>
           </Link>
@@ -128,12 +133,13 @@ const ListSection = styled.div`
       li {
         padding-bottom: 20px;
         cursor: pointer;
-        opacity: 0.4;
+
         &:hover {
-          opacity: 1;
+          opacity: 0.5;
         }
       }
       .option {
+        color: white;
         text-decoration: none;
       }
     }

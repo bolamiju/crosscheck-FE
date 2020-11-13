@@ -4,6 +4,7 @@ const initialState = {
   verifications: [],
   schCard: false,
   selectedInst: {},
+  userVerifications: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -12,6 +13,12 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         verifications: [...action.payload],
+      };
+
+    case types.USER_VERIFICATIONS:
+      return {
+        ...state,
+        userVerifications: action.payload,
       };
 
     case types.DELETE_VERIFICATION:

@@ -19,7 +19,7 @@ const Header = styled.div`
   position: fixed;
   font-family: "Rubik", sans-serif;
   z-index: 1;
-  @media (max-width: 400px) {
+  @media (max-width: 500px) {
     width: 100%;
   }
 `;

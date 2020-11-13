@@ -194,9 +194,11 @@ function VerificationForm({
           <p className="institution-details">Institution Details</p>
           <div className="inst-name">
             <span>Institution name</span>
-            <span>{selectedInst.name}</span>
-            <span className="change" onClick={() => setSchCard(false)}>
-              <small>change</small>
+            <span>
+              {selectedInst.name}{" "}
+              <span className="change" onClick={() => setSchCard(false)}>
+                <small>change</small>
+              </span>
             </span>
           </div>
           <div className="sch-country">
@@ -211,7 +213,7 @@ function VerificationForm({
           <div className="req-trans">
             <img src={Institution} alt="select a sch" />
 
-            <div>
+            <div className="select-inst">
               <p>Select an institute</p>
               <p style={{ fontSize: "12px" }}>
                 Select preferred institute to conduct verification
@@ -219,52 +221,22 @@ function VerificationForm({
             </div>
           </div>
           <div className="selects">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingLeft: "20px",
-                width: "46%",
-              }}
-            >
+            <div className="select-country">
               <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
               <CountryDropdown
-                style={{
-                  height: "34px",
-                  border: "2px solid #e2e2e2",
-                  outline: "none",
-                  width: "100%",
-                  borderRadius: "14px",
-                }}
                 name="country"
                 id="country"
-                className="country"
+                className="select-schol"
                 value={country}
                 onChange={(_, e) => {
                   setCountry(e.target.value);
                 }}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingRight: "20px",
-                paddingLeft: "20px",
-                width: "48%",
-              }}
-            >
+            <div className="institution-wrapper">
               <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
               <input
                 type="text"
-                style={{
-                  height: "34px",
-                  border: "2px solid #e2e2e2",
-                  outline: "none",
-                  width: "100%",
-                  borderRadius: "14px",
-                  paddingLeft: "5px",
-                }}
                 onChange={handleInputChange}
                 value={input}
                 name="input"
@@ -535,37 +507,32 @@ function VerificationForm({
           {/* =======QUALIFICATION DETAILS===== */}
           {activeTab === "qualification-details" && (
             <FormDiv>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "40px",
-                  paddingBottom: "40px",
-                }}
-              >
+              <div className="enrollment-status">
                 <label>Enrollment status &nbsp; &nbsp;</label>
-                <span>Alumni &nbsp;</span>
-                <Switch
-                  checked={formik.values.enrollmentStatus}
-                  onChange={(checked, e) => {
-                    formik.setFieldValue("enrollmentStatus", checked);
-                    console.log(checked);
-                  }}
-                  value={formik.values.enrollmentStatus}
-                  name="enrollmentStatus"
-                  onColor="#0092E0"
-                  onHandleColor="#2693e6"
-                  handleDiameter={28}
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                  activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                  height={20}
-                  width={48}
-                  className="react-switch"
-                  id="material-switch"
-                />
-                <span>&nbsp;Current student</span>
+                <div className="enr-status">
+                  <span>Alumni &nbsp;</span>
+                  <Switch
+                    checked={formik.values.enrollmentStatus}
+                    onChange={(checked, e) => {
+                      formik.setFieldValue("enrollmentStatus", checked);
+                      console.log(checked);
+                    }}
+                    value={formik.values.enrollmentStatus}
+                    name="enrollmentStatus"
+                    onColor="#0092E0"
+                    onHandleColor="#2693e6"
+                    handleDiameter={28}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                    className="react-switch"
+                    id="material-switch"
+                  />
+                  <span>&nbsp;Current student</span>
+                </div>
               </div>
               <p>
                 Must be the student ID issued by the institute at the time of
@@ -644,6 +611,7 @@ function VerificationForm({
                         : "qualification-input"
                     }
                     name="qualification"
+                    placeholder="B.Sc"
                     value={formik.values.qualification}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -668,6 +636,7 @@ function VerificationForm({
                 <>
                   <input
                     type="text"
+                    placeholder="second class upper"
                     className={
                       formik.touched.classification &&
                       formik.errors.classification
@@ -853,7 +822,7 @@ export default VerificationForm;
 
 const SingleCheck = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
-  padding: 10px 20px 5px 20px;
+  padding: 10px 10px 5px 10px;
   margin-top: 10px;
   margin-bottom: 20px;
 `;
@@ -862,8 +831,17 @@ const UploadSection = styled.div`
   width: 80%;
   padding-left: 40px;
   display: flex;
+  @media (max-width: 500px) {
+    padding-left: 0px;
+    width: 100%;
+  }
   .second-upload {
     margin-left: 60px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+      margin: 0 auto;
+      margin-bottom: 50px;
+    }
     img {
       margin-left: -20px;
     }
@@ -938,6 +916,9 @@ const FormContainer = styled.div`
     justify-content: space-between;
     /* margin: 0 auto; */
     border-bottom: 1px solid #707070;
+    @media (max-width: 500px) {
+      display: none;
+    }
     ul {
       display: flex;
       justify-content: space-between;
@@ -979,6 +960,22 @@ const FormContainer = styled.div`
 const FormDiv = styled.div`
   width: 100%;
   margin-top: 20px;
+  .enrollment-status {
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    @media (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 15px;
+    }
+    .enr-status {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   .btn {
     float: right;
@@ -998,6 +995,9 @@ const FormDiv = styled.div`
   }
   .submit {
     width: 150px;
+    @media (max-width: 500px) {
+      margin-right: 55px !important;
+    }
   }
   .notallowed {
     cursor: not-allowed;
@@ -1006,12 +1006,19 @@ const FormDiv = styled.div`
     font-size: 12px;
     padding-left: 135px;
     margin-top: -20px;
+    @media (max-width: 500px) {
+      padding-left: 10px;
+      margin-top: 5px;
+    }
   }
 `;
 const Field = styled.div`
   width: 100%;
   padding-left: 40px;
   padding-bottom: 20px;
+  @media (max-width: 500px) {
+    padding-left: 15px;
+  }
   .upload-text {
     padding-left: 0px !important;
     padding-top: 10px;
@@ -1022,6 +1029,10 @@ const Field = styled.div`
     border: 1px solid #707070cc;
     border-radius: 5px;
     outline: none;
+    @media (max-width: 500px) {
+      font-size: 16px;
+      width: 90%;
+    }
   }
   .err {
     border: 1px solid red !important;
@@ -1033,36 +1044,69 @@ const Field = styled.div`
   }
   .first-input {
     margin-left: 30px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .middle-input {
     margin-left: 23px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .last-input {
     margin-left: 33px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .date-input {
     margin-left: 24px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .ref-input {
     margin-left: 24px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .student-input {
     margin-left: 34px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .course-input {
     margin-left: 52px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .qualification-input {
     margin-left: 25px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .class-input {
     margin-left: 23px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .admission-input {
     margin-left: 8px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
   .graduation-input {
     margin-left: 3px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
   }
 `;
 const SelectCheck = styled.div`
@@ -1125,6 +1169,12 @@ const SelectSch = styled.div`
   .inst-name {
     padding-left: 30px;
     padding-top: 10px;
+    @media (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
     span {
       &:nth-child(1) {
         font: normal normal bold 12px/14px Montserrat;
@@ -1136,6 +1186,9 @@ const SelectSch = styled.div`
         font: normal normal normal 12/14px Montserrat;
         letter-spacing: 0.32px;
         color: #707070;
+        @media (max-width: 500px) {
+          padding-left: 0px;
+        }
       }
     }
     .change {
@@ -1214,6 +1267,60 @@ const SelectSch = styled.div`
     margin-top: 25px;
     width: 100%;
     padding-bottom: 20px;
+    .select-country {
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      width: 46%;
+      @media (max-width: 500px) {
+        width: 95%;
+        margin-bottom: 20px;
+        input {
+          width: 0 !important;
+        }
+      }
+      label {
+        @media (max-width: 500px) {
+          font-size: 14px;
+        }
+      }
+    }
+    .select-schol {
+      height: 34px;
+      border: 2px solid #e2e2e2;
+      outline: none;
+      width: 100%;
+      border-radius: 14px;
+    }
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
+  }
+
+  .institution-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 48%;
+    input {
+      height: 34px;
+      border: 2px solid #e2e2e2;
+      outline: none;
+      width: 100%;
+      border-radius: 14px;
+      padding-left: 5px;
+      @media (max-width: 500px) {
+        height: 30px;
+      }
+    }
+    @media (max-width: 500px) {
+      width: 95%;
+      padding-right: 0px;
+      label {
+        font-size: 14px !important;
+      }
+    }
   }
   .req-trans {
     display: flex;
@@ -1221,6 +1328,14 @@ const SelectSch = styled.div`
     padding-left: 20px;
     justify-content: space-between;
     margin-top: 10px;
+    @media (max-width: 500px) {
+      width: 100%;
+    }
+    .select-inst {
+      @media (max-width: 500px) {
+        margin-left: 20px;
+      }
+    }
 
     p {
       &:nth-child(1) {

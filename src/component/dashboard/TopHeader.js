@@ -26,9 +26,9 @@ function TopHeader({ setShow, show }) {
           <img src={Avatar} alt="Avatar" />
           <div className="user-info">
             <p>
-              {user.firstName} {user.lastName}
+              {user?.firstName} {user?.lastName}
             </p>
-            <p>{user.email}</p>
+            <p>{user?.email}</p>
           </div>
         </div>
       </div>
@@ -60,12 +60,13 @@ const HeadContainer = styled.div`
   border-bottom: 1px solid #eaeaea;
   opacity: 1;
   height: 50px;
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
+    display: flex;
     padding: 10px 40px 10px 40px;
   }
   .menu-icon {
     display: none;
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
       display: block;
       /* padding-right: 3px; */
       color: #171725;
@@ -86,7 +87,7 @@ const HeadContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 500px) {
       display: none;
     }
   }

@@ -9,16 +9,19 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { getAllInstitutions } from "../../state/actions/institutions";
+import { getUserVerification } from "../../state/actions/verifications";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
+  const { userVerifications } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
   const [selectedInst, setSelectedInst] = useState({});
   const [hideTable, setHideTable] = useState(false);
+
   useEffect(() => {
     dispatch(getAllInstitutions());
-    console.log("mounted");
+    dispatch(getUserVerification());
   }, [dispatch]);
 
   function handleInputChange(e) {
@@ -37,7 +40,7 @@ const DashboardContent = ({ history }) => {
   };
 
   return (
-    <DashboardLayout>
+    <DashboardLayout history={history}>
       <RequisitionBody>
         <h2
           style={{
@@ -79,7 +82,7 @@ const DashboardContent = ({ history }) => {
           <Card className="transcript-card">
             <div className="total-verification">Total Verification Orders</div>
             <div className="num">
-              <p>28</p>
+              <p>{userVerifications.length}</p>
               <img src={wavy} alt="jdjd" />
             </div>
           </Card>
@@ -161,7 +164,9 @@ const DashboardContent = ({ history }) => {
           >
             Verification history
           </p>
-          <p className="showing">Showing (4) entries</p>
+          <p className="showing">
+            Showing ({userVerifications.length}) entries
+          </p>
           <table>
             <thead>
               <tr>
@@ -172,26 +177,19 @@ const DashboardContent = ({ history }) => {
               </tr>
             </thead>
             <tbody className="t-body">
-              <tr>
-                <td>20-09-2020</td>
-                <td>Akinade John</td>
-                <td>University of Jos</td>
-                <td>Completed</td>
-              </tr>
-              <tr className="space"></tr>
-              <tr>
-                <td>20-09-2020</td>
-                <td>Akinade John</td>
-                <td>University of Jos</td>
-                <td>Completed</td>
-              </tr>
-              <tr className="space"></tr>
-              <tr>
-                <td>20-09-2020</td>
-                <td>Akinade John</td>
-                <td>University of Jos</td>
-                <td>Completed</td>
-              </tr>
+              {userVerifications.length > 0
+                ? userVerifications.map((verification) => (
+                    <>
+                      <tr>
+                        <td>{verification.date}</td>
+                        <td>{`${verification.firstName}  ${verification.lastName}`}</td>
+                        <td>{verification.institution}</td>
+                        <td>Completed</td>
+                      </tr>
+                      <tr className="space"></tr>
+                    </>
+                  ))
+                : ""}
             </tbody>
           </table>
         </div>
@@ -208,9 +206,10 @@ const CardsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
-  @media (max-width: 400px) {
+  @media (max-width: 500px) {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .transcript-card {
     display: block;
@@ -245,16 +244,21 @@ const SelectSch = styled.div`
         height: 34px;
         border: 2px solid #e2e2e2;
         outline: none;
-        width: 100%;
+        /* width: 100%; */
         border-radius: 14px;
         padding-left: 5px;
         padding-left: 15px;
-        @media screen and (max-width: 400px) {
+        @media screen and (max-width: 500px) {
           font-size: 16px;
+          width: 250px;
+        }
+        @media (max-width: 500px) {
+          width: 100%;
         }
       }
-      @media (max-width: 400px) {
-        width: 86%;
+      @media (max-width: 500px) {
+        width: 90%;
+        padding-right: 0px;
       }
     }
     .country-select {
@@ -262,12 +266,12 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-left: 20px;
       width: 46%;
-      @media (max-width: 400px) {
+      @media (max-width: 500px) {
         width: 90%;
         margin-bottom: 15px;
       }
     }
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
       display: flex;
       flex-direction: column;
     }
@@ -278,12 +282,12 @@ const SelectSch = styled.div`
     padding-left: 20px;
     justify-content: space-between;
     margin-top: 10px;
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
       width: 100%;
       padding-left: 10px;
     }
     .paragraph {
-      @media (max-width: 400px) {
+      @media (max-width: 500px) {
         padding-right: 20px;
       }
     }
@@ -317,7 +321,7 @@ const Card = styled.div`
   border-radius: 7px;
   height: 100px;
   opacity: 3;
-  @media (max-width: 400px) {
+  @media (max-width: 500px) {
     margin-bottom: 20px;
   }
   .total-verification {
@@ -422,6 +426,9 @@ const RequisitionBody = styled.div`
       td,
       th {
         padding: 10px;
+        @media (max-width: 500px) {
+          padding: 9px !important;
+        }
       }
 
       td {
