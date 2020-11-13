@@ -895,7 +895,7 @@ const FormContainer = styled.div`
     }
     input {
       @media (max-width: 500px) {
-        width: 100% !important;
+        width: 250px !important;
       }
     }
   }

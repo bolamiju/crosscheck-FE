@@ -54,6 +54,8 @@ const NewVerifications = () => {
   const [checked, setChecked] = useState(false);
   const verificationsLength = formValues.length;
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleCheck = (e) => {
     setChecked(e.target.checked);
   };
@@ -110,7 +112,7 @@ const NewVerifications = () => {
   };
 
   const componentProps = {
-    email: "tolaked@yahoo.com",
+    email: "j",
     amount: total * 100,
     metadata: {
       name: "Tola",

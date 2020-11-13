@@ -305,6 +305,7 @@ label {
   border: 1px solid #0092e0;
   margin-top: 20px;
   color: white;
+  cursor: pointer;
 }
 
 .resetpassword-button {
@@ -478,7 +479,7 @@ label {
     font-size: 18px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   .form-control {
     width: 100% !important;
     height: 40px !important;

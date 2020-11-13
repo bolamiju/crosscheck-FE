@@ -20,7 +20,7 @@ function Sidebar({ history }) {
 
   const logOut = () => {
     localStorage.clear();
-    history.push("/");
+    window.location.href = "/";
   };
   return (
     <Container className="hideshow">

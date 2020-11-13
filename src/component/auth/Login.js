@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -29,6 +29,12 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const { loginError, loading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    return () => {
+      dispatch(dispatch(setLoginError("")));
+    };
+  }, []);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -55,7 +61,7 @@ const Login = (props) => {
       } catch (err) {
         if (
           err.response.data.message &&
-          err.response.data.message === "Invalid email or password"
+          err.response.data.message === "invalid email or password"
         ) {
           dispatch(setLoginError("invalid email or password"));
         } else if (
@@ -134,6 +140,9 @@ const Login = (props) => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="error">{formik.errors.email}</div>
+              ) : null}
             </div>
 
             <div
@@ -163,6 +172,9 @@ const Login = (props) => {
                   onClick={() => setVisibility(!visibility)}
                 />
               )}
+              {formik.touched.password && formik.errors.password ? (
+                <div className="error">{formik.errors.password}</div>
+              ) : null}
             </div>
             <button
               type="button"
