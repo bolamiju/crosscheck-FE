@@ -34,9 +34,12 @@ export const getUserVerification = (email = "tolaked@yahoo.com") => async (
   dispatch
 ) => {
   await axios
-    .get(`http://localhost:5000/api/v1/verifications/${email}`)
+    .get(`https://croscheck.herokuapp.com/api/v1/verifications/${email}`)
     .then(({ data }) => {
       console.log("verifications data", data);
       dispatch(getOneUserVerifications(data.verifications));
+    })
+    .catch((err) => {
+      console.log("error", err);
     });
 };

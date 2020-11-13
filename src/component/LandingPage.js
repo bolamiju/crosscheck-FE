@@ -841,7 +841,7 @@ const About = styled.div`
   }
   .cardss {
     display: flex;
-    width: 85%;
+    width: 90%;
     justify-content: space-between;
     @media (max-width: 400px) {
       display: flex;
@@ -1155,8 +1155,9 @@ const Main = styled.main`
   }
 
   img {
-    width: 730px;
-    height: 350px;
+    width: 900px;
+    height: 470px;
+    margin-right: -85px;
     @media (max-width: 400px) {
       width: 350px;
       height: 200px;

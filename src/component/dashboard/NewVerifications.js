@@ -25,7 +25,7 @@ const request = (data) =>
   axios({
     data,
     method: "post",
-    url: "http://localhost:5000/api/v1/verifications/request",
+    url: "https://croscheck.herokuapp.com/api/v1/verifications/request",
     headers: { "Content-Type": "multipart/form-data" },
   });
 
