@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
-import {Link} from 'react-router-dom'
-import styled from 'styled-components'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import whitelogo from "../asset/whitelogo.png";
@@ -9,23 +9,23 @@ import Mail from "../asset/mail.svg";
 import phone from "../asset/phone.svg";
 
 const Terms = () => {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const handleMenuIcon = () => {
     setShow(!show);
   };
-    const changeBackground = () => {
-        if (window.scrollY >= 150) {
-          setNavbar(true);
-        } else {
-          setNavbar(false);
-        }
-      };
-    
-      window.addEventListener("scroll", changeBackground);
-    return (
-        <div>
-              <FirstSection>
+  const changeBackground = () => {
+    if (window.scrollY >= 150) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeBackground);
+  return (
+    <div>
+      <FirstSection>
         <NavBar
           style={{
             position: `${navbar ? "fixed" : ""}`,
@@ -43,7 +43,11 @@ const Terms = () => {
           </div>
           <div className="navs">
             <ul>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}><Link className="home" to="/home">Home</Link></li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
+                <Link className="home" to="/home">
+                  Home
+                </Link>
+              </li>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
                 Coverage
               </li>
@@ -58,7 +62,6 @@ const Terms = () => {
               </li>
             </ul>
           </div>
-         
 
           {!show ? (
             <FontAwesomeIcon
@@ -83,18 +86,181 @@ const Terms = () => {
             <li>Contact</li>
           </ul>
         </div> */}
-       {/* <h1>Terms Of Service</h1> */}
-       <Main>
-        <h1>Terms of Service</h1>
+        {/* <h1>Terms Of Service</h1> */}
+        <Main>
+          <h1>Terms of Service</h1>
         </Main>
       </FirstSection>
       <Paragraph>
-          <p>This Privacy Policy covers CrossCheck's web site, and CrossCheck's practices for handling personal information provided to CrossCheck over the Internet by the general public using CrossCheck's publicly available web site. This Policy also covers personal information provided by CrossCheck's clients as well as other individuals who have given their written authorization for CrossCheck to conduct a background investigation on them, using CrossCheck's online background screening solution that is accessible only through an access-restricted portion of CrossCheck's web site. CrossCheck will collect, store, and use personally identifiable information only in compliance with applicable law.</p><br/>
-          <h4>Information Collection</h4>  When you browse CrossCheck's publicly accessible web site, you do so anonymously. CrossCheck collects personally identifiable information from you only if you choose to provide this information to us. In some instances, CrossCheck may collect non-personal (e.g., aggregate or demographic) data through cookies. This information is used to better understand and improve the usability, performance and effectiveness of the crosscheck.africa web site, as is further described below under "Cookies and Tracking Technology".<br/><br/><br/> The types of personal information we may collect about you through our publicly accessible web site include the following (should you decide to provide such information to CrossCheck): (a) contact and identifying information (e.g., name, address, e-mail address, phone numbers, employer(s) in connection with your expression of interest in receiving information about, or your registering for, CrossCheck products or services, newsletters and reports; (b) your resume information and employment application information in response to CrossCheck job openings; and (c) any other personal information that you may voluntarily provide to us in an online form or through an e-mail.<br/><br/> Access to certain CrossCheck web pages and online services is not available to the general public and requires a login code and password provided by CrossCheck. Those web pages, and the information downloadable to and from those pages, are made available only to clients of CrossCheck. On these web pages, CrossCheck collects only information that the user voluntarily shares with CrossCheck.<br/><br/> If you are using this web site to open an employment screening account with CrossCheck, we collect the information requested on our account application form, including contact information and financial information (such as credit card number or billing information). This information is used for internal purposes, such as account establishment, billing, fulfillment of orders and customer service.<br/><br/>
-          <h4>How We Use Your Personal Information </h4> When your personal information is collected on CrossCheck's publicly accessible web site, CrossCheck will inform you at the point of collection of the purpose for the collection. CrossCheck will use your personal information only in the way we specify when it is collected unless you consent to a different use.<br/><br/> For example, CrossCheck may use personal information submitted in an account application to set up and maintain your account. CrossCheck also may use the personal information you provide to answer your questions and inquiries, to support CrossCheck's own recruitment activities in response to your inquiries into CrossCheck's job postings, and to provide newsletters and other information (if any) that you have requested.<br/><br/> <h4>Information Sharing and Disclosure</h4> <p>CrossCheck does not sell or rent personal information to third parties. CrossCheck will not disclose your personal information to a third party without your permission, except in connection with performing your background screen for CrossCheck's client or as otherwise described in this Privacy Policy.<br/><br/> CrossCheck may disclose personal information as necessary or appropriate in connection with any of the purposes for which we use personal information as described above in "How We Use Your Personal Information".<br/><br/><br/> When CrossCheck conducts a background screening investigation about you, CrossCheck may disclose information that you submit through this web site or via e-mail to the CrossCheck client that ordered a background screening investigation on you.<br/><br/><br/>
-           CrossCheck also may disclose your information to certain third parties as necessary to conduct the background investigation (such as educational institutions, prior employers, courts, law enforcement agencies and other persons or entities that may provide or verify information about you), as well as to a third-party representative or subcontractor authorized by CrossCheck to assist in the background screening investigation. These third party representatives and subcontractors include service providers that help host or support the web site or otherwise provide technical assistance and other data and service vendors. CrossCheck transfers to these representatives and subcontractors only the personal information they need to deliver to CrossCheck (for the benefit of CrossCheck's client) the requested product or service. CrossCheck prohibits these third parties from using that information for any other purpose. CrossCheck requires that these parties maintain commercially reasonable measures to protect the confidentiality of your information. CrossCheck also may in good faith disclose personal information and any other additional information available to CrossCheck for any of the following purposes:</p> <p className="list">(i) investigate, prevent or take action regarding actual or suspected illegal activities or fraud, situations involving potential threats to the physical safety of any person, or violations of CrossCheck's terms of use;<br/> (ii) Respond to or defend against subpoenas, court orders, or other legal process;<br/> (iii) Establish or exercise CrossCheck's legal rights; or,<br/> (iv) Otherwise comply with applicable law.</p><br/><br/> CrossCheck may acquire other businesses, and other businesses may acquire CrossCheck. If that occurs, the information CrossCheck collects may be one of the assets examined or transferred as part of the transaction. CrossCheck will not permit another business to examine the information CrossCheck has collected without a confidentiality agreement and only to the extent permitted by law. CrossCheck will not transfer the information it has collected unless the recipient agrees to provide privacy protections equal to or exceeding those established by this Privacy Policy.<br/><br/>
-          <h4>Cookies and Tracking Technology</h4> <p> CrossCheck's web site may use the standard technology called a "cookie" to collect information about how you use the web site.</p><br/> A cookie is a small data file that is transferred to your hard drive and used for record-keeping purposes. A cookie file can contain information such as the URL you came from, your computer's IP address (i.e., the Internet address of your computer) and domain type (e.g., .com or .org, etc.), your browser type, the country, state where your server is located, the pages of our site that were viewed during a visit, and any search terms that you entered on our site.<br/> This information is used for internal purposes only, and we do not link your URL or IP address to any personal information unless you have logged into our web site with a CrossCheck account login and password. In addition, CrossCheck’s web site does not allow other parties to collect personally identifiable information about an individual consumer’s online activities over time and across different Web sites when a consumer uses the CrossCheck web site. If you would prefer not to receive cookies, you can alter the configuration of your browser to refuse cookies, although it is possible that some areas of our web site will not function properly if you do so. In particular, you may be required to accept cookies in order to complete certain actions on CrossCheck's web site.<br/><br/> CrossCheck’s web site does not currently recognize “do not track” signals transmitted by web browsers. Links CrossCheck's web site may provide links to third-party web sites. Please be aware that those third-party web sites are outside of our control and are not covered by this Privacy Policy. If you have questions about how another site uses your information, consult that site's privacy statement. Changes to this Privacy Policy CrossCheck may revise this policy from time to time. If there is a material change to this Privacy Policy, we will post the revised policy at this location. CrossCheck will not provide less privacy protection, without your consent, to information collected under a prior privacy policy. We encourage you to periodically review this Privacy Policy to be informed of how CrossCheck is protecting your information.</Paragraph>
-          <Footer>
+        <p>
+          This Privacy Policy covers CrossCheck's web site, and CrossCheck's
+          practices for handling personal information provided to CrossCheck
+          over the Internet by the general public using CrossCheck's publicly
+          available web site. This Policy also covers personal information
+          provided by CrossCheck's clients as well as other individuals who have
+          given their written authorization for CrossCheck to conduct a
+          background investigation on them, using CrossCheck's online background
+          screening solution that is accessible only through an
+          access-restricted portion of CrossCheck's web site. CrossCheck will
+          collect, store, and use personally identifiable information only in
+          compliance with applicable law.
+        </p>
+        <br />
+        <h4>Information Collection</h4> When you browse CrossCheck's publicly
+        accessible web site, you do so anonymously. CrossCheck collects
+        personally identifiable information from you only if you choose to
+        provide this information to us. In some instances, CrossCheck may
+        collect non-personal (e.g., aggregate or demographic) data through
+        cookies. This information is used to better understand and improve the
+        usability, performance and effectiveness of the crosscheck.africa web
+        site, as is further described below under "Cookies and Tracking
+        Technology".
+        <br />
+        <br />
+        <br /> The types of personal information we may collect about you
+        through our publicly accessible web site include the following (should
+        you decide to provide such information to CrossCheck): (a) contact and
+        identifying information (e.g., name, address, e-mail address, phone
+        numbers, employer(s) in connection with your expression of interest in
+        receiving information about, or your registering for, CrossCheck
+        products or services, newsletters and reports; (b) your resume
+        information and employment application information in response to
+        CrossCheck job openings; and (c) any other personal information that you
+        may voluntarily provide to us in an online form or through an e-mail.
+        <br />
+        <br /> Access to certain CrossCheck web pages and online services is not
+        available to the general public and requires a login code and password
+        provided by CrossCheck. Those web pages, and the information
+        downloadable to and from those pages, are made available only to clients
+        of CrossCheck. On these web pages, CrossCheck collects only information
+        that the user voluntarily shares with CrossCheck.
+        <br />
+        <br /> If you are using this web site to open an employment screening
+        account with CrossCheck, we collect the information requested on our
+        account application form, including contact information and financial
+        information (such as credit card number or billing information). This
+        information is used for internal purposes, such as account
+        establishment, billing, fulfillment of orders and customer service.
+        <br />
+        <br />
+        <h4>How We Use Your Personal Information </h4> When your personal
+        information is collected on CrossCheck's publicly accessible web site,
+        CrossCheck will inform you at the point of collection of the purpose for
+        the collection. CrossCheck will use your personal information only in
+        the way we specify when it is collected unless you consent to a
+        different use.
+        <br />
+        <br /> For example, CrossCheck may use personal information submitted in
+        an account application to set up and maintain your account. CrossCheck
+        also may use the personal information you provide to answer your
+        questions and inquiries, to support CrossCheck's own recruitment
+        activities in response to your inquiries into CrossCheck's job postings,
+        and to provide newsletters and other information (if any) that you have
+        requested.
+        <br />
+        <br /> <h4>Information Sharing and Disclosure</h4>{" "}
+        <p>
+          CrossCheck does not sell or rent personal information to third
+          parties. CrossCheck will not disclose your personal information to a
+          third party without your permission, except in connection with
+          performing your background screen for CrossCheck's client or as
+          otherwise described in this Privacy Policy.
+          <br />
+          <br /> CrossCheck may disclose personal information as necessary or
+          appropriate in connection with any of the purposes for which we use
+          personal information as described above in "How We Use Your Personal
+          Information".
+          <br />
+          <br />
+          <br /> When CrossCheck conducts a background screening investigation
+          about you, CrossCheck may disclose information that you submit through
+          this web site or via e-mail to the CrossCheck client that ordered a
+          background screening investigation on you.
+          <br />
+          <br />
+          <br />
+          CrossCheck also may disclose your information to certain third parties
+          as necessary to conduct the background investigation (such as
+          educational institutions, prior employers, courts, law enforcement
+          agencies and other persons or entities that may provide or verify
+          information about you), as well as to a third-party representative or
+          subcontractor authorized by CrossCheck to assist in the background
+          screening investigation. These third party representatives and
+          subcontractors include service providers that help host or support the
+          web site or otherwise provide technical assistance and other data and
+          service vendors. CrossCheck transfers to these representatives and
+          subcontractors only the personal information they need to deliver to
+          CrossCheck (for the benefit of CrossCheck's client) the requested
+          product or service. CrossCheck prohibits these third parties from
+          using that information for any other purpose. CrossCheck requires that
+          these parties maintain commercially reasonable measures to protect the
+          confidentiality of your information. CrossCheck also may in good faith
+          disclose personal information and any other additional information
+          available to CrossCheck for any of the following purposes:
+        </p>{" "}
+        <p className="list">
+          (i) investigate, prevent or take action regarding actual or suspected
+          illegal activities or fraud, situations involving potential threats to
+          the physical safety of any person, or violations of CrossCheck's terms
+          of use;
+          <br /> (ii) Respond to or defend against subpoenas, court orders, or
+          other legal process;
+          <br /> (iii) Establish or exercise CrossCheck's legal rights; or,
+          <br /> (iv) Otherwise comply with applicable law.
+        </p>
+        <br />
+        <br /> CrossCheck may acquire other businesses, and other businesses may
+        acquire CrossCheck. If that occurs, the information CrossCheck collects
+        may be one of the assets examined or transferred as part of the
+        transaction. CrossCheck will not permit another business to examine the
+        information CrossCheck has collected without a confidentiality agreement
+        and only to the extent permitted by law. CrossCheck will not transfer
+        the information it has collected unless the recipient agrees to provide
+        privacy protections equal to or exceeding those established by this
+        Privacy Policy.
+        <br />
+        <br />
+        <h4>Cookies and Tracking Technology</h4>{" "}
+        <p>
+          {" "}
+          CrossCheck's web site may use the standard technology called a
+          "cookie" to collect information about how you use the web site.
+        </p>
+        <br /> A cookie is a small data file that is transferred to your hard
+        drive and used for record-keeping purposes. A cookie file can contain
+        information such as the URL you came from, your computer's IP address
+        (i.e., the Internet address of your computer) and domain type (e.g.,
+        .com or .org, etc.), your browser type, the country, state where your
+        server is located, the pages of our site that were viewed during a
+        visit, and any search terms that you entered on our site.
+        <br /> This information is used for internal purposes only, and we do
+        not link your URL or IP address to any personal information unless you
+        have logged into our web site with a CrossCheck account login and
+        password. In addition, CrossCheck’s web site does not allow other
+        parties to collect personally identifiable information about an
+        individual consumer’s online activities over time and across different
+        Web sites when a consumer uses the CrossCheck web site. If you would
+        prefer not to receive cookies, you can alter the configuration of your
+        browser to refuse cookies, although it is possible that some areas of
+        our web site will not function properly if you do so. In particular, you
+        may be required to accept cookies in order to complete certain actions
+        on CrossCheck's web site.
+        <br />
+        <br /> CrossCheck’s web site does not currently recognize “do not track”
+        signals transmitted by web browsers. Links CrossCheck's web site may
+        provide links to third-party web sites. Please be aware that those
+        third-party web sites are outside of our control and are not covered by
+        this Privacy Policy. If you have questions about how another site uses
+        your information, consult that site's privacy statement. Changes to this
+        Privacy Policy CrossCheck may revise this policy from time to time. If
+        there is a material change to this Privacy Policy, we will post the
+        revised policy at this location. CrossCheck will not provide less
+        privacy protection, without your consent, to information collected under
+        a prior privacy policy. We encourage you to periodically review this
+        Privacy Policy to be informed of how CrossCheck is protecting your
+        information.
+      </Paragraph>
+      <Footer>
         <div className="footer-logo">
           <img src={Logo} alt="crosscheck" />
           <ul>
@@ -121,8 +287,6 @@ const Terms = () => {
               <p className="text">(01) 479-642-7461 (01)</p>
             </div>
           </div>
-
-       
         </div>
         <div className="bottom-content">
           <p>© 2020 Crosscheck. All Rights Reserved</p>
@@ -132,11 +296,11 @@ const Terms = () => {
           </ul>
         </div>
       </Footer>
-        </div>
-    )
-}
+    </div>
+  );
+};
 
-export default Terms
+export default Terms;
 
 const FirstSection = styled.div`
   @media (max-width: 400px) {
@@ -147,12 +311,12 @@ const FirstSection = styled.div`
   background: transparent linear-gradient(180deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #00000029;
-  h1{
-      padding-left:90px;
-      font: normal normal bold 28px/36px Segoe UI;
-letter-spacing: 0px;
-color: #FFFFFF;
-/* padding-bottom:20px */
+  h1 {
+    padding-left: 90px;
+    font: normal normal bold 28px/36px Segoe UI;
+    letter-spacing: 0px;
+    color: #ffffff;
+    /* padding-bottom:20px */
   }
   .hide-show {
     display: none;
@@ -178,7 +342,6 @@ color: #FFFFFF;
 `;
 
 const NavBar = styled.nav`
-
   @media (max-width: 500px) {
     padding: 0px 3px 0px 3px;
     display: flex;
@@ -197,9 +360,8 @@ const NavBar = styled.nav`
     }
   }
   img {
-    width: 150px;
     height: 30px;
-    padding-left:90px;
+    padding-left: 90px;
     @media (max-width: 400px) {
       /* float: left; */
       width: 100px;
@@ -211,11 +373,11 @@ const NavBar = styled.nav`
     @media only screen and (max-width: 400px) {
       display: none;
     }
-.home{
-  color:white;
-  text-decoration:none;
-  cursor:pointer
-}
+    .home {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
     ul {
       display: flex;
       padding-left: 300px;
@@ -241,19 +403,19 @@ const NavBar = styled.nav`
 `;
 
 const Paragraph = styled.div`
-width:90%;
-margin:0 auto;
-color:#676f79;
-padding-bottom:20px;
-h4{
-    color:black;
-    margin-bottom:5px
-}
-.list{
-    padding-left:20px;
-    padding-top:0px
-}
-`
+  width: 90%;
+  margin: 0 auto;
+  color: #676f79;
+  padding-bottom: 20px;
+  h4 {
+    color: black;
+    margin-bottom: 5px;
+  }
+  .list {
+    padding-left: 20px;
+    padding-top: 0px;
+  }
+`;
 
 const Footer = styled.div`
   @media only screen and (max-width: 400px) {
@@ -367,7 +529,4 @@ const Main = styled.main`
   width: 100%;
   display: flex;
   align-items: flex-start;
-
-
-  
 `;
