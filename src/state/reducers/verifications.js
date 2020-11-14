@@ -3,7 +3,7 @@ import * as types from "../actionTypes/verifications";
 const initialState = {
   verifications: [],
   schCard: false,
-  selectedInst: {},
+  selectedInstitution: {},
   userVerifications: [],
 };
 
@@ -14,7 +14,11 @@ export default function userReducer(state = initialState, action) {
         ...state,
         verifications: [...action.payload],
       };
-
+    case types.SELECT_SCHOOL:
+      return {
+        ...state,
+        selectedInstitution: action.payload,
+      };
     case types.USER_VERIFICATIONS:
       return {
         ...state,

@@ -38,6 +38,7 @@ function VerificationForm({
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
+  const { selectedInstitution } = useSelector((state) => state.verifications);
 
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");

@@ -21,6 +21,12 @@ export const getOneUserVerifications = (payload) => {
     payload,
   };
 };
+export const selectSchool = (payload) => {
+  return {
+    type: types.SELECT_SCHOOL,
+    payload,
+  };
+};
 
 export const requestVerification = (val) => {
   console.log(val);

@@ -9,7 +9,10 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { getAllInstitutions } from "../../state/actions/institutions";
-import { getUserVerification } from "../../state/actions/verifications";
+import {
+  getUserVerification,
+  selectSchool,
+} from "../../state/actions/verifications";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
@@ -33,7 +36,7 @@ const DashboardContent = ({ history }) => {
   );
 
   const handleSelected = (institute) => {
-    setSelectedInst(institute);
+    dispatch(selectSchool(institute));
     setHideTable(true);
     setInput(institute.name);
     history.push("/new");

@@ -35,6 +35,7 @@ const NewVerifications = () => {
 
   const formData = {
     firstName: "",
+    _id: Date.now(),
     lastName: "",
     middleName: "",
     dateOfBirth: "",
@@ -47,7 +48,9 @@ const NewVerifications = () => {
     enrollmentStatus: false,
   };
 
-  const [formValues, setFormValues] = useState([formData]);
+  const [formValues, setFormValues] = useState([
+    { ...formData, _id: Date.now() },
+  ]);
 
   const [requestList, setRequestList] = useState(false);
 
@@ -79,19 +82,17 @@ const NewVerifications = () => {
     await Promise.allSettled(formValues.map((value) => request(value)));
   };
   const addNewForm = () => {
-    setFormValues((values) => [...values, formData]);
+    setFormValues((values) => [...values, { ...formData, _id: Date.now() }]);
   };
 
-  const updateFormValues = (idx) => (data) => {
+  const updateFormValues = (id) => (data) => {
     setFormValues((formValues) =>
-      formValues.map((value, index) => (index === idx ? data : value))
+      formValues.map((value) => (value._id === id ? data : value))
     );
   };
 
-  const deleteOneVerification = (idx) => (data) => {
-    setFormValues((formValues) =>
-      formValues.filter((value, index) => (index !== idx ? value : null))
-    );
+  const deleteOneVerification = (id) => () => {
+    setFormValues((formValues) => formValues.filter((v) => v._id !== id));
   };
 
   let verifRequest = [];
@@ -177,15 +178,15 @@ const NewVerifications = () => {
             <span style={{ paddingRight: "10px" }}>FINISH</span>
           </div>
 
-          {formValues.map((values, idx) => (
+          {formValues.map(({ _id: id, ...values }) => (
             <div className={requestList ? "none" : ""}>
               {" "}
               <VerificationForm
-                key={idx}
+                key={id}
                 verificationsLength={verificationsLength}
                 initialValues={values}
-                updateFormValues={updateFormValues(idx)}
-                deleteOneVerification={deleteOneVerification(idx)}
+                updateFormValues={updateFormValues(id)}
+                deleteOneVerification={deleteOneVerification(id)}
               />
             </div>
           ))}

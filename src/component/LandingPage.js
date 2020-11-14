@@ -819,6 +819,7 @@ const About = styled.div`
   width: 80%;
   align-items: center;
   margin: 0 auto;
+  margin-top: 20px;
   .about-us {
     @media (min-width: 500px) {
       display: none;
@@ -843,6 +844,7 @@ const About = styled.div`
     display: flex;
     width: 90%;
     justify-content: space-between;
+
     @media (max-width: 400px) {
       display: flex;
       flex-direction: column;
@@ -1187,7 +1189,7 @@ const Main = styled.main`
       }
     }
     h1 {
-      /* font-family: "Quicksand"; */
+      /* font-family: sans-serif; */
       @media (max-width: 400px) {
         display: none;
       }
