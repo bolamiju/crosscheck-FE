@@ -40,7 +40,9 @@ function VerificationForm({
   const { institutions } = useSelector((state) => state.institutions);
   const { selectedInstitution } = useSelector((state) => state.verifications);
 
-  const [selectedInst, setSelectedInst] = useState({});
+  const [selectedInst, setSelectedInst] = useState(
+    selectedInstitution.name ? selectedInstitution : {}
+  );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(false);
@@ -173,7 +175,7 @@ function VerificationForm({
         marginBottom: !details ? "40px" : "",
       }}
     >
-      {schCard && (
+      {formik.values.institution.length > 0 && (
         <SelectCheck
           onClick={() => {
             setDetails(!details);
@@ -181,7 +183,7 @@ function VerificationForm({
         >
           <div style={{ width: "100%" }}>
             <img src={cap} alt="graduation cap" />
-            <h3>Education Check - {selectedInst.name}</h3>
+            <h3>Education Check - {formik.values.institution}</h3>
           </div>
           <FontAwesomeIcon
             icon={details ? faCaretDown : faCaretRight}
@@ -189,13 +191,13 @@ function VerificationForm({
           />{" "}
         </SelectCheck>
       )}
-      {schCard ? (
+      {formik.values.institution.length > 0 ? (
         <SelectSch style={{ display: !details ? "none" : "" }}>
           <p className="institution-details">Institution Details</p>
           <div className="inst-name">
             <span>Institution name</span>
             <span>
-              {selectedInst.name}{" "}
+              {formik.values.institution}{" "}
               <span className="change" onClick={() => setSchCard(false)}>
                 <small>change</small>
               </span>
@@ -235,8 +237,12 @@ function VerificationForm({
               <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
               <input
                 type="text"
-                onChange={handleInputChange}
-                value={input}
+                onChange={(e) => {
+                  formik.setFieldValue("institution", e.target.value);
+                  console.log(e.target.value);
+                  setHideTable(false);
+                }}
+                value={formik.values.institution}
                 name="input"
                 placeholder="Search an institute"
               />
