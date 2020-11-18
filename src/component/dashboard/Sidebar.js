@@ -36,12 +36,12 @@ function Sidebar({ history }) {
           <Link className="link" to="/dashboard">
             {" "}
             <img src={dashboard} alt="dash" />
-            <li>DASHBOARD</li>
+            <li>Dashboard</li>
           </Link>
           <div className="link" onClick={() => setShow(!show)}>
             {" "}
             <img src={newVer} alt="verification" />
-            <li>NEW VERIFICATION</li>
+            <li>New Verification</li>
             <FontAwesomeIcon
               icon={show ? faAngleDown : faAngleRight}
               style={{ marginLeft: "20px", color: "white", fontSize: "18px" }}
@@ -51,12 +51,17 @@ function Sidebar({ history }) {
             <ul className={show ? "show" : "hide"}>
               <li>
                 <Link to="/new" className="option">
-                  EDUCATION CHECK
+                  Education Check
+                </Link>
+              </li>
+              <li>
+                <Link to="/transcript" className="option">
+                  Transcript
                 </Link>
               </li>
               <li>
                 <Link to="/new" className="option">
-                  IDENTITY VERIFICATION
+                  Identity Verification
                 </Link>
               </li>
             </ul>
@@ -64,20 +69,20 @@ function Sidebar({ history }) {
           <Link to="/dashboard/:id" className="link">
             {" "}
             <img src={histry} alt="history" />
-            <li>VERIFICATION HISTORY</li>
+            <li>Verification History</li>
           </Link>
           <Link className="link">
             {" "}
-            <img src={contact} alt="account" /> <li>MY ACCOUNT</li>
+            <img src={contact} alt="account" /> <li>My Account</li>
           </Link>
           <Link className="link">
             {" "}
             <img src={receipt} alt="receipt" />
-            <li>RECEIPTS</li>
+            <li>Receipts</li>
           </Link>
           <Link className="link" onClick={logOut}>
             {" "}
-            <img src={logout} alt="logout" /> <li>LOGOUT</li>
+            <img src={logout} alt="logout" /> <li>Logout</li>
           </Link>
         </ul>
       </ListSection>

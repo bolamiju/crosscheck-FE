@@ -86,7 +86,7 @@ const DashboardContent = ({ history }) => {
             <div className="total-verification">Total Verification Orders</div>
             <div className="num">
               <p>{userVerifications.length}</p>
-              <img src={wavy} alt="jdjd" />
+              <img src={wavy} alt="wave picture" />
             </div>
           </Card>
         </CardsContainer>
@@ -247,7 +247,7 @@ const SelectSch = styled.div`
         height: 34px;
         border: 2px solid #e2e2e2;
         outline: none;
-        /* width: 100%; */
+        font-family: "Roboto";
         border-radius: 14px;
         padding-left: 5px;
         padding-left: 15px;
@@ -284,12 +284,23 @@ const SelectSch = styled.div`
     width: 35%;
     padding-left: 20px;
     justify-content: space-between;
+    align-items: flex-end;
     margin-top: 10px;
     @media (max-width: 500px) {
       width: 100%;
       padding-left: 10px;
     }
     .paragraph {
+      p {
+        &:nth-child(1) {
+          font-weight: bold;
+          font-family: "Roboto";
+          font-size: 16px;
+        }
+        &:nth-child(2) {
+          font-family: "Roboto";
+        }
+      }
       @media (max-width: 500px) {
         padding-right: 20px;
       }
@@ -361,17 +372,21 @@ const Card = styled.div`
       padding-right: 10px;
       p {
         &:nth-child(1) {
-          font: normal normal bold 15px Open Sans;
+          font-size: 15px;
           letter-spacing: 0.44px;
           color: #000000;
           margin: 0;
+          font-weight: bold;
+          font-family: "Roboto";
         }
       }
       p {
         &:nth-child(2) {
-          font: normal normal normal 12px Open Sans;
+          font-size: 14px;
           letter-spacing: 0.32px;
+          font-weight: normal;
           color: #707070;
+          font-family: "Roboto";
           margin: 0;
         }
       }
