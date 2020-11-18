@@ -16,11 +16,8 @@ import arrow from "../../asset/arrow-right.svg";
 import account from "../../asset/icon_account.svg";
 import qualifications from "../../asset/qualification.svg";
 import document from "../../asset/document-attach.svg";
-import form from "../../asset/form-line.svg";
 import uparrow from "../../asset/format.svg";
-import documentAttach from "../../asset/attach.svg";
 import cap from "../../asset/graduation-cap.svg";
-import download from "../../asset/download.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
@@ -45,7 +42,7 @@ function VerificationForm({
   );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
-  const [schCard, setSchCard] = useState(false);
+  const [schCard, setSchCard] = useState(true);
   const [country, setCountry] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -73,6 +70,7 @@ function VerificationForm({
 
   const handleSelected = (institute) => {
     setSelectedInst(institute);
+    formik.setFieldValue("institution", institute.name);
     setHideTable(true);
     setInput(institute.name);
     setSchCard(true);
@@ -175,7 +173,7 @@ function VerificationForm({
         marginBottom: !details ? "40px" : "",
       }}
     >
-      {formik.values.institution.length > 0 && (
+      {formik.values.institution.length > 0 && schCard && (
         <SelectCheck
           onClick={() => {
             setDetails(!details);
@@ -191,7 +189,7 @@ function VerificationForm({
           />{" "}
         </SelectCheck>
       )}
-      {formik.values.institution.length > 0 ? (
+      {formik.values.institution.length > 0 && schCard ? (
         <SelectSch style={{ display: !details ? "none" : "" }}>
           <p className="institution-details">Institution Details</p>
           <div className="inst-name">
@@ -237,12 +235,8 @@ function VerificationForm({
               <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
               <input
                 type="text"
-                onChange={(e) => {
-                  formik.setFieldValue("institution", e.target.value);
-                  console.log(e.target.value);
-                  setHideTable(false);
-                }}
-                value={formik.values.institution}
+                onChange={handleInputChange}
+                value={input}
                 name="input"
                 placeholder="Search an institute"
               />

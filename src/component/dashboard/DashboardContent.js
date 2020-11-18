@@ -19,7 +19,6 @@ const DashboardContent = ({ history }) => {
   const { institutions } = useSelector((state) => state.institutions);
   const { userVerifications } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
-  const [selectedInst, setSelectedInst] = useState({});
   const [hideTable, setHideTable] = useState(false);
 
   useEffect(() => {
@@ -86,7 +85,7 @@ const DashboardContent = ({ history }) => {
             <div className="total-verification">Total Verification Orders</div>
             <div className="num">
               <p>{userVerifications.length}</p>
-              <img src={wavy} alt="wave picture" />
+              <img src={wavy} alt="wave" />
             </div>
           </Card>
         </CardsContainer>

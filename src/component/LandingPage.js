@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -22,7 +22,7 @@ import knowledge from "../asset/knowledge.svg";
 import planet from "../asset/planet.svg";
 import insight from "../asset/insight.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
 
 const LandingPage = () => {
@@ -69,7 +69,7 @@ const LandingPage = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonies.length]);
 
   const handleMenuIcon = () => {
     setShow(!show);
@@ -201,7 +201,7 @@ const LandingPage = () => {
           <img src={Computer} alt="headerimage" />
         </Main>
       </FirstSection>
-      <a id="about">
+      <a id="about" href={() => false}>
         <About>
           <h1>A few things you should know about us</h1>
           <h3 className="about-us">About Us</h3>
@@ -262,7 +262,7 @@ const LandingPage = () => {
           obtain pain and anything else to finish this sentence.
         </p>
       </Div>
-      <a id="work">
+      <a id="work" href={() => false}>
         <Blocks>
           <div className="blocks">
             <img src={register} alt="regi" />
@@ -315,7 +315,7 @@ const LandingPage = () => {
           </div>
         </Blocks>
       </a>
-      <a id="testimonies">
+      <a id="testimonies" href={() => false}>
         <Testimonies>
           <h2>What people say about us</h2>
           <p>
@@ -383,7 +383,7 @@ const LandingPage = () => {
           </div>
         </Testimonies>
       </a>
-      <a id="coverage">
+      <a id="coverage" href={() => false}>
         <Cover imgUrl={process.env.PUBLIC_URL + "/map.svg"}>
           <h2>We Cover Over</h2>
           <div className="cover">
@@ -425,7 +425,7 @@ const LandingPage = () => {
           </div>
         </Cover>
       </a>
-      <a id="contact">
+      <a id="contact" href={() => false}>
         <Footer>
           <div className="footer-logo">
             <img src={Logo} alt="crosscheck" />

@@ -3,20 +3,14 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faCaretRight,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import Switch from "react-switch";
 import styled from "styled-components";
 import arrow from "../../asset/arrow-right.svg";
 import account from "../../asset/icon_account.svg";
 import qualifications from "../../asset/qualification.svg";
 import document from "../../asset/document-attach.svg";
-import form from "../../asset/form-line.svg";
 import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
@@ -26,7 +20,6 @@ function TranscriptForm({
   initialValues,
   updateFormValues,
   deleteOneVerification,
-  verificationsLength,
 }) {
   const [activeTab, setActiveTab] = useState("destination-details");
   const [pay, setPay] = useState(false);
@@ -35,7 +28,6 @@ function TranscriptForm({
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const { selectedInstitution } = useSelector((state) => state.verifications);
 
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
@@ -714,59 +706,6 @@ const SingleCheck = styled.div`
   padding: 10px 10px 5px 10px;
   margin-top: 10px;
   margin-bottom: 20px;
-`;
-
-const UploadSection = styled.div`
-  width: 80%;
-  padding-left: 40px;
-  display: flex;
-  @media (max-width: 500px) {
-    padding-left: 0px;
-    width: 100%;
-  }
-  .second-upload {
-    margin-left: 60px;
-    @media (max-width: 500px) {
-      margin-left: 0px;
-      margin: 0 auto;
-      margin-bottom: 50px;
-    }
-    img {
-      margin-left: -20px;
-    }
-  }
-`;
-
-const Document = styled.div`
-  height: 190px;
-  width: 170px;
-  background: #e9eaed 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 10px;
-  margin-bottom: 20px;
-
-  .icons {
-    height: 17%;
-    padding: 0;
-    width: 100%;
-    display: flex;
-
-    img {
-      padding-left: 0px !important;
-      margin-bottom: -35px;
-    }
-  }
-  .consent {
-    height: 83%;
-  }
-  p {
-    padding-left: 0px !important;
-    text-align: center;
-    padding-top: 20px !important;
-  }
-  img {
-    padding-left: 65px;
-  }
 `;
 
 const FormContainer = styled.div`

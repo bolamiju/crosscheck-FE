@@ -9,11 +9,7 @@ import logout from "../../asset/logout.svg";
 import receipt from "../../asset/receipt.svg";
 import newVer from "../../asset/new.svg";
 import histry from "../../asset/history.svg";
-import {
-  faAngleDoubleDown,
-  faAngleDown,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 function Sidebar({ history }) {
   const [show, setShow] = useState(false);
