@@ -204,8 +204,8 @@ body {
   margin: 0 !important;
 }
 label {
-  font-size: 12px;
-  color: #6b6b6b;
+  font-size: 14px;
+  font-family: "Roboto";
 }
 
 .input {
@@ -213,6 +213,7 @@ label {
   outline: none;
   border-radius: 9px;
   height: 28px;
+  font-family: "Roboto" !important;
 }
 .firstname-input {
   width: 48%;
@@ -286,6 +287,7 @@ label {
   left: auto;
   right: 20px;
   top: 36px;
+  cursor: pointer;
 }
 
 .newpassword-input {
@@ -306,6 +308,7 @@ label {
   margin-top: 20px;
   color: white;
   cursor: pointer;
+  font-family: "Roboto";
 }
 
 .resetpassword-button {
@@ -350,10 +353,12 @@ label {
 }
 .signup-with {
   font-size: 14px;
+  font-family: "Roboto";
 }
 .paragraph {
   font-size: 14px;
   margin-top: 15px;
+  font-family: "Roboto";
 }
 
 .google {
@@ -370,7 +375,8 @@ label {
 }
 
 .terms .accept span {
-  font-size: 12px;
+  font-size: 14px;
+  font-family: "Roboto";
 }
 .fot-pass {
   text-decoration: none;

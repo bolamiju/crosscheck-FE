@@ -22,6 +22,7 @@ function App() {
       <Route exact path="/forgotpassword" component={ForgotPassword} />
       <Route exact path="/reset/:token" component={ResetPassword} />
       <Route exact path="/new" component={MainContent} />
+      <Route exact path="/transcript" component={MainContent} />
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
     </Provider>

@@ -7,7 +7,6 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
 import "./ver.css";
-import { Prompt } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "./DashboardLayout";
 import start from "../../asset/start.svg";
@@ -18,7 +17,7 @@ import {
   addVerificationList,
   deleteVerification,
 } from "../../state/actions/verifications";
-import VerificationForm from "./VerificationForm";
+import TranscriptForm from "./TranscriptForm";
 
 import { PaystackButton } from "react-paystack";
 
@@ -30,27 +29,23 @@ const request = (data) =>
     headers: { "Content-Type": "multipart/form-data" },
   });
 
-const NewVerifications = () => {
+const NewTranscript = () => {
   const dispatch = useDispatch();
-  const { verifications, selectedInstitution } = useSelector(
-    (state) => state.verifications
-  );
+  const { verifications } = useSelector((state) => state.verifications);
 
   const formData = {
     firstName: "",
-    institution: selectedInstitution.name || "",
     lastName: "",
-    middleName: "",
-    dateOfBirth: "",
-    studentId: "",
+    matricNo: "",
     course: "",
-    qualification: "",
-    classification: "",
-    admissionYear: "",
     graduationYear: "",
-    enrollmentStatus: false,
+    destinationCountry: "",
+    addressLine: "",
+    ZipPostCode: "",
+    destinationNumber: "",
+    city: "",
   };
-  let [isBlocking, setIsBlocking] = useState(true);
+
   const [formValues, setFormValues] = useState([
     { ...formData, _id: Date.now() },
   ]);
@@ -85,7 +80,7 @@ const NewVerifications = () => {
   const addNewForm = () => {
     setFormValues((values) => [
       ...values,
-      { ...formData, _id: Date.now(), institution: "" },
+      { ...formData, studentId: "", _id: Date.now() },
     ]);
   };
 
@@ -157,12 +152,6 @@ const NewVerifications = () => {
             pauseOnHover
             style={{ marginTop: "20px" }}
           />
-          <Prompt
-            when={isBlocking}
-            message={(location) =>
-              `Are you sure you want to go to ${location.pathname}`
-            }
-          />
           <div className={requestList ? "none" : ""}>
             {" "}
             <h2
@@ -171,9 +160,8 @@ const NewVerifications = () => {
                 fontFamily: "Roboto",
               }}
             >
-              New Verification
+              New Transcript Order
             </h2>
-            <p style={{ fontFamily: "Roboto" }}>Education Verification</p>
           </div>
           <IconDiv>
             <div>
@@ -196,7 +184,7 @@ const NewVerifications = () => {
           {formValues.map((values, id) => (
             <div className={requestList ? "none" : ""}>
               {" "}
-              <VerificationForm
+              <TranscriptForm
                 key={id}
                 verificationsLength={verificationsLength}
                 initialValues={values}
@@ -300,7 +288,7 @@ const NewVerifications = () => {
   );
 };
 
-export default NewVerifications;
+export default NewTranscript;
 
 const VerificationBody = styled.div`
   height: 100%;

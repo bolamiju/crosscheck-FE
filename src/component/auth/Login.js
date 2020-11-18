@@ -124,7 +124,9 @@ const Login = (props) => {
           <form className="form-surround">
             <div className="info-container">
               <h3 className="great">Great to See you again</h3>
-              <p style={{ fontSize: "14px" }}>Sign in to your account</p>
+              <p style={{ fontSize: "14px", fontFamily: "Roboto" }}>
+                Sign in to your account
+              </p>
               {loginError.length > 0 && (
                 <p style={{ color: "red" }}>{loginError}</p>
               )}

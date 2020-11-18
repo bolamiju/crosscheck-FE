@@ -17,21 +17,18 @@ import account from "../../asset/icon_account.svg";
 import qualifications from "../../asset/qualification.svg";
 import document from "../../asset/document-attach.svg";
 import form from "../../asset/form-line.svg";
-import uparrow from "../../asset/format.svg";
-import documentAttach from "../../asset/attach.svg";
 import cap from "../../asset/graduation-cap.svg";
-import download from "../../asset/download.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
-function VerificationForm({
+function TranscriptForm({
   initialValues,
   updateFormValues,
   deleteOneVerification,
   verificationsLength,
 }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("destination-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,8 +42,6 @@ function VerificationForm({
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(false);
   const [country, setCountry] = useState("");
-
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -134,19 +129,15 @@ function VerificationForm({
     if (
       formik.values.firstName.length === 0 ||
       formik.values.lastName.length === 0 ||
-      formik.values.dateOfBirth.length === 0
+      formik.values.course.length === 0 ||
+      formik.values.graduationYear.length === 0 ||
+      formik.values.matricNo.length === 0
     ) {
       toast.error("please fill required fields");
       return;
     }
-    let presentYear = new Date().getFullYear();
-    let DOB = Number(formik.values.dateOfBirth.substr(0, 4));
-    let age = presentYear - DOB;
 
-    if (age < 17) {
-      return toast.error("Age cannot be less than 17years");
-    }
-    setActiveTab("qualification-details");
+    setActiveTab("destination-details");
     setPay(false);
   };
 
@@ -205,8 +196,6 @@ function VerificationForm({
             <span>Country</span>
             <span>{selectedInst.country}</span>
           </div>
-          {/* <div className="sch-country"><span>Price</span>
-    <span>{ selectedInst.amount}</span></div> */}
         </SelectSch>
       ) : (
         <SelectSch>
@@ -215,7 +204,7 @@ function VerificationForm({
 
             <div className="select-inst">
               <p>Select an institute</p>
-              <p>Select preferred institute to conduct verification</p>
+              <p>Select preferred institute to order transcript</p>
             </div>
           </div>
           <div className="selects">
@@ -345,11 +334,11 @@ function VerificationForm({
               <li
                 onClick={(e) => handleQualificationTab(e)}
                 className={
-                  activeTab === "qualification-details" ? "activeTab" : ""
+                  activeTab === "destination-details" ? "activeTab" : ""
                 }
               >
                 <img src={qualifications} alt="details" />
-                &nbsp; Qualification details
+                &nbsp; Destination details
               </li>
               <li
                 onClick={handleDocumentTab}
@@ -393,23 +382,6 @@ function VerificationForm({
               </Field>
 
               <Field>
-                <label>Middle Name</label>
-                <>
-                  <input
-                    type="text"
-                    className={
-                      formik.touched.middleName && formik.errors.middleName
-                        ? "middle-input err"
-                        : "middle-input"
-                    }
-                    name="middleName"
-                    value={formik.values.middleName}
-                    onChange={formik.handleChange}
-                  />
-                </>
-              </Field>
-
-              <Field>
                 <label>
                   Last Name
                   <span>*</span>
@@ -438,132 +410,26 @@ function VerificationForm({
                 </>
               </Field>
 
-              <Field className="DOB">
-                <label>
-                  Date of Birth
-                  <span>*</span>
-                </label>
-                <>
-                  <input
-                    type="date"
-                    className={
-                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
-                        ? "date-input err"
-                        : "date-input"
-                    }
-                    name="dateOfBirth"
-                    value={formik.values.dateOfBirth}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.dateOfBirth}
-                    </div>
-                  ) : null}
-                </>
-              </Field>
-
-              <Field>
-                <label>Reference ID</label>
-                <input type="text" className="ref-input" />
-              </Field>
-              <p className="ref">
-                The reference number will be used to track this case in your
-                internal system if you have one
-              </p>
-              <button
-                // disabled={
-                //   formik.values.firstName.length === 0 ||
-                //   formik.values.lastName.length === 0 ||
-                //   formik.values.dateOfBirth.length === 0 ||
-                //   new Date().getFullYear() -
-                //     Number(formik.values.dateOfBirth.substr(0, 4)) <
-                //     17
-                // }
-                className={
-                  formik.values.firstName.length === 0 ||
-                  formik.values.lastName.length === 0 ||
-                  formik.values.dateOfBirth.length === 0 ||
-                  new Date().getFullYear() -
-                    Number(formik.values.dateOfBirth.substr(0, 4)) <
-                    17
-                    ? "btn notallowed"
-                    : "btn"
-                }
-                onClick={handleQualificationTab}
-              >
-                Next
-                <img src={arrow} alt="right" />
-              </button>
-            </FormDiv>
-          )}
-          {/* =======QUALIFICATION DETAILS===== */}
-          {activeTab === "qualification-details" && (
-            <FormDiv>
-              <div className="enrollment-status">
-                <label>Enrollment status &nbsp; &nbsp;</label>
-                <div className="enr-status">
-                  <span>Alumni &nbsp;</span>
-                  <Switch
-                    checked={formik.values.enrollmentStatus}
-                    onChange={(checked, e) => {
-                      formik.setFieldValue("enrollmentStatus", checked);
-                      console.log(checked);
-                    }}
-                    value={formik.values.enrollmentStatus}
-                    name="enrollmentStatus"
-                    onColor="#0092E0"
-                    onHandleColor="#2693e6"
-                    handleDiameter={28}
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                    height={20}
-                    width={48}
-                    className="react-switch"
-                    id="material-switch"
-                  />
-                  <span>&nbsp;Current student</span>
-                </div>
-              </div>
-              <p>
-                Must be the student ID issued by the institute at the time of
-                study
-              </p>
               <Field>
                 <label>
-                  Student ID
-                  <span>*</span>
+                  Matric No<span>*</span>
                 </label>
                 <>
                   <input
                     type="text"
                     className={
-                      formik.touched.studentId && formik.errors.studentId
-                        ? "student-input err"
-                        : "student-input"
+                      formik.touched.matricNo && formik.errors.matricNo
+                        ? "middle-input err"
+                        : "middle-input"
                     }
-                    name="studentId"
-                    value={formik.values.studentId}
+                    name="matricNo"
+                    value={formik.values.matricNo}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                   />
-                  {formik.touched.studentId && formik.errors.studentId ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.studentId}
-                    </div>
-                  ) : null}
                 </>
               </Field>
 
-              <Field>
+              <Field className="DOB">
                 <label>
                   Course
                   <span>*</span>
@@ -573,13 +439,12 @@ function VerificationForm({
                     type="text"
                     className={
                       formik.touched.course && formik.errors.course
-                        ? "course-input err"
-                        : "course-input"
+                        ? "date-input err"
+                        : "date-input"
                     }
                     name="course"
                     value={formik.values.course}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.course && formik.errors.course ? (
                     <div
@@ -592,33 +457,90 @@ function VerificationForm({
                 </>
               </Field>
 
-              <Field>
+              <Field className="DOB">
                 <label>
-                  Qualification
+                  Graduation Year
                   <span>*</span>
                 </label>
                 <>
                   <input
                     type="text"
                     className={
-                      formik.touched.qualification &&
-                      formik.errors.qualification
-                        ? "qualification-input err"
-                        : "qualification-input"
+                      formik.touched.graduationYear &&
+                      formik.errors.graduationYear
+                        ? "date-input err"
+                        : "date-input"
                     }
-                    name="qualification"
-                    placeholder="B.Sc"
-                    value={formik.values.qualification}
+                    name="graduationYear"
+                    value={formik.values.graduationYear}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                   />
-                  {formik.touched.qualification &&
-                  formik.errors.qualification ? (
+                  {formik.touched.graduationYear &&
+                  formik.errors.graduationYear ? (
                     <div
                       className="error"
                       style={{ marginLeft: "-660px", paddingTop: "3px" }}
                     >
-                      {formik.errors.qualification}
+                      {formik.errors.graduationYear}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>Reference ID</label>
+                <input type="text" className="ref-input" />
+              </Field>
+              {/* <p className="ref">
+                The reference number will be used to track this case in your
+                internal system if you have one
+              </p> */}
+              <button
+                className={
+                  formik.values.firstName.length === 0 ||
+                  formik.values.lastName.length === 0 ||
+                  formik.values.course.length === 0 ||
+                  formik.values.graduationYear.length === 0 ||
+                  formik.values.matricNo.length === 0
+                    ? "btn notallowed"
+                    : "btn"
+                }
+                onClick={handleQualificationTab}
+              >
+                Next
+                <img src={arrow} alt="right" />
+              </button>
+            </FormDiv>
+          )}
+          {/* =======QUALIFICATION DETAILS===== */}
+          {activeTab === "destination-details" && (
+            <FormDiv>
+              <Field>
+                <label>
+                  Destination Country
+                  <span>*</span>
+                </label>
+                <>
+                  <CountryDropdown
+                    name="destinationCountry"
+                    id="destinationCountry"
+                    className="destination-country"
+                    valueType="full"
+                    value={formik.values.destinationCountry}
+                    onChange={(_, e) => {
+                      formik.handleChange(e);
+                      console.log(e.target.value);
+                    }}
+                    onBlur={formik.handleBlur}
+                    ReactFlagsSelect
+                  />
+                  {formik.touched.destinationCountry &&
+                  formik.errors.destinationCountry ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.destinationCountry}
                     </div>
                   ) : null}
                 </>
@@ -626,7 +548,66 @@ function VerificationForm({
 
               <Field>
                 <label>
-                  Classificaton
+                  Address Line
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.addressLine && formik.errors.addressLine
+                        ? "course-input err"
+                        : "course-input"
+                    }
+                    name="course"
+                    value={formik.values.addressLine}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.addressLine && formik.errors.addressLine ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.addressLine}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>
+                  Zip/Postcode
+                  <span>*</span>
+                </label>
+                <>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.ZipPostCode && formik.errors.ZipPostCode
+                        ? "qualification-input err"
+                        : "qualification-input"
+                    }
+                    name="qualification"
+                    placeholder="B.Sc"
+                    value={formik.values.ZipPostCode}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.ZipPostCode && formik.errors.ZipPostCode ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.ZipPostCode}
+                    </div>
+                  ) : null}
+                </>
+              </Field>
+
+              <Field>
+                <label>
+                  Destination Number
                   <span>*</span>
                 </label>
                 <>
@@ -634,118 +615,68 @@ function VerificationForm({
                     type="text"
                     placeholder="second class upper"
                     className={
-                      formik.touched.classification &&
-                      formik.errors.classification
+                      formik.touched.destinationNumber &&
+                      formik.errors.destinationNumber
                         ? "class-input err"
                         : "class-input"
                     }
-                    name="classification"
-                    value={formik.values.classification}
+                    name="destinationNumber"
+                    value={formik.values.destinationNumber}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.classification &&
-                  formik.errors.classification ? (
+                  {formik.touched.destinationNumber &&
+                  formik.errors.destinationNumber ? (
                     <div
                       className="error"
                       style={{ marginLeft: "-660px", paddingTop: "3px" }}
                     >
-                      {formik.errors.classification}
+                      {formik.errors.destinationNumber}
                     </div>
                   ) : null}
                 </>
               </Field>
-              {!formik.values.enrollmentStatus && (
+
+              <Field>
+                <label>
+                  City<span>*</span>
+                </label>
                 <>
-                  <Field>
-                    <label>
-                      Admission Year<span>*</span>
-                    </label>
-                    <>
-                      <input
-                        type="text"
-                        className={
-                          formik.touched.admissionYear &&
-                          formik.errors.admissionYear
-                            ? "admission-input err"
-                            : "admission-input"
-                        }
-                        name="admissionYear"
-                        value={formik.values.admissionYear}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.admissionYear &&
-                      formik.errors.admissionYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.admissionYear}
-                        </div>
-                      ) : null}
-                    </>
-                  </Field>
-                  <Field>
-                    <label>
-                      Graduation Year<span>*</span>
-                    </label>
-                    <>
-                      <input
-                        type="text"
-                        className={
-                          formik.touched.graduationYear &&
-                          formik.errors.graduationYear
-                            ? "graduation-input err"
-                            : "graduation-input"
-                        }
-                        name="graduationYear"
-                        value={formik.values.graduationYear}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.graduationYear &&
-                      formik.errors.graduationYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.graduationYear}
-                        </div>
-                      ) : null}
-                    </>
-                  </Field>
+                  <input
+                    type="text"
+                    className={
+                      formik.touched.city && formik.errors.city
+                        ? "admission-input err"
+                        : "admission-input"
+                    }
+                    name="city"
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.city && formik.errors.city ? (
+                    <div
+                      className="error"
+                      style={{
+                        marginLeft: "-620px",
+                        paddingTop: "3px",
+                      }}
+                    >
+                      {formik.errors.city}
+                    </div>
+                  ) : null}
                 </>
-              )}
-              <p>
-                The reference number will be used to track this case in your
-                internal system if you have one
-              </p>
+              </Field>
+
               <button
                 disabled={
-                  formik.values.course.length === 0 ||
-                  formik.values.qualification.length === 0 ||
-                  formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
-                  formik.values.studentId.length === 0
+                  formik.values.destinationCountry.length === 0 ||
+                  formik.values.addressLine.length === 0 ||
+                  formik.values.destinationNumber.length === 0 ||
+                  formik.values.city.length === 0 ||
+                  formik.values.ZipPostCode.length === 0
                 }
-                className={
-                  formik.values.course.length === 0 ||
-                  formik.values.qualification.length === 0 ||
-                  formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
-                  formik.values.studentId.length === 0
-                    ? "btn notallowed"
-                    : "btn"
-                }
+                className="btn"
                 type="submmit"
                 onClick={() => {
                   setActiveTab("documents");
@@ -764,39 +695,6 @@ function VerificationForm({
                   Please upload file in (pdf, jpg,jpeg) format only
                 </p>
               </Field>
-              <UploadSection>
-                {/* <Document>
-                  <div className="consent">
-                    <p>Download & sign a consent form</p>
-                    <img src={form} alt="forms_document" />
-                  </div>
-                  <div className="icons">
-                    <img src={download} alt="download_icon" />
-                    <img src={documentAttach} alt="download_icon" />
-                  </div>
-                </Document> */}
-
-                <Document className="second-upload">
-                  <div className="consent">
-                    <p>Upload a third party document</p>
-                    <img src={uparrow} alt="forms_document" />
-                  </div>
-
-                  <div className="file_button_container">
-                    <input
-                      type="file"
-                      name="certImage"
-                      style={{ cursor: "pointer" }}
-                      onChange={(event) => {
-                        formik.setFieldValue(
-                          "certImage",
-                          event.currentTarget.files[0]
-                        );
-                      }}
-                    />
-                  </div>
-                </Document>
-              </UploadSection>
 
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
@@ -804,17 +702,12 @@ function VerificationForm({
             </FormDiv>
           )}
         </form>
-        {verificationsLength > 1 && (
-          <button onClick={deleteOneVerification} className="delete">
-            <FontAwesomeIcon icon={faTrash} /> Delete verification
-          </button>
-        )}
       </FormContainer>
     </SingleCheck>
   );
 }
 
-export default VerificationForm;
+export default TranscriptForm;
 
 const SingleCheck = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -1040,6 +933,18 @@ const Field = styled.div`
     border: 1px solid #707070cc;
     border-radius: 5px;
     outline: none;
+    @media (max-width: 500px) {
+      font-size: 16px;
+      width: 90%;
+    }
+  }
+  .destination-country {
+    width: 65%;
+    height: 30px;
+    border: 1px solid #707070cc;
+    border-radius: 5px;
+    outline: none;
+    margin-left: 30px;
     @media (max-width: 500px) {
       font-size: 16px;
       width: 90%;
