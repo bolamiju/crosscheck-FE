@@ -95,7 +95,7 @@ function VerificationForm({
       }
 
       var formData = new FormData();
-      formData.append("institution", selectedInst.name);
+      // formData.append("institution", selectedInst.name);
       formData.append("amount", selectedInst.amount);
       formData.append("country", selectedInst.country);
       for (var key in values) {
