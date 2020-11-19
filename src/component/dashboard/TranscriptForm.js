@@ -411,8 +411,8 @@ function TranscriptForm({
                     type="text"
                     className={
                       formik.touched.matricNo && formik.errors.matricNo
-                        ? "middle-input err"
-                        : "middle-input"
+                        ? "matric-input err"
+                        : "matric-input"
                     }
                     name="matricNo"
                     value={formik.values.matricNo}
@@ -431,8 +431,8 @@ function TranscriptForm({
                     type="text"
                     className={
                       formik.touched.course && formik.errors.course
-                        ? "date-input err"
-                        : "date-input"
+                        ? "course-input err"
+                        : "course-input"
                     }
                     name="course"
                     value={formik.values.course}
@@ -460,8 +460,8 @@ function TranscriptForm({
                     className={
                       formik.touched.graduationYear &&
                       formik.errors.graduationYear
-                        ? "date-input err"
-                        : "date-input"
+                        ? "graduationyear-input err"
+                        : "graduationyear-input"
                     }
                     name="graduationYear"
                     value={formik.values.graduationYear}
@@ -548,8 +548,8 @@ function TranscriptForm({
                     type="text"
                     className={
                       formik.touched.addressLine && formik.errors.addressLine
-                        ? "course-input err"
-                        : "course-input"
+                        ? "address-input err"
+                        : "address-input"
                     }
                     name="course"
                     value={formik.values.addressLine}
@@ -577,11 +577,11 @@ function TranscriptForm({
                     type="text"
                     className={
                       formik.touched.ZipPostCode && formik.errors.ZipPostCode
-                        ? "qualification-input err"
-                        : "qualification-input"
+                        ? "postcode-input err"
+                        : "postcode-input"
                     }
                     name="qualification"
-                    placeholder="B.Sc"
+                    placeholder="eg 11101"
                     value={formik.values.ZipPostCode}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -605,12 +605,11 @@ function TranscriptForm({
                 <>
                   <input
                     type="text"
-                    placeholder="second class upper"
                     className={
                       formik.touched.destinationNumber &&
                       formik.errors.destinationNumber
-                        ? "class-input err"
-                        : "class-input"
+                        ? "destination-input err"
+                        : "destination-input"
                     }
                     name="destinationNumber"
                     value={formik.values.destinationNumber}
@@ -638,8 +637,8 @@ function TranscriptForm({
                     type="text"
                     className={
                       formik.touched.city && formik.errors.city
-                        ? "admission-input err"
-                        : "admission-input"
+                        ? "city-input err"
+                        : "city-input"
                     }
                     name="city"
                     value={formik.values.city}
@@ -724,7 +723,7 @@ const FormContainer = styled.div`
     }
     input {
       @media (max-width: 500px) {
-        width: 250px !important;
+        /* width: 250px !important; */
       }
     }
   }
@@ -883,7 +882,7 @@ const Field = styled.div`
     border: 1px solid #707070cc;
     border-radius: 5px;
     outline: none;
-    margin-left: 30px;
+    margin-left: 35px;
     @media (max-width: 500px) {
       font-size: 16px;
       width: 90%;
@@ -898,31 +897,37 @@ const Field = styled.div`
     }
   }
   .first-input {
-    margin-left: 30px;
+    margin-left: 61px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
-  .middle-input {
-    margin-left: 23px;
+  .matric-input {
+    margin-left: 67px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
   .last-input {
-    margin-left: 33px;
+    margin-left: 62px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
-  .date-input {
-    margin-left: 24px;
+  .course-input {
+    margin-left: 84px;
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
+  }
+  .graduationyear-input {
+    margin-left: 29px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
   .ref-input {
-    margin-left: 24px;
+    margin-left: 56px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
@@ -933,26 +938,29 @@ const Field = styled.div`
       margin-left: 0px;
     }
   }
-  .course-input {
-    margin-left: 52px;
+  .address-input {
+    margin-left: 78px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
-  .qualification-input {
-    margin-left: 25px;
+  .postcode-input {
+    margin-left: 75px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
-  .class-input {
-    margin-left: 23px;
+  .destination-country {
+    margin-left: 35px;
+    @media (max-width: 400px) {
+      margin-left: 0px;
+    }
     @media (max-width: 500px) {
       margin-left: 0px;
     }
   }
-  .admission-input {
-    margin-left: 8px;
+  .city-input {
+    margin-left: 135px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
@@ -963,6 +971,16 @@ const Field = styled.div`
       margin-left: 0px;
     }
   }
+  .destination-input {
+    margin-left: 35px;
+    @media (max-width: 400px) {
+      margin-left: 0px;
+    }
+    @media (max-width: 500px) {
+      margin-left: 0px;
+    }
+  }
+  
 `;
 const SelectCheck = styled.div`
   display: flex;
