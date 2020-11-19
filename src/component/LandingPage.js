@@ -519,6 +519,34 @@ const Slides = styled.div`
       }
     }
   }
+  @media (max-width: 500px) {
+    display: flex;
+
+    .w3-container {
+      display: flex;
+      flex-direction: column;
+
+      .testimony-test {
+        background: white;
+        color: black;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        border-radius: 4px;
+      }
+      .profile {
+        position: relative;
+        top: -40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+      }
+    }
+  }
 `;
 
 const Footer = styled.div`
@@ -791,6 +819,9 @@ const Testimonies = styled.div`
         img {
           width: 70px;
           height: 70px;
+          @media (max-width: 500px) {
+          display: block;
+          }     
         }
       }
       p {
@@ -1046,13 +1077,6 @@ const About = styled.div`
 const FirstSection = styled.div`
   @media (max-width: 400px) {
     min-width: 60%;
-    min-height: 100vh;
-    height: 700px;
-    margin-bottom: 30px;
-  }
-  @media (max-width: 500px) {
-    min-width: 0%;
-    min-height: 100vh;
     height: 700px;
     margin-bottom: 30px;
   }
@@ -1304,7 +1328,7 @@ const Main = styled.main`
       margin-left: auto;
       margin-top: 40px;
     }
-    @media (max-width: 1300px) {
+    @media (min-width: 768px) and (max-width: 1300px) {
       height: 385px;
     }
   }
