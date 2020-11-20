@@ -1,5 +1,7 @@
 import React from 'react';
 import AdminLayout from './AdminLayout';
+import RecentPending from './pending/RecentPending';
+import RecentCompleted from './completed/RecentCompleted';
 import styled from 'styled-components';
 
 const  Overview = ({history}) =>{
@@ -30,14 +32,16 @@ const  Overview = ({history}) =>{
                         </div>
                     </div>
                     <div className="d-block d-lg-flex justify-content-between">
-                        <div className="recent-pending d-flex justify-content-between">
+                        <RecentPending />
+                        <RecentCompleted />
+                        {/* <div className="recent-pending d-flex justify-content-between">
                             <h6>recent pending</h6>
                             <p>total <span>10</span></p>
                         </div>
                         <div className="recent-completed d-flex justify-content-between">
                             <h6>recent completed</h6>
                             <p>total <span>125</span></p>
-                        </div>
+                        </div> */}
                     </div>
                </div>
             </OverviewWrapper>
