@@ -144,8 +144,8 @@ const LandingPage = () => {
               onClick={handleMenuIcon}
             />
           ) : (
-              ""
-            )}
+            ""
+          )}
         </NavBar>
         <div className={show ? "hide-show" : "hide"}>
           <img src={Menu} alt="close" onClick={handleMenuIcon} />
@@ -519,34 +519,6 @@ const Slides = styled.div`
       }
     }
   }
-  @media (max-width: 500px) {
-    display: flex;
-
-    .w3-container {
-      display: flex;
-      flex-direction: column;
-
-      .testimony-test {
-        background: white;
-        color: black;
-        width: 100%;
-        padding-top: 10px;
-        padding-bottom: 30px;
-        border-radius: 4px;
-      }
-      .profile {
-        position: relative;
-        top: -40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        img {
-          width: 70px;
-          height: 70px;
-        }
-      }
-    }
-  }
 `;
 
 const Footer = styled.div`
@@ -601,7 +573,7 @@ const Footer = styled.div`
     padding-top: 40px;
     padding-bottom: 30px;
     margin-left: 550px;
-    @media (max-width: 500px) {
+    @media (max-width: 400px) {
       display: block;
       flex-direction: column;
       padding-top: 0px;
@@ -621,9 +593,6 @@ const Footer = styled.div`
         @media (max-width: 400px) {
           font-size: 16px;
         }
-        @media (max-width: 500px) {
-          font-size: 16px;
-        }
       }
     }
   }
@@ -641,21 +610,8 @@ const Footer = styled.div`
 
       flex-direction: column;
     }
-    @media (max-width: 500px) {
-      padding-left: 15px;
-      display: flex;
-      /* align-items: flex-start; */
-
-      flex-direction: column;
-    }
     img {
       @media (max-width: 400px) {
-        width: 150px;
-        height: 30px;
-      }
-    }
-    img {
-      @media (max-width: 500px) {
         width: 150px;
         height: 30px;
       }
@@ -670,20 +626,11 @@ const Footer = styled.div`
         margin-left: 0px;
         padding: 0 !important;
       }
-      @media (max-width: 500px) {
-        display: flex;
-        flex-direction: column;
-        margin-left: 0px;
-        padding: 0 !important;
-      }
       li {
         margin-right: 15px;
         color: grey;
         font-size: 12px;
         @media (max-width: 400px) {
-          margin-bottom: 20px;
-        }
-        @media (max-width: 500px) {
           margin-bottom: 20px;
         }
       }
@@ -705,11 +652,6 @@ const Cover = styled.div`
       flex-direction: column;
       align-items: center;
     }
-    @media (max-width: 500px) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
     .counter {
       color: #0092e0;
       font-size: 42px;
@@ -719,10 +661,6 @@ const Cover = styled.div`
     .count {
       padding-right: 250px;
       @media (max-width: 400px) {
-        padding-right: 0px;
-        margin-bottom: 50px;
-      }
-      @media (max-width: 500px) {
         padding-right: 0px;
         margin-bottom: 50px;
       }
@@ -746,10 +684,6 @@ const Testimonies = styled.div`
       display: flex;
       margin-top: 30px;
     }
-    @media (max-width: 500px) {
-      display: flex;
-      margin-top: 30px;
-    }
 
     .circle {
       border: 1px solid white;
@@ -766,19 +700,12 @@ const Testimonies = styled.div`
     padding-bottom: 40px;
     height: auto !important;
   }
-  @media (max-width: 500px) {
-    padding-bottom: 40px;
-    height: auto !important;
-  }
   p {
     width: 40%;
     text-align: center;
     letter-spacing: 0px;
     color: #ffffff;
     @media (max-width: 400px) {
-      width: 80%;
-    }
-    @media (max-width: 500px) {
       width: 80%;
     }
   }
@@ -790,9 +717,7 @@ const Testimonies = styled.div`
     @media (max-width: 400px) {
       display: none;
     }
-    @media (max-width: 500px) {
-      display: none;
-    }
+
     .testimony {
       width: 300px;
       display: flex;
@@ -819,9 +744,6 @@ const Testimonies = styled.div`
         img {
           width: 70px;
           height: 70px;
-          @media (max-width: 500px) {
-          display: block;
-          }     
         }
       }
       p {
@@ -848,17 +770,8 @@ const Blocks = styled.div`
     flex-direction: column;
     align-items: center;
   }
-  @media (max-width: 500px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   .blocks {
     @media (max-width: 400px) {
-      width: 100%;
-      margin-bottom: 40px;
-    }
-    @media (max-width: 500px) {
       width: 100%;
       margin-bottom: 40px;
     }
@@ -876,9 +789,6 @@ const Blocks = styled.div`
       text-align: center;
       color: #676f79;
       @media (max-width: 400px) {
-        line-height: 1.6;
-      }
-      @media (max-width: 500px) {
         line-height: 1.6;
       }
     }
@@ -900,9 +810,6 @@ const Div = styled.div`
     @media (max-width: 400px) {
       width: 100%;
     }
-    @media (max-width: 500px) {
-      width: 100%;
-    }
   }
 `;
 
@@ -920,9 +827,6 @@ const About = styled.div`
   }
   .image-icons {
     @media (max-width: 400px) {
-      display: none;
-    }
-    @media (max-width: 500px) {
       display: none;
     }
     display: flex;
@@ -946,16 +850,8 @@ const About = styled.div`
       flex-direction: column;
       width: auto;
     }
-    @media (max-width: 500px) {
-      display: flex;
-      flex-direction: column;
-      width: auto;
-    }
     .card {
       @media (max-width: 400px) {
-        margin-bottom: 25px;
-      }
-      @media (max-width: 500px) {
         margin-bottom: 25px;
       }
       background: #ffffff 0% 0% no-repeat padding-box;
@@ -990,10 +886,6 @@ const About = styled.div`
           font-size: 16px;
           line-height: 1.4;
         }
-        @media (max-width: 500px) {
-          font-size: 16px;
-          line-height: 1.4;
-        }
       }
       h3 {
         color: #173049;
@@ -1006,17 +898,10 @@ const About = styled.div`
   @media (max-width: 400px) {
     width: 100%;
   }
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+
   h2 {
     display: none;
     @media (max-width: 400px) {
-      display: block;
-      font-size: 30px;
-      font-weight: bolder;
-    }
-    @media (max-width: 500px) {
       display: block;
       font-size: 30px;
       font-weight: bolder;
@@ -1026,17 +911,8 @@ const About = styled.div`
     margin-left: 0px;
     margin-top: 30px;
   }
-  @media (max-width: 500px) {
-    margin-left: 0px;
-    margin-top: 30px;
-  }
   h1 {
     @media (max-width: 400px) {
-      display: none;
-    }
-  }
-  h1 {
-    @media (max-width: 500px) {
       display: none;
     }
   }
@@ -1054,9 +930,7 @@ const About = styled.div`
     @media (max-width: 400px) {
       display: none;
     }
-    @media (max-width: 500px) {
-      display: none;
-    }
+
     h3 {
       letter-spacing: 0.6px;
       color: #173049;
@@ -1077,6 +951,7 @@ const About = styled.div`
 const FirstSection = styled.div`
   @media (max-width: 400px) {
     min-width: 60%;
+    min-height: 100vh;
     height: 700px;
     margin-bottom: 30px;
   }
@@ -1088,8 +963,7 @@ const FirstSection = styled.div`
   box-shadow: 0px 10px 30px #00000029;
   .hide-show {
     @media (min-width: 500px) {
-      display: flex;
-    min-height: 100vh;
+      display: none;
     }
     position: fixed;
     z-index: 50;
@@ -1136,14 +1010,8 @@ const FirstSection = styled.div`
 `;
 
 const NavBar = styled.nav`
-  @media (max-width: 400px) {
-    padding: 10px 10px;
-    display: flex;
-    justify-content: space-between;
-    /* max-width: 380px%; */
-  }
   @media (max-width: 500px) {
-    padding: 10px 10px;
+    padding: 0px 3px 0px 3px;
     display: flex;
     justify-content: space-between;
     /* max-width: 380px%; */
@@ -1161,13 +1029,6 @@ const NavBar = styled.nav`
       color: white;
       font-size: 28px;
     }
-    @media (max-width: 500px) {
-      display: block;
-      padding-right: 3px;
-      color: white;
-      font-size: 28px;
-      overflow: hidden;
-    }
   }
   img {
     width: 150px;
@@ -1177,18 +1038,10 @@ const NavBar = styled.nav`
       width: 100px;
       height: 25px;
     }
-    @media (max-width: 500px) {
-      /* float: left; */
-      width: 100px;
-      height: 25px;
-    }
   }
 
   .navs {
     @media only screen and (max-width: 400px) {
-      display: none;
-    }
-    @media only screen and (max-width: 500px) {
       display: none;
     }
 
@@ -1230,9 +1083,6 @@ const Main = styled.main`
   @media (max-width: 400px) {
     padding-top: 20px;
   }
-  @media (max-width: 500px) {
-    padding-top: 20px;
-  }
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1241,11 +1091,6 @@ const Main = styled.main`
   padding-bottom: 30px;
   @media (max-width: 400px) {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  @media (max-width: 500px) {
-     display: flex;
     flex-direction: column;
     align-items: center;
   }
@@ -1318,30 +1163,11 @@ const Main = styled.main`
     @media (max-width: 400px) {
       width: 350px;
       height: 200px;
-      margin-right: 0;
       margin-top: 40px;
-    }
-    @media (max-width: 500px) {
-      width: 300px;
-      height: 200px;
-      margin-right: auto;
-      margin-left: auto;
-      margin-top: 40px;
-    }
-    @media (min-width: 768px) and (max-width: 1300px) {
-      height: 385px;
     }
   }
   .intro-text {
     @media (max-width: 400px) {
-      width: 80%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-left: 0px;
-    }
-    @media (max-width: 500px) {
       width: 80%;
       display: flex;
       flex-direction: column;
@@ -1361,20 +1187,10 @@ const Main = styled.main`
         font-size: 34px;
         text-align: center;
       }
-      @media (max-width: 500px) {
-        display: block;
-        color: #66c8ed;
-        font-weight: lighter;
-        font-size: 34px;
-        text-align: center;
-      }
     }
     h1 {
       /* font-family: sans-serif; */
       @media (max-width: 400px) {
-        display: none;
-      }
-      @media (max-width: 500px) {
         display: none;
       }
       color: #66c8ed;
