@@ -7,18 +7,14 @@ import ForgotPassword from "./component/auth/ForgotPassword";
 import ResetPassword from "./component/auth/ResetPassword";
 import AccountVerification from "./component/auth/AccountVerification";
 import MainContent from "./component/dashboard/MainContent";
-import AdminContent from './component/admin/AdminContent';
 import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 function App() {
   return (
     <Provider store={store}>
-      <Route exact path="/admin" component={AdminContent} />
       <Route exact path="/register" component={Register} />
       <Route exact path="/" component={Login} />
       <Route exact path="/dashboard" component={MainContent} />

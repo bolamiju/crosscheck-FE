@@ -1,13 +1,3 @@
-:root {
-  /* --mainBlue:#2a2a72;
-  --lightBlue:#009ffd; */
-  --mainWhite:#f3f3f3;
-  --lightBlue:  #0092e0;
-  --mainBlue:  #60c2e0;
-  --lightDark: #707070;
-  /* --mainYellow:#ffa400; */
-}
-
 .app {
   background: white;
 }
