@@ -1239,7 +1239,7 @@ const NavBar = styled.nav`
     ul {
       display: flex;
       padding-left: 350px;
-
+      padding-top: 15px;
       list-style-type: none;
       button {
         margin-top: -5px;
@@ -1367,8 +1367,8 @@ const Main = styled.main`
 
   img {
     width: 64%;
-    height: calc(100vh - 148px);
-    margin-right: -85px;
+    height: calc(100vh - 163px);
+    margin-right: -98px;
     @media (max-width: 400px) {
       width: 350px;
       height: 200px;
