@@ -10,7 +10,7 @@ import receipt from "../../asset/receipt.svg";
 import newVer from "../../asset/new.svg";
 import histry from "../../asset/history.svg";
 import {
-  faAngleDoubleDown,
+  // faAngleDoubleDown,
   faAngleDown,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -47,7 +47,7 @@ function Sidebar({ history }) {
               style={{ marginLeft: "20px", color: "white", fontSize: "18px" }}
             />
           </div>
-          <div className="options">
+          {/* <div className="options">
             <ul className={show ? "show" : "hide"}>
               <li>
                 <Link to="/new" className="option">
@@ -65,7 +65,7 @@ function Sidebar({ history }) {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
           <Link to="/dashboard/:id" className="link">
             {" "}
             <img src={histry} alt="history" />

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
@@ -91,7 +91,6 @@ const HeadContainer = styled.div`
       margin-left: 0rem;
     }
   }
-  
 
   .right-con {
     display: flex;

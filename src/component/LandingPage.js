@@ -1031,6 +1031,10 @@ const About = styled.div`
     margin-top: 30px;
   }
   h1 {
+    font-family: segoebold;
+    font-size: 30px;
+    margin-top: 45px;
+    margin-bottom: 30px;
     @media (max-width: 400px) {
       display: none;
     }
@@ -1088,8 +1092,7 @@ const FirstSection = styled.div`
   box-shadow: 0px 10px 30px #00000029;
   .hide-show {
     @media (min-width: 500px) {
-      display: flex;
-      min-height: 100vh;
+      display: none;
     }
     position: fixed;
     z-index: 50;
@@ -1121,6 +1124,7 @@ const FirstSection = styled.div`
         margin-bottom: 40px;
         a {
           text-decoration: none;
+          color: white;
         }
       }
       .auth {
@@ -1210,13 +1214,20 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
+        font-family: segoesemiLight;
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
+        font-family: segoesemiLight;
         a {
           text-decoration: none;
+          color: white;
+          font-family: segoesemiLight;
+          &:hover {
+            color: #66c8ed !important;
+          }
         }
         &:hover {
           color: #66c8ed !important;
@@ -1227,6 +1238,7 @@ const NavBar = styled.nav`
 `;
 
 const Main = styled.main`
+  overflow: hidden;
   @media (max-width: 400px) {
     padding-top: 20px;
   }
@@ -1263,6 +1275,7 @@ const Main = styled.main`
       color: #0092e0;
       text-decoration: none;
       cursor: pointer;
+      font-family: orkneyLight;
       &:hover {
         color: white;
       }
@@ -1300,6 +1313,7 @@ const Main = styled.main`
         border: 1px solid white;
         color: white;
         background: none;
+        font-family: orkneyLight;
         padding: 10px 40px 10px 40px;
         border-radius: 5px;
         &:hover {
@@ -1312,8 +1326,8 @@ const Main = styled.main`
   }
 
   img {
-    width: 900px;
-    height: 470px;
+    width: 64%;
+    height: calc(100vh - 148px);
     margin-right: -85px;
     @media (max-width: 400px) {
       width: 350px;
@@ -1329,7 +1343,7 @@ const Main = styled.main`
       margin-top: 40px;
     }
     @media (min-width: 768px) and (max-width: 1300px) {
-      height: 385px;
+      /* height: 385px; */
     }
   }
   .intro-text {
@@ -1370,7 +1384,8 @@ const Main = styled.main`
       }
     }
     h1 {
-      /* font-family: sans-serif; */
+      font-family: orkneyLight;
+
       @media (max-width: 400px) {
         display: none;
       }
@@ -1379,7 +1394,7 @@ const Main = styled.main`
       }
       color: #66c8ed;
       font-weight: lighter;
-      font-size: 40px;
+      font-size: 44px;
       .here {
         color: white;
         cursor: pointer;
@@ -1388,13 +1403,17 @@ const Main = styled.main`
       }
     }
     p {
-      font-size: 16px;
+      width: 100%;
       text-align: left;
-      /* font-family: Segoe UI; */
-      letter-spacing: 1px;
+      font-family: segosemiLight;
+      font-size: 18px;
+      font-weight: normal;
+      letter-spacing: 0px;
       font-weight: lighter;
       color: #ffffff;
       opacity: 0.8;
+      margin-top: 40px;
+      margin-bottom: 40px;
       @media (max-width: 500px) {
         text-align: center;
         font-size: 18px;
