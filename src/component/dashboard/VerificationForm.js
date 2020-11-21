@@ -45,8 +45,6 @@ function VerificationForm({
   const [schCard, setSchCard] = useState(true);
   const [country, setCountry] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   const handleInputChange = (e) => {
     setInput(e.target.value);
     setHideTable(false);

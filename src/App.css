@@ -23,3 +23,11 @@
   font-family: MontserratLight;
   src: url("./fonts/Montserrat-Light.otf");
 }
+@font-face {
+  font-family: MontserratSemibold;
+  src: url("./fonts/Montserrat-SemiBold.otf");
+}
+@font-face {
+  font-family: MontserratRegular;
+  src: url("./fonts/Montserrat-Regular.ttf");
+}

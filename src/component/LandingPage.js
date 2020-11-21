@@ -105,6 +105,7 @@ const LandingPage = () => {
             width: `${navbar ? "100%" : ""}`,
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
+            zIndex: "10",
           }}
         >
           <div>
@@ -117,17 +118,39 @@ const LandingPage = () => {
           <div className="navs">
             <ul>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#coverage"> Coverage</a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#coverage"
+                >
+                  {" "}
+                  Coverage
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#about"> About Us</a>
+              <li style={{ color: `${navbar ? "#0092E0 !" : "white"}` }}>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#about"
+                >
+                  {" "}
+                  About Us
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#work">How it works</a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#work"
+                >
+                  How it works
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#contact">Contact </a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#contact"
+                >
+                  Contact{" "}
+                </a>
               </li>
               <button>
                 <Link className="link-to" to="/">
@@ -258,8 +281,9 @@ const LandingPage = () => {
       <Div>
         <h2>How it Works</h2>
         <p>
-          A descriptive if there is anyone who loves or pursues or desires to
-          obtain pain and anything else to finish this sentence.
+          Our clients can order verifications anytime and our research teams
+          start working on the same from multiple locations in highly efficient
+          and effective ways.
         </p>
       </Div>
       <a id="work" href={() => false}>
@@ -732,12 +756,12 @@ const Cover = styled.div`
 
 const Testimonies = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
   color: white;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 40px;
+  padding-top: 60px;
   background: transparent linear-gradient(308deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
   .circles {
@@ -774,7 +798,11 @@ const Testimonies = styled.div`
     width: 40%;
     text-align: center;
     letter-spacing: 0px;
+    font-family: MontserratLight;
+    font-size: 16px;
     color: #ffffff;
+    opacity: 0.9;
+    padding-bottom: 60px;
     @media (max-width: 400px) {
       width: 80%;
     }
@@ -801,6 +829,7 @@ const Testimonies = styled.div`
       justify-content: center;
       /* height: 120px; */
       background: #ffffff 0% 0% no-repeat padding-box;
+      padding: 10px;
       border-radius: 8px;
       .profile {
         margin-bottom: -90px;
@@ -831,6 +860,8 @@ const Testimonies = styled.div`
         padding: 7px 7px 0px 7px;
         text-align: center;
         margin: 0;
+        font-size: 14px;
+        font-family: MontserratRegular;
       }
     }
   }
@@ -871,10 +902,19 @@ const Blocks = styled.div`
     &:hover {
       border: 1px solid #4a86ff;
     }
+    h4 {
+      font-family: MontserratSemibold;
+      font-size: 21px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #333333;
+    }
     p {
       width: 85%;
       text-align: center;
       color: #676f79;
+      font-family: MontserratLight;
+      font-size: 14px;
       @media (max-width: 400px) {
         line-height: 1.6;
       }
@@ -889,14 +929,16 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 80%;
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
   p {
-    width: 50%;
+    width: 60%;
     text-align: center;
     color: #676f79;
+    font-family: MontserratLight;
+    font-size: 14px;
+    opacity: 100;
     @media (max-width: 400px) {
       width: 100%;
     }
@@ -1155,8 +1197,6 @@ const NavBar = styled.nav`
   display: flex;
   padding-left: 90px;
   align-items: center;
-  /* position: fixed; */
-  /* width: 100%; */
   .menu-icon {
     display: none;
     @media (max-width: 400px) {
