@@ -44,6 +44,7 @@ function VerificationForm({
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(true);
   const [country, setCountry] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -93,7 +94,7 @@ function VerificationForm({
       }
 
       var formData = new FormData();
-      // formData.append("institution", selectedInst.name);
+      formData.append("email", user.email);
       formData.append("amount", selectedInst.amount);
       formData.append("country", selectedInst.country);
       for (var key in values) {

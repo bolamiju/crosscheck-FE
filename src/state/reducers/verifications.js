@@ -5,6 +5,7 @@ const initialState = {
   schCard: false,
   selectedInstitution: {},
   userVerifications: [],
+  transcript: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -23,6 +24,11 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         userVerifications: action.payload,
+      };
+    case types.ADD_TRANSCRIPT:
+      return {
+        ...state,
+        transcript: [...action.payload],
       };
 
     case types.DELETE_VERIFICATION:

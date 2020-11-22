@@ -8,6 +8,13 @@ export const addVerificationList = (payload) => {
   };
 };
 
+export const addTranscript = (payload) => {
+  return {
+    type: types.ADD_TRANSCRIPT,
+    payload,
+  };
+};
+
 export const deleteVerification = (payload) => {
   return {
     type: types.DELETE_VERIFICATION,
