@@ -819,15 +819,15 @@ const Field = styled.div`
     }
   }
   .destination-country {
-    width: 65%;
-    height: 30px;
+    width: 66%;
+    height: 35px;
     border: 1px solid #707070cc;
     border-radius: 5px;
     outline: none;
     margin-left: 35px;
     @media (max-width: 500px) {
       font-size: 16px;
-      width: 90%;
+      width: 91.5%;
     }
   }
   .err {
@@ -881,7 +881,7 @@ const Field = styled.div`
     }
   }
   .address-input {
-    margin-left: 78px;
+    margin-left: 74px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
@@ -902,7 +902,7 @@ const Field = styled.div`
     }
   }
   .city-input {
-    margin-left: 135px;
+    margin-left: 125px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
@@ -1086,8 +1086,13 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-left: 20px;
       width: 46%;
+      label {
+      font-family: MontserratRegular;
+      font-size: 16px;
+      color: #707070;
+    }
       @media (max-width: 500px) {
-        width: 95%;
+        width: 88%;
         margin-bottom: 20px;
         input {
           width: 0 !important;
@@ -1105,7 +1110,9 @@ const SelectSch = styled.div`
       border: 2px solid #e2e2e2;
       outline: none;
       width: 100%;
+      font-family: MontserratItalic;
       border-radius: 14px;
+      color: #707070;
     }
     @media (max-width: 500px) {
       flex-direction: column;
@@ -1115,22 +1122,30 @@ const SelectSch = styled.div`
   .institution-wrapper {
     display: flex;
     flex-direction: column;
-    padding-right: 20px;
-    padding-left: 20px;
-    width: 48%;
+    padding-left: 30px;
+    width: 46%;
+    label {
+      font-family: MontserratRegular;
+      font-size: 16px;
+      color: #707070;
+    }
+    @media (max-width: 500px) {
+      padding-left: 20px;
+    }
     input {
-      height: 34px;
+      height: 28px;
       border: 2px solid #e2e2e2;
       outline: none;
       width: 100%;
       border-radius: 14px;
+      font-family: MontserratItalic;
       padding-left: 5px;
       @media (max-width: 500px) {
         height: 30px;
       }
     }
     @media (max-width: 500px) {
-      width: 95%;
+      width: 85%;
       padding-right: 0px;
       label {
         font-size: 14px !important;
@@ -1144,7 +1159,7 @@ const SelectSch = styled.div`
     justify-content: space-between;
     margin-top: 10px;
     @media (max-width: 500px) {
-      width: 100%;
+      width: 90%;
     }
     .select-inst {
       p {
@@ -1166,12 +1181,15 @@ const SelectSch = styled.div`
       &:nth-child(1) {
         font-weight: bold;
         margin-bottom: 3px;
-        color: black;
+        font-family: MontserratBold;
+          font-size: 16px;
+          letter-spacing: 0.44px;
+          color: #173049;
       }
       &:nth-child(2) {
-        font-size: 14px;
-        font: normal normal medium 15px/19px Montserrat;
-        letter-spacing: 0.3px;
+        font-family: MontserratRegular;
+        font-size: 16px;
+        letter-spacing: 0.44px;
         color: #707070;
         margin: 0;
       }

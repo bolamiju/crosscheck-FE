@@ -99,6 +99,17 @@ const DashboardContent = ({ history }) => {
             </div>
           </div>
           <div className="selects">
+            <div className="sch-select">
+              <label style={{ paddingLeft: "5px" }}>Select Institution</label>
+              <input
+                type="text"
+                className="schl-input"
+                onChange={handleInputChange}
+                value={input}
+                name="input"
+                placeholder="Search for a school"
+              />
+            </div>
             <div className="country-select">
               <label style={{ paddingLeft: "5px" }}>Country</label>
               <CountryDropdown
@@ -109,17 +120,6 @@ const DashboardContent = ({ history }) => {
                   borderRadius: "14px",
                   fontSize: "16px",
                 }}
-              />
-            </div>
-            <div className="sch-select">
-              <label style={{ paddingLeft: "5px" }}>Select Institution</label>
-              <input
-                type="text"
-                className="schl-input"
-                onChange={handleInputChange}
-                value={input}
-                name="input"
-                placeholder="Search for a school"
               />
             </div>
           </div>
@@ -241,12 +241,18 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-right: 20px;
       padding-left: 20px;
-      width: 97%;
+      width: 46%;
+      label {
+      font-family: MontserratRegular;
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #707070; 
+    }
       .schl-input {
-        height: 34px;
+        height: 28px;
         border: 2px solid #e2e2e2;
         outline: none;
-        font-family: "Roboto";
+        font-family: MontserratItalic;
         border-radius: 14px;
         padding-left: 5px;
         padding-left: 15px;
@@ -259,7 +265,7 @@ const SelectSch = styled.div`
         }
       }
       @media (max-width: 500px) {
-        width: 90%;
+        width: 80%;
         padding-right: 0px;
       }
     }
@@ -268,9 +274,16 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-left: 20px;
       width: 46%;
+      label {
+      font-family: MontserratRegular;
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #707070; 
+    }
       @media (max-width: 500px) {
-        width: 90%;
+        width: 80%;
         margin-bottom: 15px;
+        margin-top: 15px;
       }
     }
     @media (max-width: 500px) {
@@ -293,11 +306,18 @@ const SelectSch = styled.div`
       p {
         &:nth-child(1) {
           font-weight: bold;
-          font-family: "Roboto";
+          font-family: MontserratBold;
           font-size: 16px;
+          letter-spacing: 0.44px;
+          color: #173049;
+          text-transform: capitalize;
         }
         &:nth-child(2) {
-          font-family: "Roboto";
+          font-family: MontserratRegular;
+          font-size: 16px;
+          letter-spacing: 0.44px;
+          color: #707070;
+          margin: 0;
         }
       }
       @media (max-width: 500px) {
@@ -473,18 +493,18 @@ const RequisitionBody = styled.div`
     }
     .history {
       margin-left: 50px;
-      font: normal normal 400 12px Montserrat;
-      letter-spacing: 0.18px;
-      color: #2c3e50;
+      font-family: MontserratBold;
+      letter-spacing: 0.44px;
+      color: #173049;
       opacity: 1;
     }
 
     .showing {
-      font: normal normal 400 12px Montserrat;
-      letter-spacing: 0.14px;
-      color: #2c3e50;
-      margin-left: 50px;
+      font-family: MontserratRegular;
+      letter-spacing: 0.44px;
+      color: #707070;
       opacity: 1;
+      margin-left: 50px;
     }
   }
 

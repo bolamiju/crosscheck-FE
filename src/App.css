@@ -31,3 +31,11 @@
   font-family: MontserratRegular;
   src: url("./fonts/Montserrat-Regular.ttf");
 }
+@font-face {
+  font-family: MontserratBold;
+  src: url("./fonts/Montserrat-Bold.otf");
+}
+@font-face {
+  font-family: MontserratItalic;
+  src: url("./fonts/Montserrat-Italic.otf");
+}

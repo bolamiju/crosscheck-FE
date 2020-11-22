@@ -28,7 +28,7 @@ function VerificationForm({
   deleteOneVerification,
   verificationsLength,
 }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("qualification-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -208,123 +208,123 @@ function VerificationForm({
     <span>{ selectedInst.amount}</span></div> */}
         </SelectSch>
       ) : (
-        <SelectSch>
-          <div className="req-trans">
-            <img src={Institution} alt="select a sch" />
+          <SelectSch>
+            <div className="req-trans">
+              <img src={Institution} alt="select a sch" />
 
-            <div className="select-inst">
-              <p>Select an institute</p>
-              <p>Select preferred institute to conduct verification</p>
+              <div className="select-inst">
+                <p>Select an institute</p>
+                <p>Select preferred institute to conduct verification</p>
+              </div>
             </div>
-          </div>
-          <div className="selects">
-            <div className="select-country">
-              <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
-              <CountryDropdown
-                name="country"
-                id="country"
-                className="select-schol"
-                value={country}
-                onChange={(_, e) => {
-                  setCountry(e.target.value);
-                }}
-              />
+            <div className="selects">
+              <div className="institution-wrapper">
+                <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
+                <input
+                  type="text"
+                  onChange={handleInputChange}
+                  value={input}
+                  name="input"
+                  placeholder="Search an institute"
+                />
+              </div>
+              <div className="select-country">
+                <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
+                <CountryDropdown
+                  name="country"
+                  id="country"
+                  className="select-schol"
+                  value={country}
+                  onChange={(_, e) => {
+                    setCountry(e.target.value);
+                  }}
+                />
+              </div>
             </div>
-            <div className="institution-wrapper">
-              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-              <input
-                type="text"
-                onChange={handleInputChange}
-                value={input}
-                name="input"
-                placeholder="Search an institute"
-              />
-            </div>
-          </div>
-          {filteredItems.length > 0 && input.length > 0 && (
-            <div className="new-table">
-              <table
-                cellSpacing="0"
-                cellPadding="0"
-                border="0"
-                className={hideTable ? "hide-table" : ""}
-              >
-                <thead className="table-headers">
-                  <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>category rate</th>
-                    <th>amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredItems
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map((ite) => (
-                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                        <th className="mobile-header">Number</th>
-                        <td>{ite.name}</td>
-                        <th className="mobile-header">Market rate</th>
-                        <td>{ite.country}</td>
-                        <th className="mobile-header">Weight</th>
-                        <td>{ite.category}</td>
-                        <th className="mobile-header">Value</th>
-                        <td>{ite.amount}</td>
-                      </tr>
-                      // <tr className="space"></tr>
-                    ))}
-                </tbody>
-              </table>
-              {!hideTable && (
-                <div className="pagination-line">
-                  <p>
-                    Showing{" "}
-                    {
-                      filteredItems.slice(
-                        currentPage * pageSize,
-                        (currentPage + 1) * pageSize
-                      ).length
-                    }{" "}
+            {filteredItems.length > 0 && input.length > 0 && (
+              <div className="new-table">
+                <table
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className={hideTable ? "hide-table" : ""}
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>category rate</th>
+                      <th>amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredItems
+                      .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                      .map((ite) => (
+                        <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                          <th className="mobile-header">Number</th>
+                          <td>{ite.name}</td>
+                          <th className="mobile-header">Market rate</th>
+                          <td>{ite.country}</td>
+                          <th className="mobile-header">Weight</th>
+                          <td>{ite.category}</td>
+                          <th className="mobile-header">Value</th>
+                          <td>{ite.amount}</td>
+                        </tr>
+                        // <tr className="space"></tr>
+                      ))}
+                  </tbody>
+                </table>
+                {!hideTable && (
+                  <div className="pagination-line">
+                    <p>
+                      Showing{" "}
+                      {
+                        filteredItems.slice(
+                          currentPage * pageSize,
+                          (currentPage + 1) * pageSize
+                        ).length
+                      }{" "}
                     of {pagesCount} of entries
                   </p>
-                  <Pagination aria-label="Page navigation example">
-                    <PaginationItem
-                      disabled={currentPage <= 0}
-                      className="prev"
-                    >
-                      <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage - 1)}
-                        previous
-                        href={() => false}
-                      />
-                    </PaginationItem>
-
-                    {[...Array(pagesCount)].map((page, i) => (
-                      <PaginationItem active={i === currentPage} key={i}>
+                    <Pagination aria-label="Page navigation example">
+                      <PaginationItem
+                        disabled={currentPage <= 0}
+                        className="prev"
+                      >
                         <PaginationLink
-                          onClick={(e) => handleNavigation(e, i)}
+                          onClick={(e) => handleNavigation(e, currentPage - 1)}
+                          previous
                           href={() => false}
-                        >
-                          {i + 1}
-                        </PaginationLink>
+                        />
                       </PaginationItem>
-                    ))}
 
-                    <PaginationItem disabled={currentPage >= pagesCount - 1}>
-                      <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage + 1)}
-                        next
-                        href={() => false}
-                        className="next"
-                      />
-                    </PaginationItem>
-                  </Pagination>
-                </div>
-              )}
-            </div>
-          )}
-        </SelectSch>
-      )}
+                      {[...Array(pagesCount)].map((page, i) => (
+                        <PaginationItem active={i === currentPage} key={i}>
+                          <PaginationLink
+                            onClick={(e) => handleNavigation(e, i)}
+                            href={() => false}
+                          >
+                            {i + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+
+                      <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                        <PaginationLink
+                          onClick={(e) => handleNavigation(e, currentPage + 1)}
+                          next
+                          href={() => false}
+                          className="next"
+                        />
+                      </PaginationItem>
+                    </Pagination>
+                  </div>
+                )}
+              </div>
+            )}
+          </SelectSch>
+        )}
       <FormContainer style={{ display: !details ? "none" : "" }}>
         <form>
           <div className="tabs">
@@ -484,9 +484,9 @@ function VerificationForm({
                 // }
                 className={
                   formik.values.firstName.length === 0 ||
-                  formik.values.lastName.length === 0 ||
-                  formik.values.dateOfBirth.length === 0 ||
-                  new Date().getFullYear() -
+                    formik.values.lastName.length === 0 ||
+                    formik.values.dateOfBirth.length === 0 ||
+                    new Date().getFullYear() -
                     Number(formik.values.dateOfBirth.substr(0, 4)) <
                     17
                     ? "btn notallowed"
@@ -529,7 +529,7 @@ function VerificationForm({
                   <span>&nbsp;Current student</span>
                 </div>
               </div>
-              <p>
+              <p className="title">
                 Must be the student ID issued by the institute at the time of
                 study
               </p>
@@ -601,7 +601,7 @@ function VerificationForm({
                     type="text"
                     className={
                       formik.touched.qualification &&
-                      formik.errors.qualification
+                        formik.errors.qualification
                         ? "qualification-input err"
                         : "qualification-input"
                     }
@@ -612,14 +612,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.qualification &&
-                  formik.errors.qualification ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.qualification}
-                    </div>
-                  ) : null}
+                    formik.errors.qualification ? (
+                      <div
+                        className="error"
+                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      >
+                        {formik.errors.qualification}
+                      </div>
+                    ) : null}
                 </>
               </Field>
 
@@ -634,7 +634,7 @@ function VerificationForm({
                     placeholder="second class upper"
                     className={
                       formik.touched.classification &&
-                      formik.errors.classification
+                        formik.errors.classification
                         ? "class-input err"
                         : "class-input"
                     }
@@ -644,14 +644,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.classification &&
-                  formik.errors.classification ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.classification}
-                    </div>
-                  ) : null}
+                    formik.errors.classification ? (
+                      <div
+                        className="error"
+                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      >
+                        {formik.errors.classification}
+                      </div>
+                    ) : null}
                 </>
               </Field>
               {!formik.values.enrollmentStatus && (
@@ -665,7 +665,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.admissionYear &&
-                          formik.errors.admissionYear
+                            formik.errors.admissionYear
                             ? "admission-input err"
                             : "admission-input"
                         }
@@ -675,17 +675,17 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.admissionYear &&
-                      formik.errors.admissionYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.admissionYear}
-                        </div>
-                      ) : null}
+                        formik.errors.admissionYear ? (
+                          <div
+                            className="error"
+                            style={{
+                              marginLeft: "-620px",
+                              paddingTop: "3px",
+                            }}
+                          >
+                            {formik.errors.admissionYear}
+                          </div>
+                        ) : null}
                     </>
                   </Field>
                   <Field>
@@ -697,7 +697,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.graduationYear &&
-                          formik.errors.graduationYear
+                            formik.errors.graduationYear
                             ? "graduation-input err"
                             : "graduation-input"
                         }
@@ -707,22 +707,22 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.graduationYear &&
-                      formik.errors.graduationYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.graduationYear}
-                        </div>
-                      ) : null}
+                        formik.errors.graduationYear ? (
+                          <div
+                            className="error"
+                            style={{
+                              marginLeft: "-620px",
+                              paddingTop: "3px",
+                            }}
+                          >
+                            {formik.errors.graduationYear}
+                          </div>
+                        ) : null}
                     </>
                   </Field>
                 </>
               )}
-              <p>
+              <p style={{ marginTop: '10px' }}>
                 The reference number will be used to track this case in your
                 internal system if you have one
               </p>
@@ -737,11 +737,11 @@ function VerificationForm({
                 }
                 className={
                   formik.values.course.length === 0 ||
-                  formik.values.qualification.length === 0 ||
-                  formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
-                  formik.values.studentId.length === 0
+                    formik.values.qualification.length === 0 ||
+                    formik.values.classification.length === 0 ||
+                    formik.values.admissionYear.length === 0 ||
+                    formik.values.graduationYear.length === 0 ||
+                    formik.values.studentId.length === 0
                     ? "btn notallowed"
                     : "btn"
                 }
@@ -889,11 +889,6 @@ const FormContainer = styled.div`
       display: flex;
       flex-direction: column;
     }
-    input {
-      @media (max-width: 500px) {
-        width: 250px !important;
-      }
-    }
   }
   .btn {
     float: right;
@@ -921,7 +916,6 @@ const FormContainer = styled.div`
     align-items: flex-end;
     justify-content: space-between;
     /* margin: 0 auto; */
-    border-bottom: 1px solid #707070;
     @media (max-width: 500px) {
       display: none;
     }
@@ -937,8 +931,10 @@ const FormContainer = styled.div`
 
         &.activeTab {
           border-bottom: 2px solid #0092e0;
-          font-weight: 500;
-          color: #0092e0;
+          letter-spacing: 0.44px;
+          color: #0092E0;
+          opacity: 1;
+          text-transform: capitalize;
         }
       }
     }
@@ -974,6 +970,12 @@ const FormDiv = styled.div`
     align-items: center;
     padding-left: 40px;
     padding-bottom: 40px;
+    label {    
+    font-family: MontserratBold;
+    letter-spacing: 0.32px;
+    color: #707070;
+    opacity: 1;
+}
     @media (max-width: 500px) {
       display: flex;
       flex-direction: column;
@@ -983,6 +985,11 @@ const FormDiv = styled.div`
     .enr-status {
       display: flex;
       align-items: center;
+      font-family: MontserratRegular;
+      letter-spacing: 0.32px;
+      color: #707070;
+      opacity: 1;
+      font-size: 14px;
     }
   }
 
@@ -1025,7 +1032,7 @@ const Field = styled.div`
   width: 100%;
   padding-left: 40px;
   padding-bottom: 20px;
-
+  font-family: MonserratBold;
   @media (max-width: 500px) {
     padding-left: 15px;
   }
@@ -1071,7 +1078,8 @@ const Field = styled.div`
     }
   }
   .date-input {
-    margin-left: 24px;
+    margin-left: 21px;
+    height: 34px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
@@ -1283,9 +1291,15 @@ const SelectSch = styled.div`
       flex-direction: column;
       padding-left: 20px;
       width: 46%;
+      label {
+      font-family: MontserratRegular;
+      font-size: 16px;
+      color: #707070;
+     }
       @media (max-width: 500px) {
-        width: 95%;
+        width: 88%;
         margin-bottom: 20px;
+        margin-top: 20px;
         input {
           width: 0 !important;
         }
@@ -1293,7 +1307,6 @@ const SelectSch = styled.div`
       label {
         @media (max-width: 500px) {
           font-size: 14px;
-          font-family: "Roboto";
         }
       }
     }
@@ -1301,6 +1314,8 @@ const SelectSch = styled.div`
       height: 34px;
       border: 2px solid #e2e2e2;
       outline: none;
+      font-family: MontserratItalic;
+      color: #707070;
       width: 100%;
       border-radius: 14px;
     }
@@ -1312,22 +1327,31 @@ const SelectSch = styled.div`
   .institution-wrapper {
     display: flex;
     flex-direction: column;
-    padding-right: 20px;
-    padding-left: 20px;
-    width: 48%;
+    padding-left: 30px;
+    width: 46%;
+    label {
+    font-family: MontserratRegular;
+    font-size: 16px;
+    color: #707070;
+    }
+    @media (max-width: 500px) {
+      padding-left: 20px;
+    }
     input {
-      height: 34px;
+      height: 28px;
       border: 2px solid #e2e2e2;
       outline: none;
       width: 100%;
       border-radius: 14px;
+      font-family: MontserratItalic;
+      color: #707070;
       padding-left: 5px;
       @media (max-width: 500px) {
         height: 30px;
       }
     }
     @media (max-width: 500px) {
-      width: 95%;
+      width: 85%;
       padding-right: 0px;
       label {
         font-size: 14px !important;
@@ -1341,36 +1365,29 @@ const SelectSch = styled.div`
     justify-content: space-between;
     margin-top: 10px;
     @media (max-width: 500px) {
-      width: 100%;
+      width: 90%;
     }
     .select-inst {
       p {
-        font-family: "Roboto";
+        
         &:nth-child(1) {
           font-size: 16px;
+          text-transform: capitalize;
+          font-family: MontserratBold;
+          font-size: 16px;
+          letter-spacing: 0.44px;
+          color: #173049;
         }
         &:nth-child(2) {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: normal;
+          font-family: MonserratRegular;
+          color: #707070;
+          margin: 0;
         }
       }
       @media (max-width: 500px) {
         margin-left: 20px;
-      }
-    }
-
-    p {
-      &:nth-child(1) {
-        font-weight: bold;
-        margin-bottom: 3px;
-        color: black;
-      }
-      &:nth-child(2) {
-        font-size: 14px;
-        font: normal normal medium 15px/19px Montserrat;
-        letter-spacing: 0.3px;
-        color: #707070;
-        margin: 0;
       }
     }
   }
