@@ -105,6 +105,7 @@ const LandingPage = () => {
             width: `${navbar ? "100%" : ""}`,
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
+            zIndex: "10",
           }}
         >
           <div>
@@ -117,17 +118,39 @@ const LandingPage = () => {
           <div className="navs">
             <ul>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#coverage"> Coverage</a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#coverage"
+                >
+                  {" "}
+                  Coverage
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#about"> About Us</a>
+              <li style={{ color: `${navbar ? "#0092E0 !" : "white"}` }}>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#about"
+                >
+                  {" "}
+                  About Us
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#work">How it works</a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#work"
+                >
+                  How it works
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <a href="#contact">Contact </a>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#contact"
+                >
+                  Contact{" "}
+                </a>
               </li>
               <button>
                 <Link className="link-to" to="/">
@@ -258,8 +281,9 @@ const LandingPage = () => {
       <Div>
         <h2>How it Works</h2>
         <p>
-          A descriptive if there is anyone who loves or pursues or desires to
-          obtain pain and anything else to finish this sentence.
+          Our clients can order verifications anytime and our research teams
+          start working on the same from multiple locations in highly efficient
+          and effective ways.
         </p>
       </Div>
       <a id="work" href={() => false}>
@@ -732,12 +756,12 @@ const Cover = styled.div`
 
 const Testimonies = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
   color: white;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 40px;
+  padding-top: 60px;
   background: transparent linear-gradient(308deg, #0092e0 0%, #1ec3ff 100%) 0%
     0% no-repeat padding-box;
   .circles {
@@ -774,7 +798,11 @@ const Testimonies = styled.div`
     width: 40%;
     text-align: center;
     letter-spacing: 0px;
+    font-family: MontserratLight;
+    font-size: 16px;
     color: #ffffff;
+    opacity: 0.9;
+    padding-bottom: 60px;
     @media (max-width: 400px) {
       width: 80%;
     }
@@ -801,6 +829,7 @@ const Testimonies = styled.div`
       justify-content: center;
       /* height: 120px; */
       background: #ffffff 0% 0% no-repeat padding-box;
+      padding: 10px;
       border-radius: 8px;
       .profile {
         margin-bottom: -90px;
@@ -831,6 +860,8 @@ const Testimonies = styled.div`
         padding: 7px 7px 0px 7px;
         text-align: center;
         margin: 0;
+        font-size: 14px;
+        font-family: MontserratRegular;
       }
     }
   }
@@ -871,10 +902,19 @@ const Blocks = styled.div`
     &:hover {
       border: 1px solid #4a86ff;
     }
+    h4 {
+      font-family: MontserratSemibold;
+      font-size: 21px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #333333;
+    }
     p {
       width: 85%;
       text-align: center;
       color: #676f79;
+      font-family: MontserratLight;
+      font-size: 14px;
       @media (max-width: 400px) {
         line-height: 1.6;
       }
@@ -889,14 +929,16 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 80%;
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
   p {
-    width: 50%;
+    width: 60%;
     text-align: center;
     color: #676f79;
+    font-family: MontserratLight;
+    font-size: 14px;
+    opacity: 100;
     @media (max-width: 400px) {
       width: 100%;
     }
@@ -1031,6 +1073,10 @@ const About = styled.div`
     margin-top: 30px;
   }
   h1 {
+    font-family: segoebold;
+    font-size: 30px;
+    margin-top: 45px;
+    margin-bottom: 30px;
     @media (max-width: 400px) {
       display: none;
     }
@@ -1088,8 +1134,7 @@ const FirstSection = styled.div`
   box-shadow: 0px 10px 30px #00000029;
   .hide-show {
     @media (min-width: 500px) {
-      display: flex;
-      min-height: 100vh;
+      display: none;
     }
     position: fixed;
     z-index: 50;
@@ -1121,6 +1166,7 @@ const FirstSection = styled.div`
         margin-bottom: 40px;
         a {
           text-decoration: none;
+          color: white;
         }
       }
       .auth {
@@ -1151,8 +1197,6 @@ const NavBar = styled.nav`
   display: flex;
   padding-left: 90px;
   align-items: center;
-  /* position: fixed; */
-  /* width: 100%; */
   .menu-icon {
     display: none;
     @media (max-width: 400px) {
@@ -1195,7 +1239,7 @@ const NavBar = styled.nav`
     ul {
       display: flex;
       padding-left: 350px;
-
+      /* padding-top: 15px; */
       list-style-type: none;
       button {
         margin-top: -5px;
@@ -1210,13 +1254,20 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
+        font-family: segoesemiLight;
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
+        font-family: segoesemiLight;
         a {
           text-decoration: none;
+          color: white;
+          font-family: segoesemiLight;
+          &:hover {
+            color: #66c8ed !important;
+          }
         }
         &:hover {
           color: #66c8ed !important;
@@ -1227,6 +1278,7 @@ const NavBar = styled.nav`
 `;
 
 const Main = styled.main`
+  overflow: hidden;
   @media (max-width: 400px) {
     padding-top: 20px;
   }
@@ -1263,6 +1315,7 @@ const Main = styled.main`
       color: #0092e0;
       text-decoration: none;
       cursor: pointer;
+      font-family: orkneyLight;
       &:hover {
         color: white;
       }
@@ -1300,6 +1353,7 @@ const Main = styled.main`
         border: 1px solid white;
         color: white;
         background: none;
+        font-family: orkneyLight;
         padding: 10px 40px 10px 40px;
         border-radius: 5px;
         &:hover {
@@ -1312,9 +1366,9 @@ const Main = styled.main`
   }
 
   img {
-    width: 900px;
-    height: 470px;
-    margin-right: -85px;
+    width: 64%;
+    height: calc(100vh - 148px);
+    margin-right: -98px;
     @media (max-width: 400px) {
       width: 350px;
       height: 200px;
@@ -1329,7 +1383,7 @@ const Main = styled.main`
       margin-top: 40px;
     }
     @media (min-width: 768px) and (max-width: 1300px) {
-      height: 385px;
+      /* height: 385px; */
     }
   }
   .intro-text {
@@ -1370,7 +1424,8 @@ const Main = styled.main`
       }
     }
     h1 {
-      /* font-family: sans-serif; */
+      font-family: orkneyLight;
+
       @media (max-width: 400px) {
         display: none;
       }
@@ -1379,7 +1434,7 @@ const Main = styled.main`
       }
       color: #66c8ed;
       font-weight: lighter;
-      font-size: 40px;
+      font-size: 44px;
       .here {
         color: white;
         cursor: pointer;
@@ -1388,13 +1443,17 @@ const Main = styled.main`
       }
     }
     p {
-      font-size: 16px;
+      width: 100%;
       text-align: left;
-      /* font-family: Segoe UI; */
-      letter-spacing: 1px;
+      font-family: segosemiLight;
+      font-size: 18px;
+      font-weight: normal;
+      letter-spacing: 0px;
       font-weight: lighter;
       color: #ffffff;
       opacity: 0.8;
+      margin-top: 40px;
+      margin-bottom: 40px;
       @media (max-width: 500px) {
         text-align: center;
         font-size: 18px;

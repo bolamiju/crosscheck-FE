@@ -45,8 +45,6 @@ function VerificationForm({
   const [schCard, setSchCard] = useState(true);
   const [country, setCountry] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   const handleInputChange = (e) => {
     setInput(e.target.value);
     setHideTable(false);
@@ -1209,10 +1207,11 @@ const SelectSch = styled.div`
       padding-left: 5px;
       padding-right: 5px;
       cursor: pointer;
+      opacity: 0.6;
       small {
         font: normal normal bold 12px/14px Montserrat;
         letter-spacing: 0.24px;
-        color: #b30000;
+        color: black;
         opacity: 1;
       }
     }

@@ -121,8 +121,10 @@ const NewVerifications = () => {
     dispatch(deleteVerification(val));
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const componentProps = {
-    email: "tolaked@yahoo.com",
+    email: user.email,
     amount: total * 100,
     metadata: {
       name: "Tola",

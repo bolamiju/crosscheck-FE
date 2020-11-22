@@ -1,3 +1,33 @@
+:root {
+  --mainWhite: #f3f3f3;
+  --lightBlue: #0092e0;
+  --mainBlue: #60c2e0;
+  --lightDark: #707070;
+}
 .app {
   background: white;
+}
+@font-face {
+  font-family: segoesemiLight;
+  src: url("./fonts/segoeuisl.ttf");
+}
+@font-face {
+  font-family: orkneyLight;
+  src: url("./fonts/orkney-light.otf");
+}
+@font-face {
+  font-family: segoebold;
+  src: url("./fonts/segoeuib.ttf");
+}
+@font-face {
+  font-family: MontserratLight;
+  src: url("./fonts/Montserrat-Light.otf");
+}
+@font-face {
+  font-family: MontserratSemibold;
+  src: url("./fonts/Montserrat-SemiBold.otf");
+}
+@font-face {
+  font-family: MontserratRegular;
+  src: url("./fonts/Montserrat-Regular.ttf");
 }

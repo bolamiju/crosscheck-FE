@@ -18,9 +18,9 @@ function DashboardLayout({ children, history }) {
       <Main>{children}</Main>
     </Div>
   );
-};
+}
 const Div = styled.div`
-background: green;
+  background: green;
   aside {
     @media (min-width: 500px) {
       display: none;
@@ -46,4 +46,3 @@ const Main = styled.main`
 `;
 
 export default DashboardLayout;
-
