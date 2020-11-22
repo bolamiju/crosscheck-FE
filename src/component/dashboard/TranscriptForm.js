@@ -17,7 +17,7 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
 function TranscriptForm({ initialValues, updateFormValues }) {
-  const [activeTab, setActiveTab] = useState("destination-details");
+  const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -1087,10 +1087,10 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-      font-family: MontserratRegular;
-      font-size: 16px;
-      color: #707070;
-    }
+        font-family: MontserratRegular;
+        font-size: 16px;
+        color: #707070;
+      }
       @media (max-width: 500px) {
         width: 88%;
         margin-bottom: 20px;
@@ -1182,9 +1182,9 @@ const SelectSch = styled.div`
         font-weight: bold;
         margin-bottom: 3px;
         font-family: MontserratBold;
-          font-size: 16px;
-          letter-spacing: 0.44px;
-          color: #173049;
+        font-size: 16px;
+        letter-spacing: 0.44px;
+        color: #173049;
       }
       &:nth-child(2) {
         font-family: MontserratRegular;

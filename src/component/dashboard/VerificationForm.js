@@ -28,7 +28,7 @@ function VerificationForm({
   deleteOneVerification,
   verificationsLength,
 }) {
-  const [activeTab, setActiveTab] = useState("qualification-details");
+  const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -208,123 +208,123 @@ function VerificationForm({
     <span>{ selectedInst.amount}</span></div> */}
         </SelectSch>
       ) : (
-          <SelectSch>
-            <div className="req-trans">
-              <img src={Institution} alt="select a sch" />
+        <SelectSch>
+          <div className="req-trans">
+            <img src={Institution} alt="select a sch" />
 
-              <div className="select-inst">
-                <p>Select an institute</p>
-                <p>Select preferred institute to conduct verification</p>
-              </div>
+            <div className="select-inst">
+              <p>Select an institute</p>
+              <p>Select preferred institute to conduct verification</p>
             </div>
-            <div className="selects">
-              <div className="institution-wrapper">
-                <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-                <input
-                  type="text"
-                  onChange={handleInputChange}
-                  value={input}
-                  name="input"
-                  placeholder="Search an institute"
-                />
-              </div>
-              <div className="select-country">
-                <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
-                <CountryDropdown
-                  name="country"
-                  id="country"
-                  className="select-schol"
-                  value={country}
-                  onChange={(_, e) => {
-                    setCountry(e.target.value);
-                  }}
-                />
-              </div>
+          </div>
+          <div className="selects">
+            <div className="institution-wrapper">
+              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
+              <input
+                type="text"
+                onChange={handleInputChange}
+                value={input}
+                name="input"
+                placeholder="Search an institute"
+              />
             </div>
-            {filteredItems.length > 0 && input.length > 0 && (
-              <div className="new-table">
-                <table
-                  cellSpacing="0"
-                  cellPadding="0"
-                  border="0"
-                  className={hideTable ? "hide-table" : ""}
-                >
-                  <thead className="table-headers">
-                    <tr>
-                      <th>Name</th>
-                      <th>Country</th>
-                      <th>category rate</th>
-                      <th>amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredItems
-                      .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                      .map((ite) => (
-                        <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                          <th className="mobile-header">Number</th>
-                          <td>{ite.name}</td>
-                          <th className="mobile-header">Market rate</th>
-                          <td>{ite.country}</td>
-                          <th className="mobile-header">Weight</th>
-                          <td>{ite.category}</td>
-                          <th className="mobile-header">Value</th>
-                          <td>{ite.amount}</td>
-                        </tr>
-                        // <tr className="space"></tr>
-                      ))}
-                  </tbody>
-                </table>
-                {!hideTable && (
-                  <div className="pagination-line">
-                    <p>
-                      Showing{" "}
-                      {
-                        filteredItems.slice(
-                          currentPage * pageSize,
-                          (currentPage + 1) * pageSize
-                        ).length
-                      }{" "}
+            <div className="select-country">
+              <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
+              <CountryDropdown
+                name="country"
+                id="country"
+                className="select-schol"
+                value={country}
+                onChange={(_, e) => {
+                  setCountry(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          {filteredItems.length > 0 && input.length > 0 && (
+            <div className="new-table">
+              <table
+                cellSpacing="0"
+                cellPadding="0"
+                border="0"
+                className={hideTable ? "hide-table" : ""}
+              >
+                <thead className="table-headers">
+                  <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>category rate</th>
+                    <th>amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredItems
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{ite.name}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>{ite.category}</td>
+                        <th className="mobile-header">Value</th>
+                        <td>{ite.amount}</td>
+                      </tr>
+                      // <tr className="space"></tr>
+                    ))}
+                </tbody>
+              </table>
+              {!hideTable && (
+                <div className="pagination-line">
+                  <p>
+                    Showing{" "}
+                    {
+                      filteredItems.slice(
+                        currentPage * pageSize,
+                        (currentPage + 1) * pageSize
+                      ).length
+                    }{" "}
                     of {pagesCount} of entries
                   </p>
-                    <Pagination aria-label="Page navigation example">
-                      <PaginationItem
-                        disabled={currentPage <= 0}
-                        className="prev"
-                      >
-                        <PaginationLink
-                          onClick={(e) => handleNavigation(e, currentPage - 1)}
-                          previous
-                          href={() => false}
-                        />
-                      </PaginationItem>
+                  <Pagination aria-label="Page navigation example">
+                    <PaginationItem
+                      disabled={currentPage <= 0}
+                      className="prev"
+                    >
+                      <PaginationLink
+                        onClick={(e) => handleNavigation(e, currentPage - 1)}
+                        previous
+                        href={() => false}
+                      />
+                    </PaginationItem>
 
-                      {[...Array(pagesCount)].map((page, i) => (
-                        <PaginationItem active={i === currentPage} key={i}>
-                          <PaginationLink
-                            onClick={(e) => handleNavigation(e, i)}
-                            href={() => false}
-                          >
-                            {i + 1}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
-
-                      <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                    {[...Array(pagesCount)].map((page, i) => (
+                      <PaginationItem active={i === currentPage} key={i}>
                         <PaginationLink
-                          onClick={(e) => handleNavigation(e, currentPage + 1)}
-                          next
+                          onClick={(e) => handleNavigation(e, i)}
                           href={() => false}
-                          className="next"
-                        />
+                        >
+                          {i + 1}
+                        </PaginationLink>
                       </PaginationItem>
-                    </Pagination>
-                  </div>
-                )}
-              </div>
-            )}
-          </SelectSch>
-        )}
+                    ))}
+
+                    <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                      <PaginationLink
+                        onClick={(e) => handleNavigation(e, currentPage + 1)}
+                        next
+                        href={() => false}
+                        className="next"
+                      />
+                    </PaginationItem>
+                  </Pagination>
+                </div>
+              )}
+            </div>
+          )}
+        </SelectSch>
+      )}
       <FormContainer style={{ display: !details ? "none" : "" }}>
         <form>
           <div className="tabs">
@@ -484,9 +484,9 @@ function VerificationForm({
                 // }
                 className={
                   formik.values.firstName.length === 0 ||
-                    formik.values.lastName.length === 0 ||
-                    formik.values.dateOfBirth.length === 0 ||
-                    new Date().getFullYear() -
+                  formik.values.lastName.length === 0 ||
+                  formik.values.dateOfBirth.length === 0 ||
+                  new Date().getFullYear() -
                     Number(formik.values.dateOfBirth.substr(0, 4)) <
                     17
                     ? "btn notallowed"
@@ -601,7 +601,7 @@ function VerificationForm({
                     type="text"
                     className={
                       formik.touched.qualification &&
-                        formik.errors.qualification
+                      formik.errors.qualification
                         ? "qualification-input err"
                         : "qualification-input"
                     }
@@ -612,14 +612,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.qualification &&
-                    formik.errors.qualification ? (
-                      <div
-                        className="error"
-                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                      >
-                        {formik.errors.qualification}
-                      </div>
-                    ) : null}
+                  formik.errors.qualification ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.qualification}
+                    </div>
+                  ) : null}
                 </>
               </Field>
 
@@ -634,7 +634,7 @@ function VerificationForm({
                     placeholder="second class upper"
                     className={
                       formik.touched.classification &&
-                        formik.errors.classification
+                      formik.errors.classification
                         ? "class-input err"
                         : "class-input"
                     }
@@ -644,14 +644,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.classification &&
-                    formik.errors.classification ? (
-                      <div
-                        className="error"
-                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                      >
-                        {formik.errors.classification}
-                      </div>
-                    ) : null}
+                  formik.errors.classification ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.classification}
+                    </div>
+                  ) : null}
                 </>
               </Field>
               {!formik.values.enrollmentStatus && (
@@ -665,7 +665,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.admissionYear &&
-                            formik.errors.admissionYear
+                          formik.errors.admissionYear
                             ? "admission-input err"
                             : "admission-input"
                         }
@@ -675,17 +675,17 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.admissionYear &&
-                        formik.errors.admissionYear ? (
-                          <div
-                            className="error"
-                            style={{
-                              marginLeft: "-620px",
-                              paddingTop: "3px",
-                            }}
-                          >
-                            {formik.errors.admissionYear}
-                          </div>
-                        ) : null}
+                      formik.errors.admissionYear ? (
+                        <div
+                          className="error"
+                          style={{
+                            marginLeft: "-620px",
+                            paddingTop: "3px",
+                          }}
+                        >
+                          {formik.errors.admissionYear}
+                        </div>
+                      ) : null}
                     </>
                   </Field>
                   <Field>
@@ -697,7 +697,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.graduationYear &&
-                            formik.errors.graduationYear
+                          formik.errors.graduationYear
                             ? "graduation-input err"
                             : "graduation-input"
                         }
@@ -707,22 +707,22 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.graduationYear &&
-                        formik.errors.graduationYear ? (
-                          <div
-                            className="error"
-                            style={{
-                              marginLeft: "-620px",
-                              paddingTop: "3px",
-                            }}
-                          >
-                            {formik.errors.graduationYear}
-                          </div>
-                        ) : null}
+                      formik.errors.graduationYear ? (
+                        <div
+                          className="error"
+                          style={{
+                            marginLeft: "-620px",
+                            paddingTop: "3px",
+                          }}
+                        >
+                          {formik.errors.graduationYear}
+                        </div>
+                      ) : null}
                     </>
                   </Field>
                 </>
               )}
-              <p style={{ marginTop: '10px' }}>
+              <p style={{ marginTop: "10px" }}>
                 The reference number will be used to track this case in your
                 internal system if you have one
               </p>
@@ -737,11 +737,11 @@ function VerificationForm({
                 }
                 className={
                   formik.values.course.length === 0 ||
-                    formik.values.qualification.length === 0 ||
-                    formik.values.classification.length === 0 ||
-                    formik.values.admissionYear.length === 0 ||
-                    formik.values.graduationYear.length === 0 ||
-                    formik.values.studentId.length === 0
+                  formik.values.qualification.length === 0 ||
+                  formik.values.classification.length === 0 ||
+                  formik.values.admissionYear.length === 0 ||
+                  formik.values.graduationYear.length === 0 ||
+                  formik.values.studentId.length === 0
                     ? "btn notallowed"
                     : "btn"
                 }
@@ -932,7 +932,7 @@ const FormContainer = styled.div`
         &.activeTab {
           border-bottom: 2px solid #0092e0;
           letter-spacing: 0.44px;
-          color: #0092E0;
+          color: #0092e0;
           opacity: 1;
           text-transform: capitalize;
         }
@@ -970,12 +970,12 @@ const FormDiv = styled.div`
     align-items: center;
     padding-left: 40px;
     padding-bottom: 40px;
-    label {    
-    font-family: MontserratBold;
-    letter-spacing: 0.32px;
-    color: #707070;
-    opacity: 1;
-}
+    label {
+      font-family: MontserratBold;
+      letter-spacing: 0.32px;
+      color: #707070;
+      opacity: 1;
+    }
     @media (max-width: 500px) {
       display: flex;
       flex-direction: column;
@@ -1162,6 +1162,9 @@ const SelectSch = styled.div`
     margin-left: 30px;
     border-bottom: 1px solid gray;
     width: 90%;
+    font-family: segoebold;
+    font-size: 15px;
+    color: #173049;
     p {
       padding-bottom: 10px;
     }
@@ -1172,13 +1175,17 @@ const SelectSch = styled.div`
     padding-bottom: 40px;
     span {
       &:nth-child(1) {
-        font: normal normal bold 12px/14px Montserrat;
+        font-weight: normal;
+        font-size: 14px;
+        font-family: MontserratBold;
         letter-spacing: 0.32px;
         color: #707070;
       }
       &:nth-child(2) {
-        padding-left: 100px;
-        font: normal normal normal 12/14px Montserrat;
+        padding-left: 105px;
+        font-weight: normal;
+        font-size: 14px;
+        font-family: MontserratRegular;
         letter-spacing: 0.32px;
         color: #707070;
       }
@@ -1195,13 +1202,17 @@ const SelectSch = styled.div`
     }
     span {
       &:nth-child(1) {
-        font: normal normal bold 12px/14px Montserrat;
+        font-weight: normal;
+        font-size: 14px;
+        font-family: MontserratBold;
         letter-spacing: 0.32px;
         color: #707070;
       }
       &:nth-child(2) {
         padding-left: 40px;
-        font: normal normal normal 12/14px Montserrat;
+        font-weight: normal;
+        font-size: 14px;
+        font-family: MontserratRegular;
         letter-spacing: 0.32px;
         color: #707070;
         @media (max-width: 500px) {
@@ -1292,10 +1303,10 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-      font-family: MontserratRegular;
-      font-size: 16px;
-      color: #707070;
-     }
+        font-family: MontserratRegular;
+        font-size: 16px;
+        color: #707070;
+      }
       @media (max-width: 500px) {
         width: 88%;
         margin-bottom: 20px;
@@ -1330,9 +1341,9 @@ const SelectSch = styled.div`
     padding-left: 30px;
     width: 46%;
     label {
-    font-family: MontserratRegular;
-    font-size: 16px;
-    color: #707070;
+      font-family: MontserratRegular;
+      font-size: 16px;
+      color: #707070;
     }
     @media (max-width: 500px) {
       padding-left: 20px;
@@ -1369,7 +1380,6 @@ const SelectSch = styled.div`
     }
     .select-inst {
       p {
-        
         &:nth-child(1) {
           font-size: 16px;
           text-transform: capitalize;

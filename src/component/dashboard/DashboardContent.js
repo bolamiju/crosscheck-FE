@@ -20,10 +20,11 @@ const DashboardContent = ({ history }) => {
   const { userVerifications } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     dispatch(getAllInstitutions());
-    dispatch(getUserVerification());
+    dispatch(getUserVerification(user.email));
   }, [dispatch]);
 
   function handleInputChange(e) {
@@ -47,7 +48,7 @@ const DashboardContent = ({ history }) => {
         <h2
           style={{
             color: "#0092E0",
-            fontFamily: "Quicksand",
+            fontFamily: "segoebold",
             // fontSize: "16px",
           }}
         >
@@ -95,7 +96,7 @@ const DashboardContent = ({ history }) => {
 
             <div className="paragraph">
               <p>Select an institution</p>
-              <p>Request transcript from schools</p>
+              <p>Request education verification </p>
             </div>
           </div>
           <div className="selects">
@@ -243,11 +244,11 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-      font-family: MontserratRegular;
-      font-size: 16px;
-      text-transform: uppercase;
-      color: #707070; 
-    }
+        font-family: MontserratRegular;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #707070;
+      }
       .schl-input {
         height: 28px;
         border: 2px solid #e2e2e2;
@@ -275,11 +276,11 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-      font-family: MontserratRegular;
-      font-size: 16px;
-      text-transform: uppercase;
-      color: #707070; 
-    }
+        font-family: MontserratRegular;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #707070;
+      }
       @media (max-width: 500px) {
         width: 80%;
         margin-bottom: 15px;
@@ -305,16 +306,15 @@ const SelectSch = styled.div`
     .paragraph {
       p {
         &:nth-child(1) {
-          font-weight: bold;
-          font-family: MontserratBold;
-          font-size: 16px;
+          font-family: segoebold;
+          font-size: 15px;
           letter-spacing: 0.44px;
           color: #173049;
           text-transform: capitalize;
         }
         &:nth-child(2) {
           font-family: MontserratRegular;
-          font-size: 16px;
+          font-size: 14px;
           letter-spacing: 0.44px;
           color: #707070;
           margin: 0;
@@ -395,17 +395,16 @@ const Card = styled.div`
           letter-spacing: 0.44px;
           color: #000000;
           margin: 0;
-          font-weight: bold;
-          font-family: "Roboto";
+          font-family: segoebold;
         }
       }
       p {
         &:nth-child(2) {
-          font-size: 14px;
+          font-size: 12px;
           letter-spacing: 0.32px;
           font-weight: normal;
           color: #707070;
-          font-family: "Roboto";
+          font-family: MontserratRegular;
           margin: 0;
         }
       }
