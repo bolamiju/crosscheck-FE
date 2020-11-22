@@ -7,13 +7,12 @@ import ForgotPassword from "./component/auth/ForgotPassword";
 import ResetPassword from "./component/auth/ResetPassword";
 import AccountVerification from "./component/auth/AccountVerification";
 import MainContent from "./component/dashboard/MainContent";
-import AdminContent from "./component/admin/AdminContent"
+import AdminContent from "./component/admin/AdminContent";
 import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
