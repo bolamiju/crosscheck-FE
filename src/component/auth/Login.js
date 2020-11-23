@@ -34,7 +34,7 @@ const Login = (props) => {
     return () => {
       dispatch(dispatch(setLoginError("")));
     };
-  });
+  }, []);
   const formik = useFormik({
     initialValues: {
       email: "",
