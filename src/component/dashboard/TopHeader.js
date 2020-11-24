@@ -68,18 +68,20 @@ const HeadContainer = styled.div`
     @media (max-width: 500px) {
       display: block;
       /* padding-right: 3px; */
-      color: #171725;
+      color: #707070;
+      font-family: MonserratLight;
       font-size: 28px;
     }
   }
 
   h5 {
     letter-spacing: 0.12px;
-    color: #171725;
+    color: #707070;
     opacity: 1;
     font-weight: 500;
     font-size: 14px;
-    font-family: "Rubik", sans-serif;
+    font-family: MontserratLight;
+
   }
 
   .right-con {
@@ -125,20 +127,21 @@ const HeadContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-
     p {
       &:nth-child(1) {
         letter-spacing: 0.24px;
-        color: #44444f;
-        opacity: 0.85;
+        letter-spacing: 0.44px;
+        color: #173049;
+        font-family: MontserratBold;
         font-weight: 500;
-        font-size: 12px;
+        font-size: 16px;
         margin: 0;
       }
 
       &:nth-child(2) {
         letter-spacing: 0.21px;
-        color: #503faa;
+        font-family: MontserratRegular;
+        color: #707070;
         opacity: 0.95;
         font-weight: 500;
         font-size: 10px;

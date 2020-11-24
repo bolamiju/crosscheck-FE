@@ -167,15 +167,10 @@ const NewVerifications = () => {
           />
           <div className={requestList ? "none" : ""}>
             {" "}
-            <h2
-              style={{
-                color: "#0092E0",
-                fontFamily: "Roboto",
-              }}
-            >
+            <h2 className="new-heading">
               New Verification
             </h2>
-            <p style={{ fontFamily: "Roboto" }}>Education Verification</p>
+            <p classNam="new-para">Education Verification</p>
           </div>
           <IconDiv>
             <div>
@@ -189,10 +184,10 @@ const NewVerifications = () => {
             <img src={finish} alt="details" />
           </IconDiv>
           <div className="step-text">
-            <span style={{ paddingLeft: "15px" }}>START</span>
-            <span style={{ paddingLeft: "5px" }}>VERIFICATION DETAILS</span>
-            <span style={{ paddingRight: "15px" }}>PROCESS PAYMENT</span>
-            <span style={{ paddingRight: "10px" }}>FINISH</span>
+            <span style={{ paddingLeft: "50px" }}>START</span>
+            <span style={{ paddingLeft: "15px" }}>VERIFICATION DETAILS</span>
+            <span style={{ paddingRight: "35px" }}>PROCESS PAYMENT</span>
+            <span style={{ paddingRight: "45px" }}>FINISH</span>
           </div>
 
           {formValues.map((values, id) => (
@@ -310,10 +305,23 @@ const VerificationBody = styled.div`
   overflow-y: scroll;
   padding-right: 30px;
   background: #fafafb;
-  font-family: "Rubik", sans-serif;
   @media (max-width: 500px) {
     padding-right: 25px;
     padding-left: 25px;
+  }
+  .new-heading {
+    font-family: MontserratRegular;
+    letter-spacing: 0px;
+    color: #0092E0;
+    opacity: 1;
+    font-size: 32px;
+    font-weight: lighter;
+  }
+  .new-para {
+    font-family: segoebold;
+    letter-spacing: 0.44px;
+    color: #707070;
+    opacity: 1;
   }
   .step-text {
     width: 64%;
@@ -323,6 +331,10 @@ const VerificationBody = styled.div`
     margin: 0 auto;
     font-size: 12px;
     margin-top: 20px;
+    text-align: center;
+    opacity: 1;
+    font-family: MontserratRegular;
+    color: #707070;
     @media (max-width: 500px) {
       display: none;
     }
@@ -346,6 +358,10 @@ const VerificationBody = styled.div`
       margin-left: 40px;
       margin-bottom: 20px;
       margin-top: 10px;
+      @media (max-width: 500px) {
+        width: 90%;
+        margin-left: 20px;
+      }
     }
     button {
       margin-left: 40px;
@@ -358,13 +374,15 @@ const VerificationBody = styled.div`
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-
+      
+      @media (max-width: 500px) {
+        margin-left: 20px;
+      }
       span {
-        font-size: 14px;
+        /* font-size: 14px; */
         margin-left: 15px;
+        font-family: MontserratRegular;
         color: #707070;
-        font-weight: normal;
-        font-family: "Roboto";
       }
     }
   }
