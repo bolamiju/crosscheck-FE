@@ -207,7 +207,7 @@ const LandingPage = () => {
               <br />
               ahead starts <h1 className="here">here</h1>
             </h1>
-            <h2>Your unfair advantage to get ahead starts here</h2>
+            <h2>Your unfair advantage to get ahead starts <h1 className="here">here</h1> </h2>
             <p>
               We are Africa’s most comprehensive online, automated verification
               service for academic qualifications.
@@ -1440,6 +1440,13 @@ const Main = styled.main`
     padding-left: 65px;
     h2 {
       display: none;
+      .here {
+        color: white;
+        cursor: pointer;
+        display: inline;
+        font-size: 34px;
+        font-weight: lighter;
+      }
       @media (max-width: 400px) {
         display: block;
         color: #66c8ed;

@@ -7,6 +7,8 @@ import {
   faCaretDown,
   faCaretRight,
   faTrash,
+  faLongArrowAltLeft,
+  faLongArrowAltRight
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +30,7 @@ function VerificationForm({
   deleteOneVerification,
   verificationsLength,
 }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("qualification-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -726,6 +728,7 @@ function VerificationForm({
                 The reference number will be used to track this case in your
                 internal system if you have one
               </p>
+             
               <button
                 disabled={
                   formik.values.course.length === 0 ||
@@ -752,7 +755,19 @@ function VerificationForm({
                 }}
               >
                 Next
-                <img src={arrow} alt="right" />
+                <FontAwesomeIcon icon={faLongArrowAltRight} style={{marginRight: "5px", fontSize: "20px"}} />
+              </button>
+              <button
+                className="btn-prev"
+                type="submmit"
+                onClick={() => {
+                  setActiveTab("individual-details");
+                  setPay(true);
+                }}
+              >
+                
+                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{marginRight: "5px", fontSize: "20px"}} />
+                Previous
               </button>
             </FormDiv>
           )}
@@ -796,9 +811,20 @@ function VerificationForm({
                   </div>
                 </Document>
               </UploadSection>
-
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
+              </button>
+              <button
+                className="btn-prev"
+                type="submmit"
+                onClick={() => {
+                  setActiveTab("qualification-details");
+                  setPay(true);
+                }}
+              >
+                
+                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{marginRight: "5px", fontSize: "20px"}} />
+                Previous
               </button>
             </FormDiv>
           )}
@@ -890,6 +916,7 @@ const FormContainer = styled.div`
       flex-direction: column;
     }
   }
+  
   .btn {
     float: right;
     display: flex;
@@ -905,6 +932,23 @@ const FormContainer = styled.div`
     height: 30px;
     outline: none;
     border-color: #0092e0;
+  }
+  .btn-prev {
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 1.5rem;
+
+    /* width: 80px; */
+    color: white;
+    background: #0092e0 0% 0% no-repeat padding-box !important;
+    border-radius: 10px;
+    margin-right: 20px;
+    opacity: 1;
+    height: 30px;
+    outline: none;
+    border: none;
   }
   .notallowed {
     cursor: not-allowed;
@@ -1016,7 +1060,7 @@ const FormDiv = styled.div`
     }
   }
   .notallowed {
-    cursor: not-allowed;
+    /* cursor: not-allowed; */
   }
   p {
     font-size: 12px;

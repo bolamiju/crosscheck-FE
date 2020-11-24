@@ -3,7 +3,7 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretRight, faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
 function TranscriptForm({ initialValues, updateFormValues }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("destination-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -632,6 +632,18 @@ function TranscriptForm({ initialValues, updateFormValues }) {
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
               </button>
+              <button
+                className="btn-prev"
+                type="submmit"
+                onClick={() => {
+                  setActiveTab("individual-details");
+                  setPay(true);
+                }}
+              >
+                
+                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{paddingRight: "5px", fontSize: "20px"}} />
+                Previous
+              </button>
             </FormDiv>
           )}
         </form>
@@ -684,6 +696,31 @@ const FormContainer = styled.div`
     height: 30px;
     outline: none;
     border-color: #0092e0;
+    @media (max-width: 400px) {
+      margin-left: 0.3rem;
+      margin-right: 0.5rem;
+    }
+  }
+  .btn-prev {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 1.5rem;
+
+    /* width: 80px; */
+    color: white;
+    background: #0092e0 0% 0% no-repeat padding-box !important;
+    border-radius: 10px;
+    margin-right: 20px;
+    opacity: 1;
+    height: 30px;
+    outline: none;
+    border: none;
+    @media (max-width: 400px) {
+      margin-left: 0.5rem;
+      margin-right: 0px;
+    }
   }
   .notallowed {
     cursor: not-allowed;
