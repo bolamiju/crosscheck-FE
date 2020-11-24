@@ -292,50 +292,41 @@ const LandingPage = () => {
             <img src={register} alt="regi" />
             <h4>Regiser</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Create an Individual or Organization Account & activate via email
+              within a few minutes.
             </p>
           </div>
           <div className="blocks">
             <img src={service} alt="regi" />
             <h4>Select Service</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Select from a host of services ranging from Educational Checks to
+              Identity Verification.
             </p>
           </div>
           <div className="blocks">
             <img src={enquiry} alt="enq" />
             <h4>Search institution</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Initiate a quick, seamless search of the institution you wish to
+              conduct a check with.
             </p>
           </div>
           <div className="blocks">
             <img src={enquiry} alt="enq" />
             <h4>Enter Enquiry Details</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Enter all the necessary verification details.</p>
           </div>
 
           <div className="blocks">
             <img src={cash} alt="pay" />
             <h4>Pay</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Pay the rate</p>
           </div>
           <div className="blocks">
             <img src={pay} alt="paysend" />
             <h4>Send</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Submit you request and await feedback.</p>
           </div>
         </Blocks>
       </a>
@@ -915,6 +906,7 @@ const Blocks = styled.div`
       color: #676f79;
       font-family: MontserratLight;
       font-size: 14px;
+      opacity: 0.8;
       @media (max-width: 400px) {
         line-height: 1.6;
       }
@@ -932,13 +924,20 @@ const Div = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
+  margin-bottom: 20px;
+  h2 {
+    font-family: segoebold;
+    color: #173049;
+    margin: 0;
+  }
   p {
     width: 60%;
     text-align: center;
     color: #676f79;
     font-family: MontserratLight;
     font-size: 14px;
-    opacity: 100;
+    opacity: 0.8;
+    line-height: 1.7;
     @media (max-width: 400px) {
       width: 100%;
     }
@@ -976,6 +975,11 @@ const About = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
+      p {
+        font-family: MontserratLight;
+        color: #676f79;
+        opacity: 0.8;
+      }
     }
   }
   .cardss {
@@ -1028,6 +1032,8 @@ const About = styled.div`
         font-size: 15px;
         text-align: left;
         margin-left: 30px;
+        font-family: segoeRegular;
+        font-weight: 600;
         @media (max-width: 400px) {
           font-size: 16px;
           line-height: 1.4;
@@ -1042,6 +1048,8 @@ const About = styled.div`
         letter-spacing: 0.7px;
         margin-left: 30px;
         margin-top: 30px;
+        font-family: segoeSemiBold;
+        font-size: 24px;
       }
     }
   }
@@ -1261,6 +1269,7 @@ const NavBar = styled.nav`
         color: white;
         cursor: pointer;
         font-family: segoesemiLight;
+        font-size: 18px;
         a {
           text-decoration: none;
           color: white;
@@ -1446,7 +1455,7 @@ const Main = styled.main`
       width: 100%;
       text-align: left;
       font-family: segosemiLight;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: normal;
       letter-spacing: 0px;
       font-weight: lighter;
