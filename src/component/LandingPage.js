@@ -1046,7 +1046,7 @@ const About = styled.div`
         width: 85%;
         letter-spacing: 0.32px;
         color: #173049;
-        font-size: 15px;
+        font-size: 14px;
         text-align: left;
         margin-left: 30px;
         font-family: segoeRegular;
@@ -1257,7 +1257,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
-    font-family: segoesemiLight;
+    font-family: segoeRegular;
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -1283,18 +1283,18 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
-        font-family: segoesemiLight;
+        font-family: segoeRegular;
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
-        font-family: segoesemiLight;
-        font-size: 18px;
+        font-family: segoeRegular;
+        font-size: 16px;
         a {
           text-decoration: none;
           color: white;
-          font-family: segoesemiLight;
+          font-family: segoeRegular;
           &:hover {
             color: #66c8ed !important;
           }
@@ -1475,7 +1475,7 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      font-family: segosemiLight !important;
+      font-family: segoeRegular !important;
       font-size: 20px;
       font-weight: normal;
       letter-spacing: 0px;
