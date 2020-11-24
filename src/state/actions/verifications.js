@@ -37,10 +37,7 @@ export const selectSchool = (payload) => {
 
 export const requestVerification = (val) => {
   console.log(val);
-  return axios.post(
-    `https://croscheck.herokuapp.com/api/v1/verifications/request`,
-    val
-  );
+  return axios.post(`http://localhost:5000/api/v1/verifications/request`, val);
 };
 
 export const getUserVerification = (email) => async (dispatch) => {

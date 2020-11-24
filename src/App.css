@@ -20,6 +20,14 @@
   src: url("./fonts/segoeuib.ttf");
 }
 @font-face {
+  font-family: segoeRegular;
+  src: url("./fonts/segoeuireg.ttf");
+}
+@font-face {
+  font-family: segoeSemiBold;
+  src: url("./fonts/seguisb.ttf");
+}
+@font-face {
   font-family: MontserratLight;
   src: url("./fonts/Montserrat-Light.otf");
 }
@@ -38,4 +46,12 @@
 @font-face {
   font-family: MontserratItalic;
   src: url("./fonts/Montserrat-Italic.otf");
+}
+@font-face {
+  font-family: SegoeSemiBold;
+  src: url("./fonts/seguisb.ttf");
+}
+@font-face {
+  font-family: SegoeRegular;
+  src: url("./fonts/segoeui.ttf");
 }
