@@ -81,7 +81,6 @@ const HeadContainer = styled.div`
     font-weight: 500;
     font-size: 14px;
     font-family: MontserratLight;
-
   }
 
   .right-con {
@@ -132,9 +131,8 @@ const HeadContainer = styled.div`
         letter-spacing: 0.24px;
         letter-spacing: 0.44px;
         color: #173049;
-        font-family: MontserratBold;
-        font-weight: 500;
-        font-size: 16px;
+        font-family: segoebold;
+        font-size: 14px;
         margin: 0;
       }
 

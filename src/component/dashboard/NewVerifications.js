@@ -167,9 +167,7 @@ const NewVerifications = () => {
           />
           <div className={requestList ? "none" : ""}>
             {" "}
-            <h2 className="new-heading">
-              New Verification
-            </h2>
+            <h2 className="new-heading">New Verification</h2>
             <p classNam="new-para">Education Verification</p>
           </div>
           <IconDiv>
@@ -312,7 +310,7 @@ const VerificationBody = styled.div`
   .new-heading {
     font-family: MontserratRegular;
     letter-spacing: 0px;
-    color: #0092E0;
+    color: #0092e0;
     opacity: 1;
     font-size: 32px;
     font-weight: lighter;
@@ -374,12 +372,12 @@ const VerificationBody = styled.div`
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      
+
       @media (max-width: 500px) {
         margin-left: 20px;
       }
       span {
-        /* font-size: 14px; */
+        font-size: 13px;
         margin-left: 15px;
         font-family: MontserratRegular;
         color: #707070;

@@ -16,12 +16,8 @@ import { CountryDropdown } from "react-country-region-selector";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
-function TranscriptForm({
-  initialValues,
-  updateFormValues,
-  deleteOneVerification,
-}) {
-  const [activeTab, setActiveTab] = useState("destination-details");
+function TranscriptForm({ initialValues, updateFormValues }) {
+  const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -34,6 +30,9 @@ function TranscriptForm({
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(false);
   const [country, setCountry] = useState("");
+  const [destination, setDestination] = useState("");
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -70,7 +69,7 @@ function TranscriptForm({
   const formik = useFormik({
     initialValues,
 
-    onSubmit: async (values, status) => {
+    onSubmit: async (values) => {
       for (var propName in values) {
         if (
           values[propName] === null ||
@@ -81,40 +80,43 @@ function TranscriptForm({
         }
       }
 
-      var formData = new FormData();
-      formData.append("institution", selectedInst.name);
-      formData.append("amount", selectedInst.amount);
-      formData.append("country", selectedInst.country);
-      for (var key in values) {
-        formData.append(key, values[key]);
-      }
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-      updateFormValues(formData);
+      updateFormValues({
+        ...formik.values,
+        institution: selectedInst.name,
+        amount: selectedInst.amount,
+        email: user.email,
+        destination: destination,
+      });
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
-      dateOfBirth: Yup.string().required("DOB required"),
-      studentId: Yup.string().required("studentID is required"),
-      course: Yup.string().required("course is required"),
-      qualification: Yup.string().required("Qualification is required"),
-      classification: Yup.string().required("classification is required"),
-      enrollmentStatus: Yup.bool().oneOf([true, false]),
+      course: Yup.string().required("course required"),
+      matricNo: Yup.string().required("matric Number is required"),
+      graduationYear: Yup.string().required("graduation year is required"),
+      address: Yup.string().required("Address is required"),
+      destinationNumber: Yup.string().required(
+        "destination number is required"
+      ),
+      city: Yup.string().required("city is required"),
+      zipCode: Yup.string().required("Zip code is required"),
     }),
   });
+
   const submitRequest = (e) => {
     e.preventDefault();
-    if (!formik.values.certImage) {
-      return toast.error("please upload a file");
-    } else if (!selectedInst.name) {
+    if (!selectedInst.name) {
       return toast.error("please select a school");
+    } else if (
+      formik.values.address.length === 0 ||
+      formik.values.city.length === 0 ||
+      formik.values.destinationNumber.length === 0 ||
+      formik.values.zipCode.length === 0
+    ) {
+      return toast.error("please fill all required fields");
     }
-    formik.handleSubmit("paid");
+    formik.handleSubmit();
     toast.success("Verification details saved");
-
-    // updateFormValues(initialValues);
   };
   const handleQualificationTab = (e) => {
     e.preventDefault();
@@ -130,22 +132,6 @@ function TranscriptForm({
     }
 
     setActiveTab("destination-details");
-    setPay(false);
-  };
-
-  const handleDocumentTab = () => {
-    if (
-      formik.values.course.length === 0 ||
-      formik.values.qualification.length === 0 ||
-      formik.values.classification.length === 0 ||
-      formik.values.admissionYear.length === 0 ||
-      formik.values.graduationYear.length === 0 ||
-      formik.values.studentId.length === 0
-    ) {
-      toast.error("please fill required fields");
-      return;
-    }
-    setActiveTab("documents");
     setPay(true);
   };
 
@@ -332,13 +318,6 @@ function TranscriptForm({
                 <img src={qualifications} alt="details" />
                 &nbsp; Destination details
               </li>
-              <li
-                onClick={handleDocumentTab}
-                className={activeTab === "documents" ? "activeTab" : ""}
-              >
-                <img src={document} alt="details" />
-                &nbsp; Documents
-              </li>
             </ul>
           </div>
           {activeTab === "individual-details" && (
@@ -504,7 +483,7 @@ function TranscriptForm({
               </button>
             </FormDiv>
           )}
-          {/* =======QUALIFICATION DETAILS===== */}
+          {/* =======Destination DETAILS===== */}
           {activeTab === "destination-details" && (
             <FormDiv>
               <Field>
@@ -514,27 +493,18 @@ function TranscriptForm({
                 </label>
                 <>
                   <CountryDropdown
-                    name="destinationCountry"
-                    id="destinationCountry"
+                    name="destination"
+                    id="destination"
                     className="destination-country"
                     valueType="full"
-                    value={formik.values.destinationCountry}
+                    value={destination}
                     onChange={(_, e) => {
-                      formik.handleChange(e);
+                      setDestination(e.target.value);
                       console.log(e.target.value);
                     }}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                     ReactFlagsSelect
                   />
-                  {formik.touched.destinationCountry &&
-                  formik.errors.destinationCountry ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.destinationCountry}
-                    </div>
-                  ) : null}
                 </>
               </Field>
 
@@ -547,21 +517,21 @@ function TranscriptForm({
                   <input
                     type="text"
                     className={
-                      formik.touched.addressLine && formik.errors.addressLine
+                      formik.touched.address && formik.errors.address
                         ? "address-input err"
                         : "address-input"
                     }
-                    name="course"
-                    value={formik.values.addressLine}
+                    name="address"
+                    value={formik.values.address}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.addressLine && formik.errors.addressLine ? (
+                  {formik.touched.address && formik.errors.address ? (
                     <div
                       className="error"
                       style={{ marginLeft: "-660px", paddingTop: "3px" }}
                     >
-                      {formik.errors.addressLine}
+                      {formik.errors.address}
                     </div>
                   ) : null}
                 </>
@@ -576,22 +546,22 @@ function TranscriptForm({
                   <input
                     type="text"
                     className={
-                      formik.touched.ZipPostCode && formik.errors.ZipPostCode
+                      formik.touched.ZipCode && formik.errors.ZipCode
                         ? "postcode-input err"
                         : "postcode-input"
                     }
-                    name="qualification"
+                    name="zipCode"
                     placeholder="eg 11101"
-                    value={formik.values.ZipPostCode}
+                    value={formik.values.ZipCode}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.ZipPostCode && formik.errors.ZipPostCode ? (
+                  {formik.touched.ZipCode && formik.errors.ZipCode ? (
                     <div
                       className="error"
                       style={{ marginLeft: "-660px", paddingTop: "3px" }}
                     >
-                      {formik.errors.ZipPostCode}
+                      {formik.errors.ZipCode}
                     </div>
                   ) : null}
                 </>
@@ -657,34 +627,6 @@ function TranscriptForm({
                     </div>
                   ) : null}
                 </>
-              </Field>
-
-              <button
-                disabled={
-                  formik.values.destinationCountry.length === 0 ||
-                  formik.values.addressLine.length === 0 ||
-                  formik.values.destinationNumber.length === 0 ||
-                  formik.values.city.length === 0 ||
-                  formik.values.ZipPostCode.length === 0
-                }
-                className="btn"
-                type="submmit"
-                onClick={() => {
-                  setActiveTab("documents");
-                  setPay(true);
-                }}
-              >
-                Next
-                <img src={arrow} alt="right" />
-              </button>
-            </FormDiv>
-          )}
-          {activeTab === "documents" && (
-            <FormDiv>
-              <Field>
-                <p className="upload-text">
-                  Please upload file in (pdf, jpg,jpeg) format only
-                </p>
               </Field>
 
               <button pay={pay} onClick={submitRequest} className="btn submit">
@@ -1145,10 +1087,10 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-      font-family: MontserratRegular;
-      font-size: 16px;
-      color: #707070;
-    }
+        font-family: MontserratRegular;
+        font-size: 16px;
+        color: #707070;
+      }
       @media (max-width: 500px) {
         width: 88%;
         margin-bottom: 20px;
@@ -1240,9 +1182,9 @@ const SelectSch = styled.div`
         font-weight: bold;
         margin-bottom: 3px;
         font-family: MontserratBold;
-          font-size: 16px;
-          letter-spacing: 0.44px;
-          color: #173049;
+        font-size: 16px;
+        letter-spacing: 0.44px;
+        color: #173049;
       }
       &:nth-child(2) {
         font-family: MontserratRegular;

@@ -8,6 +8,13 @@ export const addVerificationList = (payload) => {
   };
 };
 
+export const addTranscript = (payload) => {
+  return {
+    type: types.ADD_TRANSCRIPT,
+    payload,
+  };
+};
+
 export const deleteVerification = (payload) => {
   return {
     type: types.DELETE_VERIFICATION,
@@ -36,9 +43,7 @@ export const requestVerification = (val) => {
   );
 };
 
-export const getUserVerification = (email = "tolaked@yahoo.com") => async (
-  dispatch
-) => {
+export const getUserVerification = (email) => async (dispatch) => {
   await axios
     .get(`https://croscheck.herokuapp.com/api/v1/verifications/${email}`)
     .then(({ data }) => {

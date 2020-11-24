@@ -13,37 +13,35 @@ import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
 import finish from "../../asset/finish.svg";
-import {
-  addVerificationList,
-  deleteVerification,
-} from "../../state/actions/verifications";
+import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
 
 import { PaystackButton } from "react-paystack";
 
-const request = (data) =>
+const request = (data) => {
   axios({
     data,
     method: "post",
-    url: "https://croscheck.herokuapp.com/api/v1/verifications/request",
-    headers: { "Content-Type": "multipart/form-data" },
+    url: "https://croscheck.herokuapp.com/api/v1/transcript/request",
   });
+};
 
 const NewTranscript = () => {
   const dispatch = useDispatch();
-  const { verifications } = useSelector((state) => state.verifications);
+  const { transcript } = useSelector((state) => state.verifications);
 
   const formData = {
     firstName: "",
     lastName: "",
-    matricNo: "",
     course: "",
     graduationYear: "",
-    destinationCountry: "",
-    addressLine: "",
-    ZipPostCode: "",
+    course: "",
+    address: "",
+    zipCode: "",
+    // destination: "",
     destinationNumber: "",
     city: "",
+    matricNo: "",
   };
 
   const [formValues, setFormValues] = useState([
@@ -53,7 +51,6 @@ const NewTranscript = () => {
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
-  const verificationsLength = formValues.length;
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
@@ -61,27 +58,19 @@ const NewTranscript = () => {
   const verify = async () => {
     console.log("updated form values", formValues);
     for (let i = 0; i < formValues.length; i++) {
-      if (formValues[i] instanceof FormData === false) {
-        for (const key in formValues[i]) {
-          if (!formValues[i][key]) {
-            return toast.error(
-              "Please complete and submit all verification details"
-            );
-          }
+      for (var key in formValues[i]) {
+        if (formValues[i][key] === "") {
+          return toast.error(
+            "Please complete and submit all verification details"
+          );
         }
       }
     }
-    dispatch(addVerificationList(formValues));
+    dispatch(addTranscript(formValues));
     setRequestList(true);
   };
-  const processPayment = async () => {
+  const processPayment = async (data) => {
     await Promise.allSettled(formValues.map((value) => request(value)));
-  };
-  const addNewForm = () => {
-    setFormValues((values) => [
-      ...values,
-      { ...formData, studentId: "", _id: Date.now() },
-    ]);
   };
 
   const updateFormValues = (id) => (data) => {
@@ -91,30 +80,10 @@ const NewTranscript = () => {
   };
   // console.log("updated", formValues);
 
-  const deleteOneVerification = (id) => () => {
-    setFormValues((formValues) => formValues.filter((v) => v._id !== id));
-    console.log("after delete", formValues);
-  };
-  console.log(formValues);
-
-  let verifRequest = [];
-  for (let i = 0; i < verifications.length; i++) {
-    let obj = {};
-    for (var pair of verifications[i].entries()) {
-      obj[pair[0]] = pair[1];
-    }
-    console.log("each object", obj);
-    verifRequest.push(obj);
-  }
-  let total = verifRequest.reduce(
+  let total = formValues.reduce(
     (accumulator, currentValue) => accumulator + Number(currentValue.amount),
     0
   );
-  console.log("request arr", verifRequest);
-
-  const removeVerification = (val) => {
-    dispatch(deleteVerification(val));
-  };
 
   const componentProps = {
     email: "tolaked@yahoo.com",
@@ -128,7 +97,7 @@ const NewTranscript = () => {
     onSuccess: () => {
       console.log("paying");
       processPayment();
-      dispatch(addVerificationList([]));
+      dispatch(addTranscript([]));
       setRequestList(false);
       setFormValues([formData]);
       toast.success("request submitted");
@@ -154,9 +123,7 @@ const NewTranscript = () => {
           />
           <div className={requestList ? "none" : ""}>
             {" "}
-            <h2 className="new-heading">
-              New Transcript Order
-            </h2>
+            <h2 className="new-heading">New Transcript Order</h2>
           </div>
           <IconDiv>
             <div>
@@ -181,10 +148,8 @@ const NewTranscript = () => {
               {" "}
               <TranscriptForm
                 key={id}
-                verificationsLength={verificationsLength}
                 initialValues={values}
                 updateFormValues={updateFormValues(id)}
-                deleteOneVerification={deleteOneVerification(values._id)}
               />
             </div>
           ))}
@@ -228,18 +193,18 @@ const NewTranscript = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {verifRequest.length > 0 &&
-                      verifRequest.map((ver) => (
+                    {formValues.length > 0 &&
+                      formValues.map((ver) => (
                         <tr key={ver.institution}>
                           <th className="mobile-header">Number</th>
                           <td>{ver.institution}</td>
                           <th className="mobile-header">Market rate</th>
-                          <td>{ver.country}</td>
+                          <td>{ver.destination}</td>
                           <th className="mobile-header">Weight</th>
                           <td>50000</td>
                           <th className="mobile-header">Value</th>
                           <td>{ver.amount}</td>
-                          <td>
+                          {/* <td>
                             <FontAwesomeIcon
                               icon={faTrash}
                               // className="menu-icon"
@@ -247,7 +212,7 @@ const NewTranscript = () => {
                                 removeVerification(ver.institution)
                               }
                             />
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
 
@@ -261,14 +226,6 @@ const NewTranscript = () => {
                 </table>
               </div>
               <div className="buttons">
-                <button
-                  className="add-btn"
-                  onClick={() => setRequestList(false)}
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                  Add another Verification &nbsp;{" "}
-                </button>
-
                 <PaystackButton {...componentProps} className="btn" />
               </div>
             </SelectSch>
@@ -291,7 +248,7 @@ const VerificationBody = styled.div`
   .new-heading {
     font-family: MontserratRegular;
     letter-spacing: 0px;
-    color: #0092E0;
+    color: #0092e0;
     opacity: 1;
     font-size: 32px;
     font-weight: lighter;
@@ -343,9 +300,9 @@ const VerificationBody = styled.div`
         padding: 10px;
         margin-left: 20px;
         input {
-        margin-left: -5px;
-        margin-right: 10px;
-      }
+          margin-left: -5px;
+          margin-right: 10px;
+        }
       }
       span {
         /* font-size: 16px; */

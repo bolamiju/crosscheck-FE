@@ -553,14 +553,15 @@ const Slides = styled.div`
       .testimony-test {
         background: white;
         color: black;
-        width: 100%;
+        margin: 0 auto;
+        width: 95%;
         padding-top: 10px;
         padding-bottom: 30px;
         border-radius: 4px;
       }
       .profile {
         position: relative;
-        top: -40px;
+        top: -30px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -578,6 +579,7 @@ const Footer = styled.div`
     display: flex;
     flex-direction: column;
     background: #001538 0% 0% no-repeat padding-box;
+    height: 100vh;
   }
   width: 100%;
   /* height: 350px; */
@@ -1489,6 +1491,8 @@ const Main = styled.main`
         text-align: center;
         font-size: 18px;
         line-height: 1.6;
+        margin-top: 15px;
+        margin-bottom: 20px;
       }
     }
   }
