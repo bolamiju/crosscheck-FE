@@ -232,7 +232,9 @@ const LandingPage = () => {
             <div className="card">
               <h3>OUR VISION</h3>
               <div className="line"></div>
-              <p>To be Africa's leading expert in background checks industry.</p>
+              <p>
+                To be Africa's leading expert in background checks industry.
+              </p>
             </div>
             <div className="card">
               <h3>WHO WE ARE</h3>
@@ -292,50 +294,41 @@ const LandingPage = () => {
             <img src={register} alt="regi" />
             <h4>Regiser</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Create an Individual or Organization Account & activate via email
+              within a few minutes.
             </p>
           </div>
           <div className="blocks">
             <img src={service} alt="regi" />
             <h4>Select Service</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Select from a host of services ranging from Educational Checks to
+              Identity Verification.
             </p>
           </div>
           <div className="blocks">
             <img src={enquiry} alt="enq" />
             <h4>Search institution</h4>
             <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
+              Initiate a quick, seamless search of the institution you wish to
+              conduct a check with.
             </p>
           </div>
           <div className="blocks">
             <img src={enquiry} alt="enq" />
             <h4>Enter Enquiry Details</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Enter all the necessary verification details.</p>
           </div>
 
           <div className="blocks">
             <img src={cash} alt="pay" />
             <h4>Pay</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Pay the rate</p>
           </div>
           <div className="blocks">
             <img src={pay} alt="paysend" />
             <h4>Send</h4>
-            <p>
-              To take a trivial example, which of us ever undertakes laborious
-              physical exercise and stuff.
-            </p>
+            <p>Submit you request and await feedback.</p>
           </div>
         </Blocks>
       </a>
@@ -816,7 +809,7 @@ const Testimonies = styled.div`
     font-family: segoebold;
     letter-spacing: 0.26px;
     word-spacing: 2px;
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 1;
   }
 
@@ -843,7 +836,7 @@ const Testimonies = styled.div`
       p {
         font-family: MontserratRegular;
         letter-spacing: 0px;
-        color: #676F79;
+        color: #676f79;
         opacity: 1;
       }
       .profile {
@@ -930,8 +923,7 @@ const Blocks = styled.div`
       color: #676f79;
       font-family: MontserratLight;
       font-size: 14px;
-      letter-spacing: 0px;
-      line-height: 30px;
+      opacity: 0.8;
       @media (max-width: 400px) {
         line-height: 1.6;
       }
@@ -949,11 +941,11 @@ const Div = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
+  margin-bottom: 20px;
   h2 {
     font-family: segoebold;
-    letter-spacing: 0px;
     color: #173049;
-    opacity: 1;
+    margin: 0;
   }
   p {
     width: 60%;
@@ -961,7 +953,8 @@ const Div = styled.div`
     color: #676f79;
     font-family: MontserratLight;
     font-size: 14px;
-    opacity: 1;
+    opacity: 0.8;
+    line-height: 1.7;
     @media (max-width: 400px) {
       width: 100%;
     }
@@ -1000,9 +993,12 @@ const About = styled.div`
       flex-direction: column;
       font-family: MontserratLight;
       align-items: center;
-      letter-spacing: 0px;
-      color: #676F79;
-      opacity: 1;
+      p {
+        font-family: MontserratLight;
+        color: #676f79;
+        opacity: 0.8;
+        font-size: 14px;
+      }
     }
   }
   .cardss {
@@ -1049,13 +1045,14 @@ const About = styled.div`
         margin-bottom: 30px;
       }
       p {
-        font-family: SegoeRegular;
         width: 85%;
         letter-spacing: 0.32px;
         color: #173049;
-        font-size: 15px;
+        font-size: 14px;
         text-align: left;
         margin-left: 30px;
+        font-family: segoeRegular;
+        font-weight: 600;
         @media (max-width: 400px) {
           font-size: 16px;
           line-height: 1.4;
@@ -1073,6 +1070,8 @@ const About = styled.div`
         opacity: 1;
         margin-left: 30px;
         margin-top: 30px;
+        font-family: segoeSemiBold;
+        font-size: 24px;
       }
     }
   }
@@ -1260,7 +1259,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
-    font-family: segoesemiLight;
+    font-family: segoeRegular;
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -1286,17 +1285,18 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
-        font-family: segoesemiLight;
+        font-family: segoeRegular;
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
-        font-family: segoesemiLight;
+        font-family: segoeRegular;
+        font-size: 16px;
         a {
           text-decoration: none;
           color: white;
-          font-family: segoesemiLight;
+          font-family: segoeRegular;
           &:hover {
             color: #66c8ed !important;
           }
@@ -1484,13 +1484,13 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      font-family: segoesemiLight;
-      letter-spacing: 0px;
-      color: #FFFFFF;
-      opacity: 1;
+      font-family: segoeRegular !important;
       font-size: 20px;
-      font-weight: lighter;
+      font-weight: normal;
+      letter-spacing: 0px;
       color: #ffffff;
+      opacity: 1;
+      font-weight: lighter;
       opacity: 0.8;
       margin-top: 40px;
       margin-bottom: 40px;
