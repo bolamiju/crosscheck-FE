@@ -47,3 +47,11 @@
   font-family: MontserratItalic;
   src: url("./fonts/Montserrat-Italic.otf");
 }
+@font-face {
+  font-family: SegoeSemiBold;
+  src: url("./fonts/seguisb.ttf");
+}
+@font-face {
+  font-family: SegoeRegular;
+  src: url("./fonts/segoeui.ttf");
+}

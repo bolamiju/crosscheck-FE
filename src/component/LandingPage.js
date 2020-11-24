@@ -232,7 +232,9 @@ const LandingPage = () => {
             <div className="card">
               <h3>OUR VISION</h3>
               <div className="line"></div>
-              <p>To be Africa's leading expert in background checks industry</p>
+              <p>
+                To be Africa's leading expert in background checks industry.
+              </p>
             </div>
             <div className="card">
               <h3>WHO WE ARE</h3>
@@ -249,7 +251,7 @@ const LandingPage = () => {
               <p>
                 An exceptional team committed to providing innovative solutions
                 and services to our clients for better hiring or engagement
-                decision making
+                decision making.
               </p>
             </div>
           </div>
@@ -801,6 +803,13 @@ const Testimonies = styled.div`
       width: 80%;
     }
   }
+  h2 {
+    font-family: segoebold;
+    letter-spacing: 0.26px;
+    word-spacing: 2px;
+    color: #ffffff;
+    opacity: 1;
+  }
 
   .testimonies {
     display: flex;
@@ -822,6 +831,12 @@ const Testimonies = styled.div`
       background: #ffffff 0% 0% no-repeat padding-box;
       padding: 10px;
       border-radius: 8px;
+      p {
+        font-family: MontserratRegular;
+        letter-spacing: 0px;
+        color: #676f79;
+        opacity: 1;
+      }
       .profile {
         margin-bottom: -90px;
         padding-top: 10px;
@@ -974,11 +989,13 @@ const About = styled.div`
     .sec {
       display: flex;
       flex-direction: column;
+      font-family: MontserratLight;
       align-items: center;
       p {
         font-family: MontserratLight;
         color: #676f79;
         opacity: 0.8;
+        font-size: 14px;
       }
     }
   }
@@ -1044,8 +1061,11 @@ const About = styled.div`
         }
       }
       h3 {
+        font-family: SegoeSemiBold;
+        letter-spacing: 0.6px;
         color: #173049;
-        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        opacity: 1;
         margin-left: 30px;
         margin-top: 30px;
         font-family: segoeSemiBold;
@@ -1237,6 +1257,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
+    font-family: segoesemiLight;
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -1454,12 +1475,13 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      font-family: segosemiLight;
+      font-family: segosemiLight !important;
       font-size: 20px;
       font-weight: normal;
       letter-spacing: 0px;
-      font-weight: lighter;
       color: #ffffff;
+      opacity: 1;
+      font-weight: lighter;
       opacity: 0.8;
       margin-top: 40px;
       margin-bottom: 40px;
