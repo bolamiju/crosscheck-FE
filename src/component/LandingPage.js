@@ -232,7 +232,7 @@ const LandingPage = () => {
             <div className="card">
               <h3>OUR VISION</h3>
               <div className="line"></div>
-              <p>To be Africa's leading expert in background checks industry</p>
+              <p>To be Africa's leading expert in background checks industry.</p>
             </div>
             <div className="card">
               <h3>WHO WE ARE</h3>
@@ -249,7 +249,7 @@ const LandingPage = () => {
               <p>
                 An exceptional team committed to providing innovative solutions
                 and services to our clients for better hiring or engagement
-                decision making
+                decision making.
               </p>
             </div>
           </div>
@@ -810,6 +810,13 @@ const Testimonies = styled.div`
       width: 80%;
     }
   }
+  h2 {
+    font-family: segoebold;
+    letter-spacing: 0.26px;
+    word-spacing: 2px;
+    color: #FFFFFF;
+    opacity: 1;
+  }
 
   .testimonies {
     display: flex;
@@ -831,6 +838,12 @@ const Testimonies = styled.div`
       background: #ffffff 0% 0% no-repeat padding-box;
       padding: 10px;
       border-radius: 8px;
+      p {
+        font-family: MontserratRegular;
+        letter-spacing: 0px;
+        color: #676F79;
+        opacity: 1;
+      }
       .profile {
         margin-bottom: -90px;
         padding-top: 10px;
@@ -915,6 +928,8 @@ const Blocks = styled.div`
       color: #676f79;
       font-family: MontserratLight;
       font-size: 14px;
+      letter-spacing: 0px;
+      line-height: 30px;
       @media (max-width: 400px) {
         line-height: 1.6;
       }
@@ -932,13 +947,19 @@ const Div = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 30px;
+  h2 {
+    font-family: segoebold;
+    letter-spacing: 0px;
+    color: #173049;
+    opacity: 1;
+  }
   p {
     width: 60%;
     text-align: center;
     color: #676f79;
     font-family: MontserratLight;
     font-size: 14px;
-    opacity: 100;
+    opacity: 1;
     @media (max-width: 400px) {
       width: 100%;
     }
@@ -975,7 +996,11 @@ const About = styled.div`
     .sec {
       display: flex;
       flex-direction: column;
+      font-family: MontserratLight;
       align-items: center;
+      letter-spacing: 0px;
+      color: #676F79;
+      opacity: 1;
     }
   }
   .cardss {
@@ -1022,6 +1047,7 @@ const About = styled.div`
         margin-bottom: 30px;
       }
       p {
+        font-family: SegoeRegular;
         width: 85%;
         letter-spacing: 0.32px;
         color: #173049;
@@ -1038,8 +1064,11 @@ const About = styled.div`
         }
       }
       h3 {
+        font-family: SegoeSemiBold;
+        letter-spacing: 0.6px;
         color: #173049;
-        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        opacity: 1;
         margin-left: 30px;
         margin-top: 30px;
       }
@@ -1229,6 +1258,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
+    font-family: segoesemiLight;
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -1445,10 +1475,11 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      font-family: segosemiLight;
-      font-size: 18px;
-      font-weight: normal;
+      font-family: segoesemiLight;
       letter-spacing: 0px;
+      color: #FFFFFF;
+      opacity: 1;
+      font-size: 20px;
       font-weight: lighter;
       color: #ffffff;
       opacity: 0.8;
