@@ -86,6 +86,7 @@ const ForgotPassword = () => {
                 className="forgot-pass-input"
                 name="email"
                 id="email"
+                placeholder="Enter email address"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -137,13 +138,22 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  h3 {
+    font-family: segoeSemiBold;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+    font-size: 24px;
+  }
   .enter-email {
     width: 80%;
+    font-family: MontserratRegular;
     text-align: center;
-    font: normal normal normal 12px Montserrat;
     letter-spacing: 0.4px;
     color: #707070;
-    opacity: 0.8;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: normal;
     @media (max-width: 400px) {
       width: 100%;
       font-size: 14px;
@@ -161,7 +171,10 @@ const Div = styled.div`
       border: 2px solid #70707061;
       border-radius: 35px;
       padding-left: 20px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: MontserratItalic;
+      letter-spacing: 0.32px;
+      color: #707070;
+      opacity: 1;
       @media (max-width: 400px) {
         font-size: 16px;
       }
@@ -181,10 +194,19 @@ const Div = styled.div`
     background: #0092e0 0% 0% no-repeat padding-box;
     border: 2px solid #0092e0;
     border-radius: 35px;
-    color: white;
+    font-family: MontserratBold;
+    letter-spacing: 0.32px;
+    color: #FFFFFF;
+    opacity: 1;
     @media (max-width: 400px) {
       margin-top: 0 !important;
       width: 200px;
     }
+  }
+  .reset-create {
+    font-family: MontserratRegular;
+    letter-spacing: 0.4px;
+    opacity: 1;
+    text-align: center;
   }
 `;

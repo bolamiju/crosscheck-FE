@@ -201,7 +201,9 @@ body {
 }
 .great {
   color: orangered;
-  margin: 0 !important;
+  margin: 0 !important; 
+  font-family: MontserratBold;
+  font-size: 20px;
 }
 label {
   font-size: 14px;
@@ -219,12 +221,20 @@ label {
   width: 48%;
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
 }
 
 .lastname-input {
   width: 48%;
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
 }
 
 .name-section {
@@ -236,6 +246,10 @@ label {
 .email-input {
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   width: 100%;
   margin-bottom: 10px;
 }
@@ -246,6 +260,10 @@ label {
 .select-input {
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   width: 45%;
   margin-bottom: 10px;
 }
@@ -259,19 +277,41 @@ label {
 .country-input {
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   width: 48%;
-  margin-bottom: 10px;
+  margin-bottom: 10px; 
+}
+.country-input select {
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
 }
 
 .phone {
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   width: 48%;
   margin-bottom: 10px;
+}
+.phone input {
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
 }
 .password-input {
   display: flex;
   flex-direction: column;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   width: 100%;
 }
 
@@ -306,9 +346,11 @@ label {
   height: 38px;
   border: 1px solid #0092e0;
   margin-top: 20px;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
-  font-family: "Roboto";
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  opacity: 1;
 }
 
 .resetpassword-button {
@@ -325,6 +367,10 @@ label {
 .terms {
   display: flex;
   justify-content: space-between;
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
   align-items: center;
   margin-top: 10px;
 }
@@ -351,14 +397,19 @@ label {
   /* width: 100%; */
   margin-bottom: 30px;
 }
+
 .signup-with {
   font-size: 14px;
-  font-family: "Roboto";
+  font-family: MontserratRegular;
+  color: #707070;
 }
 .paragraph {
   font-size: 14px;
   margin-top: 15px;
-  font-family: "Roboto";
+  font-family: MontserratRegular;
+  letter-spacing: 0.24px;
+  color: #707070;
+  opacity: 1;
 }
 
 .google {
@@ -384,19 +435,26 @@ label {
 }
 .terms .link {
   font-size: 12px;
+  font-family: MontserratRegular;
+  color: #707070;
 }
 
 .terms a {
   font-size: 14px;
   text-decoration: none;
-  color: #0092e0;
+  font-family: MontserratRegular;
+  color: #707070;
 }
 
 .text-header {
   display: flex;
   justify-content: center;
-  color: #ff2600;
   margin-top: -15px;
+  font-family: segoebold;
+  letter-spacing: 0px;
+  color: #FF2600;
+  font-size: 24px;
+  opacity: 1;
   /* margin-bottom: 5px; */
 }
 

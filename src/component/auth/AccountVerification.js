@@ -38,25 +38,54 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  @media (max-width: 400px) {
+    width: 300px;
+  }
+  @media (max-width: 500px) {
+    width: 400px;
+  }
   /* text-align: center; */
 `;
 
 const Container = styled.div`
-  width: 300px;
+  width: 400px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 8px;
-  height: 300px;
+  border-radius: 25px;
+  height: 330px;
   box-shadow: 0px 0px 5px #00000017;
   text-align: center;
+  @media (max-width: 400px) {
+    width: 300px;
+    img {
+      width: 150px;
+    }
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+    img {
+      width: 180px;
+    }
+  }
   p {
-    font-weight: bold;
-    font-size: 16px;
+    text-transform: capitalize;
+    font-size: 24px;
+    font-family: SegoeRegular;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+    font-weight: normal;
   }
   .link {
+    font-family: MontserratBold;
+    text-transform: capitalize;
     text-decoration: none;
     background: #0092e0;
-    color: white;
+    letter-spacing: 0.32px;
+    color: #FFFFFF;
+    opacity: 1;
+    font-size: 14px;
     border-radius: 3px;
-    padding: 5px 15px 5px 15px;
+    padding: 15px 25px;
+    border-radius: 30px;
   }
 `;

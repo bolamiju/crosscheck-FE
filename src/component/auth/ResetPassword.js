@@ -134,6 +134,10 @@ const Div = styled.div`
   flex-direction: column;
   align-items: center;
   h3 {
+    font-family: segoebold;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
     @media (max-width: 400px) {
       font-size: 28px;
     }
@@ -142,10 +146,15 @@ const Div = styled.div`
     p {
       text-align: center;
       letter-spacing: 0.32px;
+      color: #707070;
+      font-family: MontserratRegular;
+      text-transform: uppercase;
       opacity: 1;
+      font-weight: lighter;
+      font-size: 12px;
       @media (max-width: 400px) {
-        font-size: 16px;
         width: 100%;
+        font-size: 16px;
       }
     }
   }
@@ -166,6 +175,10 @@ const Div = styled.div`
     .confirm-label {
       font-weight: bold !important;
       margin-left: 15px;
+      font-family: segoebold;
+      letter-spacing: 0px;
+      color: #707070;
+      opacity: 1;
       @media (max-width: 400px) {
       }
     }
@@ -181,6 +194,12 @@ const Div = styled.div`
       @media (max-width: 400px) {
         font-size: 16px;
         height: 50px;
+        width: 80%;
+      }
+      @media (max-width: 500px) {
+        font-size: 16px;
+        height: 50px;
+        width: 80%;
       }
     }
     .passw-error {
@@ -199,15 +218,23 @@ const Div = styled.div`
     background: #0092e0 0% 0% no-repeat padding-box;
     border: 2px solid #0092e0;
     border-radius: 35px;
-    color: white;
-    letter-spacing: 1px;
+    font-family: MontserratBold;
+    letter-spacing: 0.32px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    opacity: 1;
     cursor: pointer;
     padding-top: 10px;
     padding-bottom: 10px;
     @media (max-width: 400px) {
       height: 60px;
       font-size: 18px;
-      width: 300px;
+      width: 250px;
+    } 
+    @media (max-width: 500px) {
+      height: 60px;
+      font-size: 18px;
+      width: 250px;
     }
   }
 `;
