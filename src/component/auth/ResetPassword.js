@@ -152,9 +152,9 @@ const Div = styled.div`
       opacity: 1;
       font-weight: lighter;
       font-size: 12px;
-      @media (max-width: 400px) {
+      @media (max-width: 500px) {
         width: 100%;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }
@@ -179,7 +179,8 @@ const Div = styled.div`
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;
-      @media (max-width: 400px) {
+      @media (max-width: 500px) {
+        margin-left: 35px;
       }
     }
     input {
@@ -220,7 +221,7 @@ const Div = styled.div`
     border-radius: 35px;
     font-family: MontserratBold;
     letter-spacing: 0.32px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-transform: uppercase;
     opacity: 1;
     cursor: pointer;
@@ -230,7 +231,7 @@ const Div = styled.div`
       height: 60px;
       font-size: 18px;
       width: 250px;
-    } 
+    }
     @media (max-width: 500px) {
       height: 60px;
       font-size: 18px;
