@@ -3,7 +3,11 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight, faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faLongArrowAltLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -640,8 +644,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   setPay(true);
                 }}
               >
-                
-                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{paddingRight: "5px", fontSize: "20px"}} />
+                <FontAwesomeIcon
+                  icon={faLongArrowAltLeft}
+                  style={{ paddingRight: "5px", fontSize: "20px" }}
+                />
                 Previous
               </button>
             </FormDiv>
@@ -702,24 +708,27 @@ const FormContainer = styled.div`
     }
   }
   .btn-prev {
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-left: 1.5rem;
+    display: none;
+    @media (max-width: 500px) {
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-left: 1.5rem;
 
-    /* width: 80px; */
-    color: white;
-    background: #0092e0 0% 0% no-repeat padding-box !important;
-    border-radius: 10px;
-    margin-right: 20px;
-    opacity: 1;
-    height: 30px;
-    outline: none;
-    border: none;
-    @media (max-width: 400px) {
-      margin-left: 0.5rem;
-      margin-right: 0px;
+      /* width: 80px; */
+      color: white;
+      background: #0092e0 0% 0% no-repeat padding-box !important;
+      border-radius: 10px;
+      margin-right: 20px;
+      opacity: 1;
+      height: 30px;
+      outline: none;
+      border: none;
+      @media (max-width: 400px) {
+        margin-left: 0.5rem;
+        margin-right: 0px;
+      }
     }
   }
   .notallowed {
@@ -1125,7 +1134,7 @@ const SelectSch = styled.div`
       width: 46%;
       label {
         font-family: MontserratRegular;
-        font-size: 16px;
+        font-size: 14px;
         color: #707070;
       }
       @media (max-width: 500px) {
@@ -1163,7 +1172,7 @@ const SelectSch = styled.div`
     width: 46%;
     label {
       font-family: MontserratRegular;
-      font-size: 16px;
+      font-size: 14px;
       color: #707070;
     }
     @media (max-width: 500px) {
