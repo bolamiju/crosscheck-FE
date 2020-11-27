@@ -178,8 +178,8 @@ const NewTranscript = () => {
             <SelectSch>
               <div className="new-table">
                 <table
-                  cellSpacing="0"
-                  cellPadding="0"
+                 ellSpacing="0"
+                  cellPadding="0" c
                   border="0"
                   className="ideTable"
                 >
