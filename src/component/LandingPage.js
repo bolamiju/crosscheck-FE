@@ -25,10 +25,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
 
+import Modal from './Modal';
+
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const [testimonyIndex, setTestimonyIndex] = useState(0);
+  const [ open, setOpen ] = useState(false);
 
   const testimonies = [
     {
@@ -92,6 +95,15 @@ const LandingPage = () => {
     // else {
     //   return false
     // }
+  };
+
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const testimony = testimonies[testimonyIndex];
@@ -218,7 +230,14 @@ const LandingPage = () => {
                   Sign Up Now
                 </Link>
               </button>
-              <button>How it Works</button>
+              <button
+                type="button"
+                onClick={handleOpen}
+              >How it Works</button>
+              <Modal
+                  open={open}
+                  onClose={handleClose}
+              />
             </div>
           </div>
           <img src={Computer} alt="headerimage" />
