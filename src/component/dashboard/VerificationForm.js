@@ -293,28 +293,28 @@ function VerificationForm({
                     <PaginationItem
                       disabled={currentPage <= 0}
                       className="prev"
+                      onClick={(e) => handleNavigation(e, currentPage - 1)}
                     >
-                      <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage - 1)}
-                        previous
-                        href={() => false}
-                      />
+                      <PaginationLink previous href={() => false} />
                     </PaginationItem>
 
                     {[...Array(pagesCount)].map((page, i) => (
-                      <PaginationItem active={i === currentPage} key={i}>
-                        <PaginationLink
-                          onClick={(e) => handleNavigation(e, i)}
-                          href={() => false}
-                        >
+                      <PaginationItem
+                        active={i === currentPage}
+                        key={i}
+                        onClick={(e) => handleNavigation(e, i)}
+                      >
+                        <PaginationLink href={() => false}>
                           {i + 1}
                         </PaginationLink>
                       </PaginationItem>
                     ))}
 
-                    <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                    <PaginationItem
+                      disabled={currentPage >= pagesCount - 1}
+                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                    >
                       <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage + 1)}
                         next
                         href={() => false}
                         className="next"

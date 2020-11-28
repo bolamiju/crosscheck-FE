@@ -196,8 +196,9 @@ const Div = styled.div`
     border-radius: 35px;
     font-family: MontserratBold;
     letter-spacing: 0.32px;
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 1;
+    cursor: pointer;
     @media (max-width: 400px) {
       margin-top: 0 !important;
       width: 200px;

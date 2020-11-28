@@ -93,14 +93,14 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       });
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required("First Name is required"),
-      lastName: Yup.string().required("Last Name is required"),
-      course: Yup.string().required("course required"),
-      matricNo: Yup.string().required("matric Number is required"),
-      graduationYear: Yup.string().required("graduation year is required"),
+      firstName: Yup.string().required("First Name is required").min(2),
+      lastName: Yup.string().required("Last Name is required").min(2),
+      course: Yup.string().required("Course required"),
+      matricNo: Yup.string().required("Matric Number is required"),
+      graduationYear: Yup.string().required("Graduation year is required"),
       address: Yup.string().required("Address is required"),
       destinationNumber: Yup.string().required(
-        "destination number is required"
+        "Destination number is required"
       ),
       city: Yup.string().required("city is required"),
       zipCode: Yup.string().required("Zip code is required"),
@@ -263,28 +263,28 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     <PaginationItem
                       disabled={currentPage <= 0}
                       className="prev"
+                      onClick={(e) => handleNavigation(e, currentPage - 1)}
                     >
-                      <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage - 1)}
-                        previous
-                        href={() => false}
-                      />
+                      <PaginationLink previous href={() => false} />
                     </PaginationItem>
 
                     {[...Array(pagesCount)].map((page, i) => (
-                      <PaginationItem active={i === currentPage} key={i}>
-                        <PaginationLink
-                          onClick={(e) => handleNavigation(e, i)}
-                          href={() => false}
-                        >
+                      <PaginationItem
+                        active={i === currentPage}
+                        key={i}
+                        onClick={(e) => handleNavigation(e, i)}
+                      >
+                        <PaginationLink href={() => false}>
                           {i + 1}
                         </PaginationLink>
                       </PaginationItem>
                     ))}
 
-                    <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                    <PaginationItem
+                      disabled={currentPage >= pagesCount - 1}
+                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                    >
                       <PaginationLink
-                        onClick={(e) => handleNavigation(e, currentPage + 1)}
                         next
                         href={() => false}
                         className="next"
@@ -348,7 +348,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   {formik.touched.firstName && formik.errors.firstName ? (
                     <div
                       className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      style={{ marginLeft: "-500px", paddingTop: "3px" }}
                     >
                       {formik.errors.firstName}
                     </div>
@@ -377,7 +377,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   {formik.touched.lastName && formik.errors.lastName ? (
                     <div
                       className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      style={{ marginLeft: "-500px", paddingTop: "3px" }}
                     >
                       {formik.errors.lastName}
                     </div>
@@ -400,7 +400,16 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     name="matricNo"
                     value={formik.values.matricNo}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
+                  {formik.touched.matricNo && formik.errors.matricNo ? (
+                    <div
+                      className="error"
+                      style={{ marginLeft: "-500px", paddingTop: "3px" }}
+                    >
+                      {formik.errors.matricNo}
+                    </div>
+                  ) : null}
                 </>
               </Field>
 
@@ -420,11 +429,12 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     name="course"
                     value={formik.values.course}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.course && formik.errors.course ? (
                     <div
                       className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      style={{ marginLeft: "-500px", paddingTop: "3px" }}
                     >
                       {formik.errors.course}
                     </div>
@@ -449,12 +459,13 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     name="graduationYear"
                     value={formik.values.graduationYear}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.graduationYear &&
                   formik.errors.graduationYear ? (
                     <div
                       className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      style={{ marginLeft: "-500px", paddingTop: "3px" }}
                     >
                       {formik.errors.graduationYear}
                     </div>
@@ -872,6 +883,7 @@ const Field = styled.div`
     border: 1px solid #707070cc;
     border-radius: 5px;
     outline: none;
+    padding-left: 7px;
     @media (max-width: 500px) {
       font-size: 16px;
       width: 90%;

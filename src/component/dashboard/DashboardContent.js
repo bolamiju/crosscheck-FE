@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CountryDropdown } from "react-country-region-selector";
@@ -15,6 +16,8 @@ import {
 } from "../../state/actions/verifications";
 
 const DashboardContent = ({ history }) => {
+  const [currentPage, setCurrentPage] = useState(0);
+
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
   const { userVerifications } = useSelector((state) => state.verifications);
@@ -34,6 +37,29 @@ const DashboardContent = ({ history }) => {
   const filteredItems = institutions.filter((item) =>
     item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
   );
+
+  const pageSize = 10;
+  const pagesCount = Math.ceil(filteredItems.length / pageSize);
+
+  const verificationsCount = Math.ceil(userVerifications.length / pageSize);
+
+  const handleNavigation = (e, index) => {
+    e.preventDefault();
+    if (index < 0 || index >= pagesCount) {
+      return;
+    } else {
+      setCurrentPage(index);
+    }
+  };
+
+  const verificationsNavigation = (e, index) => {
+    e.preventDefault();
+    if (index < 0 || index >= verificationsCount) {
+      return;
+    } else {
+      setCurrentPage(index);
+    }
+  };
 
   const handleSelected = (institute) => {
     dispatch(selectSchool(institute));
@@ -62,7 +88,14 @@ const DashboardContent = ({ history }) => {
                 <p>Transcript Check</p>
                 <p>Request transcript from schools</p>
               </div>
-              <button>Start New</button>
+              <button>
+                <Link
+                  to="/transcript"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Start New
+                </Link>
+              </button>
             </div>
           </Card>
           <Card>
@@ -119,7 +152,8 @@ const DashboardContent = ({ history }) => {
                   border: "2px solid #e2e2e2",
                   outline: "none",
                   borderRadius: "14px",
-                  fontSize: "16px",
+                  fontSize: "14px",
+                  fontFamily: "MontserratItalic",
                 }}
               />
             </div>
@@ -141,21 +175,69 @@ const DashboardContent = ({ history }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                      <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      <td>{ite.category}</td>
-                      <th className="mobile-header">Value</th>
-                      <td>{ite.amount}</td>
-                    </tr>
-                    // <tr className="space"></tr>
-                  ))}
+                  {filteredItems
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{ite.name}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>{ite.category}</td>
+                        <th className="mobile-header">Value</th>
+                        <td>{ite.amount}</td>
+                      </tr>
+                      // <tr className="space"></tr>
+                    ))}
                 </tbody>
               </table>
+              {!hideTable && (
+                <div className="pagination-line">
+                  <p>
+                    Showing{" "}
+                    {
+                      filteredItems.slice(
+                        currentPage * pageSize,
+                        (currentPage + 1) * pageSize
+                      ).length
+                    }{" "}
+                    of {pagesCount} of entries
+                  </p>
+                  <Pagination aria-label="Page navigation example">
+                    <PaginationItem
+                      disabled={currentPage <= 0}
+                      className="prev"
+                      onClick={(e) => handleNavigation(e, currentPage - 1)}
+                    >
+                      <PaginationLink previous href={() => false} />
+                    </PaginationItem>
+
+                    {[...Array(pagesCount)].map((page, i) => (
+                      <PaginationItem
+                        active={i === currentPage}
+                        key={i}
+                        onClick={(e) => handleNavigation(e, i)}
+                      >
+                        <PaginationLink href={() => false}>
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem
+                      disabled={currentPage >= pagesCount - 1}
+                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                    >
+                      <PaginationLink
+                        next
+                        href={() => false}
+                        className="next"
+                      />
+                    </PaginationItem>
+                  </Pagination>
+                </div>
+              )}
             </div>
           )}
         </SelectSch>
@@ -181,20 +263,60 @@ const DashboardContent = ({ history }) => {
             </thead>
             <tbody className="t-body">
               {userVerifications.length > 0
-                ? userVerifications.map((verification) => (
-                    <>
-                      <tr>
-                        <td>{verification.date}</td>
-                        <td>{`${verification.firstName}  ${verification.lastName}`}</td>
-                        <td>{verification.institution}</td>
-                        <td>Completed</td>
-                      </tr>
-                      <tr className="space"></tr>
-                    </>
-                  ))
+                ? userVerifications
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map((verification) => (
+                      <>
+                        <tr>
+                          <td>{verification.date}</td>
+                          <td>{`${verification.firstName}  ${verification.lastName}`}</td>
+                          <td>{verification.institution}</td>
+                          <td>Completed</td>
+                        </tr>
+                        <tr className="space"></tr>
+                      </>
+                    ))
                 : ""}
             </tbody>
           </table>
+          <div className="pagination-line">
+            <p>
+              Showing{" "}
+              {
+                userVerifications.slice(
+                  currentPage * pageSize,
+                  (currentPage + 1) * pageSize
+                ).length
+              }{" "}
+              of {verificationsCount} of entries
+            </p>
+            <Pagination aria-label="Page navigation example">
+              <PaginationItem
+                disabled={currentPage <= 0}
+                className="prev"
+                onClick={(e) => verificationsNavigation(e, currentPage - 1)}
+              >
+                <PaginationLink previous href={() => false} />
+              </PaginationItem>
+
+              {[...Array(verificationsCount)].map((page, i) => (
+                <PaginationItem
+                  active={i === currentPage}
+                  key={i}
+                  onClick={(e) => verificationsNavigation(e, i)}
+                >
+                  <PaginationLink href={() => false}>{i + 1}</PaginationLink>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem
+                disabled={currentPage >= verificationsCount - 1}
+                onClick={(e) => verificationsNavigation(e, currentPage + 1)}
+              >
+                <PaginationLink next href={() => false} className="next" />
+              </PaginationItem>
+            </Pagination>
+          </div>
         </div>
         {/* </Table> */}
       </RequisitionBody>
