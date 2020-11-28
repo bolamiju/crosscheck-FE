@@ -24,6 +24,7 @@ import insight from "../asset/insight.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
+import imgUrl from "../asset/map.svg";
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
@@ -207,7 +208,10 @@ const LandingPage = () => {
               <br />
               ahead starts <h1 className="here">here</h1>
             </h1>
-            <h2>Your unfair advantage to get ahead starts <h1 className="here">here</h1> </h2>
+            <h2>
+              Your unfair advantage to get ahead starts{" "}
+              <h1 className="here">here</h1>{" "}
+            </h2>
             <p>
               We are Africa’s most comprehensive online, automated verification
               service for academic qualifications.
@@ -292,7 +296,7 @@ const LandingPage = () => {
         <Blocks>
           <div className="blocks">
             <img src={register} alt="regi" />
-            <h4>Regiser</h4>
+            <h4>Register</h4>
             <p>
               Create an Individual or Organization Account & activate via email
               within a few minutes.
@@ -349,7 +353,7 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava2} alt="avatar" />
                 <p>Bertha Johnson</p>
-                <p className="role">CTO Herculanum</p>
+                <p className="role">Herculanum</p>
               </div>
             </div>
             <div className="testimony">
@@ -361,7 +365,7 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava1} alt="avatar" />
                 <p>Bertha Johnson</p>
-                <p className="role">HR Manager/Confetti Group</p>
+                <p className="role">Confetti Group</p>
               </div>
             </div>
             <div className="testimony">
@@ -401,7 +405,7 @@ const LandingPage = () => {
         </Testimonies>
       </a>
       <a id="coverage" href={() => false}>
-        <Cover imgUrl={process.env.PUBLIC_URL + "/map.svg"}>
+        <Cover>
           <h2>We Cover Over</h2>
           <div className="cover">
             <div className="count" data-target="100">
@@ -628,6 +632,7 @@ const Footer = styled.div`
     }
     .email {
       display: flex;
+      font-family: segoeRegular;
       img {
         margin-right: 20px;
       }
@@ -699,6 +704,7 @@ const Footer = styled.div`
         margin-right: 15px;
         color: grey;
         font-size: 12px;
+        font-family: segoeRegular;
         @media (max-width: 400px) {
           margin-bottom: 20px;
         }
@@ -713,21 +719,31 @@ const Footer = styled.div`
 const Cover = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 70px;
-  padding-bottom: 70px;
-  background: url(${(props) => props.imgUrl});
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background: url(${imgUrl});
+  h2 {
+    font-family: segoebold;
+  }
   .cover {
     display: flex;
     justify-content: center;
+    p {
+      font-family: MontserratLight;
+    }
     @media (max-width: 400px) {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-top: 70px;
+      padding-bottom: 70px;
     }
     @media (max-width: 500px) {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-top: 70px;
+      padding-bottom: 70px;
     }
     .counter {
       color: #0092e0;
@@ -737,6 +753,7 @@ const Cover = styled.div`
     }
     .count {
       padding-right: 250px;
+
       @media (max-width: 400px) {
         padding-right: 0px;
         margin-bottom: 50px;
@@ -907,6 +924,8 @@ const Blocks = styled.div`
     align-items: center;
     margin-bottom: 60px;
     padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
     &:hover {
       border: 1px solid #4a86ff;
     }
@@ -940,7 +959,7 @@ const Div = styled.div`
 
   align-items: center;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 70px;
   margin-bottom: 20px;
   h2 {
     font-family: segoebold;
