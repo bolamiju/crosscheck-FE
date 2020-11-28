@@ -2,10 +2,12 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 
 
 const Modal = ({ open, onClose }) => {
-    if (!open) return null;
+    // if (!open) return null;
 
     return (
         <div
@@ -13,10 +15,21 @@ const Modal = ({ open, onClose }) => {
             style={OVERLAY_STYLES}>
             <ModalWrapper>
                 <Formik
-                    initialValues={{ email: "" }}
+                    initialValues={{ name: "", email: "", message: "" }}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log("submitting")
+                        console.log("submitting",values)
                     }}
+
+
+                    validationSchema = {Yup.object().shape({
+                        name: Yup.string()
+                        .required("Required !"),
+                        email: Yup.string()
+                            .email()
+                            .required("Required !"),
+                        message: Yup.string()
+                        .required("Required !")
+                    })}
                 >
                     {
                         props => {
@@ -30,30 +43,39 @@ const Modal = ({ open, onClose }) => {
                                 handleSubmit
                             } = props;
                             return (
-                                <form onSubmit={handleSubmit}>
-                                    <p>leave us a message</p>
-                                    <div>
-                                        <label htmlFor="">name</label>
+                                <form className="form" onSubmit={handleSubmit}>
+                                    <p>Leave us a message</p>
+                                    <div className="field">
+                                        <label htmlFor="name">name</label>
                                         <input
                                             name="name"
                                             type="text"
                                             value={values.name}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
+                                            className={errors.name && touched.name && "error"}
                                         />
+                                        
                                     </div>
-                                    <div>
-                                        <label htmlFor="">email</label>
+                                    {errors.name && touched.name && (
+                                            <div className="input-feedback">{errors.name}</div>
+                                        )}
+                                    <div className="field">
+                                        <label htmlFor="email">email</label>
                                         <input
                                             name="email"
                                             type="email"
                                             value={values.email}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
+                                            className={errors.email && touched.email && "error"}
                                         />
                                     </div>
-                                    <div>
-                                        <label htmlFor="">subect</label>
+                                    {errors.email && touched.email && (
+                                            <div className="input-feedback">{errors.email}</div>
+                                        )}
+                                    <div className="field">
+                                        <label htmlFor="subject">subect</label>
                                         <input
                                             name="subect"
                                             type="text"
@@ -62,16 +84,22 @@ const Modal = ({ open, onClose }) => {
                                             onBlur={handleBlur}
                                         />
                                     </div>
-                                    <div>
-                                        <label htmlFor="">message</label>
-                                        <input
+                                    <div className="field">
+                                        <label htmlFor="message">message</label>
+                                        <textarea
                                             name="message"
                                             type="text"
                                             value={values.message}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                        />
-                                    </div>
+                                            className="message"
+                                            className={errors.message && touched.message && "error"}
+                                            />
+                                        </div>
+                                        {errors.message && touched.message && (
+                                                <div className="input-feedback">{errors.message}</div>
+                                            )}
+                                    <button className="button" type="submit" >send message <FontAwesomeIcon icon={faLongArrowAltRight}/></button>
                                 </form>
                             )
                         }
@@ -97,29 +125,85 @@ position: fixed;
 top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
-background-color: var(--mainYellow);
-padding: 50px;
+background: white;
 z-index: 1000;
-border-radius: 1rem;
-border: var(--mainGreen);
 &:hover {
     border: var(--mainYellow);
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 }
-.close-btn{
-    position: fixed;
-    top: 0;
-    right: 0;
-    background: transparent;
-    font-size: 2rem;
-    color: var(--mainRed);
-    border: none;
-    outline: none;
-}
-.ingredient-list {
-    list-style: none;
+.form {
+    width: 350px;
+    min-height: 460px;
+
+    p {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+    padding: 0.3rem 0 0.5rem 0;
+    font-family: MontserratRegular;
+    font-size: 20px;
+    text-align: center !important;
+    font-weight: normal;
+    background: #0091DF;
+    letter-spacing: 0.6px;
+    color: #FFFFFF;
+    opacity: 1;
+    }
+    .field {
+        display: block;
+       
+        input, label {
+            display: block;
+            margin-left: 1rem;
+        }
+        label {
+          font-family: MontserratRegular;
+          letter-spacing: 0.32px;
+          color: #707070;
+          text-transform: capitalize;
+          opacity: 1;
+          padding-top: 0.5rem;
+        }
+        input {
+            width: 85%;
+            height: 30px;
+            color: #707070;
+            border-radius: 10px;
+            opacity: 0.8;
+            outline: none;
+            border: 0.5px solid #707070;
+            padding-left: 0.5rem;
+           
+        }
+        textarea {
+            width: 80%;
+            height: 70px;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            margin-left: 1rem;
+            outline: none;
+            padding: 1rem;
+        }
+       
+    }
+    .button {
+    font-family: MontserratBold;
     text-transform: capitalize;
-    color: var(--mainWhite);
+    margin-left: 5.5rem;
+    background: #0091DF;
+    letter-spacing: 0.32px;
+    color: #FFFFFF;
+    opacity: 1;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 30px;
+    align-items: center;
+    cursor: pointer;
+    }
+    .input-feedback {
+        color: red;
+        margin-left: 1rem;
+        font-size: 1rem;
+    }
 }
 `
 

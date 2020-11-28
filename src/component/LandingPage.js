@@ -503,13 +503,13 @@ const LandingPage = () => {
               </li>
               <li>
                 <i
-                  class="fa fa-twitter"
+                  className="fa fa-twitter"
                   aria-hidden="true"
                   style={{ fontSize: "16px" }}
                 ></i>
                 &nbsp; &nbsp;
                 <i
-                  class="fa fa-facebook"
+                  className="fa fa-facebook"
                   aria-hidden="true"
                   style={{ fontSize: "16px" }}
                 ></i>
