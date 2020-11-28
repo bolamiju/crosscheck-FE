@@ -7,7 +7,7 @@ import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 
 
 const Modal = ({ open, onClose }) => {
-    // if (!open) return null;
+    if (!open) return null;
 
     return (
         <div
