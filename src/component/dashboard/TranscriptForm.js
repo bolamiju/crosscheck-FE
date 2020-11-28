@@ -3,7 +3,11 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight, faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faLongArrowAltLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -17,7 +21,7 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 
 function TranscriptForm({ initialValues, updateFormValues }) {
-  const [activeTab, setActiveTab] = useState("destination-details");
+  const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -629,9 +633,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                 </>
               </Field>
 
-              <button pay={pay} onClick={submitRequest} className="btn submit">
-                Submit details
-              </button>
+              <div className="btns">
               <button
                 className="btn-prev"
                 type="submmit"
@@ -640,10 +642,16 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   setPay(true);
                 }}
               >
-                
-                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{paddingRight: "5px", fontSize: "20px"}} />
+                <FontAwesomeIcon
+                  icon={faLongArrowAltLeft}
+                  style={{ paddingRight: "5px", fontSize: "20px" }}
+                />
                 Previous
               </button>
+              <button pay={pay} onClick={submitRequest} className="btn submit">
+                Submit details
+              </button>
+              </div>
             </FormDiv>
           )}
         </form>
@@ -681,6 +689,17 @@ const FormContainer = styled.div`
       }
     }
   }
+  .btns {
+    @media (max-width: 400px) {
+      display: flex;
+    justify-content: space-between;
+    }
+    @media (max-width: 500px) {
+      display: flex;
+    justify-content: space-between;
+    }
+   
+  }
   .btn {
     float: right;
     display: flex;
@@ -689,7 +708,7 @@ const FormContainer = styled.div`
 
     /* width: 80px; */
     color: white;
-    margin-right: 20px;
+    margin-right: 30px;
     background: #0092e0 0% 0% no-repeat padding-box !important;
     border-radius: 10px;
     opacity: 1;
@@ -697,29 +716,32 @@ const FormContainer = styled.div`
     outline: none;
     border-color: #0092e0;
     @media (max-width: 400px) {
-      margin-left: 0.3rem;
-      margin-right: 0.5rem;
+     margin-left: 3rem;
+     /* margin-right: -1rem; */
     }
   }
   .btn-prev {
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-left: 1.5rem;
+    display: none;
+    @media (max-width: 500px) {
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-left: 1.5rem;
 
-    /* width: 80px; */
-    color: white;
-    background: #0092e0 0% 0% no-repeat padding-box !important;
-    border-radius: 10px;
-    margin-right: 20px;
-    opacity: 1;
-    height: 30px;
-    outline: none;
-    border: none;
-    @media (max-width: 400px) {
-      margin-left: 0.5rem;
-      margin-right: 0px;
+      /* width: 80px; */
+      color: white;
+      background: #0092e0 0% 0% no-repeat padding-box !important;
+      border-radius: 10px;
+      margin-right: 20px;
+      opacity: 1;
+      height: 30px;
+      outline: none;
+      border: none;
+      @media (max-width: 400px) {
+        margin-left: 0.5rem;
+        margin-right: 0px;
+      }
     }
   }
   .notallowed {
@@ -814,9 +836,9 @@ const FormDiv = styled.div`
     border-color: #0092e0;
   }
   .submit {
-    width: 150px;
+    width: 120px;
     @media (max-width: 500px) {
-      margin-right: 55px !important;
+      
     }
   }
   .notallowed {
@@ -1125,7 +1147,7 @@ const SelectSch = styled.div`
       width: 46%;
       label {
         font-family: MontserratRegular;
-        font-size: 16px;
+        font-size: 14px;
         color: #707070;
       }
       @media (max-width: 500px) {
@@ -1163,7 +1185,7 @@ const SelectSch = styled.div`
     width: 46%;
     label {
       font-family: MontserratRegular;
-      font-size: 16px;
+      font-size: 14px;
       color: #707070;
     }
     @media (max-width: 500px) {

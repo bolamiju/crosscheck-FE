@@ -124,7 +124,7 @@ const NewVerifications = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const componentProps = {
-    email: user.email,
+    email: user?.email || "tolaked@yahoo.com",
     amount: total * 100,
     metadata: {
       name: "Tola",

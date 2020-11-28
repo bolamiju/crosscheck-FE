@@ -8,7 +8,7 @@ import {
   faCaretRight,
   faTrash,
   faLongArrowAltLeft,
-  faLongArrowAltRight
+  faLongArrowAltRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ function VerificationForm({
   deleteOneVerification,
   verificationsLength,
 }) {
-  const [activeTab, setActiveTab] = useState("qualification-details");
+  const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -728,7 +728,7 @@ function VerificationForm({
                 The reference number will be used to track this case in your
                 internal system if you have one
               </p>
-             
+
               <button
                 disabled={
                   formik.values.course.length === 0 ||
@@ -755,7 +755,10 @@ function VerificationForm({
                 }}
               >
                 Next
-                <FontAwesomeIcon icon={faLongArrowAltRight} style={{marginRight: "5px", fontSize: "20px"}} />
+                <FontAwesomeIcon
+                  icon={faLongArrowAltRight}
+                  style={{ marginRight: "5px", fontSize: "20px" }}
+                />
               </button>
               <button
                 className="btn-prev"
@@ -765,8 +768,10 @@ function VerificationForm({
                   setPay(true);
                 }}
               >
-                
-                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{marginRight: "5px", fontSize: "20px"}} />
+                <FontAwesomeIcon
+                  icon={faLongArrowAltLeft}
+                  style={{ marginRight: "5px", fontSize: "20px" }}
+                />
                 Previous
               </button>
             </FormDiv>
@@ -822,8 +827,10 @@ function VerificationForm({
                   setPay(true);
                 }}
               >
-                
-                <FontAwesomeIcon icon={faLongArrowAltLeft} style={{marginRight: "5px", fontSize: "20px"}} />
+                <FontAwesomeIcon
+                  icon={faLongArrowAltLeft}
+                  style={{ marginRight: "5px", fontSize: "20px" }}
+                />
                 Previous
               </button>
             </FormDiv>
@@ -916,7 +923,7 @@ const FormContainer = styled.div`
       flex-direction: column;
     }
   }
-  
+
   .btn {
     float: right;
     display: flex;
@@ -934,21 +941,24 @@ const FormContainer = styled.div`
     border-color: #0092e0;
   }
   .btn-prev {
-    float: left;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-left: 1.5rem;
+    display: none;
+    @media (max-width: 500px) {
+      float: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-left: 1.5rem;
 
-    /* width: 80px; */
-    color: white;
-    background: #0092e0 0% 0% no-repeat padding-box !important;
-    border-radius: 10px;
-    margin-right: 20px;
-    opacity: 1;
-    height: 30px;
-    outline: none;
-    border: none;
+      /* width: 80px; */
+      color: white;
+      background: #0092e0 0% 0% no-repeat padding-box !important;
+      border-radius: 10px;
+      margin-right: 20px;
+      opacity: 1;
+      height: 30px;
+      outline: none;
+      border: none;
+    }
   }
   .notallowed {
     cursor: not-allowed;
@@ -1054,10 +1064,7 @@ const FormDiv = styled.div`
     border-color: #0092e0;
   }
   .submit {
-    width: 150px;
-    @media (max-width: 500px) {
-      margin-right: 55px !important;
-    }
+    width: 120px;
   }
   .notallowed {
     /* cursor: not-allowed; */
@@ -1348,7 +1355,7 @@ const SelectSch = styled.div`
       width: 46%;
       label {
         font-family: MontserratRegular;
-        font-size: 16px;
+        font-size: 14px;
         color: #707070;
       }
       @media (max-width: 500px) {
@@ -1386,7 +1393,7 @@ const SelectSch = styled.div`
     width: 46%;
     label {
       font-family: MontserratRegular;
-      font-size: 16px;
+      font-size: 14px;
       color: #707070;
     }
     @media (max-width: 500px) {
