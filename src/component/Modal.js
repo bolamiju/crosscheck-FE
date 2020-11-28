@@ -31,6 +31,7 @@ const Modal = ({ open, onClose }) => {
                             } = props;
                             return (
                                 <form onSubmit={handleSubmit}>
+                                    <p>leave us a message</p>
                                     <div>
                                         <label htmlFor="">name</label>
                                         <input
@@ -45,8 +46,28 @@ const Modal = ({ open, onClose }) => {
                                         <label htmlFor="">email</label>
                                         <input
                                             name="email"
-                                            type="text"
+                                            type="email"
                                             value={values.email}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="">subect</label>
+                                        <input
+                                            name="subect"
+                                            type="text"
+                                            value={values.subject}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="">message</label>
+                                        <input
+                                            name="message"
+                                            type="text"
+                                            value={values.message}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                         />
