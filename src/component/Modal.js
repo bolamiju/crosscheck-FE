@@ -8,7 +8,6 @@ import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 
 const Modal = ({ open, onClose }) => {
     if (!open) return null;
-
     return (
         <div
             onClick={onClose}
@@ -19,8 +18,6 @@ const Modal = ({ open, onClose }) => {
                     onSubmit={(values, { setSubmitting }) => {
                         console.log("submitting",values)
                     }}
-
-
                     validationSchema = {Yup.object().shape({
                         name: Yup.string()
                         .required("Required !"),

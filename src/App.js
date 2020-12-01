@@ -10,8 +10,10 @@ import MainContent from "./component/dashboard/MainContent";
 import AdminContent from "./component/admin/AdminContent";
 import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
+import Receipts from './component/dashboard/Receipts';
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
       <Route exact path="/transcript" component={MainContent} />
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
+      <Route exact path = "/receipts" component={Receipts} />
     </Provider>
   );
 }

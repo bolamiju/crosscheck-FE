@@ -148,10 +148,9 @@ const Div = styled.div`
       letter-spacing: 0.32px;
       color: #707070;
       font-family: MontserratRegular;
-      text-transform: uppercase;
       opacity: 1;
       font-weight: lighter;
-      font-size: 12px;
+      font-size: 10px;
       @media (max-width: 500px) {
         width: 100%;
         font-size: 14px;
@@ -194,12 +193,12 @@ const Div = styled.div`
       padding-left: 20px;
       @media (max-width: 400px) {
         font-size: 16px;
-        height: 50px;
+        height: 34px;
         width: 80%;
       }
       @media (max-width: 500px) {
         font-size: 16px;
-        height: 50px;
+        height: 35px;
         width: 80%;
       }
     }
@@ -228,14 +227,14 @@ const Div = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
     @media (max-width: 400px) {
-      height: 60px;
-      font-size: 18px;
-      width: 250px;
+      height: 40px;
+      font-size: 12px;
+      width: 200px;
     }
     @media (max-width: 500px) {
-      height: 60px;
-      font-size: 18px;
-      width: 250px;
+      height: 40px;
+      font-size: 12px;
+      width: 200px;
     }
   }
 `;
