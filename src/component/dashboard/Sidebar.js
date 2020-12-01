@@ -71,7 +71,7 @@ function Sidebar({ history }) {
             {" "}
             <img src={contact} alt="account" /> <li>My Account</li>
           </Link>
-          <Link className="link">
+          <Link to="/receipts" className="link">
             {" "}
             <img src={receipt} alt="receipt" />
             <li>Receipts</li>
