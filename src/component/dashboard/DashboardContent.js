@@ -13,17 +13,31 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 import {
   getUserVerification,
   selectSchool,
+  getUserTranscript
 } from "../../state/actions/verifications";
+
+import Modal from '../FormModal';
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const { userVerifications } = useSelector((state) => state.verifications);
+  const { userVerifications, newTranscript } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
+  const [ open, setOpen ] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    dispatch(getUserTranscript(user.email))
+  }, [dispatch])
+
+  const allHistory = userVerifications.concat(newTranscript)
+  useEffect(() => {
+    dispatch(getUserVerification(user.email));
+  }, [dispatch]);
+
 
   useEffect(() => {
     dispatch(getAllInstitutions());
@@ -41,7 +55,7 @@ const DashboardContent = ({ history }) => {
   const pageSize = 10;
   const pagesCount = Math.ceil(filteredItems.length / pageSize);
 
-  const verificationsCount = Math.ceil(userVerifications.length / pageSize);
+  const verificationsCount = Math.ceil(allHistory.length / pageSize);
 
   const handleNavigation = (e, index) => {
     e.preventDefault();
@@ -66,6 +80,14 @@ const DashboardContent = ({ history }) => {
     setHideTable(true);
     setInput(institute.name);
     history.push("/new");
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -118,7 +140,7 @@ const DashboardContent = ({ history }) => {
           <Card className="transcript-card">
             <div className="total-verification">Total Verification Orders</div>
             <div className="num">
-              <p>{userVerifications.length}</p>
+              <p>{allHistory.length}</p>
               <img src={wavy} alt="wave" />
             </div>
           </Card>
@@ -250,7 +272,7 @@ const DashboardContent = ({ history }) => {
             Verification history
           </p>
           <p className="showing">
-            Showing ({userVerifications.length}) entries
+            Showing ({allHistory.length}) entries
           </p>
           <table>
             <thead>
@@ -262,28 +284,32 @@ const DashboardContent = ({ history }) => {
               </tr>
             </thead>
             <tbody className="t-body">
-              {userVerifications.length > 0
-                ? userVerifications
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map((verification) => (
-                      <>
-                        <tr>
-                          <td>{verification.date}</td>
-                          <td>{`${verification.firstName}  ${verification.lastName}`}</td>
-                          <td>{verification.institution}</td>
-                          <td>Completed</td>
-                        </tr>
-                        <tr className="space"></tr>
-                      </>
-                    ))
+              {allHistory.length > 0
+                ? allHistory
+                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                  .map((verification) => (
+                    <>
+                      <tr  onClick={handleOpen}>
+                        <td>{verification.date}</td>
+                        <td>{`${verification.firstName}  ${verification.lastName}`}</td>
+                        <td>{verification.institution}</td>
+                        <td>{verification.status}</td>
+                      </tr>
+                      <tr className="space"></tr>
+                    </>
+                  ))
                 : ""}
             </tbody>
+            <Modal
+                  open={open}
+                  onClose={handleClose}
+              />
           </table>
           <div className="pagination-line">
             <p>
               Showing{" "}
               {
-                userVerifications.slice(
+                allHistory.slice(
                   currentPage * pageSize,
                   (currentPage + 1) * pageSize
                 ).length

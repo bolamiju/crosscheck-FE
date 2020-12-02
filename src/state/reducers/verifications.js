@@ -6,6 +6,7 @@ const initialState = {
   selectedInstitution: {},
   userVerifications: [],
   transcript: [],
+  newTranscript: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -35,7 +36,7 @@ export default function userReducer(state = initialState, action) {
       let newArr = [];
       state.verifications.filter((verification) => {
         for (var pair of verification.entries()) {
-          if (pair[0] === "institution" && pair[1] !== action.payload) {
+          if (pair[0] === "id" && pair[1] !== action.payload) {
             newArr.push(verification);
           }
         }
@@ -43,7 +44,11 @@ export default function userReducer(state = initialState, action) {
       return {
         verifications: newArr,
       };
-
+    case types.GET_TRANSCRIPT: 
+      return {
+        ...state,
+        newTranscript: [...action.payload],
+      }
     default:
       return state;
   }

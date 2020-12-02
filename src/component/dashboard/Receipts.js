@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Layout from './DashboardLayout';
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
-// import { PDFViewer } from '@react-pdf/renderer';
 import Receipt from './Receipt';
 
 // import Institution from "../../asset/institution.svg";
@@ -27,14 +26,16 @@ const Receipts = ({ history }) => {
         } else {
           setCurrentPage(index);
         }
-    };
+  };
     
     return (
         <Layout history={history}>
         <RequisitionBody>
        
           <div className="new-table">
-            {show === "open" && ( <Receipt />)}
+            {show === "open" && (
+              <Receipt style={{ padding: "3rem", textAlign: "center"}} />
+            )}
             {/* <Table> */}
         <div  id="tableScroll">
           <table>

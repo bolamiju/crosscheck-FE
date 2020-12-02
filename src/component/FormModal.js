@@ -4,28 +4,30 @@ import * as Yup from 'yup';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
+import Modal from '@material-ui/core/Modal';
 
 
-const Modal = ({ open, onClose }) => {
+const FormModal = ({ open, onClose }) => {
     if (!open) return null;
     return (
-        <div
-            onClick={onClose}
+        <Modal
+            open={open}
+            onClose={onClose}
             style={OVERLAY_STYLES}>
             <ModalWrapper>
                 <Formik
                     initialValues={{ name: "", email: "", message: "" }}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log("submitting",values)
+                        console.log("submitting", values)
                     }}
-                    validationSchema = {Yup.object().shape({
+                    validationSchema={Yup.object().shape({
                         name: Yup.string()
-                        .required("Required !"),
+                            .required("Required !"),
                         email: Yup.string()
                             .email()
                             .required("Required !"),
                         message: Yup.string()
-                        .required("Required !")
+                            .required("Required !")
                     })}
                 >
                     {
@@ -52,11 +54,11 @@ const Modal = ({ open, onClose }) => {
                                             onBlur={handleBlur}
                                             className={errors.name && touched.name && "error"}
                                         />
-                                        
+
                                     </div>
                                     {errors.name && touched.name && (
-                                            <div className="input-feedback">{errors.name}</div>
-                                        )}
+                                        <div className="input-feedback">{errors.name}</div>
+                                    )}
                                     <div className="field">
                                         <label htmlFor="email">email</label>
                                         <input
@@ -69,8 +71,8 @@ const Modal = ({ open, onClose }) => {
                                         />
                                     </div>
                                     {errors.email && touched.email && (
-                                            <div className="input-feedback">{errors.email}</div>
-                                        )}
+                                        <div className="input-feedback">{errors.email}</div>
+                                    )}
                                     <div className="field">
                                         <label htmlFor="subject">subect</label>
                                         <input
@@ -91,19 +93,19 @@ const Modal = ({ open, onClose }) => {
                                             onBlur={handleBlur}
                                             className="message"
                                             className={errors.message && touched.message && "error"}
-                                            />
-                                        </div>
-                                        {errors.message && touched.message && (
-                                                <div className="input-feedback">{errors.message}</div>
-                                            )}
-                                    <button className="button" type="submit" >send message <FontAwesomeIcon icon={faLongArrowAltRight}/></button>
+                                        />
+                                    </div>
+                                    {errors.message && touched.message && (
+                                        <div className="input-feedback">{errors.message}</div>
+                                    )}
+                                    <button className="button" type="submit" >send message <FontAwesomeIcon icon={faLongArrowAltRight} /></button>
                                 </form>
                             )
                         }
-                }
+                    }
                 </Formik>
             </ModalWrapper>
-        </div>
+        </Modal>
     )
 };
 
@@ -119,7 +121,7 @@ const OVERLAY_STYLES = {
 
 const ModalWrapper = styled.div`
 position: fixed;
-top: 50%;
+top: 55%;
 left: 50%;
 transform: translate(-50%,-50%);
 background: white;
@@ -195,6 +197,7 @@ z-index: 1000;
     border-radius: 30px;
     align-items: center;
     cursor: pointer;
+    outline: none;
     }
     .input-feedback {
         color: red;
@@ -206,4 +209,4 @@ z-index: 1000;
 
 
 
-export default Modal;
+export default FormModal;

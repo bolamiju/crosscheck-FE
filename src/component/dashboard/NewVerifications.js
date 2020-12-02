@@ -35,7 +35,6 @@ const NewVerifications = () => {
   const { verifications, selectedInstitution } = useSelector(
     (state) => state.verifications
   );
-
   const formData = {
     firstName: "",
     institution: selectedInstitution.name || "",
@@ -52,7 +51,7 @@ const NewVerifications = () => {
   };
   let [isBlocking, setIsBlocking] = useState(true);
   const [formValues, setFormValues] = useState([
-    { ...formData, _id: Date.now() },
+    { ...formData, id: Date.now() },
   ]);
 
   const [requestList, setRequestList] = useState(false);
@@ -85,7 +84,7 @@ const NewVerifications = () => {
   const addNewForm = () => {
     setFormValues((values) => [
       ...values,
-      { ...formData, _id: Date.now(), institution: "" },
+      { ...formData, id: Date.now(), institution: "" },
     ]);
   };
 
@@ -97,7 +96,7 @@ const NewVerifications = () => {
   // console.log("updated", formValues);
 
   const deleteOneVerification = (id) => () => {
-    setFormValues((formValues) => formValues.filter((v) => v._id !== id));
+    setFormValues((formValues) => formValues.filter((v) => v.id !== id));
     console.log("after delete", formValues);
   };
   console.log(formValues);
@@ -196,7 +195,7 @@ const NewVerifications = () => {
                 verificationsLength={verificationsLength}
                 initialValues={values}
                 updateFormValues={updateFormValues(id)}
-                deleteOneVerification={deleteOneVerification(values._id)}
+                deleteOneVerification={deleteOneVerification(values.id)}
               />
             </div>
           ))}
