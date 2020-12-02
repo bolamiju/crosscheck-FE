@@ -34,6 +34,12 @@ export const selectSchool = (payload) => {
     payload,
   };
 };
+export const getOneUserTranscript = (payload) => {
+  return {
+    type: types.GET_TRANSCRIPT,
+    payload,
+  };
+};
 
 export const requestVerification = (val) => {
   console.log(val);
@@ -42,7 +48,7 @@ export const requestVerification = (val) => {
 
 export const getUserVerification = (email) => async (dispatch) => {
   await axios
-    .get(`https://croscheck.herokuapp.com/api/v1/verifications/${email}`)
+    .get(`https://croscheck.herokuapp.com/api/v1/verifications/byemail/${email}`)
     .then(({ data }) => {
       console.log("verifications data", data);
       dispatch(getOneUserVerifications(data.verifications));
@@ -51,3 +57,15 @@ export const getUserVerification = (email) => async (dispatch) => {
       console.log("error", err);
     });
 };
+export const getUserTranscript = (email) => async (dispatch) => {
+  await axios
+    .get(`https://croscheck.herokuapp.com/api/v1/transcript/byemail/${email}`)
+    .then(({ data }) => {
+      console.log("transcript data", data);
+      dispatch(getOneUserTranscript(data.transcripts));
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
+
