@@ -12,7 +12,7 @@ const Receipt = () => {
             <div className="first-section">
                 <div className="img-text">
                     <img src={Logo} alt="" /> 
-                    <h6>Trapezoid Limited</h6>
+                    <h6>Crosscheck Limited</h6>
                     <p>Company No 23957483 <br/>VAT ID 9476392867 <br/>8 Ikeja <br/>Lagos Nigeria <br/>Nigeria</p>
                 </div>
                 <h1>Receipt</h1>
@@ -20,7 +20,7 @@ const Receipt = () => {
             <div className="second-section">
                 <div className="customer">
                 <p>Customer</p>
-                <p>Trapezoid Limited</p>
+                <p>Crosscheck Limited</p>
                 <p>Nigeria</p>
                 </div>
                 <div className="invoice">
@@ -86,6 +86,7 @@ padding: 1.5rem 12rem 1.5rem 1.5rem;
 }
 .date {
     margin-right: 3rem;
+    text-align: right;
     p {
         margin-bottom: -0.5rem;
         font-size: 0.8rem;

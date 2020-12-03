@@ -16,7 +16,7 @@ function AccountVerification({ match, location }) {
         console.log(data);
       });
   }, [email]);
-
+ 
   return (
     <Div>
       <Container>
