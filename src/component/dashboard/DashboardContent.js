@@ -430,7 +430,7 @@ const SelectSch = styled.div`
         color: #707070;
       }
       @media (max-width: 500px) {
-        width: 80%;
+        width: 87%;
         margin-bottom: 15px;
         margin-top: 15px;
       }
