@@ -15,10 +15,8 @@ import {
   selectSchool,
   getUserTranscript
 } from "../../state/actions/verifications";
-import { DatePicker, Space } from "antd";
 import Modal from '../FormModal';
 
-const { RangePicker } = DatePicker
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -91,21 +89,10 @@ const DashboardContent = ({ history }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDateRange = (value, dateString) => {
-    console.log("date range", dateString);
-  }
 
   return (
     <DashboardLayout history={history}>
       <RequisitionBody>
-        <Space direction="version">
-          <RangePicker
-            allowClear={false}
-            onChange={handleDateRange}
-            style={{ width: 350 }}
-          />
-        </Space>
-
         <h2
           style={{
             color: "#0092E0",

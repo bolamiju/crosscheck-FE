@@ -19,7 +19,7 @@ function App() {
     <Provider store={store}>
       <Route exact path="/register" component={Register} />
       <Route exact path="/" component={Login} />
-      <Route exact path="/dashboard:id" component={MainContent} />
+      <Route exact path="/dashboard/:id" component={MainContent} />
       <Route exact path="/verify/:email" component={AccountVerification} />
       <Route exact path="/forgotpassword" component={ForgotPassword} />
       <Route exact path="/reset/:token" component={ResetPassword} />
@@ -27,7 +27,7 @@ function App() {
       <Route exact path="/transcript" component={MainContent} />
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
-      <Route exact path = "/receipts" component={Receipts} />
+      <Route exact path="/receipts" component={Receipts} />
     </Provider>
   );
 }

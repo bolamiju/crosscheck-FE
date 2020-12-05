@@ -55,7 +55,7 @@ const Login = (props) => {
           formik.resetForm();
 
           // window.location.href = `/dashboard/${res.data.user.id}`;
-          props.history.push("/dashboard");
+          props.history.push(`/dashboard/${res.data.user.id}`);
         }
         dispatch(setLoading(false));
       } catch (err) {
