@@ -13,7 +13,6 @@ import Receipts from './component/dashboard/Receipts';
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

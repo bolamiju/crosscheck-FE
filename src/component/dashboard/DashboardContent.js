@@ -15,8 +15,10 @@ import {
   selectSchool,
   getUserTranscript
 } from "../../state/actions/verifications";
-
+import { DatePicker, Space } from "antd";
 import Modal from '../FormModal';
+
+const { RangePicker } = DatePicker
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -26,7 +28,7 @@ const DashboardContent = ({ history }) => {
   const { userVerifications, newTranscript } = useSelector((state) => state.verifications);
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
-  const [ open, setOpen ] = useState(false);
+  const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -89,10 +91,21 @@ const DashboardContent = ({ history }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleDateRange = (value, dateString) => {
+    console.log("date range", dateString);
+  }
 
   return (
     <DashboardLayout history={history}>
       <RequisitionBody>
+        <Space direction="version">
+          <RangePicker
+            allowClear={false}
+            onChange={handleDateRange}
+            style={{ width: 350 }}
+          />
+        </Space>
+
         <h2
           style={{
             color: "#0092E0",
@@ -289,7 +302,7 @@ const DashboardContent = ({ history }) => {
                   .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                   .map((verification) => (
                     <>
-                      <tr  onClick={handleOpen}>
+                      <tr onClick={handleOpen}>
                         <td>{verification.date}</td>
                         <td>{`${verification.firstName}  ${verification.lastName}`}</td>
                         <td>{verification.institution}</td>
@@ -301,9 +314,9 @@ const DashboardContent = ({ history }) => {
                 : ""}
             </tbody>
             <Modal
-                  open={open}
-                  onClose={handleClose}
-              />
+              open={open}
+              onClose={handleClose}
+            />
           </table>
           <div className="pagination-line">
             <p>
