@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as types from "../actionTypes/verifications";
+import { BASE_URL } from "../constant/constants";
 
 export const addVerificationList = (payload) => {
   return {
@@ -37,12 +38,12 @@ export const selectSchool = (payload) => {
 
 export const requestVerification = (val) => {
   console.log(val);
-  return axios.post(`http://localhost:5000/api/v1/verifications/request`, val);
+  return axios.post(`${BASE_URL}/api/v1/verifications/request`, val);
 };
 
 export const getUserVerification = (email) => async (dispatch) => {
   await axios
-    .get(`https://croscheck.herokuapp.com/api/v1/verifications/${email}`)
+    .get(`${BASE_URL}/api/v1/verifications/${email}`)
     .then(({ data }) => {
       console.log("verifications data", data);
       dispatch(getOneUserVerifications(data.verifications));
