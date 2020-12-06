@@ -1064,10 +1064,7 @@ const FormDiv = styled.div`
     border-color: #0092e0;
   }
   .submit {
-    width: 150px;
-    @media (max-width: 500px) {
-      margin-right: 55px !important;
-    }
+    width: 120px;
   }
   .notallowed {
     /* cursor: not-allowed; */

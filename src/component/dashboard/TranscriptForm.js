@@ -644,9 +644,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                 </>
               </Field>
 
-              <button pay={pay} onClick={submitRequest} className="btn submit">
-                Submit details
-              </button>
+              <div className="btns">
               <button
                 className="btn-prev"
                 type="submmit"
@@ -661,6 +659,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                 />
                 Previous
               </button>
+              <button pay={pay} onClick={submitRequest} className="btn submit">
+                Submit details
+              </button>
+              </div>
             </FormDiv>
           )}
         </form>
@@ -698,6 +700,17 @@ const FormContainer = styled.div`
       }
     }
   }
+  .btns {
+    @media (max-width: 400px) {
+      display: flex;
+    justify-content: space-between;
+    }
+    @media (max-width: 500px) {
+      display: flex;
+    justify-content: space-between;
+    }
+   
+  }
   .btn {
     float: right;
     display: flex;
@@ -706,7 +719,7 @@ const FormContainer = styled.div`
 
     /* width: 80px; */
     color: white;
-    margin-right: 20px;
+    margin-right: 30px;
     background: #0092e0 0% 0% no-repeat padding-box !important;
     border-radius: 10px;
     opacity: 1;
@@ -714,8 +727,8 @@ const FormContainer = styled.div`
     outline: none;
     border-color: #0092e0;
     @media (max-width: 400px) {
-      margin-left: 0.3rem;
-      margin-right: 0.5rem;
+     margin-left: 3rem;
+     /* margin-right: -1rem; */
     }
   }
   .btn-prev {
@@ -834,9 +847,9 @@ const FormDiv = styled.div`
     border-color: #0092e0;
   }
   .submit {
-    width: 150px;
+    width: 120px;
     @media (max-width: 500px) {
-      margin-right: 55px !important;
+      
     }
   }
   .notallowed {

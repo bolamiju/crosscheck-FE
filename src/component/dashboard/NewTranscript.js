@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,6 +28,8 @@ const request = (data) => {
 
 const NewTranscript = () => {
   const dispatch = useDispatch();
+  
+
   const { transcript } = useSelector((state) => state.verifications);
 
   const formData = {
@@ -45,7 +47,7 @@ const NewTranscript = () => {
   };
 
   const [formValues, setFormValues] = useState([
-    { ...formData, _id: Date.now() },
+    { ...formData, id: Date.now() },
   ]);
 
   const [requestList, setRequestList] = useState(false);
@@ -102,7 +104,7 @@ const NewTranscript = () => {
       setFormValues([formData]);
       toast.success("request submitted");
     },
-    onClose: () => {},
+    onClose: () => { },
   };
 
   return (
@@ -178,8 +180,8 @@ const NewTranscript = () => {
             <SelectSch>
               <div className="new-table">
                 <table
-                  cellSpacing="0"
-                  cellPadding="0"
+                  ellSpacing="0"
+                  cellPadding="0" c
                   border="0"
                   className="ideTable"
                 >

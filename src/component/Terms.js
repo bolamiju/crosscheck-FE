@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import Menu from "../asset/Menu.svg";
 import whitelogo from "../asset/whitelogo.png";
 import Logo from "../asset/CrossCheckLogo.png";
 import Mail from "../asset/mail.svg";
@@ -25,13 +26,14 @@ const Terms = () => {
   window.addEventListener("scroll", changeBackground);
   return (
     <div>
-      <FirstSection>
+     <FirstSection>
         <NavBar
           style={{
             position: `${navbar ? "fixed" : ""}`,
-            width: "100%",
+            width: `${navbar ? "100%" : ""}`,
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
+            zIndex: "10",
           }}
         >
           <div>
@@ -43,22 +45,40 @@ const Terms = () => {
           </div>
           <div className="navs">
             <ul>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                <Link className="home" to="/home">
-                  Home
-                </Link>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#coverage"
+                >
+                  {" "}
+                  Coverage
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                Coverage
+              <li style={{ color: `${navbar ? "#0092E0 !" : "white"}` }}>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#about"
+                >
+                  {" "}
+                  About Us
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                About Us
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#work"
+                >
+                  How it works
+                </a>
               </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                How it works
-              </li>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>
-                Contact
+              <li>
+                <a
+                  style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                  href="#contact"
+                >
+                  Contact{" "}
+                </a>
               </li>
             </ul>
           </div>
@@ -70,22 +90,38 @@ const Terms = () => {
               onClick={handleMenuIcon}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="menu-icon"
-              onClick={handleMenuIcon}
-            />
+            ""
           )}
         </NavBar>
-        {/* <div className={show ? "hide-show" : "hide"}>
+        <div className={show ? "hide-show" : "hide"}>
+          <img src={Menu} alt="close" onClick={handleMenuIcon} />
           <ul>
-            <li>Home</li>
-            <li>Coverage</li>
-            <li>About Us</li>
-            <li>How it works</li>
-            <li>Contact</li>
+            <li onClick={handleMenuIcon}>Home</li>
+            <li onClick={handleMenuIcon}>
+              <a href="#coverage">Coverage</a>{" "}
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#about">About Us</a>
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#testimony">Testimonials</a>
+            </li>
+            <li onClick={handleMenuIcon}>
+              <a href="#contact">Contact us</a>
+            </li>
+            <li className="divider"></li>
+            <li>
+              <Link className="auth" to="/">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link className="auth" to="/register">
+                Sign up
+              </Link>
+            </li>
           </ul>
-        </div> */}
+        </div>
         {/* <h1>Terms Of Service</h1> */}
         <Main>
           <h1>Terms of Service</h1>
@@ -304,7 +340,7 @@ export default Terms;
 
 const FirstSection = styled.div`
   @media (max-width: 400px) {
-    min-width: 60%;
+    min-width: 60%;  
   }
   width: 100%;
   background: #0092e0;
@@ -319,20 +355,46 @@ const FirstSection = styled.div`
     /* padding-bottom:20px */
   }
   .hide-show {
-    display: none;
-    @media (max-width: 400px) {
+    @media (min-width: 500px) {
+      display: none;
+    }
+    position: fixed;
+    z-index: 50;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+
+    background: #0092e0 0% 0% no-repeat padding-box;
+    opacity: 0.95;
+    img {
+      float: right;
+      padding-top: 30px;
+      padding-right: 10px;
+    }
+    ul {
       display: flex;
-      width: 80%;
-      ul {
-        width: 100%;
-        list-style-type: none;
-        li {
-          width: 100%;
-          color: #eceff3;
-          padding-bottom: 15px;
-          margin-bottom: 15px;
-          border-bottom: 1px solid #333;
+      flex-direction: column;
+      list-style-type: none;
+      margin-top: 70px;
+      .divider {
+        width: 270px;
+        border: 1px solid white;
+      }
+      li {
+        letter-spacing: 1.6px;
+        color: #ffffff;
+        text-transform: uppercase;
+        opacity: 1;
+        margin-bottom: 40px;
+        a {
+          text-decoration: none;
+          color: white;
         }
+      }
+      .auth {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
       }
     }
   }
@@ -340,6 +402,7 @@ const FirstSection = styled.div`
     display: none;
   }
 `;
+
 
 const NavBar = styled.nav`
   @media (max-width: 500px) {
@@ -358,30 +421,44 @@ const NavBar = styled.nav`
       color: white;
       font-size: 28px;
     }
+    @media (max-width: 500px) {
+      display: block;
+      padding-right: 3px;
+      color: white;
+      font-size: 28px;
+    }
   }
   img {
     height: 30px;
     padding-left: 90px;
     @media (max-width: 400px) {
       /* float: left; */
+      padding-left: 10px;
+      width: 100px;
+      height: 25px;
+    }
+    @media (max-width: 500px) {
+      /* float: left; */
+      padding-left: 10px;
       width: 100px;
       height: 25px;
     }
   }
 
+
   .navs {
+    font-family: segoeRegular;
     @media only screen and (max-width: 400px) {
       display: none;
     }
-    .home {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
+    @media only screen and (max-width: 500px) {
+      display: none;
     }
+
     ul {
       display: flex;
-      padding-left: 300px;
-
+      padding-left: 350px;
+      /* padding-top: 15px; */
       list-style-type: none;
       button {
         margin-top: -5px;
@@ -393,19 +470,41 @@ const NavBar = styled.nav`
         border: 1px solid #ff0000;
         padding: 10px 20px 7px 20px;
       }
+      .link-to {
+        color: white;
+        text-decoration: none;
+        font-family: segoeRegular;
+      }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
+        font-family: segoeRegular;
+        font-size: 16px;
+        a {
+          text-decoration: none;
+          color: white;
+          font-family: segoeRegular;
+          &:hover {
+            color: #66c8ed !important;
+          }
+        }
+        &:hover {
+          color: #66c8ed !important;
+        }
       }
     }
   }
 `;
-
 const Paragraph = styled.div`
+  font-family: segoeRegular;
+  text-align: left;
+  letter-spacing: 0.32px;
+  color: #707070;
+  font-size: 14px;
+  opacity: 1;
   width: 90%;
   margin: 0 auto;
-  color: #676f79;
   padding-bottom: 20px;
   h4 {
     color: black;
@@ -422,15 +521,26 @@ const Footer = styled.div`
     display: flex;
     flex-direction: column;
     background: #001538 0% 0% no-repeat padding-box;
+    height: 100vh;
   }
   width: 100%;
   /* height: 350px; */
   background: #173049 0% 0% no-repeat padding-box;
+  .line {
+    width: 90%;
+    margin: 0 auto;
+    border-bottom: 1px solid grey;
+  }
   .bottom-content {
     display: flex;
     justify-content: space-between;
-    padding-left: 30px;
-    padding-right: 30px;
+    margin-left: 70px;
+    margin-right: 70px;
+    .termsof {
+      text-decoration: none;
+      color: grey;
+      cursor: pointer;
+    }
     @media (max-width: 400px) {
       display: flex;
       flex-direction: column-reverse;
@@ -452,20 +562,22 @@ const Footer = styled.div`
     }
   }
   .contact {
-    width: 95%;
+    width: 55%;
     display: flex;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     justify-content: space-around;
     padding-top: 40px;
     padding-bottom: 30px;
-    border-bottom: 1px solid grey;
-    @media (max-width: 400px) {
+    margin-left: 550px;
+    @media (max-width: 500px) {
       display: block;
       flex-direction: column;
       padding-top: 0px;
+      margin-left: 0;
     }
     .email {
       display: flex;
+      font-family: segoeRegular;
       img {
         margin-right: 20px;
       }
@@ -478,6 +590,9 @@ const Footer = styled.div`
         @media (max-width: 400px) {
           font-size: 16px;
         }
+        @media (max-width: 500px) {
+          font-size: 16px;
+        }
       }
     }
   }
@@ -487,7 +602,15 @@ const Footer = styled.div`
     display: flex;
     flex-direction: space-between;
     padding-left: 60px;
+
     @media (max-width: 400px) {
+      padding-left: 15px;
+      display: flex;
+      /* align-items: flex-start; */
+
+      flex-direction: column;
+    }
+    @media (max-width: 500px) {
       padding-left: 15px;
       display: flex;
       /* align-items: flex-start; */
@@ -500,11 +623,23 @@ const Footer = styled.div`
         height: 30px;
       }
     }
+    img {
+      @media (max-width: 500px) {
+        width: 150px;
+        height: 30px;
+      }
+    }
     ul {
-      margin-left: 300px;
+      margin-left: 350px;
       list-style-type: none;
       display: flex;
       @media (max-width: 400px) {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0px;
+        padding: 0 !important;
+      }
+      @media (max-width: 500px) {
         display: flex;
         flex-direction: column;
         margin-left: 0px;
@@ -514,7 +649,11 @@ const Footer = styled.div`
         margin-right: 15px;
         color: grey;
         font-size: 12px;
+        font-family: segoeRegular;
         @media (max-width: 400px) {
+          margin-bottom: 20px;
+        }
+        @media (max-width: 500px) {
           margin-bottom: 20px;
         }
       }
