@@ -10,6 +10,7 @@ import MainContent from "./component/dashboard/MainContent";
 import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
 import Receipts from './component/dashboard/Receipts';
+import EmailActivation from './component/EmailActivation';
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
@@ -28,6 +29,7 @@ function App() {
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
       <Route exact path="/receipts" component={Receipts} />
+      <Route exact path="/active" component={EmailActivation} />
     </Provider>
   );
 }
