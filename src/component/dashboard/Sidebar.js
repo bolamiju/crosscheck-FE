@@ -29,7 +29,7 @@ function Sidebar({ history }) {
       </LogoSection>
       <ListSection>
         <ul>
-          <Link className="link" to="/dashboard">
+          <Link className="link" to="/dashboard/:id">
             {" "}
             <img src={dashboard} alt="dash" />
             <li>Dashboard</li>
