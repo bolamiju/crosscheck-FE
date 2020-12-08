@@ -62,7 +62,7 @@ function Sidebar({ history }) {
               </li>
             </ul>
           </div>
-          <Link to="/dashboard/:id" className="link">
+          <Link to="/verification" className="link">
             {" "}
             <img src={histry} alt="history" />
             <li>Verification History</li>
