@@ -17,7 +17,6 @@ import {
 } from "../../state/actions/verifications";
 import Modal from '../FormModal';
 
-
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
