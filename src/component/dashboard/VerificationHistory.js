@@ -95,14 +95,14 @@ const EmailActivation = ({history}) => {
             Showing ({filteredItems.length}) entries
           </p>
            {searchParameter === "status" && (
-            <div>
+            <div className="search-input">
             <input
                 type="text"
                 value={input}
                 onChange={handleInputChange}
                 placeholder="search"
             />
-            <FontAwesomeIcon className="icon" icon={faSearch} style={{ fontSize: "20px" }} />
+            <FontAwesomeIcon className="icon" icon={faSearch} style={{ fontSize: "15px" }} />
             </div>
                           
            )}
@@ -271,17 +271,30 @@ h6 {
       margin-right: 4rem;
 
       .showing {
-      font-family: MontserratRegular;
-      letter-spacing: 0.44px;
-      color: #707070;
-      opacity: 1;
-      margin-left: 50px;
-    }
-    input {
+        font-family: MontserratRegular;
+        letter-spacing: 0.44px;
+        color: #707070;
+        opacity: 1;
+        margin-left: 50px;
+      }
+      .search-input {
+        position: relative;
+        padding: 0.5rem;
+
+        input {
         height: 1rem;
         padding: 0.2rem;
         outline: none;
       }
+      .icon {
+        position: absolute;
+        top: 30%;
+        right: 10%;
+        opacity: 0.7;
+        color: #2C3E50;
+      }
+      }
+      
     }
 
     

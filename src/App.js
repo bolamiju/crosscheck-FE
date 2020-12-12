@@ -11,7 +11,7 @@ import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
 import Receipts from './component/dashboard/Receipts';
 import VerificationHistory from './component/dashboard/VerificationHistory';
-// import EmailActivation from './component/dashboard/EmailActivation';
+import EmailActivation from './component/dashboard/EmailActivation';
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
@@ -31,7 +31,7 @@ function App() {
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
       <Route exact path="/receipts" component={Receipts} />
-      {/* <Route exact path="/active" component={EmailActivation} /> */}
+      <Route exact path="/active" component={EmailActivation} />
     </Provider>
   );
 }
