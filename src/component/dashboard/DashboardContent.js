@@ -13,30 +13,31 @@ import { getAllInstitutions } from "../../state/actions/institutions";
 import {
   getUserVerification,
   selectSchool,
-  getUserTranscript
+  getUserTranscript,
 } from "../../state/actions/verifications";
-import Modal from '../FormModal';
+import Modal from "../FormModal";
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
-  const { userVerifications, newTranscript } = useSelector((state) => state.verifications);
+  const { userVerifications, newTranscript } = useSelector(
+    (state) => state.verifications
+  );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    dispatch(getUserTranscript(user.email))
-  }, [dispatch])
+    dispatch(getUserTranscript(user.email));
+  }, [dispatch]);
 
-  const allHistory = userVerifications.concat(newTranscript)
+  const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
     dispatch(getUserVerification(user.email));
   }, [dispatch]);
-
 
   useEffect(() => {
     dispatch(getAllInstitutions());
@@ -270,9 +271,7 @@ const DashboardContent = ({ history }) => {
           >
             Verification history
           </p>
-          <p className="showing">
-            Showing ({allHistory.length}) entries
-          </p>
+          <p className="showing">Showing ({allHistory.length}) entries</p>
           <table>
             <thead>
               <tr>
@@ -285,24 +284,34 @@ const DashboardContent = ({ history }) => {
             <tbody className="t-body">
               {allHistory.length > 0
                 ? allHistory
-                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                  .map((verification) => (
-                    <>
-                      <tr onClick={handleOpen}>
-                        <td>{verification.date}</td>
-                        <td>{`${verification.firstName}  ${verification.lastName}`}</td>
-                        <td>{verification.institution}</td>
-                        <td>{verification.status}</td>
-                      </tr>
-                      <tr className="space"></tr>
-                    </>
-                  ))
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map(
+                      ({ date, firstName, lastName, institution, status }) => (
+                        <>
+                          <tr onClick={handleOpen}>
+                            <td>{date}</td>
+                            <td>{`${firstName}  ${lastName}`}</td>
+                            <td>{institution}</td>
+                            <td
+                              style={{
+                                color:
+                                  status === "completed"
+                                    ? "#7DC900"
+                                    : status === "pending"
+                                    ? "red"
+                                    : "orange",
+                              }}
+                            >
+                              {status}
+                            </td>
+                          </tr>
+                          <tr className="space"></tr>
+                        </>
+                      )
+                    )
                 : ""}
             </tbody>
-            <Modal
-              open={open}
-              onClose={handleClose}
-            />
+            <Modal open={open} onClose={handleClose} />
           </table>
           <div className="pagination-line">
             <p>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import Logo from "../../asset/CrossCheckLogo.png";
 import dashboard from "../../asset/dashboard.svg";
 import contact from "../../asset/contact.svg";
@@ -13,6 +13,7 @@ import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 function Sidebar({ history }) {
   const [show, setShow] = useState(false);
+  const { id } = JSON.parse(localStorage.getItem("user"));
 
   const logOut = () => {
     localStorage.clear();
@@ -29,7 +30,7 @@ function Sidebar({ history }) {
       </LogoSection>
       <ListSection>
         <ul>
-          <Link className="link" to="/dashboard/:id">
+          <Link className="link" to={`/dashboard/${id}`}>
             {" "}
             <img src={dashboard} alt="dash" />
             <li>Dashboard</li>

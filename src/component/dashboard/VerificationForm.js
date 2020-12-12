@@ -29,6 +29,7 @@ function VerificationForm({
   updateFormValues,
   deleteOneVerification,
   verificationsLength,
+  id,
 }) {
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
@@ -837,7 +838,7 @@ function VerificationForm({
           )}
         </form>
         {verificationsLength > 1 && (
-          <button onClick={deleteOneVerification} className="delete">
+          <button onClick={() => deleteOneVerification(id)} className="delete">
             <FontAwesomeIcon icon={faTrash} /> Delete verification
           </button>
         )}

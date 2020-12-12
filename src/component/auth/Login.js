@@ -125,7 +125,13 @@ const Login = (props) => {
           <form className="form-surround">
             <div className="info-container">
               <h3 className="great">Great to See you again</h3>
-              <p style={{ fontSize: "14px", fontFamily: "MontserratRegular", color: "#707070" }}>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontFamily: "MontserratRegular",
+                  color: "#707070",
+                }}
+              >
                 Sign in to your account
               </p>
               {loginError.length > 0 && (
@@ -196,9 +202,7 @@ const Login = (props) => {
                 />
                 <span>Remember me</span>
               </div>
-              <Link to="/forgotpassword">
-                Forgot password
-              </Link>
+              <Link to="/forgotpassword">Forgot password</Link>
             </div>
             <div
               style={{
