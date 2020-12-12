@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,7 +7,7 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
 import "./ver.css";
-import { Prompt } from "react-router-dom";
+import { Prompt, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "./DashboardLayout";
 import start from "../../asset/start.svg";
@@ -17,6 +17,7 @@ import finish from "../../asset/finish.svg";
 import {
   addVerificationList,
   deleteVerification,
+  selectSchool,
 } from "../../state/actions/verifications";
 import VerificationForm from "./VerificationForm";
 
@@ -29,8 +30,17 @@ const request = (data) =>
     url: "https://croscheck.herokuapp.com/api/v1/verifications/request",
     headers: { "Content-Type": "multipart/form-data" },
   });
+// TODO: CHANGE ID TO THIS DATE-TIME STRING
+// var currentdate = new Date();
+// var datetime = currentdate.getDate()
+//                 + (currentdate.getMonth()+1)  +
+//                 + currentdate.getFullYear() +
+//                 + currentdate.getHours() +
+//                 + currentdate.getMinutes() +
+//                 + currentdate.getSeconds()
 
 const NewVerifications = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { verifications, selectedInstitution } = useSelector(
     (state) => state.verifications
@@ -93,13 +103,11 @@ const NewVerifications = () => {
       formValues.map((value, index) => (index === id ? data : value))
     );
   };
-  // console.log("updated", formValues);
 
-  const deleteOneVerification = (id) => () => {
-    setFormValues((formValues) => formValues.filter((v) => v.id !== id));
-    console.log("after delete", formValues);
+  const deleteOneVerification = (id) => {
+    const vals = formValues.filter((v, index) => v.id !== id);
+    setFormValues(vals);
   };
-  console.log(formValues);
 
   let verifRequest = [];
   for (let i = 0; i < verifications.length; i++) {
@@ -123,11 +131,11 @@ const NewVerifications = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const componentProps = {
-    email: user?.email || "tolaked@yahoo.com",
+    email: user?.email,
     amount: total * 100,
     metadata: {
       name: "Tola",
-      phone: "080932215257",
+      // phone: "080932215257",
     },
     publicKey: process.env.REACT_APP_PAYSTACK_KEY,
     text: "Pay Now",
@@ -137,7 +145,11 @@ const NewVerifications = () => {
       dispatch(addVerificationList([]));
       setRequestList(false);
       setFormValues([formData]);
+      dispatch(selectSchool({}));
       toast.success("request submitted");
+      setTimeout(() => {
+        history.push(`/dashboard/${user.id}`);
+      }, 1500);
     },
     onClose: () => {},
   };
@@ -195,7 +207,8 @@ const NewVerifications = () => {
                 verificationsLength={verificationsLength}
                 initialValues={values}
                 updateFormValues={updateFormValues(id)}
-                deleteOneVerification={deleteOneVerification(values.id)}
+                id={values.id}
+                deleteOneVerification={deleteOneVerification}
               />
             </div>
           ))}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -6,47 +6,39 @@ import DashboardLayout from "./DashboardLayout";
 import { getAllInstitutions } from "../../state/actions/institutions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-
+import chat from "../../asset/comment.svg";
 
 import {
   getUserVerification,
-  getUserTranscript
+  getUserTranscript,
 } from "../../state/actions/verifications";
-import Modal from '../FormModal';
+import Modal from "../FormModal";
 
-
-const EmailActivation = ({history}) => {
-
+const EmailActivation = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { userVerifications, newTranscript } = useSelector((state) => state.verifications);
+  const { userVerifications, newTranscript } = useSelector(
+    (state) => state.verifications
+  );
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-    const [searchParameter] = useState("status");
+  const [searchParameter] = useState("status");
   const user = JSON.parse(localStorage.getItem("user"));
 
-
   useEffect(() => {
-    dispatch(getUserTranscript(user.email))
-  }, [dispatch])
+    dispatch(getUserTranscript(user.email));
+  }, [dispatch]);
 
-  const allHistory = userVerifications.concat(newTranscript)
+  const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
     dispatch(getUserVerification(user.email));
   }, [dispatch]);
-
 
   useEffect(() => {
     dispatch(getAllInstitutions());
     dispatch(getUserVerification(user.email));
   }, [dispatch]);
-
-
-
-
-  
-
 
   const verificationsNavigation = (e, index) => {
     e.preventDefault();
@@ -58,10 +50,12 @@ const EmailActivation = ({history}) => {
   };
 
   const filteredItems = allHistory.filter((history) =>
-  history[searchParameter].toLocaleLowerCase().includes(input.toLocaleLowerCase())
-    );
-    
-    const pageSize = 10;
+    history[searchParameter]
+      .toLocaleLowerCase()
+      .includes(input.toLocaleLowerCase())
+  );
+
+  const pageSize = 10;
 
   const verificationsCount = Math.ceil(filteredItems.length / pageSize);
 
@@ -77,36 +71,43 @@ const EmailActivation = ({history}) => {
     setInput(e.target.value);
   }
 
+  const truncateString = (str) => {
+    if (str.length <= 24) {
+      return str;
+    }
+    return str.slice(0, 32) + "...";
+  };
 
   return (
-      <DashboardLayout history={history}>
+    <DashboardLayout history={history}>
       <WallWrapper>
         <h6>verification history</h6>
         {/* <Table> */}
         <div className="new-table" id="tableScroll">
-        <p
+          <p
             className="history"
             style={{ marginBottom: "45px", marginTop: "25px" }}
           >
-              Verification history
+            Verification history
           </p>
-         <div className="showing-search">
-         <p className="showing">
-            Showing ({filteredItems.length}) entries
-          </p>
-           {searchParameter === "status" && (
-            <div className="search-input">
-            <input
-                type="text"
-                value={input}
-                onChange={handleInputChange}
-                placeholder="search"
-            />
-            <FontAwesomeIcon className="icon" icon={faSearch} style={{ fontSize: "15px" }} />
-            </div>
-                          
-           )}
-         </div>
+          <div className="showing-search">
+            <p className="showing">Showing ({filteredItems.length}) entries</p>
+            {searchParameter === "status" && (
+              <div>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={handleInputChange}
+                  placeholder="search"
+                />
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faSearch}
+                  style={{ fontSize: "20px" }}
+                />
+              </div>
+            )}
+          </div>
           <table>
             <thead>
               <tr>
@@ -114,29 +115,43 @@ const EmailActivation = ({history}) => {
                 <th>Name</th>
                 <th>Institution</th>
                 <th>Status</th>
+                <th>messgae</th>
               </tr>
             </thead>
             <tbody className="t-body">
               {filteredItems.length > 0
                 ? filteredItems
-                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                  .map((verification) => (
-                    <>
-                      <tr onClick={handleOpen}>
-                        <td>{verification.date}</td>
-                        <td>{`${verification.firstName}  ${verification.lastName}`}</td>
-                        <td>{verification.institution}</td>
-                        <td>{verification.status}</td>
-                      </tr>
-                      <tr className="space"></tr>
-                    </>
-                  ))
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map(
+                      ({ status, firstName, lastName, institution, date }) => (
+                        <>
+                          <tr>
+                            <td>{date}</td>
+                            <td>{`${firstName}  ${lastName}`}</td>
+                            <td>{truncateString(institution)}</td>
+                            <td
+                              style={{
+                                color:
+                                  status === "completed"
+                                    ? "#7DC900"
+                                    : status === "pending"
+                                    ? "red"
+                                    : "orange",
+                              }}
+                            >
+                              {status}
+                            </td>
+                            <td onClick={handleOpen}>
+                              <img src={chat} alt="message" />
+                            </td>
+                          </tr>
+                          <tr className="space"></tr>
+                        </>
+                      )
+                    )
                 : ""}
             </tbody>
-            <Modal
-              open={open}
-              onClose={handleClose}
-            />
+            <Modal open={open} onClose={handleClose} />
           </table>
           <div className="pagination-line">
             <p>
@@ -178,29 +193,29 @@ const EmailActivation = ({history}) => {
           </div>
         </div>
         {/* </Table> */}
-        </WallWrapper>
-      </DashboardLayout>
-  )
+      </WallWrapper>
+    </DashboardLayout>
+  );
 };
 
 const WallWrapper = styled.div`
-overflow-y: scroll;
-height: 100%;
-padding-left: 2rem;
-padding-right: 2rem;
-background: var(--mainWhite);
-h6 {
-  font-family: MontserratRegular;
-  letter-spacing: 0px;
-  color: #0092E0;
-  opacity: 1;
-  text-transform: capitalize;
-  font-size: 2rem;
-  font-weight: normal;
-  opacity: 1;
-  padding-bottom: -1.5rem;
-}
-.new-table {
+  overflow-y: scroll;
+  height: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: var(--mainWhite);
+  h6 {
+    font-family: MontserratRegular;
+    letter-spacing: 0px;
+    color: #0092e0;
+    opacity: 1;
+    text-transform: capitalize;
+    font-size: 2rem;
+    font-weight: normal;
+    opacity: 1;
+    padding-bottom: -1.5rem;
+  }
+  .new-table {
     /* margin-top: 10px; */
     width: 100%;
     background: #ffffff 0% 0% no-repeat padding-box;
@@ -296,10 +311,7 @@ h6 {
       }
       
     }
-
-    
   }
-
-`
+`;
 
 export default EmailActivation;
