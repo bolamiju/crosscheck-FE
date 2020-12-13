@@ -23,6 +23,7 @@ const EmailActivation = ({ history }) => {
   );
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [id, setId] = useState("");
   const [searchParameter] = useState("status");
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -39,6 +40,9 @@ const EmailActivation = ({ history }) => {
     dispatch(getAllInstitutions());
     dispatch(getUserVerification(user.email));
   }, [dispatch]);
+
+
+
 
   const verificationsNavigation = (e, index) => {
     e.preventDefault();
@@ -59,8 +63,9 @@ const EmailActivation = ({ history }) => {
 
   const verificationsCount = Math.ceil(filteredItems.length / pageSize);
 
-  const handleOpen = () => {
+  const handleOpen = (id) => {
     setOpen(true);
+    setId(id)
   };
 
   const handleClose = () => {
@@ -115,43 +120,43 @@ const EmailActivation = ({ history }) => {
                 <th>Name</th>
                 <th>Institution</th>
                 <th>Status</th>
-                <th>messgae</th>
+                <th>message</th>
               </tr>
             </thead>
             <tbody className="t-body">
               {filteredItems.length > 0
                 ? filteredItems
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map(
-                      ({ status, firstName, lastName, institution, date }) => (
-                        <>
-                          <tr>
-                            <td>{date}</td>
-                            <td>{`${firstName}  ${lastName}`}</td>
-                            <td>{truncateString(institution)}</td>
-                            <td
-                              style={{
-                                color:
-                                  status === "completed"
-                                    ? "#7DC900"
-                                    : status === "pending"
+                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                  .map(
+                    ({ status, firstName, lastName, institution, date, _id }) => (
+                      <>
+                        <tr>
+                          <td>{date}</td>
+                          <td>{`${firstName}  ${lastName}`}</td>
+                          <td>{truncateString(institution)}</td>
+                          <td
+                            style={{
+                              color:
+                                status === "completed"
+                                  ? "#7DC900"
+                                  : status === "pending"
                                     ? "red"
                                     : "orange",
-                              }}
-                            >
-                              {status}
-                            </td>
-                            <td onClick={handleOpen}>
-                              <img src={chat} alt="message" />
-                            </td>
-                          </tr>
-                          <tr className="space"></tr>
-                        </>
-                      )
+                            }}
+                          >
+                            {status}
+                          </td>
+                          <td onClick={() => handleOpen(_id)}>
+                            <img src={chat} alt="message" />
+                          </td>
+                        </tr>
+                        <tr className="space"></tr>
+                      </>
                     )
+                  )
                 : ""}
             </tbody>
-            <Modal open={open} onClose={handleClose} />
+            <Modal open={open} onClose={handleClose} id={id} />
           </table>
           <div className="pagination-line">
             <p>
@@ -292,11 +297,24 @@ const WallWrapper = styled.div`
         opacity: 1;
         margin-left: 50px;
       }
-      input {
+      .search-input {
+        position: relative;
+        padding: 0.5rem;
+
+        input {
         height: 1rem;
         padding: 0.2rem;
         outline: none;
       }
+      .icon {
+        position: absolute;
+        top: 30%;
+        right: 10%;
+        opacity: 0.7;
+        color: #2C3E50;
+      }
+      }
+      
     }
   }
 `;

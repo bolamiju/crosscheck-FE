@@ -1,23 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 import Modal from "@material-ui/core/Modal";
+import { getAllMessages } from "../state/actions/verifications";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const FormModal = ({ open, onClose }) => {
-  if (!open) return null;
+const FormModal = ({ open, onClose, id }) => {
+
+
   return (
     <Modal open={open} onClose={onClose} style={OVERLAY_STYLES}>
       <ModalWrapper>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          style={{ marginTop: "20px" }}
+        />
         <Formik
-          initialValues={{ message: "" }}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log("submitting", values);
+          initialValues={{ message: "", subject: "" }}
+          onSubmit={async (values, { resetForm }) => {
+            try {
+
+              console.log("submitting", values);
+              const response = await getAllMessages({ ...values, id })
+              if (response.data.message === "message sent successfuly") {
+                toast.success('message sent')
+              }
+              resetForm({ values: "" })
+              setTimeout(() => {
+                onClose()
+              }, 3000);
+            }
+
+            catch (error) {
+
+              toast.error("An error occured try again")
+            }
           }}
           validationSchema={Yup.object().shape({
-            message: Yup.string().required("Required !"),
+            subject: Yup.string().required("Required !"),
+            message: Yup.string().max(70).required("Required !"),
           })}
         >
           {(props) => {
@@ -29,6 +62,7 @@ const FormModal = ({ open, onClose }) => {
               handleChange,
               handleBlur,
               handleSubmit,
+              resetForm
             } = props;
             return (
               <form className="form" onSubmit={handleSubmit}>
@@ -37,7 +71,7 @@ const FormModal = ({ open, onClose }) => {
                 <div className="field">
                   <label htmlFor="subject">subect</label>
                   <input
-                    name="subect"
+                    name="subject"
                     type="text"
                     value={values.subject}
                     onChange={handleChange}
@@ -52,7 +86,6 @@ const FormModal = ({ open, onClose }) => {
                     value={values.message}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    // className="message"
                     className={
                       errors.message && touched.message ? "error" : "message"
                     }

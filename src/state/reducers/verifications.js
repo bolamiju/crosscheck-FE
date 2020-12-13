@@ -7,6 +7,7 @@ const initialState = {
   userVerifications: [],
   transcript: [],
   newTranscript: [],
+  getMessage: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -48,6 +49,11 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         newTranscript: [...action.payload],
+      }
+    case types.GET_MESSAGES: 
+      return {
+        ...state,
+        getMessage: [...action.payload]
       }
     default:
       return state;

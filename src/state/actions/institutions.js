@@ -1,5 +1,6 @@
 import * as types from "../actionTypes/users";
 import axios from "axios";
+import { BASE_URL } from "../constant/constants";
 
 const fetchInstitutes = (payload) => {
   return {
@@ -10,7 +11,7 @@ const fetchInstitutes = (payload) => {
 
 export const getAllInstitutions = () => (dispatch) => {
   axios
-    .get(`https://croscheck.herokuapp.com/api/v1/institutions`)
+    .get(`${BASE_URL}/api/v1/institutions`)
     .then(({ data }) => {
       dispatch(fetchInstitutes(data.institution));
     })

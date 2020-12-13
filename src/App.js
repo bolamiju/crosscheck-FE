@@ -10,9 +10,9 @@ import AccountVerification from "./component/auth/AccountVerification";
 import MainContent from "./component/dashboard/MainContent";
 import LandingPage from "./component/LandingPage";
 import Terms from "./component/Terms";
-import Receipts from "./component/dashboard/Receipts";
-import VerificationHistory from "./component/dashboard/VerificationHistory";
-// import EmailActivation from './component/dashboard/EmailActivation';
+import Receipts from './component/dashboard/Receipts';
+import VerificationHistory from './component/dashboard/VerificationHistory';
+import EmailActivation from './component/dashboard/EmailActivation';
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
@@ -52,12 +52,12 @@ function App() {
       />
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
+      <Route exact path="/active" component={EmailActivation} />
       <Route
         exact
         path="/receipts"
         component={(props) => withAuthCheck(Receipts, props)}
       />
-      {/* <Route exact path="/active" component={EmailActivation} /> */}
     </Provider>
   );
 }
