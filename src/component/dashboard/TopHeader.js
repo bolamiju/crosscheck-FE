@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { getMessages } from '../../state/actions/verifications';
+
 
 function TopHeader({ setShow, show }) {
+
+  const dispatch = useDispatch();
+  const { getMessage } = useSelector((state) => state.verifications);
+  const [open, setOpen] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
   const handleMenuIcon = () => {
     setShow(!show);
   };
+
+  useEffect(() => {
+    dispatch(getMessages("value"))
+  }, [dispatch])
   return (
-    <HeadContainer className="top-header">
+    <div>
+      <HeadContainer className="top-header">
       <h5>search bar</h5>
       <div className="right-con">
         <div className="nots">
           <img
+            onClick={
+              () => setOpen(!open)}
             src={Bell}
             alt="bellimage"
-            style={{ fontSize: "0.8em", color: "#2C3E50", width: "18px" }}
-          />
+            style={{ fontSize: "0.8em", color: "#2C3E50", width: "18px", cursor: "pointer" }}
+            />
+             {!open ? (
+              <div className="messages">
+                 {getMessage.map(message => (
+                   <div className="message">
+                     <h2>{message.subject}</h2>
+                      <p>{message.message}</p>
+                      <button>mark as read</button>
+                    </div>
+                    ))}
+                
+       </div>
+     ): null}
         </div>
         <div className="user-avatar">
-          <img src={Avatar} alt="Avatar" />
+          <img 
+            src={Avatar} alt="Avatar" />
           <div className="user-info">
             <p>
               {user?.firstName} {user?.lastName}
@@ -43,8 +70,9 @@ function TopHeader({ setShow, show }) {
           className="menu-icon"
           onClick={handleMenuIcon}
         />
-      )}
-    </HeadContainer>
+        )}
+      </HeadContainer>
+    </div>
   );
 }
 
@@ -101,6 +129,37 @@ const HeadContainer = styled.div`
     margin-left: 20px;
     margin-right: 20px;
     display: inline-block;
+    .messages {
+      position: absolute;
+      right: 30%;
+      background: #ffffff;
+      max-height: 230px;
+      overflow-y: scroll;
+      padding: 0.5rem 1rem;
+      color: #707070;
+      width: 400px;
+      text-align: left;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #00000029;
+      .message {
+        border-bottom: 1px solid #707070;
+        padding-bottom: 1.2rem;
+        button {
+          float: right;
+          background: transparent;
+          border: none;
+          color: #0092E0;
+          text-transform: capitalize;
+          cursor: pointer;
+          outline: none;
+        }
+         p {
+           letter-spacing: 0.32px;
+           opacity: 1;
+           font-weight: normal;
+         }
+      }
+    }
   }
 
   .profile-icon {
