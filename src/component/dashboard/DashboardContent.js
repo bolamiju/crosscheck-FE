@@ -16,11 +16,10 @@ import {
   getUserTranscript,
 } from "../../state/actions/verifications";
 import Modal from "../FormModal";
-import Input from "./Input";
+import chat from "../../asset/comment.svg";
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const arr = ["a", "b", "c"];
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
@@ -28,6 +27,7 @@ const DashboardContent = ({ history }) => {
     (state) => state.verifications
   );
   const [input, setInput] = useState("");
+  const [id, setId] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -84,12 +84,20 @@ const DashboardContent = ({ history }) => {
     history.push("/new");
   };
 
-  const handleOpen = () => {
+  const handleOpen = (id) => {
     setOpen(true);
+    setId(id);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const truncateString = (str) => {
+    if (str.length <= 24) {
+      return str;
+    }
+    return str.slice(0, 32) + "...";
   };
 
   return (
@@ -104,9 +112,7 @@ const DashboardContent = ({ history }) => {
         >
           What would you like to do today?
         </h2>
-        {arr.map((leta) => (
-          <Input name={leta} />
-        ))}
+
         <CardsContainer>
           <Card>
             <img src={Transcript} alt="tran" />
@@ -284,6 +290,7 @@ const DashboardContent = ({ history }) => {
                 <th>Name</th>
                 <th>Institution</th>
                 <th>Status</th>
+                <th>Message</th>
               </tr>
             </thead>
             <tbody className="t-body">
@@ -291,12 +298,19 @@ const DashboardContent = ({ history }) => {
                 ? allHistory
                     .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                     .map(
-                      ({ date, firstName, lastName, institution, status }) => (
+                      ({
+                        date,
+                        firstName,
+                        lastName,
+                        institution,
+                        status,
+                        _id,
+                      }) => (
                         <>
-                          <tr onClick={handleOpen}>
+                          <tr>
                             <td>{date}</td>
                             <td>{`${firstName}  ${lastName}`}</td>
-                            <td>{institution}</td>
+                            <td>{truncateString(institution)}</td>
                             <td
                               style={{
                                 color:
@@ -309,6 +323,9 @@ const DashboardContent = ({ history }) => {
                             >
                               {status}
                             </td>
+                            <td onClick={() => handleOpen(_id)}>
+                              <img src={chat} alt="message" />
+                            </td>
                           </tr>
                           <tr className="space"></tr>
                         </>
@@ -316,7 +333,7 @@ const DashboardContent = ({ history }) => {
                     )
                 : ""}
             </tbody>
-            <Modal open={open} onClose={handleClose} />
+            <Modal open={open} onClose={handleClose} id={id} />
           </table>
           <div className="pagination-line">
             <p>

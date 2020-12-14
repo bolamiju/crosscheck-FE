@@ -35,9 +35,24 @@ export const selectSchool = (payload) => {
     payload,
   };
 };
+
 export const getOneUserTranscript = (payload) => {
   return {
     type: types.GET_TRANSCRIPT,
+    payload,
+  };
+};
+
+
+export const messages = (payload) => {
+  return {
+    type: types.GET_MESSAGES,
+    payload,
+  };
+};
+export const delMessages = (payload) => {
+  return {
+    type: types.DELETE_MESSAGES,
     payload,
   };
 };
@@ -60,7 +75,7 @@ export const getUserVerification = (email) => async (dispatch) => {
 };
 export const getUserTranscript = (email) => async (dispatch) => {
   await axios
-    .get(`https://croscheck.herokuapp.com/api/v1/transcript/byemail/${email}`)
+    .get(`${BASE_URL}/api/v1/transcript/byemail/${email}`)
     .then(({ data }) => {
       console.log("transcript data", data);
       dispatch(getOneUserTranscript(data.transcripts));
@@ -69,3 +84,36 @@ export const getUserTranscript = (email) => async (dispatch) => {
       console.log("error", err);
     });
 };
+
+export const getAllMessages = (message) =>
+  axios
+    .post(`${BASE_URL}/api/v1/message/sendMessage`, message)
+
+
+
+export const getMessages = (value) => async(dispatch) => {
+  await axios
+    .get(`${BASE_URL}/api/v1/message`, value) 
+    .then(({ data }) => {
+      console.log("messages", data);
+      dispatch(messages(data.message))
+    })
+    .catch((err) => {
+    console.log("error", err)
+  })
+}
+
+export const deleteMessages = (id) => async(dispatch) => {
+  await axios
+    .delete(`${BASE_URL}/api/v1/message/${id}`) 
+    .then(({ data }) => {
+      console.log("deleted", data);
+      dispatch(delMessages(data.message))
+    })
+    .catch((err) => {
+    console.log("error", err)
+  })
+}
+
+
+    // http://localhost:5000
