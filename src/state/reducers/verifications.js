@@ -8,6 +8,7 @@ const initialState = {
   transcript: [],
   newTranscript: [],
   getMessage: [],
+  deleteMessage: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -54,6 +55,11 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         getMessage: [...action.payload]
+      }
+      case types.DELETE_MESSAGES: 
+      return {
+        ...state,
+        deleteMessage: [...action.payload]
       }
     default:
       return state;

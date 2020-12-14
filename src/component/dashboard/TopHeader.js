@@ -5,14 +5,15 @@ import Bell from "../../asset/bell.svg";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { getMessages } from '../../state/actions/verifications';
+import { getMessages, deleteMessages } from '../../state/actions/verifications';
 
 
 function TopHeader({ setShow, show }) {
 
   const dispatch = useDispatch();
-  const { getMessage } = useSelector((state) => state.verifications);
+  const { getMessage, delMessages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
+  const [font, setFont] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
   const handleMenuIcon = () => {
     setShow(!show);
@@ -20,7 +21,15 @@ function TopHeader({ setShow, show }) {
 
   useEffect(() => {
     dispatch(getMessages("value"))
-  }, [dispatch])
+  }, [dispatch]);
+
+
+  const handleFontChange = (font) => {
+    setFont(font);
+  };
+
+
+
   return (
     <div>
       <HeadContainer className="top-header">
@@ -37,10 +46,23 @@ function TopHeader({ setShow, show }) {
              {!open ? (
               <div className="messages">
                  {getMessage.map(message => (
-                   <div className="message">
+                   <div 
+                     key={message.id}
+                     className="message">
                      <h2>{message.subject}</h2>
                       <p>{message.message}</p>
-                      <button>mark as read</button>
+                     <button
+                        onClick={() => {
+                         dispatch(deleteMessages(message.id))
+                         handleFontChange(message.id);
+                        }}
+                        className={
+                          font === message.id
+                            ? "read"
+                            : ""
+                        }
+                     >
+                       mark as read</button>
                     </div>
                     ))}
                 
@@ -95,7 +117,6 @@ const HeadContainer = styled.div`
     display: none;
     @media (max-width: 500px) {
       display: block;
-      /* padding-right: 3px; */
       color: #707070;
       font-family: MonserratLight;
       font-size: 28px;
@@ -152,6 +173,9 @@ const HeadContainer = styled.div`
           text-transform: capitalize;
           cursor: pointer;
           outline: none;
+          &.read {
+        font-weight: bolder;
+      }
         }
          p {
            letter-spacing: 0.32px;
