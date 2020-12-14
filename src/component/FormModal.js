@@ -5,13 +5,11 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 import Modal from "@material-ui/core/Modal";
-import { getAllMessages } from "../state/actions/verifications";
+import { sendMessage } from "../state/actions/verifications";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormModal = ({ open, onClose, id }) => {
-
-
   return (
     <Modal open={open} onClose={onClose} style={OVERLAY_STYLES}>
       <ModalWrapper>
@@ -31,26 +29,22 @@ const FormModal = ({ open, onClose, id }) => {
           initialValues={{ message: "", subject: "" }}
           onSubmit={async (values, { resetForm }) => {
             try {
-
               console.log("submitting", values);
-              const response = await getAllMessages({ ...values, id })
+              const response = await sendMessage({ ...values, id });
               if (response.data.message === "message sent successfuly") {
-                toast.success('message sent')
+                toast.success("message sent");
               }
-              resetForm({ values: "" })
+              resetForm({ values: "" });
               setTimeout(() => {
-                onClose()
+                onClose();
               }, 3000);
-            }
-
-            catch (error) {
-
-              toast.error("An error occured try again")
+            } catch (error) {
+              toast.error("An error occured try again");
             }
           }}
           validationSchema={Yup.object().shape({
             subject: Yup.string().required("Required !"),
-            message: Yup.string().max(70).required("Required !"),
+            message: Yup.string().max(150).required("Required !"),
           })}
         >
           {(props) => {
@@ -62,7 +56,7 @@ const FormModal = ({ open, onClose, id }) => {
               handleChange,
               handleBlur,
               handleSubmit,
-              resetForm
+              resetForm,
             } = props;
             return (
               <form className="form" onSubmit={handleSubmit}>

@@ -31,7 +31,7 @@ function VerificationForm({
   verificationsLength,
   id,
 }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("documents");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -815,6 +815,15 @@ function VerificationForm({
                       }}
                     />
                   </div>
+                  {/* <img
+                    src={
+                      formik.values.certImage
+                        ? URL.createObjectURL(formik.values.certImage)
+                        : null
+                    }
+                    style={{ width: "100px", height: "100px" }}
+                    alt="selectedfile"
+                  /> */}
                 </Document>
               </UploadSection>
               <button pay={pay} onClick={submitRequest} className="btn submit">

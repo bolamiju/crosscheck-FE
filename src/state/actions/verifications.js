@@ -43,7 +43,6 @@ export const getOneUserTranscript = (payload) => {
   };
 };
 
-
 export const messages = (payload) => {
   return {
     type: types.GET_MESSAGES,
@@ -85,35 +84,28 @@ export const getUserTranscript = (email) => async (dispatch) => {
     });
 };
 
-export const getAllMessages = (message) =>
-  axios
-    .post(`${BASE_URL}/api/v1/message/sendMessage`, message)
+export const sendMessage = (message) =>
+  axios.post(`${BASE_URL}/api/v1/message/sendMessage`, message);
 
-
-
-export const getMessages = (value) => async(dispatch) => {
+export const getMessages = () => async (dispatch) => {
   await axios
-    .get(`${BASE_URL}/api/v1/message`, value) 
+    .get(`${BASE_URL}/api/v1/message`)
     .then(({ data }) => {
-      console.log("messages", data);
-      dispatch(messages(data.message))
+      dispatch(messages(data.message));
     })
     .catch((err) => {
-    console.log("error", err)
-  })
-}
+      console.log("error", err);
+    });
+};
 
-export const deleteMessages = (id) => async(dispatch) => {
+export const deleteMessage = (id) => async (dispatch) => {
   await axios
-    .delete(`${BASE_URL}/api/v1/message/${id}`) 
+    .delete(`${BASE_URL}/api/v1/message/${id}`)
     .then(({ data }) => {
       console.log("deleted", data);
-      dispatch(delMessages(data.message))
+      dispatch(delMessages(data.message));
     })
     .catch((err) => {
-    console.log("error", err)
-  })
-}
-
-
-    // http://localhost:5000
+      console.log("error", err);
+    });
+};
