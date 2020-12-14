@@ -16,9 +16,11 @@ import {
   getUserTranscript,
 } from "../../state/actions/verifications";
 import Modal from "../FormModal";
+import Input from "./Input";
 
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const arr = ["a", "b", "c"];
 
   const dispatch = useDispatch();
   const { institutions } = useSelector((state) => state.institutions);
@@ -102,6 +104,9 @@ const DashboardContent = ({ history }) => {
         >
           What would you like to do today?
         </h2>
+        {arr.map((leta) => (
+          <Input name={leta} />
+        ))}
         <CardsContainer>
           <Card>
             <img src={Transcript} alt="tran" />
