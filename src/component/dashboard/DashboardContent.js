@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CountryDropdown } from "react-country-region-selector";
 import DashboardLayout from "./DashboardLayout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
@@ -27,8 +29,10 @@ const DashboardContent = ({ history }) => {
     (state) => state.verifications
   );
   const [input, setInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [id, setId] = useState("");
   const [hideTable, setHideTable] = useState(false);
+  const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -54,10 +58,16 @@ const DashboardContent = ({ history }) => {
     item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
   );
 
+  const filteredTable = allHistory.filter((history) =>
+    history[searchParameter]
+      .toLocaleLowerCase()
+      .includes(searchInput.toLocaleLowerCase())
+  );
+
   const pageSize = 10;
   const pagesCount = Math.ceil(filteredItems.length / pageSize);
 
-  const verificationsCount = Math.ceil(allHistory.length / pageSize);
+  const verificationsCount = Math.ceil(filteredTable.length / pageSize);
 
   const handleNavigation = (e, index) => {
     e.preventDefault();
@@ -99,6 +109,10 @@ const DashboardContent = ({ history }) => {
     }
     return str.slice(0, 32) + "...";
   };
+
+  function handleInputChange(e) {
+    setSearchInput(e.target.value);
+  }
 
   return (
     <DashboardLayout history={history}>
@@ -282,7 +296,24 @@ const DashboardContent = ({ history }) => {
           >
             Verification history
           </p>
-          <p className="showing">Showing ({allHistory.length}) entries</p>
+         <div className="showing-search">
+            <p className="showing">Showing ({filteredTable.length}) entries</p>
+            {searchParameter === "status" && (
+              <div className="search-input">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={handleInputChange}
+                  placeholder="search"
+                />
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faSearch}
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
+            )}
+         </div>
           <table>
             <thead>
               <tr>
@@ -294,8 +325,8 @@ const DashboardContent = ({ history }) => {
               </tr>
             </thead>
             <tbody className="t-body">
-              {allHistory.length > 0
-                ? allHistory
+              {filteredTable.length > 0
+                ? filteredTable
                     .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                     .map(
                       ({
@@ -339,7 +370,7 @@ const DashboardContent = ({ history }) => {
             <p>
               Showing{" "}
               {
-                allHistory.slice(
+                filteredTable.slice(
                   currentPage * pageSize,
                   (currentPage + 1) * pageSize
                 ).length
@@ -675,13 +706,36 @@ const RequisitionBody = styled.div`
       color: #173049;
       opacity: 1;
     }
+    .showing-search {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 4rem;
 
-    .showing {
-      font-family: MontserratRegular;
-      letter-spacing: 0.44px;
-      color: #707070;
-      opacity: 1;
-      margin-left: 50px;
+      .showing {
+        font-family: MontserratRegular;
+        letter-spacing: 0.44px;
+        color: #707070;
+        opacity: 1;
+        margin-left: 50px;
+      }
+      .search-input {
+        position: relative;
+        padding: 0.5rem;
+
+        input {
+        height: 1rem;
+        padding: 0.2rem;
+        outline: none;
+      }
+      .icon {
+        position: absolute;
+        top: 30%;
+        right:5%;
+        opacity: 0.7;
+        color: #2C3E50;
+      }
+    }
     }
   }
 
