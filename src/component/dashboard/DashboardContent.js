@@ -20,7 +20,6 @@ import {
 import Modal from "../FormModal";
 import chat from "../../asset/comment.svg";
 
-
 const DashboardContent = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -97,7 +96,7 @@ const DashboardContent = ({ history }) => {
 
   const handleOpen = (id) => {
     setOpen(true);
-    setId(id)
+    setId(id);
   };
 
   const handleClose = () => {
@@ -127,6 +126,7 @@ const DashboardContent = ({ history }) => {
         >
           What would you like to do today?
         </h2>
+
         <CardsContainer>
           <Card>
             <img src={Transcript} alt="tran" />
@@ -329,7 +329,14 @@ const DashboardContent = ({ history }) => {
                 ? filteredTable
                     .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                     .map(
-                      ({ date, firstName, lastName, institution, status, _id }) => (
+                      ({
+                        date,
+                        firstName,
+                        lastName,
+                        institution,
+                        status,
+                        _id,
+                      }) => (
                         <>
                           <tr>
                             <td>{date}</td>
@@ -348,8 +355,8 @@ const DashboardContent = ({ history }) => {
                               {status}
                             </td>
                             <td onClick={() => handleOpen(_id)}>
-                            <img src={chat} alt="message" />
-                          </td>
+                              <img src={chat} alt="message" />
+                            </td>
                           </tr>
                           <tr className="space"></tr>
                         </>
