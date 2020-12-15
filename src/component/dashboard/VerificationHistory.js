@@ -98,7 +98,7 @@ const EmailActivation = ({ history }) => {
           <div className="showing-search">
             <p className="showing">Showing ({filteredItems.length}) entries</p>
             {searchParameter === "status" && (
-              <div>
+              <div className="search-input">
                 <input
                   type="text"
                   value={input}
@@ -108,7 +108,7 @@ const EmailActivation = ({ history }) => {
                 <FontAwesomeIcon
                   className="icon"
                   icon={faSearch}
-                  style={{ fontSize: "20px" }}
+                  style={{ fontSize: "15px" }}
                 />
               </div>
             )}
@@ -309,11 +309,11 @@ const WallWrapper = styled.div`
       .icon {
         position: absolute;
         top: 30%;
-        right: 10%;
+        right:5%;
         opacity: 0.7;
         color: #2C3E50;
       }
-      }
+    }
       
     }
   }
