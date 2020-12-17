@@ -15,6 +15,8 @@ function TopHeader({ setShow, show }) {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+
+
   const handleMenuIcon = () => {
     setShow(!show);
   };
@@ -26,24 +28,12 @@ function TopHeader({ setShow, show }) {
   const handleFontChange = (font) => {
     setFont(font);
   };
-  console.log("messages", messages);
   return (
     <div>
       <HeadContainer className="top-header">
         <h5>search bar</h5>
         <div className="right-con">
           <div className="nots">
-            {/* <img
-              onClick={() => setOpen(!open)}
-              src={Bell}
-              alt="bellimage"
-              style={{
-                fontSize: "0.8em",
-                color: "#2C3E50",
-                width: "18px",
-                cursor: "pointer",
-              }}
-            /> */}
             <BellFilled
               style={{
                 fontSize: "1.5em",

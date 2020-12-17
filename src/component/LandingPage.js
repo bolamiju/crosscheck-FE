@@ -1086,7 +1086,6 @@ const About = styled.div`
         }
       }
       h3 {
-        font-family: SegoeSemiBold;
         letter-spacing: 0.6px;
         color: #173049;
         text-transform: uppercase;
