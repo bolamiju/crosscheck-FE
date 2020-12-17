@@ -53,9 +53,9 @@ const EmailActivation = ({ history }) => {
     }
   };
 
-  const filteredItems = allHistory.filter((history) =>
+  const filteredItems = allHistory?.filter((history) =>
     history[searchParameter]
-      .toLocaleLowerCase()
+      ?.toLocaleLowerCase()
       .includes(input.toLocaleLowerCase())
   );
 

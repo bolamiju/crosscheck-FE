@@ -38,10 +38,14 @@
 @font-face {
   font-family: MontserratRegular;
   src: url("./fonts/Montserrat-Regular.ttf");
+  src: url("./fonts/MontserratRegular.woff");
 }
+
 @font-face {
   font-family: MontserratBold;
   src: url("./fonts/Montserrat-Bold.otf");
+  src: url("./fonts/Montserrat-Bold.woff");
+  src: url("./fonts/Montserrat-Bold.eot");
 }
 @font-face {
   font-family: MontserratItalic;
@@ -54,4 +58,10 @@
 @font-face {
   font-family: SegoeRegular;
   src: url("./fonts/segoeui.ttf");
+  src: url("./fonts/SegoeUI.woff");
+  src: url("./fonts/segoeui.eot");
+}
+@font-face {
+  font-family: SegoeBlack;
+  src: url("./fonts/SegoeUIBlack.woff");
 }

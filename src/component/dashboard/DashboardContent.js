@@ -55,12 +55,11 @@ const DashboardContent = ({ history }) => {
   }
 
   const filteredItems = institutions.filter((item) =>
-    item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+    item?.name?.includes(input)
   );
-
-  const filteredTable = allHistory.filter((history) =>
+  const filteredTable = allHistory?.filter((history) =>
     history[searchParameter]
-      .toLocaleLowerCase()
+      ?.toLocaleLowerCase()
       .includes(searchInput.toLocaleLowerCase())
   );
 
@@ -111,6 +110,9 @@ const DashboardContent = ({ history }) => {
   };
 
   function handleInputChange(e) {
+    setInput(e.target.value);
+  }
+  function handleSearchInput(e) {
     setSearchInput(e.target.value);
   }
 
@@ -296,14 +298,14 @@ const DashboardContent = ({ history }) => {
           >
             Verification history
           </p>
-         <div className="showing-search">
+          <div className="showing-search">
             <p className="showing">Showing ({filteredTable.length}) entries</p>
             {searchParameter === "status" && (
               <div className="search-input">
                 <input
                   type="text"
                   value={searchInput}
-                  onChange={handleInputChange}
+                  onChange={handleSearchInput}
                   placeholder="search"
                 />
                 <FontAwesomeIcon
@@ -313,7 +315,7 @@ const DashboardContent = ({ history }) => {
                 />
               </div>
             )}
-         </div>
+          </div>
           <table>
             <thead>
               <tr>
@@ -327,16 +329,16 @@ const DashboardContent = ({ history }) => {
             <tbody className="t-body">
               {filteredTable.length > 0
                 ? filteredTable
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map(
-                      ({
-                        date,
-                        firstName,
-                        lastName,
-                        institution,
-                        status,
-                        _id,
-                      }) => (
+                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                  .map(
+                    ({
+                      date,
+                      firstName,
+                      lastName,
+                      institution,
+                      status,
+                      _id,
+                    }) => (
                         <>
                           <tr>
                             <td>{date}</td>
@@ -348,8 +350,8 @@ const DashboardContent = ({ history }) => {
                                   status === "completed"
                                     ? "#7DC900"
                                     : status === "pending"
-                                    ? "red"
-                                    : "orange",
+                                      ? "red"
+                                      : "orange",
                               }}
                             >
                               {status}
@@ -361,7 +363,7 @@ const DashboardContent = ({ history }) => {
                           <tr className="space"></tr>
                         </>
                       )
-                    )
+                  )
                 : ""}
             </tbody>
             <Modal open={open} onClose={handleClose} id={id} />

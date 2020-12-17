@@ -60,8 +60,19 @@ const NewVerifications = () => {
     enrollmentStatus: false,
   };
   let [isBlocking, setIsBlocking] = useState(true);
+
+
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const year = today.getFullYear();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
+  const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+
   const [formValues, setFormValues] = useState([
-    { ...formData, id: Date.now() },
+    { ...formData, id: date },
   ]);
 
   const [requestList, setRequestList] = useState(false);
