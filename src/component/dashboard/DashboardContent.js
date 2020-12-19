@@ -655,6 +655,12 @@ const RequisitionBody = styled.div`
     overflow-x: hidden;
     margin-bottom: 10px;
     padding-bottom: 20px;
+    @media (max-width: 400px) {
+      overflow-x: scroll;
+    }
+    @media (max-width: 500px) {
+      overflow-x: scroll;
+    }
     .hide-table {
       display: none;
     }
@@ -663,7 +669,7 @@ const RequisitionBody = styled.div`
       margin: 0 auto;
       width: 95%;
       border-collapse: collapse;
-      text-align: left;
+      text-align: center;
       overflow: hidden;
       font-size: 14px;
       .mobile-header {
@@ -679,6 +685,7 @@ const RequisitionBody = styled.div`
       }
 
       td {
+        text-align: center;
         /* border-left: 1px solid #ecf0f1;
         border-right: 1px solid #ecf0f1; */
       }
@@ -708,11 +715,29 @@ const RequisitionBody = styled.div`
       color: #173049;
       opacity: 1;
     }
+    @media (max-width: 400px){
+      text-align: center;
+    }
+    @media (max-width: 500px){
+      text-align: center;
+    }
     .showing-search {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-right: 4rem;
+      @media (max-width: 400px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      @media (max-width: 500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
 
       .showing {
         font-family: MontserratRegular;
@@ -720,6 +745,12 @@ const RequisitionBody = styled.div`
         color: #707070;
         opacity: 1;
         margin-left: 50px;
+        @media (max-width: 400px) {
+        margin-left: 0;
+      }
+      @media (max-width: 500px) {
+        margin-left: 0;
+      }
       }
       .search-input {
         position: relative;
@@ -729,6 +760,14 @@ const RequisitionBody = styled.div`
         height: 1rem;
         padding: 0.2rem;
         outline: none;
+      }
+      @media (max-width: 400px) {
+        margin-bottom: 1rem;
+        margin-left: 0;
+      }
+      @media (max-width: 500px) {
+        margin-bottom: 1rem;
+        margin-left: 0;
       }
       .icon {
         position: absolute;

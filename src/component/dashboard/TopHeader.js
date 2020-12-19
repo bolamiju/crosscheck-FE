@@ -35,6 +35,7 @@ function TopHeader({ setShow, show }) {
         <div className="right-con">
           <div className="nots">
             <BellFilled
+              className="bell"
               style={{
                 fontSize: "1.5em",
                 color: "#2C3E50",
@@ -124,19 +125,38 @@ const HeadContainer = styled.div`
     font-weight: 500;
     font-size: 14px;
     font-family: MontserratLight;
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
 
   .right-con {
     display: flex;
     justify-content: center;
     align-items: center;
-    @media screen and (max-width: 500px) {
+    .user-avatar {
+      @media screen and (max-width: 500px) {
       display: none;
+    }
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
     }
   }
   .bell {
-    width: 0.8em !important;
-    height: 0.8em !important;
+    @media screen and (max-width: 400px) {
+      margin-left: -1rem;
+      font-size: 3rem;
+      width: 30px;
+    }
+    @media screen and (max-width: 500px) {
+      margin-left: -1rem;
+      font-size: 3rem;
+      width: 30px;
+    }
   }
 
   .nots {
@@ -171,6 +191,14 @@ const HeadContainer = styled.div`
       text-align: left;
       border-radius: 5px;
       box-shadow: 0px 0px 10px #00000029;
+      @media (max-width: 400px) {
+        left: 10%;
+        width: 250px;
+      }
+      @media (max-width: 500px) {
+        width: 250px;
+        left: 10%;
+      }
       .message {
         border-bottom: 1px solid #707070;
         padding-bottom: 1.2rem;
