@@ -49,12 +49,30 @@ const Receipt = () => {
 };
 
 const PdfWrapper = styled.div`
-padding: 1.5rem 12rem 1.5rem 1.5rem;
+padding: 1.5rem 18rem 1.5rem 1.5rem;
+@media (max-width: 400px) {
+    width: 750px;
+}
+@media (max-width: 400px) {
+    width: 750px;
+}
 .first-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     align-content: center;
+    @media (max-width: 400px) {
+        h1 {
+        font-size: 1.5rem;
+        margin-left: -2.5rem;
+    }
+    }
+    @media (max-width: 500px) {
+        h1 {
+        font-size: 1.5rem;
+        margin-left: -2.5rem;
+    }
+    }
 }
 .img-text  {
     display: block;
@@ -67,6 +85,7 @@ padding: 1.5rem 12rem 1.5rem 1.5rem;
         margin: 0;
         font-size: 0.8rem;
     }
+    
 }
 .second-section {
     display: flex;

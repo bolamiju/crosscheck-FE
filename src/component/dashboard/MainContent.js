@@ -20,7 +20,7 @@ const MainContent = (props) => {
         <NewVerification />
       ) : route && route.url === "/transcript" ? (
         <NewTranscript />
-      ) : route && route.url === "/verification" ? (
+      ) : route && route.url === "/history" ? (
           <VerificationHistory />
       ) : (
         <DashboardContent history={history} />

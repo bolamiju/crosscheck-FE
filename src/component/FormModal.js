@@ -89,7 +89,7 @@ const FormModal = ({ open, onClose, id }) => {
                   <div className="input-feedback">{errors.message}</div>
                 )}
                 <button className="button" type="submit">
-                  send message <FontAwesomeIcon icon={faLongArrowAltRight} />
+                  send message <FontAwesomeIcon icon={faLongArrowAltRight} style={{marginLeft: "1.5rem", fontSize: "1.5rem"}} />
                 </button>
               </form>
             );
@@ -192,6 +192,7 @@ const ModalWrapper = styled.div`
       cursor: pointer;
       outline: none;
       margin-top: 20px;
+      font-size: 1.2rem
     }
     .input-feedback {
       color: red;

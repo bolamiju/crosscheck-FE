@@ -231,6 +231,12 @@ const WallWrapper = styled.div`
     overflow-x: hidden;
     margin-bottom: 10px;
     padding-bottom: 20px;
+    @media (max-width: 400px) {
+        overflow-x: scroll;
+      }
+      @media (max-width: 500px) {
+        overflow-x: scroll;
+      }
     .hide-table {
       display: none;
     }
@@ -242,6 +248,7 @@ const WallWrapper = styled.div`
       text-align: left;
       overflow: hidden;
       font-size: 14px;
+      text-align: center;
       .mobile-header {
         display: none;
       }
@@ -283,12 +290,29 @@ const WallWrapper = styled.div`
       letter-spacing: 0.44px;
       color: #173049;
       opacity: 1;
+      @media (max-width: 400px) {
+        text-align: left;
+      }
     }
     .showing-search {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-right: 4rem;
+      @media (max-width: 400px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: left;
+        margin-bottom: 1rem;
+      }
+      @media (max-width: 500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: left;
+        margin-bottom: 1rem;
+      }
 
       .showing {
         font-family: MontserratRegular;
@@ -296,6 +320,12 @@ const WallWrapper = styled.div`
         color: #707070;
         opacity: 1;
         margin-left: 50px;
+        @media (max-width: 400px) {
+        margin-left: 0;
+      }
+      @media (max-width: 500px) {
+        margin-left: 0;
+      }
       }
       .search-input {
         position: relative;
@@ -305,6 +335,14 @@ const WallWrapper = styled.div`
         height: 1rem;
         padding: 0.2rem;
         outline: none;
+        @media (max-width: 400px) {
+        margin-bottom: 1rem;
+        margin-left: 0;
+      }
+      @media (max-width: 500px) {
+        margin-bottom: 1rem;
+        margin-left: 0;
+      }
       }
       .icon {
         position: absolute;

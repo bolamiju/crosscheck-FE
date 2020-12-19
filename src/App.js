@@ -13,6 +13,7 @@ import Terms from "./component/Terms";
 import Receipts from './component/dashboard/Receipts';
 import VerificationHistory from './component/dashboard/VerificationHistory';
 import EmailActivation from './component/dashboard/EmailActivation';
+import NotFound from './component/dashboard/NotFound'
 import { Route } from "react-router-dom";
 import "./component/auth/auth.css";
 
@@ -47,12 +48,13 @@ function App() {
       />
       <Route
         exact
-        path="/verification"
+        path="/history"
         component={(props) => withAuthCheck(MainContent, props)}
       />
       <Route exact path="/home" component={LandingPage} />
       <Route exact path="/terms" component={Terms} />
       <Route exact path="/active" component={EmailActivation} />
+      <Route component={NotFound} />
       <Route
         exact
         path="/receipts"
