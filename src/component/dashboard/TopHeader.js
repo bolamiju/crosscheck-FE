@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { getMessages, deleteMessage } from "../../state/actions/verifications";
+import { getUserMessages, deleteMessage } from "../../state/actions/verifications";
 import { BellFilled } from "@ant-design/icons";
 
 function TopHeader({ setShow, show }) {
@@ -22,7 +22,7 @@ function TopHeader({ setShow, show }) {
   };
 
   useEffect(() => {
-    dispatch(getMessages());
+    dispatch(getUserMessages(user?.email));
   }, [dispatch]);
 
   const handleFontChange = (font) => {
@@ -200,7 +200,6 @@ const HeadContainer = styled.div`
         left: 10%;
       }
       .message {
-        border-bottom: 1px solid #707070;
         padding-bottom: 1.2rem;
         button {
           float: right;
@@ -214,6 +213,10 @@ const HeadContainer = styled.div`
             font-weight: bolder;
           }
         }
+        /* h5 {
+          border-bottom: 1px solid #707070;
+          padding-bottom: 1rem;
+        } */
         p {
           letter-spacing: 0.32px;
           opacity: 1;

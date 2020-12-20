@@ -11,7 +11,7 @@ const NotFound = (props) => {
 };
 
 const PageWrapper = styled.div`
-background: var(--mainWhite);
+background-color: #0092e0;
 height: 100vh;    
 font-size: 1.5rem;
 align-items: center;
@@ -21,15 +21,14 @@ font-weight: normal;
 letter-spacing: 0.32px;
 opacity: 1;
 overflow: hidden;
+color: #ffffff;
 .display {
-    color: #707070;
     .text-danger {
         color: red;
     }
 }
 h3 {
     text-transform: capitalize;
-    color: var(--mainBlue);
     .text-danger {
         color: red;
     }

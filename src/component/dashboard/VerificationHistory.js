@@ -14,7 +14,7 @@ import {
 } from "../../state/actions/verifications";
 import Modal from "../FormModal";
 
-const EmailActivation = ({ history }) => {
+const VerificationHistory = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
@@ -357,4 +357,4 @@ const WallWrapper = styled.div`
   }
 `;
 
-export default EmailActivation;
+export default VerificationHistory;

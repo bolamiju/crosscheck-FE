@@ -55,12 +55,12 @@ const DashboardContent = ({ history }) => {
   }
 
   const filteredItems = institutions.filter((item) =>
-    item?.name?.includes(input)
+    item?.name?.toLowerCase().includes(input)
   );
   const filteredTable = allHistory?.filter((history) =>
     history[searchParameter]
-      ?.toLocaleLowerCase()
-      .includes(searchInput.toLocaleLowerCase())
+      ?.toLowerCase()
+      .includes(searchInput.toLowerCase())
   );
 
   const pageSize = 10;
@@ -208,7 +208,7 @@ const DashboardContent = ({ history }) => {
             </div>
           </div>
           {filteredItems.length > 0 && input.length > 0 && (
-            <div className="new-table">
+            <div className="new-table open">
               <table
                 cellSpacing="0"
                 cellPadding="0"
@@ -664,12 +664,19 @@ const RequisitionBody = styled.div`
     .hide-table {
       display: none;
     }
-
+    .open {
+      table {
+        td,
+        th {
+          text-align: left !important; 
+          background: red;
+        }
+      }
+    }
     table {
       margin: 0 auto;
       width: 95%;
       border-collapse: collapse;
-      text-align: center;
       overflow: hidden;
       font-size: 14px;
       .mobile-header {
