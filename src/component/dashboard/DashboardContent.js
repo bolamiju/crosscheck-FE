@@ -11,7 +11,7 @@ import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
-import { getAllInstitutions } from "../../state/actions/institutions";
+// import { fetchInstitutes } from "../../state/actions/institutions";
 import {
   getUserVerification,
   selectSchool,
@@ -19,12 +19,13 @@ import {
 } from "../../state/actions/verifications";
 import Modal from "../FormModal";
 import chat from "../../asset/comment.svg";
+import { search } from "./utils"
 
 const DashboardContent = ({ history }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [curentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { institutions } = useSelector((state) => state.institutions);
+  const { institutions,pageInfo } = useSelector((state) => state.institutions);
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
@@ -34,11 +35,32 @@ const DashboardContent = ({ history }) => {
   const [hideTable, setHideTable] = useState(false);
   const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
+  // const [institutions, setInstitutions] = useState([])
+  // const [pagesInfo,setPagesInfo] = useState({})
+  
   const user = JSON.parse(localStorage.getItem("user"));
+
+  console.log('institu',institutions)
+
+let offset = 0
+  const request = async (offset,limit) => {
+   return await search(`https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`)
+
+    // `setPagesInfo({totalPages:res.institutiontota})
+    // check the response object
+    // setInstitutions to the institutions
+    // save totalPages,page,totalDocs to state as an object. `
+  }
 
   useEffect(() => {
     dispatch(getUserTranscript(user.email));
-  }, [dispatch]);
+    if (input.length > 0) {
+      console.log('typed', input)
+      request(offset,15)
+    }
+  }, [dispatch, input]);
+
+
 
   const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
@@ -46,7 +68,7 @@ const DashboardContent = ({ history }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllInstitutions());
+    // dispatch(getAllInstitutions());
     dispatch(getUserVerification(user.email));
   }, [dispatch]);
 
@@ -54,26 +76,45 @@ const DashboardContent = ({ history }) => {
     setInput(e.target.value);
   }
 
-  const filteredItems = institutions.filter((item) =>
-    item?.name?.includes(input)
-  );
+  // const filteredItems = institutions.filter((item) =>
+  //   item?.name?.toLowerCase().includes(input)
+  // );
   const filteredTable = allHistory?.filter((history) =>
     history[searchParameter]
-      ?.toLocaleLowerCase()
-      .includes(searchInput.toLocaleLowerCase())
+      ?.toLowerCase()
+      .includes(searchInput.toLowerCase())
   );
 
-  const pageSize = 10;
-  const pagesCount = Math.ceil(filteredItems.length / pageSize);
+  const pageSize = 15;
+  const pagesCount =  pageInfo?.totalPages
+
+  
+  const pagesize = 15;
 
   const verificationsCount = Math.ceil(filteredTable.length / pageSize);
+console.log('pageinfo',pageInfo?.page)
+  const handlePrevious = (e) => {
 
-  const handleNavigation = (e, index) => {
     e.preventDefault();
-    if (index < 0 || index >= pagesCount) {
+    if (!pageInfo?.hasPrevPage) {
       return;
-    } else {
-      setCurrentPage(index);
+    }
+    else {
+offset -=15
+      request(offset,15)
+    }
+  };
+
+  
+  const handleNext = (e) => {
+
+    e.preventDefault();
+    if (!pageInfo?.hasNextPage) {
+      return;
+    }
+    else {
+offset +=15
+      request(offset,15)
     }
   };
 
@@ -81,7 +122,8 @@ const DashboardContent = ({ history }) => {
     e.preventDefault();
     if (index < 0 || index >= verificationsCount) {
       return;
-    } else {
+    }
+    else {
       setCurrentPage(index);
     }
   };
@@ -115,6 +157,7 @@ const DashboardContent = ({ history }) => {
   function handleSearchInput(e) {
     setSearchInput(e.target.value);
   }
+  const pageNos = pageInfo?.totalPages
 
   return (
     <DashboardLayout history={history}>
@@ -207,8 +250,8 @@ const DashboardContent = ({ history }) => {
               />
             </div>
           </div>
-          {filteredItems.length > 0 && input.length > 0 && (
-            <div className="new-table">
+          {institutions.length > 0 && input.length > 0 && (
+            <div className="new-table open">
               <table
                 cellSpacing="0"
                 cellPadding="0"
@@ -224,9 +267,7 @@ const DashboardContent = ({ history }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map((ite) => (
+                  {institutions.map((ite) => (
                       <tr onClick={() => handleSelected(ite)} key={ite.name}>
                         <th className="mobile-header">Number</th>
                         <td>{ite.name}</td>
@@ -246,37 +287,35 @@ const DashboardContent = ({ history }) => {
                   <p>
                     Showing{" "}
                     {
-                      filteredItems.slice(
-                        currentPage * pageSize,
-                        (currentPage + 1) * pageSize
-                      ).length
+                      institutions.length
                     }{" "}
-                    of {pagesCount} of entries
+                    of {pageInfo.totalDocs} of entries
                   </p>
                   <Pagination aria-label="Page navigation example">
                     <PaginationItem
-                      disabled={currentPage <= 0}
+                      disabled={!pageInfo?.hasPrevPage}
                       className="prev"
-                      onClick={(e) => handleNavigation(e, currentPage - 1)}
+                      onClick={(e) => handlePrevious(e)}
                     >
                       <PaginationLink previous href={() => false} />
                     </PaginationItem>
 
-                    {[...Array(pagesCount)].map((page, i) => (
+                    {[...Array(pageNos)].map((item,i) => 
+                    
                       <PaginationItem
-                        active={i === currentPage}
+                        active={i === (pageInfo?.page - 1)}
                         key={i}
-                        onClick={(e) => handleNavigation(e, i)}
+                        onClick={(e) => handleNext(e)}
                       >
                         <PaginationLink href={() => false}>
                           {i + 1}
                         </PaginationLink>
                       </PaginationItem>
-                    ))}
+                    )}
 
                     <PaginationItem
-                      disabled={currentPage >= pagesCount - 1}
-                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                      disabled={!pageInfo?.hasNextPage}
+                      onClick={(e) => handleNext(e)}
                     >
                       <PaginationLink
                         next
@@ -290,124 +329,7 @@ const DashboardContent = ({ history }) => {
             </div>
           )}
         </SelectSch>
-        {/* <Table> */}
-        <div className="new-table" id="tableScroll">
-          <p
-            className="history"
-            style={{ marginBottom: "45px", marginTop: "25px" }}
-          >
-            Verification history
-          </p>
-          <div className="showing-search">
-            <p className="showing">Showing ({filteredTable.length}) entries</p>
-            {searchParameter === "status" && (
-              <div className="search-input">
-                <input
-                  type="text"
-                  value={searchInput}
-                  onChange={handleSearchInput}
-                  placeholder="search"
-                />
-                <FontAwesomeIcon
-                  className="icon"
-                  icon={faSearch}
-                  style={{ fontSize: "15px" }}
-                />
-              </div>
-            )}
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th>Institution</th>
-                <th>Status</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody className="t-body">
-              {filteredTable.length > 0
-                ? filteredTable
-                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                  .map(
-                    ({
-                      date,
-                      firstName,
-                      lastName,
-                      institution,
-                      status,
-                      _id,
-                    }) => (
-                        <>
-                          <tr>
-                            <td>{date}</td>
-                            <td>{`${firstName}  ${lastName}`}</td>
-                            <td>{truncateString(institution)}</td>
-                            <td
-                              style={{
-                                color:
-                                  status === "completed"
-                                    ? "#7DC900"
-                                    : status === "pending"
-                                      ? "red"
-                                      : "orange",
-                              }}
-                            >
-                              {status}
-                            </td>
-                            <td onClick={() => handleOpen(_id)}>
-                              <img src={chat} alt="message" />
-                            </td>
-                          </tr>
-                          <tr className="space"></tr>
-                        </>
-                      )
-                  )
-                : ""}
-            </tbody>
-            <Modal open={open} onClose={handleClose} id={id} />
-          </table>
-          <div className="pagination-line">
-            <p>
-              Showing{" "}
-              {
-                filteredTable.slice(
-                  currentPage * pageSize,
-                  (currentPage + 1) * pageSize
-                ).length
-              }{" "}
-              of {verificationsCount} of entries
-            </p>
-            <Pagination aria-label="Page navigation example">
-              <PaginationItem
-                disabled={currentPage <= 0}
-                className="prev"
-                onClick={(e) => verificationsNavigation(e, currentPage - 1)}
-              >
-                <PaginationLink previous href={() => false} />
-              </PaginationItem>
-
-              {[...Array(verificationsCount)].map((page, i) => (
-                <PaginationItem
-                  active={i === currentPage}
-                  key={i}
-                  onClick={(e) => verificationsNavigation(e, i)}
-                >
-                  <PaginationLink href={() => false}>{i + 1}</PaginationLink>
-                </PaginationItem>
-              ))}
-
-              <PaginationItem
-                disabled={currentPage >= verificationsCount - 1}
-                onClick={(e) => verificationsNavigation(e, currentPage + 1)}
-              >
-                <PaginationLink next href={() => false} className="next" />
-              </PaginationItem>
-            </Pagination>
-          </div>
-        </div>
-        {/* </Table> */}
+      
       </RequisitionBody>
     </DashboardLayout>
   );
@@ -664,12 +586,19 @@ const RequisitionBody = styled.div`
     .hide-table {
       display: none;
     }
-
+    .open {
+      table {
+        td,
+        th {
+          text-align: left !important; 
+          background: red;
+        }
+      }
+    }
     table {
       margin: 0 auto;
       width: 95%;
       border-collapse: collapse;
-      text-align: center;
       overflow: hidden;
       font-size: 14px;
       .mobile-header {

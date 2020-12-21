@@ -87,9 +87,9 @@ export const getUserTranscript = (email) => async (dispatch) => {
 export const sendMessage = (message) =>
   axios.post(`${BASE_URL}/api/v1/message/sendMessage`, message);
 
-export const getMessages = () => async (dispatch) => {
+export const getUserMessages = (email) => async (dispatch) => {
   await axios
-    .get(`${BASE_URL}/api/v1/message`)
+    .get(`${BASE_URL}/api/v1/message/${email}`)
     .then(({ data }) => {
       dispatch(messages(data.message));
     })
