@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +10,8 @@ import { BellFilled } from "@ant-design/icons";
 
 function TopHeader({ setShow, show }) {
   const dispatch = useDispatch();
+    let route = useRouteMatch();
+
   const { messages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
   const [font, setFont] = useState("");
@@ -31,7 +34,15 @@ function TopHeader({ setShow, show }) {
   return (
     <div>
       <HeadContainer className="top-header">
-        <h5>search bar</h5>
+      {route && route.url === "/new" ? (
+        <h5>Education Check</h5>
+      ) : route && route.url === "/transcript" ? (
+        <h5>Transcript Order</h5>
+      ) : route && route.url === "/history" ? (
+          <h5>Verification History</h5>
+      ) : (
+        <h5>Dashboard</h5>
+      )}
         <div className="right-con">
           <div className="nots">
             <BellFilled
