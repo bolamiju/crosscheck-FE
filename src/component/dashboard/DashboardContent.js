@@ -49,11 +49,6 @@ const DashboardContent = ({ history }) => {
     return await search(
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
-
-    // `setPagesInfo({totalPages:res.institutiontota})
-    // check the response object
-    // setInstitutions to the institutions
-    // save totalPages,page,totalDocs to state as an object. `
   };
 
   useEffect(() => {
@@ -71,7 +66,7 @@ const DashboardContent = ({ history }) => {
       const { data } = await Axios.get(
         `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      console.log("res", data.institution);
+      // console.log("res", data.institution);
       const {
         totalDocs,
         totalPages,
@@ -87,13 +82,39 @@ const DashboardContent = ({ history }) => {
     },
     [country]
   );
+  const institutionByName = useCallback(
+    async (input, country, offset, limit) => {
+      const { data } = await Axios.get(
+        `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${input}/${offset}/${limit}`
+      );
+      console.log("res", data.institution.docs)
+
+      const {
+        totalDocs,
+        totalPages,
+        hasPrevPage,
+        hasNextPage,
+        page,
+      } = data.institution;
+      dispatch(fetchInstitutes(data.institution.docs.name));
+      dispatch(
+        setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      );
+
+    },[country, input]
+  )
 
   useEffect(() => {
     if (country !== "") {
-      console.log("country", country);
       institutionByCountry(country, offset, 15);
     }
   }, [dispatch, institutionByCountry, country, offset]);
+  
+  useEffect(() => {
+    if (country !== "" && input.length > 0) {
+      institutionByName(country, input, offset, 15)
+    }
+  }, [dispatch, institutionByCountry, country, offset, input])
 
   const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
