@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
-// import { fetchInstitutes } from "../../state/actions/institutions";
+import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import {
   getUserVerification,
   selectSchool,
@@ -19,13 +19,14 @@ import {
 } from "../../state/actions/verifications";
 import Modal from "../FormModal";
 import chat from "../../asset/comment.svg";
-import { search } from "./utils"
+import { search } from "./utils";
+import Axios from "axios";
 
 const DashboardContent = ({ history }) => {
   const [curentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { institutions,pageInfo } = useSelector((state) => state.institutions);
+  const { institutions, pageInfo } = useSelector((state) => state.institutions);
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
@@ -35,32 +36,64 @@ const DashboardContent = ({ history }) => {
   const [hideTable, setHideTable] = useState(false);
   const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
+  const [country, setCountry] = useState("");
   // const [institutions, setInstitutions] = useState([])
   // const [pagesInfo,setPagesInfo] = useState({})
-  
+
   const user = JSON.parse(localStorage.getItem("user"));
 
-  console.log('institu',institutions)
+  console.log("institu", institutions);
 
-let offset = 0
-  const request = async (offset,limit) => {
-   return await search(`https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`)
+  let offset = 0;
+  const request = async (offset, limit) => {
+    return await search(
+      `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+    );
 
     // `setPagesInfo({totalPages:res.institutiontota})
     // check the response object
     // setInstitutions to the institutions
     // save totalPages,page,totalDocs to state as an object. `
-  }
+  };
 
   useEffect(() => {
     dispatch(getUserTranscript(user.email));
     if (input.length > 0) {
-      console.log('typed', input)
-      request(offset,15)
+      console.log("typed", input);
+      request(offset, 15);
     }
   }, [dispatch, input]);
 
+  console.log("country", country);
 
+  const institutionByCountry = useCallback(
+    async (country, offset, limit) => {
+      const { data } = await Axios.get(
+        `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+      );
+      console.log("res", data.institution);
+      const {
+        totalDocs,
+        totalPages,
+        hasPrevPage,
+        hasNextPage,
+        page,
+      } = data.institution;
+      dispatch(fetchInstitutes(data.institution.docs));
+      dispatch(
+        setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [country]
+  );
+
+  useEffect(() => {
+    if (country !== "") {
+      console.log("country", country);
+      institutionByCountry(country, offset, 15);
+    }
+  }, [dispatch, institutionByCountry, country, offset]);
 
   const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
@@ -80,41 +113,33 @@ let offset = 0
   //   item?.name?.toLowerCase().includes(input)
   // );
   const filteredTable = allHistory?.filter((history) =>
-    history[searchParameter]
-      ?.toLowerCase()
-      .includes(searchInput.toLowerCase())
+    history[searchParameter]?.toLowerCase().includes(searchInput.toLowerCase())
   );
 
   const pageSize = 15;
-  const pagesCount =  pageInfo?.totalPages
+  const pagesCount = pageInfo?.totalPages;
 
-  
   const pagesize = 15;
 
   const verificationsCount = Math.ceil(filteredTable.length / pageSize);
-console.log('pageinfo',pageInfo?.page)
+  console.log("pageinfo", pageInfo?.page);
   const handlePrevious = (e) => {
-
     e.preventDefault();
     if (!pageInfo?.hasPrevPage) {
       return;
-    }
-    else {
-offset -=15
-      request(offset,15)
+    } else {
+      offset -= 15;
+      request(offset, 15);
     }
   };
 
-  
   const handleNext = (e) => {
-
     e.preventDefault();
     if (!pageInfo?.hasNextPage) {
       return;
-    }
-    else {
-offset +=15
-      request(offset,15)
+    } else {
+      offset += 15;
+      request(offset, 15);
     }
   };
 
@@ -122,8 +147,7 @@ offset +=15
     e.preventDefault();
     if (index < 0 || index >= verificationsCount) {
       return;
-    }
-    else {
+    } else {
       setCurrentPage(index);
     }
   };
@@ -157,7 +181,7 @@ offset +=15
   function handleSearchInput(e) {
     setSearchInput(e.target.value);
   }
-  const pageNos = pageInfo?.totalPages
+  const pageNos = pageInfo?.totalPages;
 
   return (
     <DashboardLayout history={history}>
@@ -247,10 +271,19 @@ offset +=15
                   fontSize: "14px",
                   fontFamily: "MontserratItalic",
                 }}
+                name="country"
+                id="country"
+                className="country"
+                valueType="full"
+                value={country}
+                onChange={(_, e) => {
+                  console.log(e.target.value);
+                  setCountry(e.target.value.toLowerCase());
+                }}
               />
             </div>
           </div>
-          {institutions.length > 0 && input.length > 0 && (
+          {institutions.length > 0 && (
             <div className="new-table open">
               <table
                 cellSpacing="0"
@@ -268,28 +301,25 @@ offset +=15
                 </thead>
                 <tbody>
                   {institutions.map((ite) => (
-                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                        <th className="mobile-header">Number</th>
-                        <td>{ite.name}</td>
-                        <th className="mobile-header">Market rate</th>
-                        <td>{ite.country}</td>
-                        <th className="mobile-header">Weight</th>
-                        <td>{ite.category}</td>
-                        <th className="mobile-header">Value</th>
-                        <td>{ite.amount}</td>
-                      </tr>
-                      // <tr className="space"></tr>
-                    ))}
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                      <th className="mobile-header">Number</th>
+                      <td>{ite.name}</td>
+                      <th className="mobile-header">Market rate</th>
+                      <td>{ite.country}</td>
+                      <th className="mobile-header">Weight</th>
+                      <td>{ite.category}</td>
+                      <th className="mobile-header">Value</th>
+                      <td>{ite.amount}</td>
+                    </tr>
+                    // <tr className="space"></tr>
+                  ))}
                 </tbody>
               </table>
               {!hideTable && (
                 <div className="pagination-line">
                   <p>
-                    Showing{" "}
-                    {
-                      institutions.length
-                    }{" "}
-                    of {pageInfo.totalDocs} of entries
+                    Showing {institutions.length} of {pageInfo.totalDocs} of
+                    entries
                   </p>
                   <Pagination aria-label="Page navigation example">
                     <PaginationItem
@@ -300,10 +330,9 @@ offset +=15
                       <PaginationLink previous href={() => false} />
                     </PaginationItem>
 
-                    {[...Array(pageNos)].map((item,i) => 
-                    
+                    {[...Array(pageNos)].map((item, i) => (
                       <PaginationItem
-                        active={i === (pageInfo?.page - 1)}
+                        active={i === pageInfo?.page - 1}
                         key={i}
                         onClick={(e) => handleNext(e)}
                       >
@@ -311,7 +340,7 @@ offset +=15
                           {i + 1}
                         </PaginationLink>
                       </PaginationItem>
-                    )}
+                    ))}
 
                     <PaginationItem
                       disabled={!pageInfo?.hasNextPage}
@@ -329,7 +358,6 @@ offset +=15
             </div>
           )}
         </SelectSch>
-      
       </RequisitionBody>
     </DashboardLayout>
   );
@@ -590,7 +618,7 @@ const RequisitionBody = styled.div`
       table {
         td,
         th {
-          text-align: left !important; 
+          text-align: left !important;
           background: red;
         }
       }
@@ -644,10 +672,10 @@ const RequisitionBody = styled.div`
       color: #173049;
       opacity: 1;
     }
-    @media (max-width: 400px){
+    @media (max-width: 400px) {
       text-align: center;
     }
-    @media (max-width: 500px){
+    @media (max-width: 500px) {
       text-align: center;
     }
     .showing-search {
@@ -675,37 +703,37 @@ const RequisitionBody = styled.div`
         opacity: 1;
         margin-left: 50px;
         @media (max-width: 400px) {
-        margin-left: 0;
-      }
-      @media (max-width: 500px) {
-        margin-left: 0;
-      }
+          margin-left: 0;
+        }
+        @media (max-width: 500px) {
+          margin-left: 0;
+        }
       }
       .search-input {
         position: relative;
         padding: 0.5rem;
 
         input {
-        height: 1rem;
-        padding: 0.2rem;
-        outline: none;
+          height: 1rem;
+          padding: 0.2rem;
+          outline: none;
+        }
+        @media (max-width: 400px) {
+          margin-bottom: 1rem;
+          margin-left: 0;
+        }
+        @media (max-width: 500px) {
+          margin-bottom: 1rem;
+          margin-left: 0;
+        }
+        .icon {
+          position: absolute;
+          top: 30%;
+          right: 5%;
+          opacity: 0.7;
+          color: #2c3e50;
+        }
       }
-      @media (max-width: 400px) {
-        margin-bottom: 1rem;
-        margin-left: 0;
-      }
-      @media (max-width: 500px) {
-        margin-bottom: 1rem;
-        margin-left: 0;
-      }
-      .icon {
-        position: absolute;
-        top: 30%;
-        right:5%;
-        opacity: 0.7;
-        color: #2C3E50;
-      }
-    }
     }
   }
 
