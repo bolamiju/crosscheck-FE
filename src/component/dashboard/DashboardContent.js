@@ -85,7 +85,7 @@ const DashboardContent = ({ history }) => {
   const institutionByName = useCallback(
     async (input, country, offset, limit) => {
       const { data } = await Axios.get(
-        `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${input}/${offset}/${limit}`
+        `https://croscheck.herokuapp.com/api/v1/institutions/countryandName=\/${country}/${input}/${offset}/${limit}`
       );
       console.log("res", data.institution.docs)
 
