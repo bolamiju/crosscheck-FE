@@ -51,18 +51,18 @@ const DashboardContent = ({ history }) => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const request = async (offset, limit) => {
-    return await search(
-      `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
-    );
-  };
+  const request = useCallback(
+    async (offset, limit) => {
+      return await search(
+        `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+      );
+    },
+    [offset, input]
+  );
   console.log("offset", offset);
   useEffect(() => {
     dispatch(getUserTranscript(user.email));
-    if (input.length > 0) {
-      request(offset, 15);
-    }
-  }, [dispatch, input]);
+  }, [dispatch]);
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
@@ -116,11 +116,16 @@ const DashboardContent = ({ history }) => {
     if (country !== "" && input.length > 0) {
       countryAndName(country, byCountryandNameoffset, 15, input);
     }
+    if (input.length > 0 && country.length === 0) {
+      request(offset, 15);
+    }
   }, [
     dispatch,
     institutionByCountry,
     byCountryandNameoffset,
     input,
+    request,
+    offset,
     byCountryOffset,
     country,
     countryAndName,
@@ -344,40 +349,9 @@ const DashboardContent = ({ history }) => {
                     Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
-                  {/* <Pagination aria-label="Page navigation example">
-                    <PaginationItem
-                      disabled={!pageInfo?.hasPrevPage}
-                      className="prev"
-                      onClick={(e) => handlePrevious(e)}
-                    >
-                      <PaginationLink previous href={() => false} />
-                    </PaginationItem>
 
-                    {[...Array(pageNos)].map((item, i) => (
-                      <PaginationItem
-                        active={i === pageInfo?.page - 1}
-                        key={i}
-                        onClick={(e) => handleNext(e)}
-                      >
-                        <PaginationLink href={() => false}>
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem
-                      disabled={!pageInfo?.hasNextPage}
-                      onClick={(e) => handleNext(e)}
-                    >
-                      <PaginationLink
-                        next
-                        href={() => false}
-                        className="next"
-                      />
-                    </PaginationItem>
-                  </Pagination> */}
                   <ReactPaginate
-                    previousLabel={"previous"}
+                    previousLabel={"prev"}
                     nextLabel={"next"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
