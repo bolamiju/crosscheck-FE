@@ -23,7 +23,6 @@ import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
-import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
 
@@ -37,7 +36,6 @@ function VerificationForm({
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
@@ -55,18 +53,22 @@ function VerificationForm({
   const [country, setCountry] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const request = async (offset, limit) => {
-    return await search(
-      `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
-    );
-  };
-  console.log("offset", offset);
+  const request = useCallback(
+    async (offset, limit) => {
+      return await search(
+        `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [offset, input]
+  );
 
   useEffect(() => {
-    if (input.length > 0) {
-      request(offset, 15);
-    }
-  }, [dispatch, input]);
+    console.log("clean up");
+    dispatch(fetchInstitutes([]));
+    dispatch(setPageInfo({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
@@ -85,8 +87,8 @@ function VerificationForm({
       dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
       );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [offset, country]
   );
   const countryAndName = useCallback(
@@ -94,47 +96,32 @@ function VerificationForm({
       await search(
         `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
-      console.log("res", input);
-
-      // const {
-      //   totalDocs,
-      //   totalPages,
-      //   hasPrevPage,
-      //   hasNextPage,
-      //   page,
-      // } = data.institution;
-      // dispatch(fetchInstitutes(data.institution.docs.name));
-      // dispatch(
-      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
-      // );
-      console.log("in usecallback");
     },
-    [country,offset, input]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [country, offset, input]
   );
 
   useEffect(() => {
-    console.log("in useeffect");
     if (country !== "" && input.length === 0) {
       institutionByCountry(country, byCountryOffset, 15);
     }
     if (country !== "" && input.length > 0) {
       countryAndName(country, byCountryandNameoffset, 15, input);
     }
+    if (input.length > 0 && country.length === 0) {
+      request(offset, 15);
+    }
   }, [
     dispatch,
     institutionByCountry,
     byCountryandNameoffset,
     input,
+    request,
+    offset,
     byCountryOffset,
     country,
     countryAndName,
   ]);
-
-
-
-
-
-  const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
 
   const handleInputChange = (e) => {
@@ -142,25 +129,15 @@ function VerificationForm({
     setHideTable(false);
   };
 
- 
   const handleSelected = (institute) => {
-    dispatch(selectSchool(institute));
+    setSelectedInst(institute);
+    formik.setFieldValue("institution", institute.name);
     setHideTable(true);
     setInput(institute.name);
     setSchCard(true);
   };
 
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (!pageInfo?.hasPrevPage) {
-      return;
-    } else {
-      offset -= 15;
-      // request(offset, 15);
-    }
-  };
-
-  const handleNext = (data) => {
+  const institutionNavs = (data) => {
     console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
@@ -170,10 +147,6 @@ function VerificationForm({
       setOffset((prev) => Math.ceil(data.selected * 15));
     }
   };
-  
-  const pageNos = pageInfo?.totalPages;
-  
- 
 
   const formik = useFormik({
     initialValues,
@@ -316,7 +289,7 @@ function VerificationForm({
           <div className="selects">
             <div className="institution-wrapper">
               <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-               <input
+              <input
                 type="text"
                 className="schl-input"
                 onChange={handleInputChange}
@@ -351,7 +324,7 @@ function VerificationForm({
               />
             </div>
           </div>
-          {institutions.length > 0 && (
+          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
             <div className="new-table">
               <table
                 cellSpacing="0"
@@ -363,24 +336,24 @@ function VerificationForm({
                   <tr>
                     <th>Name</th>
                     <th>Country</th>
-                    <th>category rate</th>
-                    <th>amount</th>
+                    <th>Our charge</th>
+                    <th>Institute charge</th>
                   </tr>
                 </thead>
                 <tbody>
-                {institutions.map((ite) => (
-                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                        <th className="mobile-header">Number</th>
-                        <td>{ite.name}</td>
-                        <th className="mobile-header">Market rate</th>
-                        <td>{ite.country}</td>
-                        <th className="mobile-header">Weight</th>
-                        <td>{ite.category}</td>
-                        <th className="mobile-header">Value</th>
-                        <td>{ite.amount}</td>
-                      </tr>
-                      // <tr className="space"></tr>
-                    ))}
+                  {institutions.map((ite) => (
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                      <th className="mobile-header">Number</th>
+                      <td>{ite.name}</td>
+                      <th className="mobile-header">Market rate</th>
+                      <td>{ite.country}</td>
+                      <th className="mobile-header">Weight</th>
+                      <td>{ite["our_charge"]}</td>
+                      <th className="mobile-header">Value</th>
+                      <td>{ite["institute_charge"]}</td>
+                    </tr>
+                    // <tr className="space"></tr>
+                  ))}
                 </tbody>
               </table>
               {!hideTable && (
@@ -389,38 +362,7 @@ function VerificationForm({
                     Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
-                  {/* <Pagination aria-label="Page navigation example">
-                    <PaginationItem
-                        disabled={!pageInfo?.hasPrevPage}
-                        className="prev"
-                        onClick={(e) => handlePrevious(e)}
-                    >
-                      <PaginationLink previous href={() => false} />
-                    </PaginationItem>
 
-                    {[...Array(pageNos)].map((item, i) => (
-                      <PaginationItem
-                      active={i === pageInfo?.page - 1}
-                      key={i}
-                      onClick={(e) => handleNext(e)}
-                      >
-                        <PaginationLink href={() => false}>
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem
-                        disabled={!pageInfo?.hasNextPage}
-                        onClick={(e) => handleNext(e)}
-                    >
-                      <PaginationLink
-                        next
-                        href={() => false}
-                        className="next"
-                      />
-                    </PaginationItem>
-                  </Pagination> */}
                   <ReactPaginate
                     previousLabel={"previous"}
                     nextLabel={"next"}
@@ -429,7 +371,7 @@ function VerificationForm({
                     pageCount={pagesCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
-                    onPageChange={(e) => handleNext(e)}
+                    onPageChange={(e) => institutionNavs(e)}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
@@ -625,7 +567,6 @@ function VerificationForm({
                     checked={formik.values.enrollmentStatus}
                     onChange={(checked, e) => {
                       formik.setFieldValue("enrollmentStatus", checked);
-                      console.log(checked);
                     }}
                     value={formik.values.enrollmentStatus}
                     name="enrollmentStatus"

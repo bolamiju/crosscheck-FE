@@ -14,7 +14,6 @@ import styled from "styled-components";
 import arrow from "../../asset/arrow-right.svg";
 import account from "../../asset/icon_account.svg";
 import qualifications from "../../asset/qualification.svg";
-import document from "../../asset/document-attach.svg";
 import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
@@ -27,7 +26,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
@@ -119,10 +117,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     countryAndName,
   ]);
 
-
-
-
-
   const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
 
@@ -131,7 +125,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     setHideTable(false);
   };
 
- 
   const handleSelected = (institute) => {
     dispatch(selectSchool(institute));
     setHideTable(true);
@@ -160,9 +153,8 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     }
   };
 
-  
   const pageNos = pageInfo?.totalPages;
-  
+
   const formik = useFormik({
     initialValues,
 
@@ -337,19 +329,19 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   </tr>
                 </thead>
                 <tbody>
-                {institutions.map((ite) => (
-                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                        <th className="mobile-header">Number</th>
-                        <td>{ite.name}</td>
-                        <th className="mobile-header">Market rate</th>
-                        <td>{ite.country}</td>
-                        <th className="mobile-header">Weight</th>
-                        <td>{ite.category}</td>
-                        <th className="mobile-header">Value</th>
-                        <td>{ite.amount}</td>
-                      </tr>
-                      // <tr className="space"></tr>
-                    ))}
+                  {institutions.map((ite) => (
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                      <th className="mobile-header">Number</th>
+                      <td>{ite.name}</td>
+                      <th className="mobile-header">Market rate</th>
+                      <td>{ite.country}</td>
+                      <th className="mobile-header">Weight</th>
+                      <td>{ite.category}</td>
+                      <th className="mobile-header">Value</th>
+                      <td>{ite.amount}</td>
+                    </tr>
+                    // <tr className="space"></tr>
+                  ))}
                 </tbody>
               </table>
               {!hideTable && (
@@ -390,7 +382,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                       />
                     </PaginationItem>
                     </Pagination> */}
-                    <ReactPaginate
+                  <ReactPaginate
                     previousLabel={"previous"}
                     nextLabel={"next"}
                     breakLabel={"..."}
@@ -757,23 +749,27 @@ function TranscriptForm({ initialValues, updateFormValues }) {
               </Field>
 
               <div className="btns">
-              <button
-                className="btn-prev"
-                type="submmit"
-                onClick={() => {
-                  setActiveTab("individual-details");
-                  setPay(true);
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faLongArrowAltLeft}
-                  style={{ paddingRight: "5px", fontSize: "20px" }}
-                />
-                Previous
-              </button>
-              <button pay={pay} onClick={submitRequest} className="btn submit">
-                Submit details
-              </button>
+                <button
+                  className="btn-prev"
+                  type="submmit"
+                  onClick={() => {
+                    setActiveTab("individual-details");
+                    setPay(true);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faLongArrowAltLeft}
+                    style={{ paddingRight: "5px", fontSize: "20px" }}
+                  />
+                  Previous
+                </button>
+                <button
+                  pay={pay}
+                  onClick={submitRequest}
+                  className="btn submit"
+                >
+                  Submit details
+                </button>
               </div>
             </FormDiv>
           )}
@@ -815,13 +811,12 @@ const FormContainer = styled.div`
   .btns {
     @media (max-width: 400px) {
       display: flex;
-    justify-content: space-between;
+      justify-content: space-between;
     }
     @media (max-width: 500px) {
       display: flex;
-    justify-content: space-between;
+      justify-content: space-between;
     }
-   
   }
   .btn {
     float: right;
@@ -839,8 +834,8 @@ const FormContainer = styled.div`
     outline: none;
     border-color: #0092e0;
     @media (max-width: 400px) {
-     margin-left: 3rem;
-     /* margin-right: -1rem; */
+      margin-left: 3rem;
+      /* margin-right: -1rem; */
     }
   }
   .btn-prev {
@@ -961,7 +956,6 @@ const FormDiv = styled.div`
   .submit {
     width: 120px;
     @media (max-width: 500px) {
-      
     }
   }
   .notallowed {

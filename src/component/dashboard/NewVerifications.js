@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,7 +21,7 @@ import {
 } from "../../state/actions/verifications";
 import VerificationForm from "./VerificationForm";
 
-import Pdf from 'react-to-pdf';
+import Pdf from "react-to-pdf";
 import { PaystackButton } from "react-paystack";
 
 const request = (data) =>
@@ -64,7 +64,6 @@ const NewVerifications = () => {
   };
   let [isBlocking, setIsBlocking] = useState(true);
 
-
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
   const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -74,9 +73,7 @@ const NewVerifications = () => {
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
 
-  const [formValues, setFormValues] = useState([
-    { ...formData, id: date },
-  ]);
+  const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
 
   const [requestList, setRequestList] = useState(false);
 
@@ -301,11 +298,27 @@ const NewVerifications = () => {
                     </td>
                     <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
                   </tbody>
-              </table>
-              <Pdf targetRef={ref} filename="receipt.pdf">
-                {({ toPdf }) => <button style={{ backgroundColor: "#0092e0", border: "none", padding: "0.8rem", color: "#ffffff", float: "right",  marginRight:"1.5rem", borderRadius: "15px", outline: "none", cursor: "pointer" }}
-                    onClick={toPdf}>Print Invoice</button>}
-              </Pdf>
+                </table>
+                <Pdf targetRef={ref} filename="receipt.pdf">
+                  {({ toPdf }) => (
+                    <button
+                      style={{
+                        backgroundColor: "#0092e0",
+                        border: "none",
+                        padding: "0.8rem",
+                        color: "#ffffff",
+                        float: "right",
+                        marginRight: "1.5rem",
+                        borderRadius: "15px",
+                        outline: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={toPdf}
+                    >
+                      Print Invoice
+                    </button>
+                  )}
+                </Pdf>
               </div>
               <div className="buttons">
                 <button

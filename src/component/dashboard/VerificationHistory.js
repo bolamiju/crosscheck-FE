@@ -1,7 +1,6 @@
 import React from "react";
-import VerificationContent from './VerificationContent';
+import VerificationContent from "./VerificationContent";
 import DashboardLayout from "./DashboardLayout";
-
 
 const VerificationHistory = ({ history }) => {
   return (
@@ -10,6 +9,5 @@ const VerificationHistory = ({ history }) => {
     </DashboardLayout>
   );
 };
-
 
 export default VerificationHistory;

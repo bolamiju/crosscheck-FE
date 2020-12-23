@@ -5,12 +5,15 @@ import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { getUserMessages, deleteMessage } from "../../state/actions/verifications";
+import {
+  getUserMessages,
+  deleteMessage,
+} from "../../state/actions/verifications";
 import { BellFilled } from "@ant-design/icons";
 
 function TopHeader({ setShow, show }) {
   const dispatch = useDispatch();
-    let route = useRouteMatch();
+  let route = useRouteMatch();
 
   const { messages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
@@ -18,14 +21,13 @@ function TopHeader({ setShow, show }) {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-
-
   const handleMenuIcon = () => {
     setShow(!show);
   };
 
   useEffect(() => {
     dispatch(getUserMessages(user?.email));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const handleFontChange = (font) => {
@@ -34,17 +36,17 @@ function TopHeader({ setShow, show }) {
   return (
     <div>
       <HeadContainer className="top-header">
-      {route && route.url === "/new" ? (
-        <h5>Education Check</h5>
-      ) : route && route.url === "/transcript" ? (
-        <h5>Transcript Order</h5>
-      ) : route && route.url === "/history" ? (
+        {route && route.url === "/new" ? (
+          <h5>Education Check</h5>
+        ) : route && route.url === "/transcript" ? (
+          <h5>Transcript Order</h5>
+        ) : route && route.url === "/history" ? (
           <h5>Verification History</h5>
-      ) : route && route.url === "/receipts" ? (
+        ) : route && route.url === "/receipts" ? (
           <h5>Receipts</h5>
-      ) : (
+        ) : (
           <h5>Dashboard</h5>
-      )}
+        )}
         <div className="right-con">
           <div className="nots">
             <BellFilled
@@ -152,11 +154,11 @@ const HeadContainer = styled.div`
     align-items: center;
     .user-avatar {
       @media screen and (max-width: 500px) {
-      display: none;
-    }
-    @media screen and (max-width: 400px) {
-      display: none;
-    }
+        display: none;
+      }
+      @media screen and (max-width: 400px) {
+        display: none;
+      }
     }
   }
   .bell {

@@ -15,22 +15,16 @@ import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
-import VerificationContent from './VerificationContent';
+import VerificationContent from "./VerificationContent";
 
 const DashboardContent = ({ history }) => {
-  const [curentPage, setCurrentPage] = useState(0);
-
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
   const [input, setInput] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-  const [id, setId] = useState("");
   const [hideTable, setHideTable] = useState(false);
-  const [searchParameter] = useState("status");
-  const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState(0);
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
@@ -45,28 +39,21 @@ const DashboardContent = ({ history }) => {
     }),
   });
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   const request = useCallback(
     async (offset, limit) => {
       return await search(
         `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [offset, input]
   );
-  console.log("offset", offset);
-  useEffect(() => {
-
-    dispatch(getUserTranscript(user.email));
-  }, [dispatch]);
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
         `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      // console.log("res", data.institution);
       const {
         totalDocs,
         totalPages,
@@ -78,8 +65,8 @@ const DashboardContent = ({ history }) => {
       dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
       );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [offset, country]
   );
   const countryAndName = useCallback(
@@ -87,26 +74,19 @@ const DashboardContent = ({ history }) => {
       await search(
         `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
-      console.log("res", input);
-
-      // const {
-      //   totalDocs,
-      //   totalPages,
-      //   hasPrevPage,
-      //   hasNextPage,
-      //   page,
-      // } = data.institution;
-      // dispatch(fetchInstitutes(data.institution.docs.name));
-      // dispatch(
-      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
-      // );
-      console.log("in usecallback");
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [country, offset, input]
   );
 
   useEffect(() => {
-    console.log("in useeffect");
+    console.log("clean up");
+    dispatch(fetchInstitutes([]));
+    dispatch(setPageInfo({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (country !== "" && input.length === 0) {
       institutionByCountry(country, byCountryOffset, 15);
     }
@@ -134,26 +114,9 @@ const DashboardContent = ({ history }) => {
     setInput(e.target.value);
   }
 
-  const filteredTable = allHistory?.filter((history) =>
-    history[searchParameter]?.toLowerCase().includes(searchInput.toLowerCase())
-  );
-
-  const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
 
-  // const pagesize = 15;
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (!pageInfo?.hasPrevPage) {
-      return;
-    } else {
-      offset -= 15;
-      // request(offset, 15);
-    }
-  };
-
   const handleNext = (data) => {
-    console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
     } else if (country !== "" && input.length > 0) {
@@ -169,16 +132,6 @@ const DashboardContent = ({ history }) => {
     setInput(institute.name);
     history.push("/new");
   };
-
- 
-
-  function handleInputChange(e) {
-    setInput(e.target.value);
-  }
-  // function handleSearchInput(e) {
-  //   setSearchInput(e.target.value);
-  // }
-  const pageNos = pageInfo?.totalPages;
 
   return (
     <DashboardLayout history={history}>
@@ -617,14 +570,11 @@ const RequisitionBody = styled.div`
         }
       }
 
-     
-
       th {
         background-color: #1e2a36;
         color: white;
       }
 
-     
       tr {
         cursor: pointer;
         &:nth-child(odd) {
@@ -707,8 +657,7 @@ const RequisitionBody = styled.div`
     }
   }
 
- .spacer {
-   margin-top: 4rem;
- }
+  .spacer {
+    margin-top: 4rem;
+  }
 `;
-

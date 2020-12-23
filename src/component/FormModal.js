@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -52,11 +52,9 @@ const FormModal = ({ open, onClose, id }) => {
               values,
               touched,
               errors,
-              isSubmitting,
               handleChange,
               handleBlur,
               handleSubmit,
-              resetForm,
             } = props;
             return (
               <form className="form" onSubmit={handleSubmit}>
@@ -89,7 +87,11 @@ const FormModal = ({ open, onClose, id }) => {
                   <div className="input-feedback">{errors.message}</div>
                 )}
                 <button className="button" type="submit">
-                  send message <FontAwesomeIcon icon={faLongArrowAltRight} style={{marginLeft: "1.5rem", fontSize: "1.5rem"}} />
+                  send message{" "}
+                  <FontAwesomeIcon
+                    icon={faLongArrowAltRight}
+                    style={{ marginLeft: "1.5rem", fontSize: "1.5rem" }}
+                  />
                 </button>
               </form>
             );
@@ -192,7 +194,7 @@ const ModalWrapper = styled.div`
       cursor: pointer;
       outline: none;
       margin-top: 20px;
-      font-size: 1.2rem
+      font-size: 1.2rem;
     }
     .input-feedback {
       color: red;

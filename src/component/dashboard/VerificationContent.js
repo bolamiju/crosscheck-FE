@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getAllInstitutions } from "../../state/actions/institutions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import chat from "../../asset/comment.svg";
@@ -14,200 +13,197 @@ import {
 import Modal from "../FormModal";
 
 const VerificationContent = () => {
+  const [currentPage, setCurrentPage] = useState(0);
 
-    const [currentPage, setCurrentPage] = useState(0);
+  const dispatch = useDispatch();
+  const { userVerifications, newTranscript } = useSelector(
+    (state) => state.verifications
+  );
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [id, setId] = useState("");
+  const [searchParameter] = useState("status");
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    const dispatch = useDispatch();
-    const { userVerifications, newTranscript } = useSelector(
-      (state) => state.verifications
-    );
-    const [open, setOpen] = useState(false);
-    const [input, setInput] = useState("");
-    const [id, setId] = useState("");
-    const [searchParameter] = useState("status");
-    const user = JSON.parse(localStorage.getItem("user"));
-  
-    useEffect(() => {
-      dispatch(getUserTranscript(user.email));
-    }, [dispatch]);
-  
-    const allHistory = userVerifications.concat(newTranscript);
-    useEffect(() => {
-      dispatch(getUserVerification(user.email));
-    }, [dispatch]);
-  
-    useEffect(() => {
-      dispatch(getAllInstitutions());
-      dispatch(getUserVerification(user.email));
-    }, [dispatch]);
-  
-  
-  
-  
-    const verificationsNavigation = (e, index) => {
-      e.preventDefault();
-      if (index < 0 || index >= verificationsCount) {
-        return;
-      } else {
-        setCurrentPage(index);
-      }
-    };
-  
-    const filteredItems = allHistory?.filter((history) =>
-      history[searchParameter]
-        ?.toLocaleLowerCase()
-        .includes(input.toLocaleLowerCase())
-    );
-  
-    const pageSize = 10;
-  
-    const verificationsCount = Math.ceil(filteredItems.length / pageSize);
-  
-    const handleOpen = (id) => {
-      setOpen(true);
-      setId(id)
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-  
-    function handleInputChange(e) {
-      setInput(e.target.value);
+  useEffect(() => {
+    dispatch(getUserTranscript(user.email));
+    dispatch(getUserVerification(user.email));
+  }, [dispatch, user.email]);
+
+  const allHistory = userVerifications.concat(newTranscript);
+
+  const verificationsNavigation = (e, index) => {
+    e.preventDefault();
+    if (index < 0 || index >= verificationsCount) {
+      return;
+    } else {
+      setCurrentPage(index);
     }
-  
-    const truncateString = (str) => {
-      if (str.length <= 24) {
-        return str;
-      }
-      return str.slice(0, 32) + "...";
-    };
+  };
 
-    return (
-        <div>
-            <WallWrapper>
-                <h6>verification history</h6>
-                {/* <Table> */}
-                <div className="new-table" id="tableScroll">
-                    <p
-                        className="history"
-                        style={{ marginBottom: "45px", marginTop: "25px" }}
-                    >
-                        Verification history
+  const filteredItems = allHistory?.filter((history) =>
+    history[searchParameter]
+      ?.toLocaleLowerCase()
+      .includes(input.toLocaleLowerCase())
+  );
+
+  const pageSize = 10;
+
+  const verificationsCount = Math.ceil(filteredItems.length / pageSize);
+
+  const handleOpen = (id) => {
+    setOpen(true);
+    setId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function handleInputChange(e) {
+    setInput(e.target.value);
+  }
+
+  const truncateString = (str) => {
+    if (str.length <= 24) {
+      return str;
+    }
+    return str.slice(0, 32) + "...";
+  };
+
+  return (
+    <div>
+      {/* <h6>verification history</h6> */}
+      <WallWrapper>
+        {/* <Table> */}
+        <div className="new-table" id="tableScroll">
+          <p
+            className="history"
+            style={{ marginBottom: "45px", marginTop: "25px" }}
+          >
+            Verification history
           </p>
-                    <div className="showing-search">
-                        <p className="showing">Showing ({filteredItems.length}) entries</p>
-                        {searchParameter === "status" && (
-                            <div className="search-input">
-                                <input
-                                    type="text"
-                                    value={input}
-                                    onChange={handleInputChange}
-                                    placeholder="search"
-                                />
-                                <FontAwesomeIcon
-                                    className="icon"
-                                    icon={faSearch}
-                                    style={{ fontSize: "15px" }}
-                                />
-                            </div>
-                        )}
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Institution</th>
-                                <th>Status</th>
-                                <th>message</th>
-                            </tr>
-                        </thead>
-                        <tbody className="t-body">
-                            {filteredItems.length > 0
-                                ? filteredItems
-                                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                                    .map(
-                                        ({ status, firstName, lastName, institution, date, _id }) => (
-                                            <>
-                                                <tr>
-                                                    <td>{date}</td>
-                                                    <td>{`${firstName}  ${lastName}`}</td>
-                                                    <td>{truncateString(institution)}</td>
-                                                    <td
-                                                        style={{
-                                                            color:
-                                                                status === "completed"
-                                                                    ? "#7DC900"
-                                                                    : status === "pending"
-                                                                        ? "red"
-                                                                        : "orange",
-                                                        }}
-                                                    >
-                                                        {status}
-                                                    </td>
-                                                    <td onClick={() => handleOpen(_id)}>
-                                                        <img src={chat} alt="message" />
-                                                    </td>
-                                                </tr>
-                                                <tr className="space"></tr>
-                                            </>
-                                        )
-                                    )
-                                : ""}
-                        </tbody>
-                        <Modal open={open} onClose={handleClose} id={id} />
-                    </table>
-                    <div className="pagination-line">
-                        <p>
-                            Showing{" "}
-                            {
-                                filteredItems.slice(
-                                    currentPage * pageSize,
-                                    (currentPage + 1) * pageSize
-                                ).length
-                            }{" "}
+          <div className="showing-search">
+            <p className="showing">Showing ({filteredItems.length}) entries</p>
+            {searchParameter === "status" && (
+              <div className="search-input">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={handleInputChange}
+                  placeholder="search"
+                />
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faSearch}
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
+            )}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Institution</th>
+                <th>Status</th>
+                <th>message</th>
+              </tr>
+            </thead>
+            <tbody className="t-body">
+              {filteredItems.length > 0
+                ? filteredItems
+                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                    .map(
+                      ({
+                        status,
+                        firstName,
+                        lastName,
+                        institution,
+                        date,
+                        _id,
+                      }) => (
+                        <>
+                          <tr>
+                            <td>{date}</td>
+                            <td>{`${firstName}  ${lastName}`}</td>
+                            <td>{truncateString(institution)}</td>
+                            <td
+                              style={{
+                                color:
+                                  status === "completed"
+                                    ? "#7DC900"
+                                    : status === "pending"
+                                    ? "red"
+                                    : "orange",
+                              }}
+                            >
+                              {status}
+                            </td>
+                            <td onClick={() => handleOpen(_id)}>
+                              <img src={chat} alt="message" />
+                            </td>
+                          </tr>
+                          <tr className="space"></tr>
+                        </>
+                      )
+                    )
+                : ""}
+            </tbody>
+            <Modal open={open} onClose={handleClose} id={id} />
+          </table>
+          <div className="pagination-line">
+            <p>
+              Showing{" "}
+              {
+                filteredItems.slice(
+                  currentPage * pageSize,
+                  (currentPage + 1) * pageSize
+                ).length
+              }{" "}
               of {verificationsCount} of entries
             </p>
-                        <Pagination aria-label="Page navigation example">
-                            <PaginationItem
-                                disabled={currentPage <= 0}
-                                className="prev"
-                                onClick={(e) => verificationsNavigation(e, currentPage - 1)}
-                            >
-                                <PaginationLink previous href={() => false} />
-                            </PaginationItem>
+            <Pagination aria-label="Page navigation example">
+              <PaginationItem
+                disabled={currentPage <= 0}
+                className="prev"
+                onClick={(e) => verificationsNavigation(e, currentPage - 1)}
+              >
+                <PaginationLink previous href={() => false} />
+              </PaginationItem>
 
-                            {[...Array(verificationsCount)].map((page, i) => (
-                                <PaginationItem
-                                    active={i === currentPage}
-                                    key={i}
-                                    onClick={(e) => verificationsNavigation(e, i)}
-                                >
-                                    <PaginationLink href={() => false}>{i + 1}</PaginationLink>
-                                </PaginationItem>
-                            ))}
+              {[...Array(verificationsCount)].map((page, i) => (
+                <PaginationItem
+                  active={i === currentPage}
+                  key={i}
+                  onClick={(e) => verificationsNavigation(e, i)}
+                >
+                  <PaginationLink href={() => false}>{i + 1}</PaginationLink>
+                </PaginationItem>
+              ))}
 
-                            <PaginationItem
-                                disabled={currentPage >= verificationsCount - 1}
-                                onClick={(e) => verificationsNavigation(e, currentPage + 1)}
-                            >
-                                <PaginationLink next href={() => false} className="next" />
-                            </PaginationItem>
-                        </Pagination>
-                    </div>
-                </div>
-                {/* </Table> */}
-            </WallWrapper>
+              <PaginationItem
+                disabled={currentPage >= verificationsCount - 1}
+                onClick={(e) => verificationsNavigation(e, currentPage + 1)}
+              >
+                <PaginationLink next href={() => false} className="next" />
+              </PaginationItem>
+            </Pagination>
+          </div>
         </div>
-    );
+        {/* </Table> */}
+      </WallWrapper>
+    </div>
+  );
 };
 
 const WallWrapper = styled.div`
+  margin-top: 30px;
+
   overflow-y: scroll;
   height: 100%;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 2rem;
   background: var(--mainWhite);
   h6 {
     font-family: MontserratRegular;
@@ -232,11 +228,11 @@ const WallWrapper = styled.div`
     margin-bottom: 10px;
     padding-bottom: 20px;
     @media (max-width: 400px) {
-        overflow-x: scroll;
-      }
-      @media (max-width: 500px) {
-        overflow-x: scroll;
-      }
+      overflow-x: scroll;
+    }
+    @media (max-width: 500px) {
+      overflow-x: scroll;
+    }
     .hide-table {
       display: none;
     }
@@ -321,41 +317,39 @@ const WallWrapper = styled.div`
         opacity: 1;
         margin-left: 50px;
         @media (max-width: 400px) {
-        margin-left: 0;
-      }
-      @media (max-width: 500px) {
-        margin-left: 0;
-      }
+          margin-left: 0;
+        }
+        @media (max-width: 500px) {
+          margin-left: 0;
+        }
       }
       .search-input {
         position: relative;
         padding: 0.5rem;
 
         input {
-        height: 1rem;
-        padding: 0.2rem;
-        outline: none;
-        @media (max-width: 400px) {
-        margin-bottom: 1rem;
-        margin-left: 0;
+          height: 1rem;
+          padding: 0.2rem;
+          outline: none;
+          @media (max-width: 400px) {
+            margin-bottom: 1rem;
+            margin-left: 0;
+          }
+          @media (max-width: 500px) {
+            margin-bottom: 1rem;
+            margin-left: 0;
+          }
+        }
+        .icon {
+          position: absolute;
+          top: 30%;
+          right: 5%;
+          opacity: 0.7;
+          color: #2c3e50;
+        }
       }
-      @media (max-width: 500px) {
-        margin-bottom: 1rem;
-        margin-left: 0;
-      }
-      }
-      .icon {
-        position: absolute;
-        top: 30%;
-        right:5%;
-        opacity: 0.7;
-        color: #2C3E50;
-      }
-    }
-      
     }
   }
 `;
-
 
 export default VerificationContent;

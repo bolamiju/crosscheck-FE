@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
 import "./ver.css";
@@ -16,7 +14,7 @@ import finish from "../../asset/finish.svg";
 import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
 
-import Pdf from 'react-to-pdf';
+import Pdf from "react-to-pdf";
 import { PaystackButton } from "react-paystack";
 
 const request = (data) => {
@@ -29,19 +27,14 @@ const request = (data) => {
 
 const NewTranscript = () => {
   const dispatch = useDispatch();
-  
-
-  const { transcript } = useSelector((state) => state.verifications);
 
   const ref = React.createRef();
-
 
   const formData = {
     firstName: "",
     lastName: "",
     course: "",
     graduationYear: "",
-    course: "",
     address: "",
     zipCode: "",
     // destination: "",
@@ -59,9 +52,7 @@ const NewTranscript = () => {
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
 
-  const [formValues, setFormValues] = useState([
-    { ...formData, id: date },
-  ]);
+  const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
 
   const [requestList, setRequestList] = useState(false);
 
@@ -117,7 +108,7 @@ const NewTranscript = () => {
       setFormValues([formData]);
       toast.success("request submitted");
     },
-    onClose: () => { },
+    onClose: () => {},
   };
 
   return (
@@ -195,7 +186,8 @@ const NewTranscript = () => {
                 <table
                   ref={ref}
                   cellSpacing="0"
-                  cellPadding="0" c
+                  cellPadding="0"
+                  c
                   border="0"
                   className="ideTable"
                 >
@@ -204,7 +196,8 @@ const NewTranscript = () => {
                       <th>Name</th>
                       <th>Country</th>
                       <th>category rate</th>
-                      <th>amount</th><th>Our Charge</th>
+                      <th>amount</th>
+                      <th>Our Charge</th>
                       <th>Unstitute Charge</th>
                       <th></th>
                     </tr>
@@ -221,7 +214,6 @@ const NewTranscript = () => {
                           <td>50000</td>
                           <th className="mobile-header">Value</th>
                           <td>{ver.amount}</td>
-                  
                         </tr>
                       ))}
 
@@ -234,9 +226,25 @@ const NewTranscript = () => {
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
-                {({ toPdf }) => <button style={{ backgroundColor: "#0092e0", border: "none", padding: "0.8rem", color: "#ffffff", float: "right",  marginRight:"1.5rem", borderRadius: "15px", outline: "none", cursor: "pointer" }}
-                    onClick={toPdf}>Print Invoice</button>}
-              </Pdf>
+                  {({ toPdf }) => (
+                    <button
+                      style={{
+                        backgroundColor: "#0092e0",
+                        border: "none",
+                        padding: "0.8rem",
+                        color: "#ffffff",
+                        float: "right",
+                        marginRight: "1.5rem",
+                        borderRadius: "15px",
+                        outline: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={toPdf}
+                    >
+                      Print Invoice
+                    </button>
+                  )}
+                </Pdf>
               </div>
               <div className="buttons">
                 <PaystackButton {...componentProps} className="btn" />

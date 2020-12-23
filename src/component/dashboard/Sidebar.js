@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouteMatch, Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../asset/CrossCheckLogo.png";
 import dashboard from "../../asset/dashboard.svg";
 import contact from "../../asset/contact.svg";

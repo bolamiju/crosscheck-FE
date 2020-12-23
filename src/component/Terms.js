@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Menu from "../asset/Menu.svg";
 import whitelogo from "../asset/whitelogo.png";
 import Logo from "../asset/CrossCheckLogo.png";
@@ -26,7 +26,7 @@ const Terms = () => {
   window.addEventListener("scroll", changeBackground);
   return (
     <div>
-     <FirstSection>
+      <FirstSection>
         <NavBar
           style={{
             position: `${navbar ? "fixed" : ""}`,
@@ -340,7 +340,7 @@ export default Terms;
 
 const FirstSection = styled.div`
   @media (max-width: 400px) {
-    min-width: 60%;  
+    min-width: 60%;
   }
   width: 100%;
   background: #0092e0;
@@ -403,7 +403,6 @@ const FirstSection = styled.div`
   }
 `;
 
-
 const NavBar = styled.nav`
   @media (max-width: 500px) {
     padding: 0px 3px 0px 3px;
@@ -444,7 +443,6 @@ const NavBar = styled.nav`
       height: 25px;
     }
   }
-
 
   .navs {
     font-family: segoeRegular;
