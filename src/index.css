@@ -65,6 +65,7 @@ html ::-webkit-scrollbar {
 
 .pagination li a {
   text-decoration: none;
+  outline: none;
 }
 
 .pagination li a span {

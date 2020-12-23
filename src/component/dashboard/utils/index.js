@@ -40,7 +40,7 @@ const makeRequestCreator = () => {
       );
       console.log("inst", docs);
       // Store response
-      resources[query] = docs;
+      // resources[query] = docs;
 
       return docs;
     } catch (error) {
