@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CountryDropdown } from "react-country-region-selector";
 import DashboardLayout from "./DashboardLayout";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useFormik } from "formik";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
+import * as Yup from "yup";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import {
   getUserVerification,
@@ -37,12 +38,17 @@ const DashboardContent = ({ history }) => {
   const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
   const [country, setCountry] = useState("");
-  // const [institutions, setInstitutions] = useState([])
-  // const [pagesInfo,setPagesInfo] = useState({})
+
+  const formik = useFormik({
+    initialValues: {
+      country: "",
+    },
+    validationSchema: Yup.object().shape({
+      country: Yup.string().required("First Name is required"),
+    }),
+  });
 
   const user = JSON.parse(localStorage.getItem("user"));
-
-  console.log("institu", institutions);
 
   let offset = 0;
   const request = async (offset, limit) => {
@@ -54,12 +60,9 @@ const DashboardContent = ({ history }) => {
   useEffect(() => {
     dispatch(getUserTranscript(user.email));
     if (input.length > 0) {
-      console.log("typed", input);
       request(offset, 15);
     }
   }, [dispatch, input]);
-
-  console.log("country", country);
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
@@ -82,39 +85,36 @@ const DashboardContent = ({ history }) => {
     },
     [country]
   );
-  const institutionByName = useCallback(
-    async (input, country, offset, limit) => {
-      const { data } = await Axios.get(
-        `https://croscheck.herokuapp.com/api/v1/institutions/countryandName=\/${country}/${input}/${offset}/${limit}`
+  const countryAndName = useCallback(
+    async (country, offset, limit, input) => {
+      await search(
+        `http://localhost:5000/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
-      console.log("res", data.institution.docs)
+      console.log("res", input);
 
-      const {
-        totalDocs,
-        totalPages,
-        hasPrevPage,
-        hasNextPage,
-        page,
-      } = data.institution;
-      dispatch(fetchInstitutes(data.institution.docs.name));
-      dispatch(
-        setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
-      );
-
-    },[country, input]
-  )
+      // const {
+      //   totalDocs,
+      //   totalPages,
+      //   hasPrevPage,
+      //   hasNextPage,
+      //   page,
+      // } = data.institution;
+      // dispatch(fetchInstitutes(data.institution.docs.name));
+      // dispatch(
+      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      // );
+    },
+    [country, input]
+  );
 
   useEffect(() => {
     if (country !== "") {
       institutionByCountry(country, offset, 15);
     }
-  }, [dispatch, institutionByCountry, country, offset]);
-  
-  useEffect(() => {
     if (country !== "" && input.length > 0) {
-      institutionByName(country, input, offset, 15)
+      countryAndName(country, offset, 15, input);
     }
-  }, [dispatch, institutionByCountry, country, offset, input])
+  }, [dispatch, institutionByCountry, countryAndName, country, offset]);
 
   const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
@@ -143,7 +143,6 @@ const DashboardContent = ({ history }) => {
   const pagesize = 15;
 
   const verificationsCount = Math.ceil(filteredTable.length / pageSize);
-  console.log("pageinfo", pageInfo?.page);
   const handlePrevious = (e) => {
     e.preventDefault();
     if (!pageInfo?.hasPrevPage) {
@@ -296,11 +295,14 @@ const DashboardContent = ({ history }) => {
                 id="country"
                 className="country"
                 valueType="full"
-                value={country}
+                value={formik.values.country}
                 onChange={(_, e) => {
+                  formik.handleChange(e);
                   console.log(e.target.value);
                   setCountry(e.target.value.toLowerCase());
                 }}
+                onBlur={formik.handleBlur}
+                ReactFlagsSelect
               />
             </div>
           </div>
@@ -316,8 +318,8 @@ const DashboardContent = ({ history }) => {
                   <tr>
                     <th>Name</th>
                     <th>Country</th>
-                    <th>category rate</th>
-                    <th>amount</th>
+                    <th>our charge</th>
+                    <th>Institute charge</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -328,9 +330,9 @@ const DashboardContent = ({ history }) => {
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
-                      <td>{ite.category}</td>
+                      <td>{ite["our_charge"] || "-"}</td>
                       <th className="mobile-header">Value</th>
-                      <td>{ite.amount}</td>
+                      <td>{ite["institute_charge"] || "-"}</td>
                     </tr>
                     // <tr className="space"></tr>
                   ))}

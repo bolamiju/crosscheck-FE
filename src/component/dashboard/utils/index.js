@@ -1,10 +1,11 @@
 // import React from "react";
 import axios from "axios";
-import  store  from "../../../store";
-import {fetchInstitutes,setPageInfo } from "../../../state/actions/institutions";
+import store from "../../../store";
+import {
+  fetchInstitutes,
+  setPageInfo,
+} from "../../../state/actions/institutions";
 
-
-  
 const resources = {};
 
 const makeRequestCreator = () => {
@@ -23,14 +24,24 @@ const makeRequestCreator = () => {
         return resources[query];
       }
       const res = await axios(query, { cancelToken: cancel.token });
+      console.log("oun re", res);
 
-        const {docs,totalDocs,totalPages,hasPrevPage,hasNextPage,page} = res.data.institution;
-        store.dispatch(fetchInstitutes(docs));
-        store.dispatch(setPageInfo({totalDocs,totalPages,hasPrevPage,hasNextPage,page}));
-        console.log('inst',docs)
+      const {
+        docs,
+        totalDocs,
+        totalPages,
+        hasPrevPage,
+        hasNextPage,
+        page,
+      } = res.data.institution;
+      store.dispatch(fetchInstitutes(docs));
+      store.dispatch(
+        setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      );
+      console.log("inst", docs);
       // Store response
       resources[query] = docs;
-     
+
       return docs;
     } catch (error) {
       if (axios.isCancel(error)) {
