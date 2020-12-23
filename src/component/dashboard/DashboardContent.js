@@ -36,6 +36,8 @@ const DashboardContent = ({ history }) => {
   const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [byCountryOffset, setByCountryOffset] = useState(0);
+  const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
 
   const formik = useFormik({
@@ -109,12 +111,20 @@ const DashboardContent = ({ history }) => {
   useEffect(() => {
     console.log("in useeffect");
     if (country !== "" && input.length === 0) {
-      institutionByCountry(country, offset, 15);
+      institutionByCountry(country, byCountryOffset, 15);
     }
     if (country !== "" && input.length > 0) {
-      countryAndName(country, offset, 15, input);
+      countryAndName(country, byCountryandNameoffset, 15, input);
     }
-  }, [dispatch, institutionByCountry, input, offset, country, countryAndName]);
+  }, [
+    dispatch,
+    institutionByCountry,
+    byCountryandNameoffset,
+    input,
+    byCountryOffset,
+    country,
+    countryAndName,
+  ]);
 
   const allHistory = userVerifications.concat(newTranscript);
   useEffect(() => {
@@ -153,7 +163,13 @@ const DashboardContent = ({ history }) => {
 
   const handleNext = (data) => {
     console.log("data", data);
-    setOffset((prev) => Math.ceil(data.selected * 15));
+    if (country !== "" && input.length === 0) {
+      setByCountryOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (country !== "" && input.length > 0) {
+      setByCountryandNameOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (input.length > 0 && country.length === 0) {
+      setOffset((prev) => Math.ceil(data.selected * 15));
+    }
   };
 
   const handleSelected = (institute) => {
