@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import React, { useState, useEffect, useCallback } from "react";
+import ReactPaginate from "react-paginate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,8 +17,11 @@ import qualifications from "../../asset/qualification.svg";
 import document from "../../asset/document-attach.svg";
 import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
-import { getAllInstitutions } from "../../state/actions/institutions";
+import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
+import { selectSchool } from "../../state/actions/verifications";
+import { search } from "./utils";
+import Axios from "axios";
 
 function TranscriptForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
@@ -27,49 +30,139 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { institutions } = useSelector((state) => state.institutions);
+  const { institutions, pageInfo } = useSelector((state) => state.institutions);
 
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [byCountryOffset, setByCountryOffset] = useState(0);
+  const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
   const [destination, setDestination] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const request = async (offset, limit) => {
+    return await search(
+      `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+    );
+  };
+  console.log("offset", offset);
+
+  useEffect(() => {
+    if (input.length > 0) {
+      request(offset, 15);
+    }
+  }, [dispatch, input]);
+
+  const institutionByCountry = useCallback(
+    async (country, offset, limit) => {
+      const { data } = await Axios.get(
+        `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+      );
+      // console.log("res", data.institution);
+      const {
+        totalDocs,
+        totalPages,
+        hasPrevPage,
+        hasNextPage,
+        page,
+      } = data.institution;
+      dispatch(fetchInstitutes(data.institution.docs));
+      dispatch(
+        setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [offset, country]
+  );
+  const countryAndName = useCallback(
+    async (country, offset, limit, input) => {
+      await search(
+        `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+      );
+      console.log("res", input);
+
+      // const {
+      //   totalDocs,
+      //   totalPages,
+      //   hasPrevPage,
+      //   hasNextPage,
+      //   page,
+      // } = data.institution;
+      // dispatch(fetchInstitutes(data.institution.docs.name));
+      // dispatch(
+      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
+      // );
+      console.log("in usecallback");
+    },
+    [country, offset, input]
+  );
+
+  useEffect(() => {
+    console.log("in useeffect");
+    if (country !== "" && input.length === 0) {
+      institutionByCountry(country, byCountryOffset, 15);
+    }
+    if (country !== "" && input.length > 0) {
+      countryAndName(country, byCountryandNameoffset, 15, input);
+    }
+  }, [
+    dispatch,
+    institutionByCountry,
+    byCountryandNameoffset,
+    input,
+    byCountryOffset,
+    country,
+    countryAndName,
+  ]);
+
+
+
+
+
+  const pageSize = 15;
+  const pagesCount = pageInfo?.totalPages;
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
     setHideTable(false);
   };
 
-  const filteredItems = institutions.filter((item) =>
-    item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
-  );
-
-  const pageSize = 4;
-  const pagesCount = Math.ceil(filteredItems.length / pageSize);
-
-  const handleNavigation = (e, index) => {
-    e.preventDefault();
-    if (index < 0 || index >= pagesCount) {
-      return;
-    } else {
-      setCurrentPage(index);
-    }
-  };
-
+ 
   const handleSelected = (institute) => {
-    setSelectedInst(institute);
+    dispatch(selectSchool(institute));
     setHideTable(true);
     setInput(institute.name);
     setSchCard(true);
   };
 
-  useEffect(() => {
-    dispatch(getAllInstitutions());
-  }, [dispatch]);
+  const handlePrevious = (e) => {
+    e.preventDefault();
+    if (!pageInfo?.hasPrevPage) {
+      return;
+    } else {
+      offset -= 15;
+      // request(offset, 15);
+    }
+  };
 
+  const handleNext = (data) => {
+    console.log("data", data);
+    if (country !== "" && input.length === 0) {
+      setByCountryOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (country !== "" && input.length > 0) {
+      setByCountryandNameOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (input.length > 0 && country.length === 0) {
+      setOffset((prev) => Math.ceil(data.selected * 15));
+    }
+  };
+
+  
+  const pageNos = pageInfo?.totalPages;
+  
   const formik = useFormik({
     initialValues,
 
@@ -193,27 +286,41 @@ function TranscriptForm({ initialValues, updateFormValues }) {
             <div className="select-country">
               <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
               <CountryDropdown
+                style={{
+                  height: "34px",
+                  border: "2px solid #e2e2e2",
+                  outline: "none",
+                  borderRadius: "14px",
+                  fontSize: "14px",
+                  fontFamily: "MontserratItalic",
+                }}
                 name="country"
                 id="country"
-                className="select-schol"
-                value={country}
+                className="country"
+                valueType="full"
+                value={formik.values.country}
                 onChange={(_, e) => {
-                  setCountry(e.target.value);
+                  formik.handleChange(e);
+                  console.log(e.target.value);
+                  setCountry(e.target.value.toLowerCase());
                 }}
+                onBlur={formik.handleBlur}
+                ReactFlagsSelect
               />
             </div>
             <div className="institution-wrapper">
               <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
               <input
                 type="text"
+                className="schl-input"
                 onChange={handleInputChange}
                 value={input}
                 name="input"
-                placeholder="Search an institute"
+                placeholder="Search for a school"
               />
             </div>
           </div>
-          {filteredItems.length > 0 && input.length > 0 && (
+          {institutions.length > 0 && (
             <div className="new-table">
               <table
                 cellSpacing="0"
@@ -230,9 +337,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems
-                    .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
-                    .map((ite) => (
+                {institutions.map((ite) => (
                       <tr onClick={() => handleSelected(ite)} key={ite.name}>
                         <th className="mobile-header">Number</th>
                         <td>{ite.name}</td>
@@ -250,29 +355,23 @@ function TranscriptForm({ initialValues, updateFormValues }) {
               {!hideTable && (
                 <div className="pagination-line">
                   <p>
-                    Showing{" "}
-                    {
-                      filteredItems.slice(
-                        currentPage * pageSize,
-                        (currentPage + 1) * pageSize
-                      ).length
-                    }{" "}
-                    of {pagesCount} of entries
+                    Showing {institutions.length} of {pageInfo.totalDocs} of
+                    entries
                   </p>
-                  <Pagination aria-label="Page navigation example">
+                  {/* <Pagination aria-label="Page navigation example">
                     <PaginationItem
-                      disabled={currentPage <= 0}
+                       disabled={!pageInfo?.hasPrevPage}
                       className="prev"
-                      onClick={(e) => handleNavigation(e, currentPage - 1)}
+                      onClick={(e) => handlePrevious(e)}
                     >
                       <PaginationLink previous href={() => false} />
                     </PaginationItem>
 
-                    {[...Array(pagesCount)].map((page, i) => (
+                    {[...Array(pageNos)].map((item, i) => (
                       <PaginationItem
-                        active={i === currentPage}
+                      active={i === pageInfo?.page - 1}
                         key={i}
-                        onClick={(e) => handleNavigation(e, i)}
+                        onClick={(e) => handleNext(e)}
                       >
                         <PaginationLink href={() => false}>
                           {i + 1}
@@ -281,8 +380,8 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     ))}
 
                     <PaginationItem
-                      disabled={currentPage >= pagesCount - 1}
-                      onClick={(e) => handleNavigation(e, currentPage + 1)}
+                      disabled={!pageInfo?.hasNextPage}
+                      onClick={(e) => handleNext(e)}
                     >
                       <PaginationLink
                         next
@@ -290,7 +389,20 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                         className="next"
                       />
                     </PaginationItem>
-                  </Pagination>
+                    </Pagination> */}
+                    <ReactPaginate
+                    previousLabel={"previous"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pagesCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(e) => handleNext(e)}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
                 </div>
               )}
             </div>

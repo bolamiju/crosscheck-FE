@@ -40,8 +40,10 @@ function TopHeader({ setShow, show }) {
         <h5>Transcript Order</h5>
       ) : route && route.url === "/history" ? (
           <h5>Verification History</h5>
+      ) : route && route.url === "/receipts" ? (
+          <h5>Receipts</h5>
       ) : (
-        <h5>Dashboard</h5>
+          <h5>Dashboard</h5>
       )}
         <div className="right-con">
           <div className="nots">

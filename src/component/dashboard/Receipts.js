@@ -29,7 +29,7 @@ const Receipts = ({ history }) => {
   };
     
     return (
-        <Layout history={history}>
+        <Layout>
         <RequisitionBody>
        
           <div className="new-table">

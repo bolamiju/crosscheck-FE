@@ -21,6 +21,7 @@ import {
 } from "../../state/actions/verifications";
 import VerificationForm from "./VerificationForm";
 
+import Pdf from 'react-to-pdf';
 import { PaystackButton } from "react-paystack";
 
 const request = (data) =>
@@ -45,6 +46,8 @@ const NewVerifications = () => {
   const { verifications, selectedInstitution } = useSelector(
     (state) => state.verifications
   );
+  const ref = React.createRef();
+
   const formData = {
     firstName: "",
     institution: selectedInstitution.name || "",
@@ -252,6 +255,7 @@ const NewVerifications = () => {
             <SelectSch>
               <div className="new-table">
                 <table
+                  ref={ref}
                   cellSpacing="0"
                   cellPadding="0"
                   border="0"
@@ -261,8 +265,8 @@ const NewVerifications = () => {
                     <tr>
                       <th>Name</th>
                       <th>Country</th>
-                      <th>category rate</th>
-                      <th>amount</th>
+                      <th>Our Charge</th>
+                      <th>Unstitute Charge</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -297,7 +301,11 @@ const NewVerifications = () => {
                     </td>
                     <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
                   </tbody>
-                </table>
+              </table>
+              <Pdf targetRef={ref} filename="receipt.pdf">
+                {({ toPdf }) => <button style={{ backgroundColor: "#0092e0", border: "none", padding: "0.8rem", color: "#ffffff", float: "right",  marginRight:"1.5rem", borderRadius: "15px", outline: "none", cursor: "pointer" }}
+                    onClick={toPdf}>Print Invoice</button>}
+              </Pdf>
               </div>
               <div className="buttons">
                 <button

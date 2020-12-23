@@ -12,14 +12,10 @@ import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import * as Yup from "yup";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
-import {
-  getUserVerification,
-  selectSchool,
-  getUserTranscript,
-} from "../../state/actions/verifications";
-import Modal from "../FormModal";
+import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
+import VerificationContent from './VerificationContent';
 
 const DashboardContent = ({ history }) => {
   const [curentPage, setCurrentPage] = useState(0);
@@ -61,6 +57,7 @@ const DashboardContent = ({ history }) => {
   );
   console.log("offset", offset);
   useEffect(() => {
+
     dispatch(getUserTranscript(user.email));
   }, [dispatch]);
 
@@ -132,22 +129,11 @@ const DashboardContent = ({ history }) => {
   ]);
 
   const allHistory = userVerifications.concat(newTranscript);
-  useEffect(() => {
-    dispatch(getUserVerification(user.email));
-  }, [dispatch]);
-
-  useEffect(() => {
-    // dispatch(getAllInstitutions());
-    dispatch(getUserVerification(user.email));
-  }, [dispatch]);
 
   function handleInputChange(e) {
     setInput(e.target.value);
   }
 
-  // const filteredItems = institutions.filter((item) =>
-  //   item?.name?.toLowerCase().includes(input)
-  // );
   const filteredTable = allHistory?.filter((history) =>
     history[searchParameter]?.toLowerCase().includes(searchInput.toLowerCase())
   );
@@ -184,28 +170,14 @@ const DashboardContent = ({ history }) => {
     history.push("/new");
   };
 
-  const handleOpen = (id) => {
-    setOpen(true);
-    setId(id);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const truncateString = (str) => {
-    if (str.length <= 24) {
-      return str;
-    }
-    return str.slice(0, 32) + "...";
-  };
+ 
 
   function handleInputChange(e) {
     setInput(e.target.value);
   }
-  function handleSearchInput(e) {
-    setSearchInput(e.target.value);
-  }
+  // function handleSearchInput(e) {
+  //   setSearchInput(e.target.value);
+  // }
   const pageNos = pageInfo?.totalPages;
 
   return (
@@ -368,7 +340,8 @@ const DashboardContent = ({ history }) => {
             </div>
           )}
         </SelectSch>
-        {/* <VerificationHistory /> */}
+        <div className="spacer"></div>
+        <VerificationContent />
       </RequisitionBody>
     </DashboardLayout>
   );
@@ -625,21 +598,13 @@ const RequisitionBody = styled.div`
     .hide-table {
       display: none;
     }
-    .open {
-      table {
-        td,
-        th {
-          text-align: left !important;
-          background: red;
-        }
-      }
-    }
     table {
       margin: 0 auto;
       width: 95%;
       border-collapse: collapse;
       overflow: hidden;
       font-size: 14px;
+      text-align: left;
       .mobile-header {
         display: none;
       }
@@ -652,20 +617,14 @@ const RequisitionBody = styled.div`
         }
       }
 
-      td {
-        text-align: center;
-        /* border-left: 1px solid #ecf0f1;
-        border-right: 1px solid #ecf0f1; */
-      }
+     
 
       th {
         background-color: #1e2a36;
         color: white;
       }
 
-      /* tr:nth-of-type(even) td {
-        background-color: lighten(#4ecdc4, 35%);
-      } */
+     
       tr {
         cursor: pointer;
         &:nth-child(odd) {
@@ -748,146 +707,8 @@ const RequisitionBody = styled.div`
     }
   }
 
-  /* .new-table {
-    margin-top: 15px;
-    width: 100%;
-    background: #ffffff 0% 0% no-repeat padding-box;
-    border-radius: 7px;
-    box-shadow: 0px 0px 10px #00000029;
-
-    height: 90%;
-    overflow-x: hidden;
-    margin-bottom: 10px;
-    padding-bottom: 20px;
-
-    
-    table {
-      border-collapse: separate;
-      border-spacing: 0 10px;
-      width: 90%;
-      margin: 0 auto;
-      thead {
-        width: 80%;
-        background-color: #efeff4;
-      }
-      th {
-        opacity: 1;
-        font: normal normal 600 14px/18px Montserrat;
-        letter-spacing: 0.28px;
-        color: #2c3e50;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 5px;
-      }
-
-      tr {
-        cursor: default;
-        width: 100%;
-      }
-
-      .t-body {
-        .space tr {
-          height: 10px;
-          background-color: #efeff4 !important;
-        }
-        tr {
-          padding-top: 10px;
-          background-color: white;
-
-          td {
-            padding-left: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            text-align: center;
-            font: normal normal normal 12px Montserrat;
-            letter-spacing: 0.28px;
-            color: #707070;
-            opacity: 1;
-            &:nth-child(1) {
-              border-left: 0px;
-              border-top-right-radius: 0px;
-              border-bottom-right-radius: 0px;
-              border-right: none;
-            }
-
-            &:nth-child(2) {
-              border-left: none;
-              border-right: none;
-              border-radius: 0px;
-            }
-
-            &:last-child {
-              border-top-left-radius: 0px;
-              border-bottom-left-radius: 0px;
-              border-left: none;
-              border-right: 0px;
-            }
-          }
-        }
-      }
-
-      td {
-        font-family: "Rubik", sans-serif;
-        letter-spacing: 0.14px;
-        color: #171725;
-        opacity: 0.85;
-        font-weight: 500;
-        text-transform: capitalize;
-        font-size: 12px;
-        border-radius: 5px;
-
-         &.time {
-          color: #92929d;
-          text-transform: lowercase;
-          opacity: 1;
-          font-weight: 400;
-        } 
-      }
-    }
-  }  */
+ .spacer {
+   margin-top: 4rem;
+ }
 `;
 
-// const RequisitionDiv = styled.div`
-//   display: flex;
-//   /* padding-left: 20px;
-//   padding-right: 20px; */
-//   padding-top: 20px;
-//   justify-content: space-between;
-//   align-items: center;
-//   svg[data-icon="search"] {
-//     width: 15px !important;
-//   }
-//   .ant-input-affix-wrapper > input.ant-input {
-//     font-size: 14px;
-//     height: auto;
-//     display: flex;
-//     align-items: center;
-//     border-color: #503faa !important;
-//     outline: #503faa;
-//   }
-
-//   .ant-select-selector {
-//     height: 29px !important;
-//     &:hover {
-//       border-color: #503faa !important;
-//     }
-//     &::selection {
-//       border-color: #503faa !important;
-//     }
-//     html {
-//       --antd-wave-shadow-color: #503faa !important;
-//     }
-//   }
-//   .ant-input-search.ant-input-affix-wrapper {
-//     border-color: #503faa !important;
-//   }
-//   .ant-input-search.ant-input-affix-wrapper > input.ant-input {
-//     padding-left: 0px;
-//     &::placeholder {
-//       font-family: "Rubik", sans-serif;
-//       font-size: 13px !important;
-//       padding-left: 3px;
-//       font-weight: 300;
-//     }
-//   }
-// `;

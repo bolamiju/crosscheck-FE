@@ -16,6 +16,7 @@ import finish from "../../asset/finish.svg";
 import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
 
+import Pdf from 'react-to-pdf';
 import { PaystackButton } from "react-paystack";
 
 const request = (data) => {
@@ -31,6 +32,9 @@ const NewTranscript = () => {
   
 
   const { transcript } = useSelector((state) => state.verifications);
+
+  const ref = React.createRef();
+
 
   const formData = {
     firstName: "",
@@ -189,7 +193,8 @@ const NewTranscript = () => {
             <SelectSch>
               <div className="new-table">
                 <table
-                  ellSpacing="0"
+                  ref={ref}
+                  cellSpacing="0"
                   cellPadding="0" c
                   border="0"
                   className="ideTable"
@@ -199,7 +204,8 @@ const NewTranscript = () => {
                       <th>Name</th>
                       <th>Country</th>
                       <th>category rate</th>
-                      <th>amount</th>
+                      <th>amount</th><th>Our Charge</th>
+                      <th>Unstitute Charge</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -227,6 +233,10 @@ const NewTranscript = () => {
                     <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
                   </tbody>
                 </table>
+                <Pdf targetRef={ref} filename="receipt.pdf">
+                {({ toPdf }) => <button style={{ backgroundColor: "#0092e0", border: "none", padding: "0.8rem", color: "#ffffff", float: "right",  marginRight:"1.5rem", borderRadius: "15px", outline: "none", cursor: "pointer" }}
+                    onClick={toPdf}>Print Invoice</button>}
+              </Pdf>
               </div>
               <div className="buttons">
                 <PaystackButton {...componentProps} className="btn" />
