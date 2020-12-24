@@ -12,12 +12,7 @@ import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import * as Yup from "yup";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
-import {
-  getUserVerification,
-  selectSchool,
-  getUserTranscript,
-} from "../../state/actions/verifications";
-import Modal from "../FormModal";
+import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
 import VerificationContent from './VerificationContent';
