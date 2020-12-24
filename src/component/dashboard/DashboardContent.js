@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CountryDropdown } from "react-country-region-selector";
 import DashboardLayout from "./DashboardLayout";
 import { useFormik } from "formik";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import * as Yup from "yup";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
-import { selectSchool } from "../../state/actions/verifications";
+import {
+  getUserVerification,
+  selectSchool,
+  getUserTranscript,
+} from "../../state/actions/verifications";
+import Modal from "../FormModal";
 import { search } from "./utils";
 import Axios from "axios";
 import VerificationContent from './VerificationContent';
@@ -32,6 +36,9 @@ const DashboardContent = ({ history }) => {
   const [hideTable, setHideTable] = useState(false);
   const [searchParameter] = useState("status");
   const [open, setOpen] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [byCountryOffset, setByCountryOffset] = useState(0);
+  const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
 
   const formik = useFormik({
@@ -45,13 +52,12 @@ const DashboardContent = ({ history }) => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  let offset = 0;
   const request = async (offset, limit) => {
     return await search(
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
   };
-
+  console.log("offset", offset);
   useEffect(() => {
     if (input.length > 0) {
       request(offset, 15);
@@ -77,12 +83,12 @@ const DashboardContent = ({ history }) => {
       );
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [country]
+    [offset, country]
   );
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `http://localhost:5000/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
       console.log("res", input);
 
@@ -97,18 +103,28 @@ const DashboardContent = ({ history }) => {
       // dispatch(
       //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
       // );
+      console.log("in usecallback");
     },
-    [country, input]
+    [country, offset, input]
   );
 
   useEffect(() => {
-    if (country !== "") {
-      institutionByCountry(country, offset, 15);
+    console.log("in useeffect");
+    if (country !== "" && input.length === 0) {
+      institutionByCountry(country, byCountryOffset, 15);
     }
     if (country !== "" && input.length > 0) {
-      countryAndName(country, offset, 15, input);
+      countryAndName(country, byCountryandNameoffset, 15, input);
     }
-  }, [dispatch, institutionByCountry, countryAndName, country, offset]);
+  }, [
+    dispatch,
+    institutionByCountry,
+    byCountryandNameoffset,
+    input,
+    byCountryOffset,
+    country,
+    countryAndName,
+  ]);
 
   const allHistory = userVerifications.concat(newTranscript);
 
@@ -123,37 +139,27 @@ const DashboardContent = ({ history }) => {
   const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
 
-  const pagesize = 15;
-
-  const verificationsCount = Math.ceil(filteredTable.length / pageSize);
+  // const pagesize = 15;
   const handlePrevious = (e) => {
     e.preventDefault();
     if (!pageInfo?.hasPrevPage) {
       return;
     } else {
       offset -= 15;
-      request(offset, 15);
+      // request(offset, 15);
     }
   };
 
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (!pageInfo?.hasNextPage) {
-      return;
-    } else {
-      offset += 15;
-      request(offset, 15);
+  const handleNext = (data) => {
+    console.log("data", data);
+    if (country !== "" && input.length === 0) {
+      setByCountryOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (country !== "" && input.length > 0) {
+      setByCountryandNameOffset((prev) => Math.ceil(data.selected * 15));
+    } else if (input.length > 0 && country.length === 0) {
+      setOffset((prev) => Math.ceil(data.selected * 15));
     }
   };
-
-  // const verificationsNavigation = (e, index) => {
-  //   e.preventDefault();
-  //   if (index < 0 || index >= verificationsCount) {
-  //     return;
-  //   } else {
-  //     setCurrentPage(index);
-  //   }
-  // };
 
   const handleSelected = (institute) => {
     dispatch(selectSchool(institute));
@@ -313,7 +319,7 @@ const DashboardContent = ({ history }) => {
                     Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
-                  <Pagination aria-label="Page navigation example">
+                  {/* <Pagination aria-label="Page navigation example">
                     <PaginationItem
                       disabled={!pageInfo?.hasPrevPage}
                       className="prev"
@@ -344,7 +350,20 @@ const DashboardContent = ({ history }) => {
                         className="next"
                       />
                     </PaginationItem>
-                  </Pagination>
+                  </Pagination> */}
+                  <ReactPaginate
+                    previousLabel={"previous"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pagesCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(e) => handleNext(e)}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
                 </div>
               )}
             </div>
