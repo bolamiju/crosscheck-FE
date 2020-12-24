@@ -357,7 +357,6 @@ function VerificationForm({
                       <th className="mobile-header">Value</th>
                       <td>{ite["institute_charge"]}</td>
                     </tr>
-                    // <tr className="space"></tr>
                   ))}
                 </tbody>
               </table>
