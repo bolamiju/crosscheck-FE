@@ -622,21 +622,13 @@ const RequisitionBody = styled.div`
     .hide-table {
       display: none;
     }
-    .open {
-      table {
-        td,
-        th {
-          text-align: left !important;
-          background: red;
-        }
-      }
-    }
     table {
       margin: 0 auto;
       width: 95%;
       border-collapse: collapse;
       overflow: hidden;
       font-size: 14px;
+      text-align: left;
       .mobile-header {
         display: none;
       }
@@ -649,20 +641,14 @@ const RequisitionBody = styled.div`
         }
       }
 
-      td {
-        text-align: center;
-        /* border-left: 1px solid #ecf0f1;
-        border-right: 1px solid #ecf0f1; */
-      }
+     
 
       th {
         background-color: #1e2a36;
         color: white;
       }
 
-      /* tr:nth-of-type(even) td {
-        background-color: lighten(#4ecdc4, 35%);
-      } */
+     
       tr {
         cursor: pointer;
         &:nth-child(odd) {
