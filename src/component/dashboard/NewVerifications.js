@@ -265,8 +265,8 @@ const NewVerifications = () => {
                     <tr>
                       <th>Name</th>
                       <th>Country</th>
-                      <th>category rate</th>
-                      <th>amount</th>
+                      <th>Our Charge</th>
+                      <th>Unstitute Charge</th>
                       <th></th>
                     </tr>
                   </thead>
