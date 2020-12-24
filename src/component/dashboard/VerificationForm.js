@@ -164,8 +164,10 @@ function VerificationForm({
 
       var formData = new FormData();
       formData.append("email", user.email);
-      formData.append("amount", selectedInst.amount);
+      formData.append("our_charge", selectedInst["our_charge"]);
+      formData.append("institute_charge", selectedInst["institute_charge"]);
       formData.append("country", selectedInst.country);
+
       for (var key in values) {
         formData.append(key, values[key]);
       }
@@ -342,9 +344,12 @@ function VerificationForm({
                 </thead>
                 <tbody>
                   {institutions.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                    <tr
+                      onClick={() => handleSelected(ite)}
+                      key={ite.institution}
+                    >
                       <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
+                      <td>{ite.institution}</td>
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>

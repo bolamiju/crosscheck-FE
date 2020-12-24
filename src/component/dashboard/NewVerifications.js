@@ -129,11 +129,20 @@ const NewVerifications = () => {
     console.log("each object", obj);
     verifRequest.push(obj);
   }
-  let total = verifRequest.reduce(
-    (accumulator, currentValue) => accumulator + Number(currentValue.amount),
+  let totalOurCharge = verifRequest.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue["our_charge"]),
     0
   );
-  console.log("request arr", verifRequest);
+
+  let totalInstituteCharge = verifRequest.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue["institute_charge"]),
+    0
+  );
+  const total =
+    (totalOurCharge ? totalOurCharge : 0) +
+    (totalInstituteCharge ? totalInstituteCharge : 0);
 
   const removeVerification = (val) => {
     dispatch(deleteVerification(val));
@@ -263,33 +272,36 @@ const NewVerifications = () => {
                       <th>Name</th>
                       <th>Country</th>
                       <th>Our Charge</th>
-                      <th>Unstitute Charge</th>
+                      <th>Institute Charge</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {verifRequest.length > 0 &&
-                      verifRequest.map((ver) => (
-                        <tr key={ver.institution}>
-                          <th className="mobile-header">Number</th>
-                          <td>{ver.institution}</td>
-                          <th className="mobile-header">Market rate</th>
-                          <td>{ver.country}</td>
-                          <th className="mobile-header">Weight</th>
-                          <td>50000</td>
-                          <th className="mobile-header">Value</th>
-                          <td>{ver.amount}</td>
-                          <td>
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              // className="menu-icon"
-                              onClick={() =>
-                                removeVerification(ver.institution)
-                              }
-                            />
-                          </td>
-                        </tr>
-                      ))}
+                      verifRequest.map((ver) => {
+                        console.log("verifiddd", ver);
+                        return (
+                          <tr key={ver.name}>
+                            <th className="mobile-header">Number</th>
+                            <td>{ver.name}</td>
+                            <th className="mobile-header">Market rate</th>
+                            <td>{ver.country}</td>
+                            <th className="mobile-header">Weight</th>
+                            <td>{`${ver["our_charge"]}`}</td>
+                            <th className="mobile-header">Value</th>
+                            <td>{ver["institute_charge"]}</td>
+                            <td>
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                // className="menu-icon"
+                                onClick={() =>
+                                  removeVerification(ver.institution)
+                                }
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
 
                     <td></td>
                     <td></td>
