@@ -29,8 +29,11 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
+  const { selectedInstitution } = useSelector((state) => state.verifications);
 
-  const [selectedInst, setSelectedInst] = useState({});
+  const [selectedInst, setSelectedInst] = useState(
+    selectedInstitution.name ? selectedInstitution : {}
+  );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [schCard, setSchCard] = useState(false);
@@ -42,18 +45,23 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const request = async (offset, limit) => {
+  const request = useCallback(
+    async (offset, limit) => {
     return await search(
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
-  };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [offset, input]
+  );
   console.log("offset", offset);
 
   useEffect(() => {
-    if (input.length > 0) {
-      request(offset, 15);
-    }
-  }, [dispatch, input]);
+    console.log("clean up");
+    dispatch(fetchInstitutes([]));
+    dispatch(setPageInfo({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
@@ -81,43 +89,32 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       await search(
         `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
-      console.log("res", input);
-
-      // const {
-      //   totalDocs,
-      //   totalPages,
-      //   hasPrevPage,
-      //   hasNextPage,
-      //   page,
-      // } = data.institution;
-      // dispatch(fetchInstitutes(data.institution.docs.name));
-      // dispatch(
-      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
-      // );
-      console.log("in usecallback");
     },
     [country, offset, input]
   );
 
   useEffect(() => {
-    console.log("in useeffect");
     if (country !== "" && input.length === 0) {
       institutionByCountry(country, byCountryOffset, 15);
     }
     if (country !== "" && input.length > 0) {
       countryAndName(country, byCountryandNameoffset, 15, input);
     }
+    if (input.length > 0 && country.length === 0) {
+      request(offset, 15);
+    }
   }, [
     dispatch,
     institutionByCountry,
     byCountryandNameoffset,
     input,
+    request,
+    offset,
     byCountryOffset,
     country,
     countryAndName,
   ]);
 
-  const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
 
   const handleInputChange = (e) => {
@@ -126,23 +123,17 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const handleSelected = (institute) => {
-    dispatch(selectSchool(institute));
-    setHideTable(true);
+    setSelectedInst(institute);
+    formik.setFieldValue("institution", institute.name);
+    // dispatch(selectSchool(institute));
+    // setHideTable(true);
     setInput(institute.name);
     setSchCard(true);
   };
 
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (!pageInfo?.hasPrevPage) {
-      return;
-    } else {
-      offset -= 15;
-      // request(offset, 15);
-    }
-  };
 
-  const handleNext = (data) => {
+
+  const institutionNavs = (data) => {
     console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
@@ -153,7 +144,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     }
   };
 
-  const pageNos = pageInfo?.totalPages;
 
   const formik = useFormik({
     initialValues,
@@ -222,6 +212,13 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
     setActiveTab("destination-details");
     setPay(true);
+  };
+
+  const truncateString = (str) => {
+    if (str.length <= 40) {
+      return str;
+    }
+    return str.slice(0, 40) + "..."
   };
 
   return (
@@ -332,7 +329,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   {institutions.map((ite) => (
                     <tr onClick={() => handleSelected(ite)} key={ite.name}>
                       <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
+                      <td>{truncateString(ite.name)}</td>
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
@@ -350,38 +347,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
-                  {/* <Pagination aria-label="Page navigation example">
-                    <PaginationItem
-                       disabled={!pageInfo?.hasPrevPage}
-                      className="prev"
-                      onClick={(e) => handlePrevious(e)}
-                    >
-                      <PaginationLink previous href={() => false} />
-                    </PaginationItem>
-
-                    {[...Array(pageNos)].map((item, i) => (
-                      <PaginationItem
-                      active={i === pageInfo?.page - 1}
-                        key={i}
-                        onClick={(e) => handleNext(e)}
-                      >
-                        <PaginationLink href={() => false}>
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem
-                      disabled={!pageInfo?.hasNextPage}
-                      onClick={(e) => handleNext(e)}
-                    >
-                      <PaginationLink
-                        next
-                        href={() => false}
-                        className="next"
-                      />
-                    </PaginationItem>
-                    </Pagination> */}
                   <ReactPaginate
                     previousLabel={"previous"}
                     nextLabel={"next"}
@@ -390,7 +355,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     pageCount={pagesCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
-                    onPageChange={(e) => handleNext(e)}
+                    onPageChange={(e) => institutionNavs(e)}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}

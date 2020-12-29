@@ -23,12 +23,20 @@ const DashboardContent = ({ history }) => {
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
+  const { selectedInstitution } = useSelector((state) => state.verifications);
+
+  const [selectedInst, setSelectedInst] = useState(
+    selectedInstitution.name ? selectedInstitution : {}
+  );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
+  const [schCard, setSchCard] = useState(true);
   const [offset, setOffset] = useState(0);
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+
 
   const formik = useFormik({
     initialValues: {
@@ -49,11 +57,19 @@ const DashboardContent = ({ history }) => {
     [offset, input]
   );
 
+  useEffect(() => {
+    console.log("clean up");
+    dispatch(fetchInstitutes([]));
+    dispatch(setPageInfo({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
         `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
+      // console.log("res", data.institution);
       const {
         totalDocs,
         totalPages,
@@ -80,13 +96,6 @@ const DashboardContent = ({ history }) => {
   );
 
   useEffect(() => {
-    console.log("clean up");
-    dispatch(fetchInstitutes([]));
-    dispatch(setPageInfo({}));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (country !== "" && input.length === 0) {
       institutionByCountry(country, byCountryOffset, 15);
     }
@@ -107,16 +116,17 @@ const DashboardContent = ({ history }) => {
     country,
     countryAndName,
   ]);
-
+  const pagesCount = pageInfo?.totalPages;
   const allHistory = userVerifications.concat(newTranscript);
 
   function handleInputChange(e) {
     setInput(e.target.value);
+    setHideTable(false);
   }
 
-  const pagesCount = pageInfo?.totalPages;
 
-  const handleNext = (data) => {
+  const institutionNavs = (data) => {
+    console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
     } else if (country !== "" && input.length > 0) {
@@ -131,6 +141,13 @@ const DashboardContent = ({ history }) => {
     setHideTable(true);
     setInput(institute.name);
     history.push("/new");
+  };
+
+  const truncateString = (str) => {
+    if (str.length <= 40) {
+      return str;
+    }
+    return str.slice(0, 40) + "...";
   };
 
   return (
@@ -236,7 +253,7 @@ const DashboardContent = ({ history }) => {
               />
             </div>
           </div>
-          {institutions.length > 0 && (
+          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
             <div className="new-table open">
               <table
                 cellSpacing="0"
@@ -256,7 +273,7 @@ const DashboardContent = ({ history }) => {
                   {institutions.map((ite) => (
                     <tr onClick={() => handleSelected(ite)} key={ite.name}>
                       <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
+                      <td>{truncateString(ite.name)}</td>
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
@@ -276,18 +293,18 @@ const DashboardContent = ({ history }) => {
                   </p>
 
                   <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pagesCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(e) => handleNext(e)}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                  />
+                      previousLabel={"previous"}
+                      nextLabel={"next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pagesCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={(e) => institutionNavs(e)}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
                 </div>
               )}
             </div>

@@ -53,6 +53,8 @@ function VerificationForm({
   const [country, setCountry] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
 
+  // const selectedFileName = event.currentTarget.files[0].name
+
   const request = useCallback(
     async (offset, limit) => {
       return await search(
@@ -196,7 +198,6 @@ function VerificationForm({
     }
     formik.handleSubmit("paid");
     toast.success("Verification details saved");
-
     // updateFormValues(initialValues);
   };
   const handleQualificationTab = (e) => {
@@ -234,6 +235,13 @@ function VerificationForm({
     }
     setActiveTab("documents");
     setPay(true);
+  };
+
+  const truncateString = (str) => {
+    if (str.length <= 40) {
+      return str;
+    }
+    return str.slice(0, 40) + "...";
   };
 
   return (
@@ -279,113 +287,113 @@ function VerificationForm({
     <span>{ selectedInst.amount}</span></div> */}
         </SelectSch>
       ) : (
-        <SelectSch>
-          <div className="req-trans">
-            <img src={Institution} alt="select a sch" />
+          <SelectSch>
+            <div className="req-trans">
+              <img src={Institution} alt="select a sch" />
 
-            <div className="select-inst">
-              <p>Select an institute</p>
-              <p>Select preferred institute to conduct verification</p>
+              <div className="select-inst">
+                <p>Select an institute</p>
+                <p>Select preferred institute to conduct verification</p>
+              </div>
             </div>
-          </div>
-          <div className="selects">
-            <div className="institution-wrapper">
-              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-              <input
-                type="text"
-                className="schl-input"
-                onChange={handleInputChange}
-                value={input}
-                name="input"
-                placeholder="Search for a school"
-              />
+            <div className="selects">
+              <div className="institution-wrapper">
+                <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
+                <input
+                  type="text"
+                  className="schl-input"
+                  onChange={handleInputChange}
+                  value={input}
+                  name="input"
+                  placeholder="Search for a school"
+                />
+              </div>
+              <div className="select-country">
+                <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
+                <CountryDropdown
+                  style={{
+                    height: "34px",
+                    border: "2px solid #e2e2e2",
+                    outline: "none",
+                    borderRadius: "14px",
+                    fontSize: "14px",
+                    fontFamily: "MontserratItalic",
+                  }}
+                  name="country"
+                  id="country"
+                  className="country"
+                  valueType="full"
+                  value={formik.values.country}
+                  onChange={(_, e) => {
+                    formik.handleChange(e);
+                    console.log(e.target.value);
+                    setCountry(e.target.value.toLowerCase());
+                  }}
+                  onBlur={formik.handleBlur}
+                  ReactFlagsSelect
+                />
+              </div>
             </div>
-            <div className="select-country">
-              <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
-              <CountryDropdown
-                style={{
-                  height: "34px",
-                  border: "2px solid #e2e2e2",
-                  outline: "none",
-                  borderRadius: "14px",
-                  fontSize: "14px",
-                  fontFamily: "MontserratItalic",
-                }}
-                name="country"
-                id="country"
-                className="country"
-                valueType="full"
-                value={formik.values.country}
-                onChange={(_, e) => {
-                  formik.handleChange(e);
-                  console.log(e.target.value);
-                  setCountry(e.target.value.toLowerCase());
-                }}
-                onBlur={formik.handleBlur}
-                ReactFlagsSelect
-              />
-            </div>
-          </div>
-          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
-            <div className="new-table">
-              <table
-                cellSpacing="0"
-                cellPadding="0"
-                border="0"
-                className={hideTable ? "hide-table" : ""}
-              >
-                <thead className="table-headers">
-                  <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>Our charge</th>
-                    <th>Institute charge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {institutions.map((ite) => (
-                    <tr
-                      onClick={() => handleSelected(ite)}
-                      key={ite.institution}
-                    >
-                      <th className="mobile-header">Number</th>
-                      <td>{ite.institution}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      <td>{ite["our_charge"]}</td>
-                      <th className="mobile-header">Value</th>
-                      <td>{ite["institute_charge"]}</td>
+            {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
+              <div className="new-table">
+                <table
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className={hideTable ? "hide-table" : ""}
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>Our charge</th>
+                      <th>Institute charge</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              {!hideTable && (
-                <div className="pagination-line">
-                  <p>
-                    Showing {institutions.length} of {pageInfo.totalDocs} of
+                  </thead>
+                  <tbody>
+                    {institutions.map((ite) => (
+                      <tr
+                        onClick={() => handleSelected(ite)}
+                        key={ite.name}
+                      >
+                        <th className="mobile-header">Number</th>
+                        <td>{truncateString(ite.name)}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>{ite["our_charge"]}</td>
+                        <th className="mobile-header">Value</th>
+                        <td>{ite["institute_charge"]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!hideTable && (
+                  <div className="pagination-line">
+                    <p>
+                      Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
 
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pagesCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(e) => institutionNavs(e)}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </SelectSch>
-      )}
+                    <ReactPaginate
+                      previousLabel={"previous"}
+                      nextLabel={"next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pagesCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={(e) => institutionNavs(e)}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </SelectSch>
+        )}
       <FormContainer style={{ display: !details ? "none" : "" }}>
         <form>
           <div className="tabs">
@@ -545,9 +553,9 @@ function VerificationForm({
                 // }
                 className={
                   formik.values.firstName.length === 0 ||
-                  formik.values.lastName.length === 0 ||
-                  formik.values.dateOfBirth.length === 0 ||
-                  new Date().getFullYear() -
+                    formik.values.lastName.length === 0 ||
+                    formik.values.dateOfBirth.length === 0 ||
+                    new Date().getFullYear() -
                     Number(formik.values.dateOfBirth.substr(0, 4)) <
                     17
                     ? "btn notallowed"
@@ -661,7 +669,7 @@ function VerificationForm({
                     type="text"
                     className={
                       formik.touched.qualification &&
-                      formik.errors.qualification
+                        formik.errors.qualification
                         ? "qualification-input err"
                         : "qualification-input"
                     }
@@ -672,14 +680,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.qualification &&
-                  formik.errors.qualification ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.qualification}
-                    </div>
-                  ) : null}
+                    formik.errors.qualification ? (
+                      <div
+                        className="error"
+                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      >
+                        {formik.errors.qualification}
+                      </div>
+                    ) : null}
                 </>
               </Field>
 
@@ -694,7 +702,7 @@ function VerificationForm({
                     placeholder="second class upper"
                     className={
                       formik.touched.classification &&
-                      formik.errors.classification
+                        formik.errors.classification
                         ? "class-input err"
                         : "class-input"
                     }
@@ -704,14 +712,14 @@ function VerificationForm({
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.classification &&
-                  formik.errors.classification ? (
-                    <div
-                      className="error"
-                      style={{ marginLeft: "-660px", paddingTop: "3px" }}
-                    >
-                      {formik.errors.classification}
-                    </div>
-                  ) : null}
+                    formik.errors.classification ? (
+                      <div
+                        className="error"
+                        style={{ marginLeft: "-660px", paddingTop: "3px" }}
+                      >
+                        {formik.errors.classification}
+                      </div>
+                    ) : null}
                 </>
               </Field>
               {!formik.values.enrollmentStatus && (
@@ -725,7 +733,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.admissionYear &&
-                          formik.errors.admissionYear
+                            formik.errors.admissionYear
                             ? "admission-input err"
                             : "admission-input"
                         }
@@ -735,17 +743,17 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.admissionYear &&
-                      formik.errors.admissionYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.admissionYear}
-                        </div>
-                      ) : null}
+                        formik.errors.admissionYear ? (
+                          <div
+                            className="error"
+                            style={{
+                              marginLeft: "-620px",
+                              paddingTop: "3px",
+                            }}
+                          >
+                            {formik.errors.admissionYear}
+                          </div>
+                        ) : null}
                     </>
                   </Field>
                   <Field>
@@ -757,7 +765,7 @@ function VerificationForm({
                         type="text"
                         className={
                           formik.touched.graduationYear &&
-                          formik.errors.graduationYear
+                            formik.errors.graduationYear
                             ? "graduation-input err"
                             : "graduation-input"
                         }
@@ -767,17 +775,17 @@ function VerificationForm({
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.graduationYear &&
-                      formik.errors.graduationYear ? (
-                        <div
-                          className="error"
-                          style={{
-                            marginLeft: "-620px",
-                            paddingTop: "3px",
-                          }}
-                        >
-                          {formik.errors.graduationYear}
-                        </div>
-                      ) : null}
+                        formik.errors.graduationYear ? (
+                          <div
+                            className="error"
+                            style={{
+                              marginLeft: "-620px",
+                              paddingTop: "3px",
+                            }}
+                          >
+                            {formik.errors.graduationYear}
+                          </div>
+                        ) : null}
                     </>
                   </Field>
                 </>
@@ -798,11 +806,11 @@ function VerificationForm({
                 }
                 className={
                   formik.values.course.length === 0 ||
-                  formik.values.qualification.length === 0 ||
-                  formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
-                  formik.values.studentId.length === 0
+                    formik.values.qualification.length === 0 ||
+                    formik.values.classification.length === 0 ||
+                    formik.values.admissionYear.length === 0 ||
+                    formik.values.graduationYear.length === 0 ||
+                    formik.values.studentId.length === 0
                     ? "btn notallowed"
                     : "btn"
                 }
@@ -865,11 +873,17 @@ function VerificationForm({
                       name="certImage"
                       style={{ cursor: "pointer" }}
                       onChange={(event) => {
+                        console.log("event", event)
                         formik.setFieldValue(
                           "certImage",
-                          event.currentTarget.files[0]
+                          event.currentTarget.files[0],
+                          event.currentTarget.files[0].name
+
                         );
+                        // console.log(certImage)
+                        console.log("selected value", event.currentTarget.files[0].name )
                       }}
+
                     />
                   </div>
                   {/* <img
@@ -882,7 +896,12 @@ function VerificationForm({
                     alt="selectedfile"
                   /> */}
                 </Document>
+          
+                {formik?.values?.certImage?.length > 0 ? (
+                  <p>{formik?.values?.certImage}</p>
+                ): ""}
               </UploadSection>
+
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
               </button>

@@ -229,13 +229,15 @@ const NewTranscript = () => {
                   {({ toPdf }) => (
                     <button
                       style={{
-                        backgroundColor: "#0092e0",
-                        border: "none",
-                        padding: "0.8rem",
-                        color: "#ffffff",
+                        background: "#0092e0",
+                        border: "1px solid #0092e0",
+                        borderRadius: "10px",
+                        width: "140px",
+                        height: "30px",
+                        padding: "1px 6px",
+                        color: "white",
                         float: "right",
                         marginRight: "1.5rem",
-                        borderRadius: "15px",
                         outline: "none",
                         cursor: "pointer",
                       }}
