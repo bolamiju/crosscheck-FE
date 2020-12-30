@@ -279,7 +279,6 @@ const NewVerifications = () => {
                   <tbody>
                     {verifRequest.length > 0 &&
                       verifRequest.map((ver) => {
-                        console.log("verifiddd", ver);
                         return (
                           <tr key={ver.name}>
                             <th className="mobile-header">Number</th>

@@ -33,7 +33,7 @@ function VerificationForm({
   verificationsLength,
   id,
 }) {
-  const [activeTab, setActiveTab] = useState("individual-details");
+  const [activeTab, setActiveTab] = useState("documents");
   const [pay, setPay] = useState(false);
   const [details, setDetails] = useState(true);
 
@@ -237,14 +237,12 @@ function VerificationForm({
     setActiveTab("documents");
     setPay(true);
   };
-
   const truncateString = (str) => {
     if (str.length <= 40) {
       return str;
     }
     return str.slice(0, 40) + "...";
   };
-
   return (
     <SingleCheck
       style={{
@@ -874,7 +872,7 @@ function VerificationForm({
                       name="certImage"
                       style={{ cursor: "pointer" }}
                       onChange={(event) => {
-                        console.log("event", event)
+                        console.log("event", event.currentTarget.files[0]);
                         formik.setFieldValue(
                           "certImage",
                           event.currentTarget.files[0]
@@ -896,6 +894,13 @@ function VerificationForm({
                 </Document>
           
               </UploadSection>
+              {formik?.values?.certImage?.name.length > 1 && (
+                <Field>
+                  <p className="upload-text">
+                    {formik?.values?.certImage?.name}
+                  </p>
+                </Field>
+              )}
 
               <button pay={pay} onClick={submitRequest} className="btn submit">
                 Submit details
