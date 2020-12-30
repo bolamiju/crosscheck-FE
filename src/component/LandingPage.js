@@ -26,7 +26,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
 import imgUrl from "../asset/map.svg";
 
-
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
@@ -95,7 +94,6 @@ const LandingPage = () => {
     //   return false
     // }
   };
-
 
   const testimony = testimonies[testimonyIndex];
 
@@ -224,9 +222,7 @@ const LandingPage = () => {
                   Sign Up Now
                 </Link>
               </button>
-              <button
-                type="button"
-              >How it Works</button>
+              <button type="button">How it Works</button>
             </div>
           </div>
           <img src={Computer} alt="headerimage" />
