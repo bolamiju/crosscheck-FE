@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, Link } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import profile from "../../asset/profile.svg";
+import logit from "../../asset/logit.svg";
 import {
   getUserMessages,
   deleteMessage,
 } from "../../state/actions/verifications";
 import { BellFilled } from "@ant-design/icons";
+
 
 function TopHeader({ setShow, show }) {
   const dispatch = useDispatch();
@@ -17,6 +20,7 @@ function TopHeader({ setShow, show }) {
 
   const { messages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
+  const [opened, setOpened] = useState(true);
   const [font, setFont] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -33,6 +37,11 @@ function TopHeader({ setShow, show }) {
   const handleFontChange = (font) => {
     setFont(font);
   };
+
+  const logOut = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
   return (
     <div>
       <HeadContainer className="top-header">
@@ -45,8 +54,8 @@ function TopHeader({ setShow, show }) {
         ) : route && route.url === "/receipts" ? (
           <h5>Receipts</h5>
         ) : (
-          <h5>Dashboard</h5>
-        )}
+                  <h5>Dashboard</h5>
+                )}
         <div className="right-con">
           <div className="nots">
             <BellFilled
@@ -81,14 +90,37 @@ function TopHeader({ setShow, show }) {
             {messages.length > 0 && <div className="red-circle"></div>}
           </div>
           <div className="user-avatar">
-            <img src={Avatar} alt="Avatar" />
+            <img
+              src={Avatar} alt="Avatar"
+              onClick={() => setOpened(!opened)}
+              style={{ cursor: "pointer" }}
+            />
             <div className="user-info">
               <p>
                 {user?.firstName} {user?.lastName}
               </p>
               <p>{user?.email}</p>
             </div>
+            {!opened ? (
+             <div className="profs">
+                <div className="prof">
+                  <Link className="link">
+                    <img src={profile} alt="profile" style={{border: "none", width: "10%",}} />
+                    <li>Profile</li>
+                  </Link>
+                  <Link className="link">
+                    <img src={profile} alt="logout" style={{border: "none", width: "10%",}} />
+                    <li>Support</li>
+                  </Link>
+                  <Link className="links" onClick={logOut}>
+                    <img src={logit} alt="logout" style={{border: "none", width: "10%",}} />
+                    <li>Logout</li>
+                  </Link>
+               </div>
+             </div>
+          ): null}
           </div>
+         
         </div>
         {!show ? (
           <FontAwesomeIcon
@@ -97,12 +129,12 @@ function TopHeader({ setShow, show }) {
             onClick={handleMenuIcon}
           />
         ) : (
-          <FontAwesomeIcon
-            icon={faTimes}
-            className="menu-icon"
-            onClick={handleMenuIcon}
-          />
-        )}
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="menu-icon"
+              onClick={handleMenuIcon}
+            />
+          )}
       </HeadContainer>
     </div>
   );
@@ -248,6 +280,7 @@ const HeadContainer = styled.div`
 
   .user-avatar {
     display: flex;
+    position: relative
 
     img {
       width: 40px;
@@ -256,6 +289,52 @@ const HeadContainer = styled.div`
       border: 1px solid #e2e2ea;
       opacity: 1;
     }
+    .profs{
+      position: absolute;
+      background: #ffffff;
+      overflow-y: scroll;
+      padding: 0.5rem 1rem;
+      color: #707070;
+      
+      top: 100%;
+      width: 120px;
+      text-align: left;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #00000029;
+    }
+    .prof{
+      list-style: none;
+      padding: 0;
+    }
+    .link {
+    padding-bottom: 0.1rem !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /* opacity: 0.9; */
+    &:hover {
+      opacity: 1;
+    }
+   
+  }
+  .links {
+    padding-bottom: 0.1rem !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-top: 1px solid var(--lighterDark) !important;
+    /* opacity: 0.9; */
+    &:hover {
+      opacity: 1;
+    }
+   
+  }
+  li {
+    padding-left: 10px;
+    color: #707070;
+  }
   }
 
   .user-info {

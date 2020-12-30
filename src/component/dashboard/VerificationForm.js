@@ -198,6 +198,7 @@ function VerificationForm({
     }
     formik.handleSubmit("paid");
     toast.success("Verification details saved");
+
     // updateFormValues(initialValues);
   };
   const handleQualificationTab = (e) => {
@@ -876,12 +877,9 @@ function VerificationForm({
                         console.log("event", event)
                         formik.setFieldValue(
                           "certImage",
-                          event.currentTarget.files[0],
-                          event.currentTarget.files[0].name
+                          event.currentTarget.files[0]
 
                         );
-                        // console.log(certImage)
-                        console.log("selected value", event.currentTarget.files[0].name )
                       }}
 
                     />
@@ -897,9 +895,6 @@ function VerificationForm({
                   /> */}
                 </Document>
           
-                {formik?.values?.certImage?.length > 0 ? (
-                  <p>{formik?.values?.certImage}</p>
-                ): ""}
               </UploadSection>
 
               <button pay={pay} onClick={submitRequest} className="btn submit">
