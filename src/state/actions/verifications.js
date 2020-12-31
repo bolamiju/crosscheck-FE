@@ -57,7 +57,6 @@ export const delMessages = (payload) => {
 };
 
 export const requestVerification = (val) => {
-  console.log(val);
   return axios.post(`${BASE_URL}/api/v1/verifications/request`, val);
 };
 
