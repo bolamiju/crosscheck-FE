@@ -161,12 +161,12 @@ function VerificationForm({
           delete values[propName];
         }
       }
-
       var formData = new FormData();
       formData.append("email", user.email);
       formData.append("our_charge", selectedInst["our_charge"]);
       formData.append("institute_charge", selectedInst["institute_charge"]);
       formData.append("country", selectedInst.country);
+      formData.append("name", selectedInst.name);
 
       for (var key in values) {
         formData.append(key, values[key]);
@@ -878,15 +878,6 @@ function VerificationForm({
                       }}
                     />
                   </div>
-                  {/* <img
-                    src={
-                      formik.values.certImage
-                        ? URL.createObjectURL(formik.values.certImage)
-                        : null
-                    }
-                    style={{ width: "100px", height: "100px" }}
-                    alt="selectedfile"
-                  /> */}
                 </Document>
               </UploadSection>
               {formik?.values?.certImage?.name.length > 1 && (
