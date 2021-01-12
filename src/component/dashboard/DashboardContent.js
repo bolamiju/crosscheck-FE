@@ -36,6 +36,8 @@ const DashboardContent = ({ history }) => {
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
+  const [userCountry, setUserCountry] = useState("");
+  const [convertedUsd, setConvertedUsd] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -90,6 +92,30 @@ const DashboardContent = ({ history }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [country, offset, input]
   );
+  const getGeoInfo = () => {
+    Axios.get("https://ipapi.co/json/")
+      .then((response) => {
+        let data = response.data;
+        setUserCountry(data?.country_name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleCurrencyConversion = () => {
+    const res = Axios.get(
+      `http://apilayer.net/api/live?access_key=00dc481525a5a9d2ab8a541a143d7616&currencies=EUR,GBP,NGN,PLN&source=USD&format=1`
+    ).then(({ data }) => {
+      setConvertedUsd(data?.quotes?.USDNGN);
+    });
+  };
+
+  console.log("result", convertedUsd, userCountry);
+  useEffect(() => {
+    getGeoInfo();
+    handleCurrencyConversion();
+  }, []);
 
   useEffect(() => {
     console.log("clean up");
@@ -97,12 +123,6 @@ const DashboardContent = ({ history }) => {
     dispatch(setPageInfo({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log(position);
-    });
-  }, [input]);
 
   useEffect(() => {
     if (country !== "" && input.length === 0) {
@@ -151,6 +171,16 @@ const DashboardContent = ({ history }) => {
     history.push("/new");
   };
 
+  const toDollar = (amount) => {
+    console.log(amount);
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
+  const truncateString = (str) => {
+    if (str.length <= 24) {
+      return str;
+    }
+    return str.slice(0, 32) + "...";
+  };
   return (
     <DashboardLayout history={history}>
       <RequisitionBody>
@@ -277,15 +307,25 @@ const DashboardContent = ({ history }) => {
                     institutions.map((ite) => (
                       <tr onClick={() => handleSelected(ite)} key={ite.name}>
                         <th className="mobile-header">Number</th>
-                        <td>{ite.name}</td>
+                        <td>{truncateString(ite.name)}</td>
                         <th className="mobile-header">Market rate</th>
-                        <td>{ite.country}</td>
+                        <td>{truncateString(ite.country)}</td>
                         <th className="mobile-header">Weight</th>
-                        <td>{ite["our_charge"] || "-"}</td>
+                        {userCountry === "Nigeria" && (
+                          <td>&#8358;{ite["our_charge"] || 0}</td>
+                        )}
+                        {userCountry !== "Nigeria" && (
+                          <td>${toDollar(ite["our_charge"]) || 0}</td>
+                        )}
+
                         <th className="mobile-header">Value</th>
-                        <td>{ite["institute_charge"] || "-"}</td>
+                        {userCountry === "Nigeria" && (
+                          <td>&#8358;{ite["institute_charge"] || 0}</td>
+                        )}
+                        {userCountry !== "Nigeria" && (
+                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
+                        )}
                       </tr>
-                      // <tr className="space"></tr>
                     ))}
                 </tbody>
               </table>
