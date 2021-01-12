@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,12 +14,19 @@ import { BellFilled } from "@ant-design/icons";
 function TopHeader({ setShow, show }) {
   const dispatch = useDispatch();
   let route = useRouteMatch();
+  console.log("route", route);
 
   const { messages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
   const [font, setFont] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    if (route.url.includes("/dashboard") && user?.id !== route?.params?.id) {
+      window.location.href = "/";
+      return <Redirect to="/" />;
+    }
+  }, [user.id, route.params.id]);
 
   const handleMenuIcon = () => {
     setShow(!show);

@@ -11,7 +11,12 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import * as Yup from "yup";
-import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
+import {
+  fetchInstitutes,
+  setPageInfo,
+  setLoading,
+  noInstitute,
+} from "../../state/actions/institutions";
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
@@ -19,7 +24,9 @@ import VerificationContent from "./VerificationContent";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
-  const { institutions, pageInfo } = useSelector((state) => state.institutions);
+  const { institutions, pageInfo, loading, noInstitutes } = useSelector(
+    (state) => state.institutions
+  );
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
@@ -51,6 +58,7 @@ const DashboardContent = ({ history }) => {
 
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
+      dispatch(setLoading(true));
       const { data } = await Axios.get(
         `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
@@ -61,6 +69,10 @@ const DashboardContent = ({ history }) => {
         hasNextPage,
         page,
       } = data.institution;
+      if (data.institution.docs > 1) {
+        dispatch(noInstitute(false));
+      }
+      dispatch(setLoading(false));
       dispatch(fetchInstitutes(data.institution.docs));
       dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
@@ -85,6 +97,12 @@ const DashboardContent = ({ history }) => {
     dispatch(setPageInfo({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log(position);
+    });
+  }, [input]);
 
   useEffect(() => {
     if (country !== "" && input.length === 0) {
@@ -236,6 +254,8 @@ const DashboardContent = ({ history }) => {
               />
             </div>
           </div>
+          {loading && <p>loading</p>}
+
           {institutions.length > 0 && (
             <div className="new-table open">
               <table
@@ -253,21 +273,23 @@ const DashboardContent = ({ history }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {institutions.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                      <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      <td>{ite["our_charge"] || "-"}</td>
-                      <th className="mobile-header">Value</th>
-                      <td>{ite["institute_charge"] || "-"}</td>
-                    </tr>
-                    // <tr className="space"></tr>
-                  ))}
+                  {institutions.length > 0 &&
+                    institutions.map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{ite.name}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>{ite["our_charge"] || "-"}</td>
+                        <th className="mobile-header">Value</th>
+                        <td>{ite["institute_charge"] || "-"}</td>
+                      </tr>
+                      // <tr className="space"></tr>
+                    ))}
                 </tbody>
               </table>
+
               {!hideTable && (
                 <div className="pagination-line">
                   <p>
@@ -291,6 +313,9 @@ const DashboardContent = ({ history }) => {
                 </div>
               )}
             </div>
+          )}
+          {noInstitutes && institutions.length < 1 && (
+            <p style={{ marginLeft: "40px" }}>No institutions found</p>
           )}
         </SelectSch>
         <div className="spacer"></div>

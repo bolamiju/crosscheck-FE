@@ -1,7 +1,11 @@
 import * as types from "../actionTypes/users";
 import axios from "axios";
 import { BASE_URL } from "../constant/constants";
-import {GET_PAGE_DETAILS } from "../actionTypes/verifications";
+import {
+  GET_PAGE_DETAILS,
+  LOADING,
+  NO_INSTITUTES,
+} from "../actionTypes/verifications";
 
 export const fetchInstitutes = (payload) => {
   return {
@@ -13,9 +17,23 @@ export const fetchInstitutes = (payload) => {
 export const setPageInfo = (payload) => {
   return {
     type: GET_PAGE_DETAILS,
-    payload
-  }
-}
+    payload,
+  };
+};
+
+export const setLoading = (payload) => {
+  return {
+    type: LOADING,
+    payload,
+  };
+};
+
+export const noInstitute = (payload) => {
+  return {
+    type: NO_INSTITUTES,
+    payload,
+  };
+};
 
 export const getAllInstitutions = () => (dispatch) => {
   axios

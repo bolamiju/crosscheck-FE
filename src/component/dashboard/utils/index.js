@@ -4,6 +4,8 @@ import store from "../../../store";
 import {
   fetchInstitutes,
   setPageInfo,
+  setLoading,
+  noInstitute,
 } from "../../../state/actions/institutions";
 
 const resources = {};
@@ -24,8 +26,6 @@ const makeRequestCreator = () => {
         return resources[query];
       }
       const res = await axios(query, { cancelToken: cancel.token });
-      console.log("oun re", res);
-
       const {
         docs,
         totalDocs,
@@ -34,6 +34,9 @@ const makeRequestCreator = () => {
         hasNextPage,
         page,
       } = res.data.institution;
+      if (docs.length === 0) {
+        store.dispatch(noInstitute(true));
+      }
       store.dispatch(fetchInstitutes(docs));
       store.dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })

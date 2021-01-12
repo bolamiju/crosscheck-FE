@@ -7,4 +7,6 @@ export const GET_TRANSCRIPT = "GET_TRANSCRIPT";
 export const GET_MESSAGES = "GET_MESSAGES";
 export const DELETE_MESSAGES = "DELETE_MESSAGES";
 
-export const GET_PAGE_DETAILS = "GET_PAGE_DETAILS"
+export const GET_PAGE_DETAILS = "GET_PAGE_DETAILS";
+export const LOADING = "LOADING";
+export const NO_INSTITUTES = "NO_INSTITUTES";

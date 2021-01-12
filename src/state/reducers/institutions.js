@@ -1,8 +1,14 @@
 import * as types from "../actionTypes/users";
-import {GET_PAGE_DETAILS} from "../actionTypes/verifications";
+import {
+  GET_PAGE_DETAILS,
+  LOADING,
+  NO_INSTITUTES,
+} from "../actionTypes/verifications";
 const initialState = {
   institutions: [],
-  pageInfo:{}
+  pageInfo: {},
+  noInstitutes: false,
+  loading: "",
 };
 
 export default function userReducer(state = initialState, action) {
@@ -15,8 +21,18 @@ export default function userReducer(state = initialState, action) {
     case GET_PAGE_DETAILS:
       return {
         ...state,
-        pageInfo:action.payload
-      }
+        pageInfo: action.payload,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case NO_INSTITUTES:
+      return {
+        ...state,
+        noInstitutes: action.payload,
+      };
     default:
       return state;
   }
