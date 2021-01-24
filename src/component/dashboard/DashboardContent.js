@@ -93,8 +93,9 @@ const DashboardContent = ({ history }) => {
     [country, offset, input]
   );
   const getGeoInfo = () => {
-    Axios.get("https://ipapi.co/json/")
+    Axios.get("https://cors-anywhere.herokuapp.com/https://ipapi.co/json/")
       .then((response) => {
+        console.log('data re',response)
         let data = response.data;
         setUserCountry(data?.country_name);
       })
@@ -104,14 +105,13 @@ const DashboardContent = ({ history }) => {
   };
 
   const handleCurrencyConversion = () => {
-    const res = Axios.get(
+     Axios.get(
       `http://apilayer.net/api/live?access_key=00dc481525a5a9d2ab8a541a143d7616&currencies=EUR,GBP,NGN,PLN&source=USD&format=1`
     ).then(({ data }) => {
       setConvertedUsd(data?.quotes?.USDNGN);
     });
   };
 
-  console.log("result", convertedUsd, userCountry);
   useEffect(() => {
     getGeoInfo();
     handleCurrencyConversion();

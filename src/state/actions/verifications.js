@@ -64,22 +64,20 @@ export const getUserVerification = (email) => async (dispatch) => {
   await axios
     .get(`${BASE_URL}/api/v1/verifications/byemail/${email}`)
     .then(({ data }) => {
-      console.log("verifications data", data);
       dispatch(getOneUserVerifications(data.verifications));
     })
     .catch((err) => {
-      console.log("error", err);
+      return err
     });
 };
 export const getUserTranscript = (email) => async (dispatch) => {
   await axios
     .get(`${BASE_URL}/api/v1/transcript/byemail/${email}`)
     .then(({ data }) => {
-      console.log("transcript data", data);
       dispatch(getOneUserTranscript(data.transcripts));
     })
     .catch((err) => {
-      console.log("error", err);
+      return err
     });
 };
 
@@ -93,7 +91,7 @@ export const getUserMessages = (email) => async (dispatch) => {
       dispatch(messages(data.message));
     })
     .catch((err) => {
-      console.log("error", err);
+      return err
     });
 };
 
@@ -101,10 +99,9 @@ export const deleteMessage = (id) => async (dispatch) => {
   await axios
     .delete(`${BASE_URL}/api/v1/message/${id}`)
     .then(({ data }) => {
-      console.log("deleted", data);
       dispatch(delMessages(data.message));
     })
     .catch((err) => {
-      console.log("error", err);
+      return err
     });
 };

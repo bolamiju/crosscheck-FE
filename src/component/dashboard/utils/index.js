@@ -4,7 +4,6 @@ import store from "../../../store";
 import {
   fetchInstitutes,
   setPageInfo,
-  setLoading,
   noInstitute,
 } from "../../../state/actions/institutions";
 
@@ -41,7 +40,6 @@ const makeRequestCreator = () => {
       store.dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
       );
-      console.log("inst", docs);
       // Store response
       // resources[query] = docs;
 

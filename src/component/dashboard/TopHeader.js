@@ -4,7 +4,7 @@ import { useRouteMatch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {
   getUserMessages,
   deleteMessage,
@@ -14,7 +14,6 @@ import { BellFilled } from "@ant-design/icons";
 function TopHeader({ setShow, show }) {
   const dispatch = useDispatch();
   let route = useRouteMatch();
-  console.log("route", route);
 
   const { messages } = useSelector((state) => state.verifications);
   const [open, setOpen] = useState(true);
@@ -89,6 +88,7 @@ function TopHeader({ setShow, show }) {
           </div>
           <div className="user-avatar">
             <img src={Avatar} alt="Avatar" />
+        
             <div className="user-info">
               <p>
                 {user?.firstName} {user?.lastName}

@@ -94,7 +94,7 @@ function Register() {
             <p>
               We've sent an account activation link to
               <br />
-              <span>{userEmail}</span>{" "}
+              <span>{userEmail}. Please check your inbox or spam folder.</span>{" "}
             </p>
 
             <p>Click on the link to activate your account</p>
@@ -319,7 +319,7 @@ function Register() {
                       setTerms(!terms);
                     }}
                   />
-                  <span>I agree to the terms and conditions</span>
+                  <span>I agree to the <a href='/terms' target="_blank" style={{color:"rgb(0, 146, 224)"}}>terms and conditions</a></span>
                   {formik.touched.accept && formik.errors.accept ? (
                     <div className="error">{formik.errors.accept}</div>
                   ) : null}

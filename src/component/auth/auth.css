@@ -201,7 +201,7 @@ body {
 }
 .great {
   color: orangered;
-  margin: 0 !important; 
+  margin: 0 !important;
   font-family: MontserratBold;
   font-size: 20px;
 }
@@ -282,7 +282,7 @@ label {
   color: #707070;
   opacity: 1;
   width: 48%;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 .country-input select {
   font-family: MontserratRegular;
@@ -426,7 +426,7 @@ label {
 }
 
 .terms .accept span {
-  font-size: 14px;
+  /* font-size: 14px; */
   font-family: "Roboto";
 }
 .fot-pass {
@@ -452,7 +452,7 @@ label {
   margin-top: -15px;
   font-family: segoebold;
   letter-spacing: 0px;
-  color: #FF2600;
+  color: #ff2600;
   font-size: 24px;
   opacity: 1;
   /* margin-bottom: 5px; */
