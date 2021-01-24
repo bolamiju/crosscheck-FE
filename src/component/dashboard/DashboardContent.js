@@ -106,7 +106,7 @@ const DashboardContent = ({ history }) => {
 
   const handleCurrencyConversion = () => {
      Axios.get(
-      `http://apilayer.net/api/live?access_key=00dc481525a5a9d2ab8a541a143d7616&currencies=EUR,GBP,NGN,PLN&source=USD&format=1`
+      `https://apilayer.net/api/live?access_key=00dc481525a5a9d2ab8a541a143d7616&currencies=EUR,GBP,NGN,PLN&source=USD&format=1`
     ).then(({ data }) => {
       setConvertedUsd(data?.quotes?.USDNGN);
     });
