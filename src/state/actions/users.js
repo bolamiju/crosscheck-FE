@@ -30,6 +30,13 @@ export const setUser = (payload) => {
   };
 };
 
+const setLocation = (payload) => {
+  return {
+    type: types.USER_LOCATION,
+    payload,
+  };
+};
+
 export const signUp = (user) =>
   axios.post(`${BASE_URL}/api/v1/users/register`, user);
 
@@ -41,3 +48,15 @@ export const forgotPassword = (email) =>
 
 export const resetPassword = (token, passwords) =>
   axios.put(`${BASE_URL}/api/v1/users/reset/${token}`, passwords);
+
+
+export const getGeoInfo = () => async(dispatch)=>{
+   await axios.get("https://cors-anywhere.herokuapp.com/https://ipapi.co/json/")
+      .then((response) => {
+        let data = response.data;
+        dispatch(setLocation(data?.country_name))
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };

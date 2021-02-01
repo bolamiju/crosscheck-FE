@@ -5,6 +5,7 @@ const initialState = {
   registerError: "",
   loginError: "",
   user: {},
+  location:''
 };
 
 export default function userReducer(state = initialState, action) {
@@ -32,6 +33,11 @@ export default function userReducer(state = initialState, action) {
         registerError: "",
         loginError: "",
       };
+      case types.USER_LOCATION:
+        return {
+          ...state,
+          location:action.payload
+        }
 
     default:
       return state;

@@ -17,6 +17,7 @@ import {
   setLoading,
   noInstitute,
 } from "../../state/actions/institutions";
+import {getGeoInfo} from '../../state/actions/users'
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
@@ -30,14 +31,17 @@ const DashboardContent = ({ history }) => {
   const { userVerifications, newTranscript } = useSelector(
     (state) => state.verifications
   );
+
+  const { location:userCountry } = useSelector(
+    (state) => state.user
+  );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [offset, setOffset] = useState(0);
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
-  const [userCountry, setUserCountry] = useState("");
-  const [convertedUsd, setConvertedUsd] = useState("");
+  const convertedUsd = 382;
 
   const formik = useFormik({
     initialValues: {
@@ -92,33 +96,12 @@ const DashboardContent = ({ history }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [country, offset, input]
   );
-  const getGeoInfo = () => {
-    Axios.get("https://cors-anywhere.herokuapp.com/https://ipapi.co/json/")
-      .then((response) => {
-        console.log('data re',response)
-        let data = response.data;
-        setUserCountry(data?.country_name);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleCurrencyConversion = () => {
-     Axios.get(
-      `https://apilayer.net/api/live?access_key=00dc481525a5a9d2ab8a541a143d7616&currencies=EUR,GBP,NGN,PLN&source=USD&format=1`
-    ).then(({ data }) => {
-      setConvertedUsd(data?.quotes?.USDNGN);
-    });
-  };
-
+ 
   useEffect(() => {
-    getGeoInfo();
-    handleCurrencyConversion();
+    dispatch(getGeoInfo());
   }, []);
 
   useEffect(() => {
-    console.log("clean up");
     dispatch(fetchInstitutes([]));
     dispatch(setPageInfo({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,7 +155,6 @@ const DashboardContent = ({ history }) => {
   };
 
   const toDollar = (amount) => {
-    console.log(amount);
     return Math.round(Number(amount) / Number(convertedUsd));
   };
   const truncateString = (str) => {
@@ -196,7 +178,7 @@ const DashboardContent = ({ history }) => {
 
         <CardsContainer>
           <Card>
-            <img src={Transcript} alt="tran" />
+            <img src={Transcript} alt="tran" className="trans-image"/>
             <div className="tran-text">
               <div className="transcript">
                 <p>Transcript Check</p>
@@ -276,7 +258,6 @@ const DashboardContent = ({ history }) => {
                 value={formik.values.country}
                 onChange={(_, e) => {
                   formik.handleChange(e);
-                  console.log(e.target.value);
                   setCountry(e.target.value.toLowerCase());
                 }}
                 onBlur={formik.handleBlur}
@@ -515,8 +496,11 @@ const Card = styled.div`
   box-shadow: 0px 0px 10px #00000029;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 7px;
-  height: 100px;
+  height: 110px;
   opacity: 3;
+  .trans-image{
+    margin-left:10px
+  }
   @media (max-width: 500px) {
     margin-bottom: 20px;
   }

@@ -20,8 +20,10 @@ import {
   selectSchool,
 } from "../../state/actions/verifications";
 import VerificationForm from "./VerificationForm";
-
+import Logo from "../../asset/CrossCheckLogo.png";
 import Pdf from "react-to-pdf";
+
+import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { PaystackButton } from "react-paystack";
 
 const request = (data) =>
@@ -46,6 +48,10 @@ const NewVerifications = () => {
   const { verifications, selectedInstitution } = useSelector(
     (state) => state.verifications
   );
+
+  const { location } = useSelector(
+    (state) => state.user
+  );
   const ref = React.createRef();
 
   const formData = {
@@ -63,6 +69,7 @@ const NewVerifications = () => {
     enrollmentStatus: false,
   };
   let [isBlocking, setIsBlocking] = useState(true);
+  const convertedUsd = 382
 
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
@@ -84,7 +91,6 @@ const NewVerifications = () => {
     setChecked(e.target.checked);
   };
   const verify = async () => {
-    console.log("updated form values", formValues);
     for (let i = 0; i < formValues.length; i++) {
       if (formValues[i] instanceof FormData === false) {
         for (const key in formValues[i]) {
@@ -126,18 +132,20 @@ const NewVerifications = () => {
     for (var pair of verifications[i].entries()) {
       obj[pair[0]] = pair[1];
     }
-    console.log("each object", obj);
     verifRequest.push(obj);
   }
+  const toDollar = (amount) => {
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
   let totalOurCharge = verifRequest.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(currentValue["our_charge"]),
+      accumulator + Number(location === 'Nigeria' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
     0
   );
 
   let totalInstituteCharge = verifRequest.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(currentValue["institute_charge"]),
+      accumulator + Number(location === 'Nigeria' ? currentValue["institute_charge"] : toDollar(currentValue["institute_charge"])),
     0
   );
   const total =
@@ -150,17 +158,33 @@ const NewVerifications = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const componentProps = {
-    email: user?.email,
-    amount: total * 100,
-    metadata: {
-      name: "Tola",
-      // phone: "080932215257",
+ 
+
+   const config = {
+    public_key: 'FLWPUBK_TEST-936198c935ce9b7b8b16accb4858e2d1-X',
+    tx_ref: Date.now(),
+    amount: total,
+    currency: location ==='Nigeria' ? 'NGN' : 'USD',
+    payment_options: 'card,mobilemoney,ussd',
+    customer: {
+      email: user?.email,
+      phonenumber: user?.phone,
+      name: `${user?.firstName} ${ user?.lastName}`,
     },
-    publicKey: process.env.REACT_APP_PAYSTACK_KEY,
-    text: "Pay Now",
-    onSuccess: () => {
-      console.log("paying");
+    customizations: {
+      title: 'CrossCheck',
+      description: 'Payment for verification',
+      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+    },
+  };
+
+  const fwConfig = {
+    ...config,
+    text: 'Pay Now!',
+    callback: (response) => {
+       console.log(response);
+  if(response?.status === 'successful'){
+    closePaymentModal() // this will close the modal programmatically
       processPayment();
       dispatch(addVerificationList([]));
       setRequestList(false);
@@ -169,7 +193,8 @@ const NewVerifications = () => {
       toast.success("request submitted");
       setTimeout(() => {
         history.push(`/dashboard/${user.id}`);
-      }, 1500);
+      }, 1500)
+    }
     },
     onClose: () => {},
   };
@@ -286,9 +311,9 @@ const NewVerifications = () => {
                             <th className="mobile-header">Market rate</th>
                             <td>{ver.country}</td>
                             <th className="mobile-header">Weight</th>
-                            <td>{`${ver["our_charge"]}`}</td>
+                            {location === 'Nigeria' ? <td>&#8358;{ver["our_charge"]}</td> : <td>${toDollar(ver["our_charge"])}</td>}
                             <th className="mobile-header">Value</th>
-                            <td>{ver["institute_charge"]}</td>
+                        {location === 'Nigeria' ? <td>&#8358;{ver["institute_charge"]}</td> : <td>${toDollar(ver["institute_charge"])}</td>}
                             <td>
                               <FontAwesomeIcon
                                 icon={faTrash}
@@ -307,7 +332,7 @@ const NewVerifications = () => {
                     <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
-                    <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
+                  {location === 'Nigeria' ? <td style={{ fontWeight: "bold" }}>&#8358;{total}</td> : <td style={{ fontWeight: "bold" }}>${total}</td>}
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
@@ -339,8 +364,7 @@ const NewVerifications = () => {
                   <FontAwesomeIcon icon={faPlus} />
                   Add another Verification &nbsp;{" "}
                 </button>
-
-                <PaystackButton {...componentProps} className="btn" />
+                <FlutterWaveButton {...fwConfig} className="btn"/>
               </div>
             </SelectSch>
           )}

@@ -40,6 +40,7 @@ function VerificationForm({
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
   const { selectedInstitution } = useSelector((state) => state.verifications);
+  const {location} = useSelector(state=>state.user)
 
   const [selectedInst, setSelectedInst] = useState(
     selectedInstitution.name ? selectedInstitution : {}
@@ -51,6 +52,7 @@ function VerificationForm({
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
+  const convertedUsd = 382
   const user = JSON.parse(localStorage.getItem("user"));
 
   const request = useCallback(
@@ -64,7 +66,7 @@ function VerificationForm({
   );
 
   useEffect(() => {
-    console.log("clean up");
+    // clean up
     dispatch(fetchInstitutes([]));
     dispatch(setPageInfo({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -241,6 +243,11 @@ function VerificationForm({
     }
     return str.slice(0, 40) + "...";
   };
+
+  const toDollar = (amount) => {
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
+
   return (
     <SingleCheck
       style={{
@@ -280,8 +287,6 @@ function VerificationForm({
             <span>Country</span>
             <span>{selectedInst.country}</span>
           </div>
-          {/* <div className="sch-country"><span>Price</span>
-    <span>{ selectedInst.amount}</span></div> */}
         </SelectSch>
       ) : (
         <SelectSch>
@@ -358,9 +363,14 @@ function VerificationForm({
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
-                      <td>{ite["our_charge"]}</td>
+                      <td>{location !== "Nigeria" && (
+                          <td>${toDollar(ite["our_charge"]) || 0}</td>
+                        )}</td>
                       <th className="mobile-header">Value</th>
-                      <td>{ite["institute_charge"]}</td>
+                      <td> {location !== "Nigeria" && (
+                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
+                        )}
+                        </td>
                     </tr>
                   ))}
                 </tbody>
@@ -531,14 +541,7 @@ function VerificationForm({
                 </>
               </Field>
 
-              <Field>
-                <label>Reference ID</label>
-                <input type="text" className="ref-input" />
-              </Field>
-              <p className="ref">
-                The reference number will be used to track this case in your
-                internal system if you have one
-              </p>
+             
               <button
                 // disabled={
                 //   formik.values.firstName.length === 0 ||
