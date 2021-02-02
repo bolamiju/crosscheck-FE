@@ -20,10 +20,9 @@ import {
   selectSchool,
 } from "../../state/actions/verifications";
 import VerificationForm from "./VerificationForm";
-import Logo from "../../asset/CrossCheckLogo.png";
 import Pdf from "react-to-pdf";
 
-import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
+import { FlutterWaveButton } from 'flutterwave-react-v3';
 
 const request = (data) =>
   axios({
@@ -183,7 +182,7 @@ const NewVerifications = () => {
     callback: (response) => {
        console.log(response);
   if(response?.status === 'successful'){
-    closePaymentModal() // this will close the modal programmatically
+    // closePaymentModal() // this will close the modal programmatically
       processPayment();
       dispatch(addVerificationList([]));
       setRequestList(false);
