@@ -24,7 +24,6 @@ import Logo from "../../asset/CrossCheckLogo.png";
 import Pdf from "react-to-pdf";
 
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
-import { PaystackButton } from "react-paystack";
 
 const request = (data) =>
   axios({

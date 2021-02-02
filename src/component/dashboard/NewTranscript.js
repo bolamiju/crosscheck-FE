@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import arrow from "../../asset/arrow-right.svg";
@@ -30,6 +30,10 @@ const NewTranscript = () => {
 
   const ref = React.createRef();
 
+  const { location } = useSelector(
+    (state) => state.user
+  );
+
   const formData = {
     firstName: "",
     lastName: "",
@@ -57,12 +61,16 @@ const NewTranscript = () => {
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
+  const convertedUsd = 382
+
+  const toDollar = (amount) => {
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
   };
   const verify = async () => {
-    console.log("updated form values", formValues);
     for (let i = 0; i < formValues.length; i++) {
       for (var key in formValues[i]) {
         if (formValues[i][key] === "") {
@@ -84,10 +92,10 @@ const NewTranscript = () => {
       formValues.map((value, index) => (index === id ? data : value))
     );
   };
-  // console.log("updated", formValues);
+
 
   let total = formValues.reduce(
-    (accumulator, currentValue) => accumulator + Number(currentValue.amount),
+    (accumulator, currentValue) => accumulator + Number(location === 'Nigeria' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
     0
   );
 
@@ -195,10 +203,8 @@ const NewTranscript = () => {
                     <tr>
                       <th>Name</th>
                       <th>Country</th>
-                      <th>category rate</th>
-                      <th>amount</th>
-                      <th>Our Charge</th>
-                      <th>Unstitute Charge</th>
+                      <th>our charge</th>
+                      <th>Institute Charge</th>
                       <th></th>
                     </tr>
                   </thead>

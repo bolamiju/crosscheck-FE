@@ -29,7 +29,9 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
-
+  const { location:userCountry } = useSelector(
+    (state) => state.user
+  );
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
@@ -47,7 +49,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
   };
-  console.log("offset", offset);
 
   useEffect(() => {
     if (input.length > 0) {
@@ -81,26 +82,17 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       await search(
         `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
-      console.log("res", input);
-
-      // const {
-      //   totalDocs,
-      //   totalPages,
-      //   hasPrevPage,
-      //   hasNextPage,
-      //   page,
-      // } = data.institution;
-      // dispatch(fetchInstitutes(data.institution.docs.name));
-      // dispatch(
-      //   setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
-      // );
-      console.log("in usecallback");
     },
     [country, offset, input]
   );
 
   useEffect(() => {
-    console.log("in useeffect");
+    dispatch(fetchInstitutes([]));
+    dispatch(setPageInfo({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (country !== "" && input.length === 0) {
       institutionByCountry(country, byCountryOffset, 15);
     }
@@ -119,6 +111,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
+  const convertedUsd = 382
+  const toDollar = (amount) => {
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -126,6 +122,12 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const handleSelected = (institute) => {
+    if(institute?.country !== 'Nigeria')
+    {
+      return toast.error('We process transcripts for schools within nigeria alone for now')
+    }
+    setSelectedInst(institute)
+    formik.setFieldValue("institution", institute.name);
     dispatch(selectSchool(institute));
     setHideTable(true);
     setInput(institute.name);
@@ -143,7 +145,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const handleNext = (data) => {
-    console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
     } else if (country !== "" && input.length > 0) {
@@ -239,7 +240,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
         >
           <div style={{ width: "100%" }}>
             <img src={cap} alt="graduation cap" />
-            <h3>Education Check - {selectedInst.name}</h3>
+            <h3>Transcript Request - {formik.values.institution}</h3>
           </div>
           <FontAwesomeIcon
             icon={details ? faCaretDown : faCaretRight}
@@ -324,8 +325,8 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   <tr>
                     <th>Name</th>
                     <th>Country</th>
-                    <th>category rate</th>
-                    <th>amount</th>
+                    <th>Institute charge</th>
+                    <th>Our Charge</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -336,11 +337,15 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
-                      <td>{ite.category}</td>
+                      <td>-</td>
                       <th className="mobile-header">Value</th>
-                      <td>{ite.amount}</td>
+                      {userCountry !== "Nigeria" && (
+                          <td>${toDollar(ite['transcript_fee']) }</td>
+                        )}
+                        {userCountry === "Nigeria" && (
+                          <td>&#8358;{ite['transcript_fee'] || 0}</td>
+                        )}
                     </tr>
-                    // <tr className="space"></tr>
                   ))}
                 </tbody>
               </table>

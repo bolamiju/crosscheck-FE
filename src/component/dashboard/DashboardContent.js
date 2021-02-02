@@ -267,7 +267,7 @@ const DashboardContent = ({ history }) => {
           </div>
           {loading && <p>loading</p>}
 
-          {institutions.length > 0 && (
+          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
             <div className="new-table open">
               <table
                 cellSpacing="0"
