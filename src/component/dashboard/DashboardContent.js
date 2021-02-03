@@ -17,11 +17,11 @@ import {
   setLoading,
   noInstitute,
 } from "../../state/actions/institutions";
-import {getGeoInfo} from '../../state/actions/users'
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
 import VerificationContent from "./VerificationContent";
+import ipapi from 'ipapi.co'
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
@@ -32,16 +32,20 @@ const DashboardContent = ({ history }) => {
     (state) => state.verifications
   );
 
-  const { location:userCountry } = useSelector(
-    (state) => state.user
-  );
+
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [offset, setOffset] = useState(0);
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
+  const [userCountry,setUserCountry] = useState('')
   const convertedUsd = 382;
+
+  useEffect(()=>{
+    ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  },[])
+  
 
   const formik = useFormik({
     initialValues: {
@@ -97,10 +101,6 @@ const DashboardContent = ({ history }) => {
     [country, offset, input]
   );
  
-  useEffect(() => {
-    dispatch(getGeoInfo());
-  }, []);
-
   useEffect(() => {
     dispatch(fetchInstitutes([]));
     dispatch(setPageInfo({}));
@@ -279,8 +279,8 @@ const DashboardContent = ({ history }) => {
                   <tr>
                     <th>Name</th>
                     <th>Country</th>
-                    <th>our charge</th>
                     <th>Institute charge</th>
+                    <th>Our charge</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -291,21 +291,22 @@ const DashboardContent = ({ history }) => {
                         <td>{truncateString(ite.name)}</td>
                         <th className="mobile-header">Market rate</th>
                         <td>{truncateString(ite.country)}</td>
+                        <th className="mobile-header">Value</th>
+                        {ite['institute_charge'] === 0 ? <td>-</td> :
+                        userCountry === "NG" ? (
+                          <td>&#8358;{ite["institute_charge"] || 0}</td>
+                        ) :
+                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
+                        }
                         <th className="mobile-header">Weight</th>
-                        {userCountry === "Nigeria" && (
+                        {userCountry === "NG" && (
                           <td>&#8358;{ite["our_charge"] || 0}</td>
                         )}
-                        {userCountry !== "Nigeria" && (
+                        {userCountry !== "NG" && (
                           <td>${toDollar(ite["our_charge"]) || 0}</td>
                         )}
 
-                        <th className="mobile-header">Value</th>
-                        {userCountry === "Nigeria" && (
-                          <td>&#8358;{ite["institute_charge"] || 0}</td>
-                        )}
-                        {userCountry !== "Nigeria" && (
-                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
-                        )}
+                        
                       </tr>
                     ))}
                 </tbody>

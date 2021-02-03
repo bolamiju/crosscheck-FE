@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import arrow from "../../asset/arrow-right.svg";
@@ -15,7 +16,8 @@ import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
 
 import Pdf from "react-to-pdf";
-import { PaystackButton } from "react-paystack";
+import { FlutterWaveButton } from 'flutterwave-react-v3';
+import ipapi, { location } from 'ipapi.co'
 
 const request = (data) => {
   axios({
@@ -29,10 +31,8 @@ const NewTranscript = () => {
   const dispatch = useDispatch();
 
   const ref = React.createRef();
+  const history = useHistory()
 
-  const { location } = useSelector(
-    (state) => state.user
-  );
 
   const formData = {
     firstName: "",
@@ -61,11 +61,14 @@ const NewTranscript = () => {
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
+  const [userCountry,setUserCountry] = useState('')
   const convertedUsd = 382
 
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd));
   };
+ ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  console.log('userCountry',userCountry)
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
@@ -91,30 +94,46 @@ const NewTranscript = () => {
     setFormValues((formValues) =>
       formValues.map((value, index) => (index === id ? data : value))
     );
-  };
-
-
+  }
   let total = formValues.reduce(
-    (accumulator, currentValue) => accumulator + Number(location === 'Nigeria' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
+    (accumulator, currentValue) => accumulator + Number(userCountry && userCountry === 'NG' ? currentValue.amount : toDollar(currentValue.amount)),
     0
   );
+  const user = JSON.parse(localStorage.getItem("user"));
+  const config = {
+   public_key: process.env.REACT_APP_PUBLIC_KEY,
+   tx_ref: Date.now(),
+   amount: total,
+   currency: userCountry ==='NG' ? 'NGN' : 'USD',
+   payment_options: 'card,mobilemoney,ussd',
+   customer: {
+     email: user?.email,
+     phonenumber: user?.phone,
+     name: `${user?.firstName} ${ user?.lastName}`,
+   },
+   customizations: {
+     title: 'CrossCheck',
+     description: 'Payment for Transcript',
+     logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+   },
+ };
 
-  const componentProps = {
-    email: "tolaked@yahoo.com",
-    amount: total * 100,
-    metadata: {
-      name: "Tola",
-      phone: "080932215257",
-    },
-    publicKey: process.env.REACT_APP_PAYSTACK_KEY,
-    text: "Pay Now",
-    onSuccess: () => {
-      console.log("paying");
-      processPayment();
-      dispatch(addTranscript([]));
-      setRequestList(false);
-      setFormValues([formData]);
-      toast.success("request submitted");
+ const fwConfig = {
+   ...config,
+   text: 'Pay Now!',
+   callback: (response) => {
+  console.log(response);
+  if(response?.status === 'successful'){
+    // closePaymentModal() // this will close the modal programmatically
+    processPayment();
+    dispatch(addTranscript([]));
+    setRequestList(false);
+    setFormValues([formData]);
+    toast.success("request submitted");
+      setTimeout(() => {
+        history.push(`/dashboard/${user.id}`);
+      }, 1500)
+    }
     },
     onClose: () => {},
   };
@@ -217,9 +236,9 @@ const NewTranscript = () => {
                           <th className="mobile-header">Market rate</th>
                           <td>{ver.destination}</td>
                           <th className="mobile-header">Weight</th>
-                          <td>50000</td>
+                          <td>  {userCountry === 'NG' ? <td>&#8358;{ver.amount}</td> : <td>${toDollar(ver.amount)}</td>}</td>
                           <th className="mobile-header">Value</th>
-                          <td>{ver.amount}</td>
+                          <td>-</td>
                         </tr>
                       ))}
 
@@ -253,7 +272,7 @@ const NewTranscript = () => {
                 </Pdf>
               </div>
               <div className="buttons">
-                <PaystackButton {...componentProps} className="btn" />
+              <FlutterWaveButton {...fwConfig} className="btn"/>
               </div>
             </SelectSch>
           )}

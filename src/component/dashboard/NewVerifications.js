@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +14,8 @@ import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
 import finish from "../../asset/finish.svg";
+import bell from "../../asset/details.svg";
+
 import {
   addVerificationList,
   deleteVerification,
@@ -22,7 +24,8 @@ import {
 import VerificationForm from "./VerificationForm";
 import Pdf from "react-to-pdf";
 
-import { FlutterWaveButton } from 'flutterwave-react-v3';
+import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
+import ipapi from 'ipapi.co'
 
 const request = (data) =>
   axios({
@@ -47,14 +50,15 @@ const NewVerifications = () => {
     (state) => state.verifications
   );
 
-  const { location } = useSelector(
-    (state) => state.user
-  );
   const ref = React.createRef();
+
+  useEffect(()=>{
+    ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  },[])
 
   const formData = {
     firstName: "",
-    institution: selectedInstitution.name || "",
+    institution: selectedInstitution?.name || "",
     lastName: "",
     middleName: "",
     dateOfBirth: "",
@@ -67,6 +71,7 @@ const NewVerifications = () => {
     enrollmentStatus: false,
   };
   let [isBlocking, setIsBlocking] = useState(true);
+  const [userCountry,setUserCountry] = useState('')
   const convertedUsd = 382
 
   const today = new Date();
@@ -135,15 +140,15 @@ const NewVerifications = () => {
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd));
   };
-  let totalOurCharge = verifRequest.reduce(
+  let totalOurCharge = verifRequest?.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(location === 'Nigeria' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
+      accumulator + Number(userCountry === 'NG' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
     0
   );
 
-  let totalInstituteCharge = verifRequest.reduce(
+  let totalInstituteCharge = verifRequest?.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(location === 'Nigeria' ? currentValue["institute_charge"] : toDollar(currentValue["institute_charge"])),
+      accumulator + Number(userCountry === 'NG' ? currentValue["institute_charge"] : toDollar(currentValue["institute_charge"])),
     0
   );
   const total =
@@ -156,13 +161,11 @@ const NewVerifications = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
- 
-
    const config = {
-    public_key: 'FLWPUBK_TEST-936198c935ce9b7b8b16accb4858e2d1-X',
+    public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
     amount: total,
-    currency: location ==='Nigeria' ? 'NGN' : 'USD',
+    currency: userCountry ==='NG' ? 'NGN' : 'USD',
     payment_options: 'card,mobilemoney,ussd',
     customer: {
       email: user?.email,
@@ -182,7 +185,7 @@ const NewVerifications = () => {
     callback: (response) => {
        console.log(response);
   if(response?.status === 'successful'){
-    // closePaymentModal() // this will close the modal programmatically
+    closePaymentModal() // this will close the modal programmatically
       processPayment();
       dispatch(addVerificationList([]));
       setRequestList(false);
@@ -196,7 +199,7 @@ const NewVerifications = () => {
     },
     onClose: () => {},
   };
-
+ 
   return (
     <div>
       <Layout>
@@ -309,15 +312,15 @@ const NewVerifications = () => {
                             <th className="mobile-header">Market rate</th>
                             <td>{ver.country}</td>
                             <th className="mobile-header">Weight</th>
-                            {location === 'Nigeria' ? <td>&#8358;{ver["our_charge"]}</td> : <td>${toDollar(ver["our_charge"])}</td>}
+                            {userCountry === 'NG' ? <td>&#8358;{ver["our_charge"]}</td> : <td>${toDollar(ver["our_charge"])}</td>}
                             <th className="mobile-header">Value</th>
-                        {location === 'Nigeria' ? <td>&#8358;{ver["institute_charge"]}</td> : <td>${toDollar(ver["institute_charge"])}</td>}
+                        {userCountry === 'NG' ? <td>&#8358;{ver["institute_charge"]}</td> : <td>${toDollar(ver["institute_charge"])}</td>}
                             <td>
                               <FontAwesomeIcon
                                 icon={faTrash}
                                 // className="menu-icon"
                                 onClick={() =>
-                                  removeVerification(ver.institution)
+                                  removeVerification(ver.id)
                                 }
                               />
                             </td>
@@ -330,7 +333,7 @@ const NewVerifications = () => {
                     <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
-                  {location === 'Nigeria' ? <td style={{ fontWeight: "bold" }}>&#8358;{total}</td> : <td style={{ fontWeight: "bold" }}>${total}</td>}
+                  {userCountry === 'NG' ? <td style={{ fontWeight: "bold" }}>&#8358;{total}</td> : <td style={{ fontWeight: "bold" }}>${total}</td>}
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">

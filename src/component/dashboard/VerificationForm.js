@@ -25,6 +25,7 @@ import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 import { search } from "./utils";
 import Axios from "axios";
+import ipapi from 'ipapi.co'
 
 function VerificationForm({
   initialValues,
@@ -43,7 +44,7 @@ function VerificationForm({
   const {location} = useSelector(state=>state.user)
 
   const [selectedInst, setSelectedInst] = useState(
-    selectedInstitution.name ? selectedInstitution : {}
+    selectedInstitution?.name ? selectedInstitution : {}
   );
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
@@ -52,6 +53,7 @@ function VerificationForm({
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
+  const [userCountry,setUserCountry] = useState('')
   const convertedUsd = 382
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -64,6 +66,9 @@ function VerificationForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [offset, input]
   );
+  useEffect(()=>{
+    ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  },[])
 
   useEffect(() => {
     // clean up
@@ -348,8 +353,8 @@ function VerificationForm({
                   <tr>
                     <th>Name</th>
                     <th>Country</th>
-                    <th>Our charge</th>
                     <th>Institute charge</th>
+                    <th>Our charge</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -363,14 +368,16 @@ function VerificationForm({
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
-                      <td>{location !== "Nigeria" && (
+                      {ite['institute_charge'] === 0 ?
+                      (<td>-</td>) : 
+                        userCountry === 'NG' ? (<td>&#8358;{ite['institute_charge'] || 0}</td>)
+                        :  
+                          <td>${toDollar(ite['institute_charge']) }</td>
+                      }
+                      <th className="mobile-header">Value</th>
+                      <td>{userCountry === "NG" ? ( <td>&#8358;{ite["our_charge"]}</td>): (
                           <td>${toDollar(ite["our_charge"]) || 0}</td>
                         )}</td>
-                      <th className="mobile-header">Value</th>
-                      <td> {location !== "Nigeria" && (
-                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
-                        )}
-                        </td>
                     </tr>
                   ))}
                 </tbody>

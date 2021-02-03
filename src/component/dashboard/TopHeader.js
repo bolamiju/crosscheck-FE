@@ -65,7 +65,7 @@ function TopHeader({ setShow, show }) {
               }}
               onClick={() => setOpen(!open)}
             />
-            {!open && messages.length > 0 ? (
+            {!open && messages?.length > 0 ? (
               <div className="messages">
                 {messages.map((message) => (
                   <div key={message.id} className="message">
@@ -84,7 +84,7 @@ function TopHeader({ setShow, show }) {
                 ))}
               </div>
             ) : null}
-            {messages.length > 0 && <div className="red-circle"></div>}
+            {messages?.length > 0 && <div className="red-circle"></div>}
           </div>
           <div className="user-avatar">
             <img src={Avatar} alt="Avatar" />

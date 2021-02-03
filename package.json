@@ -25,6 +25,7 @@
     "font-awesome": "^4.7.0",
     "formik": "^2.1.5",
     "history": "^5.0.0",
+    "ipapi.co": "^0.3.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
     "mui": "0.0.1",

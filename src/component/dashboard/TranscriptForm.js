@@ -21,6 +21,7 @@ import Institution from "../../asset/institution.svg";
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
+import ipapi from 'ipapi.co'
 
 function TranscriptForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
@@ -29,9 +30,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
-  const { location:userCountry } = useSelector(
-    (state) => state.user
-  );
+  
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
@@ -41,6 +40,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
   const [destination, setDestination] = useState("");
+  const [userCountry,setUserCountry] = useState('')
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -49,7 +49,9 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
   };
-
+  useEffect(()=>{
+    ipapi.location((location)=>setUserCountry(location),'','','country')
+  },[])
   useEffect(() => {
     if (input.length > 0) {
       request(offset, 15);
@@ -113,8 +115,8 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const pagesCount = pageInfo?.totalPages;
   const convertedUsd = 382
   const toDollar = (amount) => {
-    return Math.round(Number(amount) / Number(convertedUsd));
-  };
+    return Math.round(Number(amount) / Number(convertedUsd))
+  }
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -155,7 +157,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const pageNos = pageInfo?.totalPages;
-
+console.log('selecyt',selectedInst)
   const formik = useFormik({
     initialValues,
 
@@ -173,7 +175,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       updateFormValues({
         ...formik.values,
         institution: selectedInst.name,
-        amount: selectedInst.amount,
+        amount: selectedInst['transcript_fee'],
         email: user.email,
         destination: destination,
       });
@@ -313,7 +315,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
               />
             </div>
           </div>
-          {institutions.length > 0 && (
+          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
             <div className="new-table">
               <table
                 cellSpacing="0"
@@ -339,10 +341,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                       <th className="mobile-header">Weight</th>
                       <td>-</td>
                       <th className="mobile-header">Value</th>
-                      {userCountry !== "Nigeria" && (
+                      {userCountry !== "NG" && (
                           <td>${toDollar(ite['transcript_fee']) }</td>
                         )}
-                        {userCountry === "Nigeria" && (
+                        {userCountry === "NG" && (
                           <td>&#8358;{ite['transcript_fee'] || 0}</td>
                         )}
                     </tr>
