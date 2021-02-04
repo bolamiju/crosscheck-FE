@@ -160,7 +160,7 @@ const NewVerifications = () => {
   };
 
   const user = JSON.parse(localStorage.getItem("user"));
-
+console.log('Key',process.env.REACT_APP_PUBLIC_KEY)
    const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
