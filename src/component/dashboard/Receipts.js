@@ -1,121 +1,172 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Layout from "./DashboardLayout";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import ReactPaginate from "react-paginate";
+import ipapi from 'ipapi.co'
+import {
+  getUserVerification,
+  getUserTranscript,
+} from "../../state/actions/verifications";
 import Receipt from "./Receipt";
 
-// import Institution from "../../asset/institution.svg";
 import styled from "styled-components";
 
 const Receipts = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState("close");
+  const [userCountry,setUserCountry] = useState('')
+  const convertedUsd = 382
 
-  // const dispatch = useDispatch();
-  const { userVerifications } = useSelector((state) => state.verifications);
+  const dispatch = useDispatch();
+  const { userVerifications, newTranscript } = useSelector(
+    (state) => state.verifications
+  );
 
-  const pageSize = 10;
+  const [input, setInput] = useState("");
+  const [receiptDetails, setReceiptDetails] = useState({});
+  const [searchParameter] = useState("status");
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const verificationsCount = Math.ceil(userVerifications.length / pageSize);
+  useEffect(()=>{
+    ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  },[])
 
-  const verificationsNavigation = (e, index) => {
-    e.preventDefault();
-    if (index < 0 || index >= verificationsCount) {
-      return;
-    } else {
-      setCurrentPage(index);
+  useEffect(() => {
+    dispatch(getUserTranscript(user.email));
+    dispatch(getUserVerification(user.email));
+  }, [dispatch, user.email]);
+
+  const allHistory = userVerifications.concat(newTranscript);
+
+  const filteredItems = allHistory?.filter((history) =>
+    history[searchParameter]
+      ?.toLocaleLowerCase()
+      .includes(input.toLocaleLowerCase())
+  );
+
+  const pageSize = 15;
+
+  const verificationsCount = Math.ceil(filteredItems.length / pageSize);
+
+  function handleInputChange(e) {
+    setInput(e.target.value);
+  }
+
+  const truncateString = (str) => {
+    if (str.length <= 24) {
+      return str;
     }
+    return str.slice(0, 32) + "...";
   };
 
+  const toDollar = (amount) => {
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
+
+  const handleReceiptDetails =(details)=>{
+    setReceiptDetails(details)
+    setShow("open");
+  }
+  const handleNext=(data)=>{
+    return setCurrentPage(data.selected)
+  }
   return (
     <Layout>
-      <RequisitionBody>
+      <ReceiptBody>
         <div className="new-table">
           {show === "open" && (
-            <Receipt style={{ padding: "3rem", textAlign: "center" }} />
+            <Receipt style={{ padding: "3rem", textAlign: "center" }} receiptDetails={receiptDetails} userCountry={userCountry}/>
           )}
-          {/* <Table> */}
           <div id="tableScroll">
             <table>
               <thead>
                 <tr>
-                  <th>Item</th>
-                  <th>Price</th>
-                  <th>Institute Surcharge</th>
+                <th>Request type</th>
+                  <th>Institution</th>
+                  <th>our charge</th>
+                  <th>Institute charge</th>
                   <th>Total</th>
                 </tr>
               </thead>
               <tbody className="t-body">
-                <tr
-                  onClick={() => {
-                    setShow("open");
-                  }}
-                >
-                  <td>University of Lagos/Student Verification</td>
-                  <td>$20.00</td>
-                  <td>$0.00</td>
-                  <td>$20.00</td>
-                </tr>
-                <tr
-                  onClick={() => {
-                    setShow("open");
-                  }}
-                >
-                  <td>University of Lagos/Student Verification</td>
-                  <td>$20.00</td>
-                  <td>$0.00</td>
-                  <td>$20.00</td>
-                </tr>
-                <tr className="space"></tr>
+              {filteredItems.length > 0
+                  && filteredItems
+                      .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                      .map(
+                        (item) => (
+                          <tr
+                          onClick={()=>{
+                            handleReceiptDetails(item)
+                          }}
+                        >
+                            
+                  <td>{item?.destination ? 'Transcript Request' : 'Verification Request'}</td>
+                  <td>{truncateString(item?.institution)}</td>
+                          {item['our_charge'] ? (
+                            userCountry === 'NG' ? (<td>&#8358;{item['our_charge']}</td>) : (<td>${toDollar(item['our_charge'])}</td>)
+                          ) : item.amount ? (userCountry ==='NG' ? (<td>&#8358;{item.amount}</td>) : (<td>${toDollar(item.amount)}</td>)) : '-'
+                        }
+                        {
+                          item['institute_charge'] ? (
+                            userCountry ==='NG' ? (<td>&#8358;{item['institute_charge']}</td>) : (<td>${toDollar(item['institute_charge'])}</td>)
+                          ) : '-'
+                        }
+                  {item.amount ? (
+                    userCountry === 'NG' ? (<td>&#8358;{item.amount}</td>) : (<td>${toDollar(item.amount)}</td>)
+                    ) :
+                    (userCountry === 'NG' ? (<td>&#8358;{item['our_charge'] && (Number(item['our_charge']) + (item['institute_charge'] ? Number(item['institute_charge']) : 0))}</td>) : (
+                      
+                      <td>${toDollar(Number(item['our_charge'])) + toDollar(Number(item['institute_charge'] ? Number(item['institute_charge']) : 0))} </td>
+                    ))}
+                  <tr className="space"></tr>
+                            </tr>
+                        ))}
               </tbody>
             </table>
             <div className="pagination-line">
               <p>
                 Showing{" "}
                 {
-                  userVerifications.slice(
+                  allHistory.slice(
                     currentPage * pageSize,
                     (currentPage + 1) * pageSize
                   ).length
                 }{" "}
-                of {verificationsCount} of entries
+                of {allHistory.length} of entries
               </p>
-              <Pagination aria-label="Page navigation example">
-                <PaginationItem
-                  disabled={currentPage <= 0}
-                  className="prev"
-                  onClick={(e) => verificationsNavigation(e, currentPage - 1)}
-                >
-                  <PaginationLink previous href={() => false} />
-                </PaginationItem>
-
-                {[...Array(verificationsCount)].map((page, i) => (
-                  <PaginationItem
-                    active={i === currentPage}
-                    key={i}
-                    onClick={(e) => verificationsNavigation(e, i)}
-                  >
-                    <PaginationLink href={() => false}>{i + 1}</PaginationLink>
-                  </PaginationItem>
-                ))}
-
-                <PaginationItem
-                  disabled={currentPage >= verificationsCount - 1}
-                  onClick={(e) => verificationsNavigation(e, currentPage + 1)}
-                >
-                  <PaginationLink next href={() => false} className="next" />
-                </PaginationItem>
-              </Pagination>
+              <ReactPaginate
+                    previousLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleLeft}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    nextLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleRight}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={verificationsCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(e) => handleNext(e)}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  /> 
             </div>
           </div>
           {/* </Table> */}
         </div>
-      </RequisitionBody>
+      </ReceiptBody>
     </Layout>
   );
 };
 
-const RequisitionBody = styled.div`
+const ReceiptBody = styled.div`
   height: 100%;
   padding: 30px;
   overflow-y: scroll;

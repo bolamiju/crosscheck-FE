@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import Avatar from "../../asset/Avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes,faUser} from "@fortawesome/free-solid-svg-icons";
 import {
   getUserMessages,
   deleteMessage,
@@ -87,7 +86,10 @@ function TopHeader({ setShow, show }) {
             {messages?.length > 0 && <div className="red-circle"></div>}
           </div>
           <div className="user-avatar">
-            <img src={Avatar} alt="Avatar" />
+            <FontAwesomeIcon
+            icon={faUser}
+            style={{width:'30px',height:'40px',color:'grey'}}
+          />
         
             <div className="user-info">
               <p>

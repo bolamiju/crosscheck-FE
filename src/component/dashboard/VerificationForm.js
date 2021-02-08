@@ -41,7 +41,6 @@ function VerificationForm({
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
   const { selectedInstitution } = useSelector((state) => state.verifications);
-  const {location} = useSelector(state=>state.user)
 
   const [selectedInst, setSelectedInst] = useState(
     selectedInstitution?.name ? selectedInstitution : {}
@@ -82,7 +81,6 @@ function VerificationForm({
       const { data } = await Axios.get(
         `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      // console.log("res", data.institution);
       const {
         totalDocs,
         totalPages,
@@ -145,7 +143,6 @@ function VerificationForm({
   };
 
   const institutionNavs = (data) => {
-    console.log("data", data);
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
     } else if (country !== "" && input.length > 0) {
@@ -178,19 +175,18 @@ function VerificationForm({
       for (var key in values) {
         formData.append(key, values[key]);
       }
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
       updateFormValues(formData);
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required("First Name is required"),
-      lastName: Yup.string().required("Last Name is required"),
+      firstName: Yup.string().test('len', 'First Name must be at least 2 characters', val => val?.length >= 2).required("First Name is required"),
+      lastName: Yup.string().test('len', 'First Name must be at least 2 characters', val => val?.length >= 2).required("Last Name is required"),
       dateOfBirth: Yup.string().required("DOB required"),
-      studentId: Yup.string().required("studentID is required"),
-      course: Yup.string().required("course is required"),
-      qualification: Yup.string().required("Qualification is required"),
-      classification: Yup.string().required("classification is required"),
+      studentId: Yup.number().required("studentID is required"),
+      course: Yup.string().test('len', 'Course must be at least 3 characters', val => val?.length >= 3).required("Last Name is required").required("course is required"),
+      qualification: Yup.string().test('len', 'Qualification must be at least 3 characters', val => val?.length >= 3).required("Qualification is required"),
+      classification: Yup.string().test('len', 'classification must be at least 3 characters', val => val?.length >= 3).required("classification is required"),
+      admissionYear:Yup.number().typeError('Enter valid year'),
+      graduationYear:Yup.number().typeError('Enter valid year'),
       enrollmentStatus: Yup.bool().oneOf([true, false]),
     }),
   });
@@ -226,17 +222,22 @@ function VerificationForm({
     setActiveTab("qualification-details");
     setPay(false);
   };
-
-  const handleDocumentTab = () => {
+console.log('checked',formik.values.enrollmentStatus)
+  const handleDocumentTab = (e) => {
+    e.preventDefault()
     if (
       formik.values.course.length === 0 ||
       formik.values.qualification.length === 0 ||
       formik.values.classification.length === 0 ||
-      formik.values.admissionYear.length === 0 ||
-      formik.values.graduationYear.length === 0 ||
-      formik.values.studentId.length === 0
+      formik.values.studentId.length === 0 || (formik.values.enrollmentStatus === false && (formik.values.admissionYear.length === 0 ||
+        formik.values.graduationYear.length === 0))
     ) {
       toast.error("please fill required fields");
+      return;
+    }
+    if(formik.values.enrollmentStatus === false && Number(formik.values.admissionYear) > Number(formik.values.graduationYear)){
+      console.log('error out',Number(formik.values.admissionYear) > Number(formik.values.graduationYear))
+      toast.error('Please check admission and graduation year');
       return;
     }
     setActiveTab("documents");
@@ -803,28 +804,27 @@ function VerificationForm({
               </p>
 
               <button
-                disabled={
-                  formik.values.course.length === 0 ||
-                  formik.values.qualification.length === 0 ||
-                  formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
-                  formik.values.studentId.length === 0
-                }
+                // disabled={
+                //   formik.values.course.length === 0 ||
+                //   formik.values.qualification.length === 0 ||
+                //   formik.values.classification.length === 0 ||
+                //   formik.values.admissionYear.length === 0 ||
+                //   formik.values.graduationYear.length === 0 ||
+                //   formik.values.studentId.length === 0
+                // }
                 className={
                   formik.values.course.length === 0 ||
                   formik.values.qualification.length === 0 ||
                   formik.values.classification.length === 0 ||
-                  formik.values.admissionYear.length === 0 ||
-                  formik.values.graduationYear.length === 0 ||
+                  (formik.values.enrollmentStatus === false && (formik.values.admissionYear.length === 0 ||
+                    formik.values.graduationYear.length === 0)) ||
                   formik.values.studentId.length === 0
                     ? "btn notallowed"
                     : "btn"
                 }
                 type="submmit"
-                onClick={() => {
-                  setActiveTab("documents");
-                  setPay(true);
+                onClick={(e) => {
+                  handleDocumentTab(e)
                 }}
               >
                 Next

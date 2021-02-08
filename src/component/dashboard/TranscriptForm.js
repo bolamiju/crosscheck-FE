@@ -44,11 +44,12 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const request = async (offset, limit) => {
+  const request = useCallback(async (offset, limit) => {
     return await search(
       `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
-  };
+  },[offset,input])
+
   useEffect(()=>{
     ipapi.location((location)=>setUserCountry(location),'','','country')
   },[])
@@ -101,18 +102,23 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     if (country !== "" && input.length > 0) {
       countryAndName(country, byCountryandNameoffset, 15, input);
     }
+    if (input.length > 0 && country.length === 0) {
+      request(offset, 15);
+    }
   }, [
     dispatch,
     institutionByCountry,
     byCountryandNameoffset,
     input,
+    request,
+    offset,
     byCountryOffset,
     country,
     countryAndName,
   ]);
 
-  const pageSize = 15;
   const pagesCount = pageInfo?.totalPages;
+  console.log('pages count',pagesCount)
   const convertedUsd = 382
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd))
@@ -136,16 +142,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     setSchCard(true);
   };
 
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (!pageInfo?.hasPrevPage) {
-      return;
-    } else {
-      offset -= 15;
-      // request(offset, 15);
-    }
-  };
-
   const handleNext = (data) => {
     if (country !== "" && input.length === 0) {
       setByCountryOffset((prev) => Math.ceil(data.selected * 15));
@@ -156,8 +152,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     }
   };
 
-  const pageNos = pageInfo?.totalPages;
-console.log('selecyt',selectedInst)
   const formik = useFormik({
     initialValues,
 
@@ -278,6 +272,18 @@ console.log('selecyt',selectedInst)
             </div>
           </div>
           <div className="selects">
+            <div className="institution-wrapper">
+              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
+              <input
+                type="text"
+                className="schl-input"
+                onChange={handleInputChange}
+                value={input}
+                name="input"
+                placeholder="Search for a school"
+              />
+            </div>
+
             <div className="select-country">
               <label style={{ paddingLeft: "5px" }}>SELECT COUNTRY</label>
               <CountryDropdown
@@ -298,20 +304,12 @@ console.log('selecyt',selectedInst)
                   formik.handleChange(e);
                   console.log(e.target.value);
                   setCountry(e.target.value.toLowerCase());
+                  setByCountryOffset(0)
+                  setByCountryandNameOffset(0)
+                  setOffset(0)
                 }}
                 onBlur={formik.handleBlur}
                 ReactFlagsSelect
-              />
-            </div>
-            <div className="institution-wrapper">
-              <label style={{ paddingLeft: "5px" }}>SELECT INSTITUTION</label>
-              <input
-                type="text"
-                className="schl-input"
-                onChange={handleInputChange}
-                value={input}
-                name="input"
-                placeholder="Search for a school"
               />
             </div>
           </div>
@@ -357,38 +355,7 @@ console.log('selecyt',selectedInst)
                     Showing {institutions.length} of {pageInfo.totalDocs} of
                     entries
                   </p>
-                  {/* <Pagination aria-label="Page navigation example">
-                    <PaginationItem
-                       disabled={!pageInfo?.hasPrevPage}
-                      className="prev"
-                      onClick={(e) => handlePrevious(e)}
-                    >
-                      <PaginationLink previous href={() => false} />
-                    </PaginationItem>
-
-                    {[...Array(pageNos)].map((item, i) => (
-                      <PaginationItem
-                      active={i === pageInfo?.page - 1}
-                        key={i}
-                        onClick={(e) => handleNext(e)}
-                      >
-                        <PaginationLink href={() => false}>
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem
-                      disabled={!pageInfo?.hasNextPage}
-                      onClick={(e) => handleNext(e)}
-                    >
-                      <PaginationLink
-                        next
-                        href={() => false}
-                        className="next"
-                      />
-                    </PaginationItem>
-                    </Pagination> */}
+                 
                   <ReactPaginate
                     previousLabel={"previous"}
                     nextLabel={"next"}
@@ -401,6 +368,7 @@ console.log('selecyt',selectedInst)
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
+                    initialPage={0}
                   />
                 </div>
               )}

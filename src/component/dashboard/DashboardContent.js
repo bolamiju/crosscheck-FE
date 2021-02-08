@@ -10,6 +10,8 @@ import Transcript from "../../asset/Transcript.svg";
 import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch,faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import {
   fetchInstitutes,
@@ -134,7 +136,7 @@ const DashboardContent = ({ history }) => {
   function handleInputChange(e) {
     setInput(e.target.value);
   }
-
+console.log('total pa',pageInfo?.totalPages)
   const pagesCount = pageInfo?.totalPages;
 
   const handleNext = (data) => {
@@ -259,6 +261,9 @@ const DashboardContent = ({ history }) => {
                 onChange={(_, e) => {
                   formik.handleChange(e);
                   setCountry(e.target.value.toLowerCase());
+                  setByCountryOffset(0)
+                  setByCountryandNameOffset(0)
+                  setOffset(0)
                 }}
                 onBlur={formik.handleBlur}
                 ReactFlagsSelect
@@ -320,8 +325,16 @@ const DashboardContent = ({ history }) => {
                   </p>
 
                   <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
+                    previousLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleLeft}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    nextLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleRight}
+                      style={{ fontSize: "15px" }}
+                    />}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
                     pageCount={pagesCount}
@@ -331,7 +344,8 @@ const DashboardContent = ({ history }) => {
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
-                  />
+                    initialPage={0}
+                  /> 
                 </div>
               )}
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
@@ -16,14 +16,14 @@ import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
 
 import Pdf from "react-to-pdf";
-import { FlutterWaveButton } from 'flutterwave-react-v3';
-import ipapi, { location } from 'ipapi.co'
+import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
+import ipapi from 'ipapi.co'
 
-const request = (data) => {
+const request = (data,tranId) => {
   axios({
     data,
     method: "post",
-    url: "https://croscheck.herokuapp.com/api/v1/transcript/request",
+    url: `https://croscheck.herokuapp.com/api/v1/transcript/request/${tranId}`,
   });
 };
 
@@ -67,8 +67,10 @@ const NewTranscript = () => {
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd));
   };
- ipapi.location((loca)=>setUserCountry(loca),'','','country')
-  console.log('userCountry',userCountry)
+  useEffect(()=>{
+    ipapi.location((loca)=>setUserCountry(loca),'','','country')
+  },[])
+ 
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
@@ -86,8 +88,8 @@ const NewTranscript = () => {
     dispatch(addTranscript(formValues));
     setRequestList(true);
   };
-  const processPayment = async (data) => {
-    await Promise.allSettled(formValues.map((value) => request(value)));
+  const processPayment = async (tranId) => {
+    await Promise.allSettled(formValues.map((value) => request(value,tranId)));
   };
 
   const updateFormValues = (id) => (data) => {
@@ -124,8 +126,8 @@ const NewTranscript = () => {
    callback: (response) => {
   console.log(response);
   if(response?.status === 'successful'){
-    // closePaymentModal() // this will close the modal programmatically
-    processPayment();
+    closePaymentModal() // this will close the modal programmatically
+    processPayment(response?.transaction_id);
     dispatch(addTranscript([]));
     setRequestList(false);
     setFormValues([formData]);

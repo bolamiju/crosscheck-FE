@@ -56,8 +56,8 @@ export const delMessages = (payload) => {
   };
 };
 
-export const requestVerification = (val) => {
-  return axios.post(`${BASE_URL}/api/v1/verifications/request`, val);
+export const requestVerification = (val,tranId) => {
+  return axios.post(`${BASE_URL}/api/v1/verifications/request/${tranId}`, val);
 };
 
 export const getUserVerification = (email) => async (dispatch) => {

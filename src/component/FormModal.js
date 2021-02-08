@@ -29,7 +29,6 @@ const FormModal = ({ open, onClose, id }) => {
           initialValues={{ message: "", subject: "" }}
           onSubmit={async (values, { resetForm }) => {
             try {
-              console.log("submitting", values);
               const response = await sendMessage({ ...values, id });
               if (response.data.message === "message sent successfuly") {
                 toast.success("message sent");

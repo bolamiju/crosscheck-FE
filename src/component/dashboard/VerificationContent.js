@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch,faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import chat from "../../asset/comment.svg";
 
 import {
@@ -47,7 +47,7 @@ const VerificationContent = () => {
       .includes(input.toLocaleLowerCase())
   );
 
-  const pageSize = 10;
+  const pageSize = 15;
 
   const verificationsCount = Math.ceil(filteredItems.length / pageSize);
 
@@ -70,6 +70,10 @@ const VerificationContent = () => {
     }
     return str.slice(0, 32) + "...";
   };
+
+  const handleNext=(data)=>{
+    return setCurrentPage(data.selected)
+  }
 
   return (
     <div>
@@ -109,6 +113,7 @@ const VerificationContent = () => {
                 <th>Institution</th>
                 <th>Status</th>
                 <th>message</th>
+                <th>Proof</th>
               </tr>
             </thead>
             <tbody className="t-body">
@@ -123,6 +128,7 @@ const VerificationContent = () => {
                         institution,
                         date,
                         _id,
+                        proof
                       }) => (
                         <>
                           <tr>
@@ -144,6 +150,7 @@ const VerificationContent = () => {
                             <td onClick={() => handleOpen(_id)}>
                               <img src={chat} alt="message" />
                             </td>
+                           {proof ? (<td><a target="_blank" href={proof} style={{textDecoration:'none',color:'blue'}}>View</a></td>) : <td>N/A</td>}
                           </tr>
                           <tr className="space"></tr>
                         </>
@@ -164,32 +171,27 @@ const VerificationContent = () => {
               }{" "}
               of {verificationsCount} of entries
             </p>
-            <Pagination aria-label="Page navigation example">
-              <PaginationItem
-                disabled={currentPage <= 0}
-                className="prev"
-                onClick={(e) => verificationsNavigation(e, currentPage - 1)}
-              >
-                <PaginationLink previous href={() => false} />
-              </PaginationItem>
-
-              {[...Array(verificationsCount)].map((page, i) => (
-                <PaginationItem
-                  active={i === currentPage}
-                  key={i}
-                  onClick={(e) => verificationsNavigation(e, i)}
-                >
-                  <PaginationLink href={() => false}>{i + 1}</PaginationLink>
-                </PaginationItem>
-              ))}
-
-              <PaginationItem
-                disabled={currentPage >= verificationsCount - 1}
-                onClick={(e) => verificationsNavigation(e, currentPage + 1)}
-              >
-                <PaginationLink next href={() => false} className="next" />
-              </PaginationItem>
-            </Pagination>
+            <ReactPaginate
+                    previousLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleLeft}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    nextLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleRight}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={verificationsCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(e) => handleNext(e)}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  /> 
           </div>
         </div>
         {/* </Table> */}

@@ -27,11 +27,11 @@ import Pdf from "react-to-pdf";
 import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
 import ipapi from 'ipapi.co'
 
-const request = (data) =>
+const request = (data,tranId) =>
   axios({
     data,
     method: "post",
-    url: "https://croscheck.herokuapp.com/api/v1/verifications/request",
+    url: `https://croscheck.herokuapp.com/api/v1/verifications/request/${tranId}`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 // TODO: CHANGE ID TO THIS DATE-TIME STRING
@@ -108,8 +108,8 @@ const NewVerifications = () => {
     dispatch(addVerificationList(formValues));
     setRequestList(true);
   };
-  const processPayment = async () => {
-    await Promise.allSettled(formValues.map((value) => request(value)));
+  const processPayment = async (tranId) => {
+    await Promise.allSettled(formValues.map((value) => request(value,tranId)));
   };
   const addNewForm = () => {
     setFormValues((values) => [
@@ -160,7 +160,8 @@ const NewVerifications = () => {
   };
 
   const user = JSON.parse(localStorage.getItem("user"));
-console.log('Key',process.env.REACT_APP_PUBLIC_KEY)
+
+  
    const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -183,9 +184,10 @@ console.log('Key',process.env.REACT_APP_PUBLIC_KEY)
     ...config,
     text: 'Pay Now!',
     callback: (response) => {
+      console.log(response)
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
-      processPayment();
+      processPayment(response?.transaction_id);
       dispatch(addVerificationList([]));
       setRequestList(false);
       setFormValues([formData]);
