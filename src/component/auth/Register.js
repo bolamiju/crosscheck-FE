@@ -319,7 +319,7 @@ function Register() {
                       setTerms(!terms);
                     }}
                   />
-                  <span>I agree to the <a href='/terms' target="_blank" style={{color:"rgb(0, 146, 224)"}}>terms and conditions</a></span>
+                  <span>I agree to the <a href='/terms' target="_blank" rel="noopener noreferrer" style={{color:"rgb(0, 146, 224)"}}>terms and conditions</a></span>
                   {formik.touched.accept && formik.errors.accept ? (
                     <div className="error">{formik.errors.accept}</div>
                   ) : null}

@@ -150,7 +150,7 @@ const VerificationContent = () => {
                             <td onClick={() => handleOpen(_id)}>
                               <img src={chat} alt="message" />
                             </td>
-                           {proof ? (<td><a target="_blank" href={proof} style={{textDecoration:'none',color:'blue'}}>View</a></td>) : <td>N/A</td>}
+                           {proof ? (<td><a target="_blank" rel="noopener noreferrer" href={proof} style={{textDecoration:'none',color:'blue'}}>View</a></td>) : <td>N/A</td>}
                           </tr>
                           <tr className="space"></tr>
                         </>
