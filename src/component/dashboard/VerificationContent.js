@@ -169,7 +169,7 @@ const VerificationContent = () => {
                   (currentPage + 1) * pageSize
                 ).length
               }{" "}
-              of {verificationsCount} of entries
+              of {filteredItems.length} of entries
             </p>
             <ReactPaginate
                     previousLabel={<FontAwesomeIcon
