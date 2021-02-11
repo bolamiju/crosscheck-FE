@@ -11,7 +11,7 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch,faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import {
   fetchInstitutes,
@@ -136,7 +136,6 @@ const DashboardContent = ({ history }) => {
   function handleInputChange(e) {
     setInput(e.target.value);
   }
-console.log('total pa',pageInfo?.totalPages)
   const pagesCount = pageInfo?.totalPages;
 
   const handleNext = (data) => {
@@ -167,7 +166,7 @@ console.log('total pa',pageInfo?.totalPages)
   };
   return (
     <DashboardLayout history={history}>
-      <RequisitionBody>
+      <DashboardBody>
         <h2
           style={{
             color: "#0092E0",
@@ -356,7 +355,7 @@ console.log('total pa',pageInfo?.totalPages)
         </SelectSch>
         <div className="spacer"></div>
         <VerificationContent />
-      </RequisitionBody>
+      </DashboardBody>
     </DashboardLayout>
   );
 };
@@ -585,7 +584,7 @@ const Card = styled.div`
     }
   }
 `;
-const RequisitionBody = styled.div`
+const DashboardBody = styled.div`
   height: 100%;
   padding-left: 30px;
   overflow-y: scroll;

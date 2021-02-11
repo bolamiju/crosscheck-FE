@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import {
   faCaretDown,
   faCaretRight,
@@ -391,8 +392,16 @@ console.log('checked',formik.values.enrollmentStatus)
                   </p>
 
                   <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
+                    previousLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleLeft}
+                      style={{ fontSize: "15px" }}
+                    />}
+                    nextLabel={<FontAwesomeIcon
+                      className="icon"
+                      icon={faAngleDoubleRight}
+                      style={{ fontSize: "15px" }}
+                    />}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
                     pageCount={pagesCount}
