@@ -18,10 +18,7 @@ const Receipt = ({receiptDetails,userCountry}) => {
             <div className="first-section">
                 <div className="img-text">
                     <img src={Logo} alt="" /> 
-                    <h6>Crosscheck Limited</h6>
-                    <p>Company No 23957483 </p>
-                    <p>39 Opebi Road, Opebi, Ikeja</p>
-                    <p>Lagos, Nigeria</p>
+                    <h6>Crosscheck</h6>
                 </div>
                 <h1>Receipt</h1>
             </div>

@@ -138,7 +138,7 @@ const NewVerifications = () => {
     verifRequest.push(obj);
   }
   const toDollar = (amount) => {
-    return Math.round(Number(amount) / Number(convertedUsd));
+    return  (Number(amount) / Number(convertedUsd)).toFixed(2);;
   };
   let totalOurCharge = verifRequest?.reduce(
     (accumulator, currentValue) =>

@@ -156,7 +156,7 @@ const DashboardContent = ({ history }) => {
   };
 
   const toDollar = (amount) => {
-    return Math.round(Number(amount) / Number(convertedUsd));
+    return (Number(amount) / Number(convertedUsd)).toFixed(2);
   };
   const truncateString = (str) => {
     if (str.length <= 24) {

@@ -65,7 +65,7 @@ const NewTranscript = () => {
   const convertedUsd = 382
 
   const toDollar = (amount) => {
-    return Math.round(Number(amount) / Number(convertedUsd));
+    return (Number(amount) / Number(convertedUsd)).toFixed(2);
   };
   useEffect(()=>{
     ipapi.location((loca)=>setUserCountry(loca),'','','country')
