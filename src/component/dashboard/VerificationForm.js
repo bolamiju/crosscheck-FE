@@ -363,7 +363,7 @@ console.log('checked',formik.values.enrollmentStatus)
                   {institutions.map((ite) => (
                     <tr
                       onClick={() => handleSelected(ite)}
-                      key={ite.institution}
+                      key={ite.name}
                     >
                       <th className="mobile-header">Number</th>
                       <td>{truncateString(ite.name)}</td>

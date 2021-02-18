@@ -125,7 +125,7 @@ const NewVerifications = () => {
   };
 
   const deleteOneVerification = (id) => {
-    const vals = formValues.filter((v, index) => v.id !== id);
+    const vals = formValues.filter((v) => v.id !== id);
     setFormValues(vals);
   };
 
@@ -246,14 +246,13 @@ const NewVerifications = () => {
             <span style={{ paddingRight: "45px" }}>FINISH</span>
           </div>
 
-          {formValues.map((values, id) => (
-            <div className={requestList ? "none" : ""}>
+          {formValues.map((values, idx) => (
+            <div className={requestList ? "none" : ""}  key={values.id}>
               {" "}
               <VerificationForm
-                key={id}
                 verificationsLength={verificationsLength}
                 initialValues={values}
-                updateFormValues={updateFormValues(id)}
+                updateFormValues={updateFormValues(idx)}
                 id={values.id}
                 deleteOneVerification={deleteOneVerification}
               />
