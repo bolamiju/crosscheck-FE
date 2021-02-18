@@ -100,7 +100,7 @@ const Login = (props) => {
   const responseFacebook = (response) => {
     axios({
       method: "POST",
-      url: "https://croscheck.herokuapp.com/api/v1/users/facebooklogin",
+      url: "https://crosschek.herokuapp.com/api/v1/users/facebooklogin",
       data: { accessToken: response.accessToken, userID: response.userID },
     }).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));

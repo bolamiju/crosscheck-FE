@@ -23,7 +23,7 @@ const request = (data,tranId) => {
   axios({
     data,
     method: "post",
-    url: `https://croscheck.herokuapp.com/api/v1/transcript/request/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${tranId}`,
   });
 };
 

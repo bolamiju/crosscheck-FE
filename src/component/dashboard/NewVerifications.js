@@ -31,7 +31,7 @@ const request = (data,tranId) =>
   axios({
     data,
     method: "post",
-    url: `https://croscheck.herokuapp.com/api/v1/verifications/request/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/verifications/request/${tranId}`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 // TODO: CHANGE ID TO THIS DATE-TIME STRING

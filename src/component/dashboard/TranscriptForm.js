@@ -46,7 +46,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const request = useCallback(async (offset, limit) => {
     return await search(
-      `https://croscheck.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+      `https://crosschek.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
     );
   },[offset,input])
 
@@ -62,7 +62,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
-        `https://croscheck.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `https://crosschek.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
       // console.log("res", data.institution);
       const {
@@ -83,7 +83,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://croscheck.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `https://crosschek.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     [country, offset, input]

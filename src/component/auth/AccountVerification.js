@@ -11,7 +11,7 @@ function AccountVerification({ match, location }) {
   console.log("EMAIL", email);
   useEffect(() => {
     axios
-      .put(`https://croscheck.herokuapp.com/api/v1/users/${email}`)
+      .put(`https://crosschek.herokuapp.com/api/v1/users/${email}`)
       .then((data) => {
         console.log(data);
       });
