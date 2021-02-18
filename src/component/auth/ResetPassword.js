@@ -114,7 +114,7 @@ function ResetPassword({ match, location }) {
               </Link>
               &nbsp; or go
               <Link
-                to="/home"
+                to="/"
                 style={{ textDecoration: "none", color: "#0092e0" }}
               >
                 &nbsp; Home

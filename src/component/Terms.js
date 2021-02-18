@@ -111,7 +111,7 @@ const Terms = () => {
             </li>
             <li className="divider"></li>
             <li>
-              <Link className="auth" to="/">
+              <Link className="auth" to="/login">
                 Login
               </Link>
             </li>

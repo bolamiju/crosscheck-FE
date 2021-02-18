@@ -20,13 +20,13 @@ function App() {
     if (JSON.parse(localStorage.getItem("user"))) {
       return <Component {...props} />;
     }
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   };
   return (
     <Provider store={store}>
       <Switch>
         <Route exact path="/register" component={Register} />
-        <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
         <Route
           exact
           path="/dashboard/:id"
@@ -55,7 +55,7 @@ function App() {
           path="/receipts"
           component={(props) => withAuthCheck(MainContent, props)}
         />
-        <Route exact path="/home" component={LandingPage} />
+        <Route exact path="/" component={LandingPage} />
         <Route exact path="/terms" component={Terms} />
         <Route exact path="/active" component={EmailActivation} />
         <Route component={NotFound} />

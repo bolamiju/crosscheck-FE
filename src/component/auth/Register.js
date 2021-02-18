@@ -101,7 +101,7 @@ function Register() {
             <button>
               <Link
                 className="login-redirect"
-                to="/"
+                to="/login"
                 onClick={() => dispatch(setLoginError(""))}
               >
                 Login
@@ -345,7 +345,7 @@ function Register() {
                   Already have an account?
                   <Link
                     style={{ color: "#0092e0", textDecoration: "none" }}
-                    to="/"
+                    to="/login"
                   >
                     Login here
                   </Link>

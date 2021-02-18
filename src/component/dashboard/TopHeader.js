@@ -21,8 +21,8 @@ function TopHeader({ setShow, show }) {
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     if (route.url.includes("/dashboard") && user?.id !== route?.params?.id) {
-      window.location.href = "/";
-      return <Redirect to="/" />;
+      window.location.href = "/login";
+      return <Redirect to="/login" />;
     }
   }, [user.id, route.params.id]);
 

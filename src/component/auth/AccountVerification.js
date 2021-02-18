@@ -13,7 +13,7 @@ function AccountVerification({ match, location }) {
     axios
       .put(`https://crosschek.herokuapp.com/api/v1/users/${email}`)
       .then((data) => {
-        console.log(data);
+        return data
       });
   }, [email]);
  
@@ -22,7 +22,7 @@ function AccountVerification({ match, location }) {
       <Container>
         <img src={Activated} alt="activated" />
         <p>Account activated</p>
-        <Link to="/" className="link">
+        <Link to="/login" className="link">
           Log in
         </Link>
       </Container>

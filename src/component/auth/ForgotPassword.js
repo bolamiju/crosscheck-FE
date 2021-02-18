@@ -59,7 +59,7 @@ const ForgotPassword = () => {
             </p>
             <p className="has-account">
               Have an account?
-              <Link to="/" style={{ color: "#0092e0", textDecoration: "none" }}>
+              <Link to="/login" style={{ color: "#0092e0", textDecoration: "none" }}>
                 Login
               </Link>
             </p>
@@ -115,11 +115,11 @@ const ForgotPassword = () => {
               <p style={{ color: "#0092e0" }}>Home</p> */}
               <p style={{ width: "100%" }}>
                 If you are having problems recovering your password{" "}
-                <Link to="/home" className="cntct">
+                <Link to="/" className="cntct">
                   contact us
                 </Link>
                 , or go{" "}
-                <Link to="/home" className="cntct">
+                <Link to="/" className="cntct">
                   Home
                 </Link>
                 .

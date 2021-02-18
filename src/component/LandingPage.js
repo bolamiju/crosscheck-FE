@@ -154,7 +154,7 @@ const LandingPage = () => {
                 </a>
               </li>
               <button>
-                <Link className="link-to" to="/">
+                <Link className="link-to" to="/login">
                   LOGIN
                 </Link>
               </button>
@@ -189,7 +189,7 @@ const LandingPage = () => {
             </li>
             <li className="divider"></li>
             <li>
-              <Link className="auth" to="/">
+              <Link className="auth" to="/login">
                 Login
               </Link>
             </li>
