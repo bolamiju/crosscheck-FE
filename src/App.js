@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import store from "./store";
 import Register from "./component/auth/Register";
 import Login from "./component/auth/Login";
@@ -25,6 +26,10 @@ function App() {
   return (
     <Provider store={store}>
       <Switch>
+      <Helmet>
+        <title>title</title>
+        <meta name="description" content="verification app" />
+      </Helmet>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route
