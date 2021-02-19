@@ -26,10 +26,6 @@ function App() {
   return (
     <Provider store={store}>
       <Switch>
-      <Helmet>
-        <title>title</title>
-        <meta name="description" content="verification app" />
-      </Helmet>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route
