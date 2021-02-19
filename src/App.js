@@ -25,6 +25,9 @@ function App() {
   };
   return (
     <Provider store={store}>
+      <Helmet>
+        <title>crosscheck</title>
+        <meta name="description" content="verification app" />
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
@@ -61,6 +64,7 @@ function App() {
         <Route exact path="/active" component={EmailActivation} />
         <Route component={NotFound} />
       </Switch>
+      </Helmet>
     </Provider>
   );
 }
