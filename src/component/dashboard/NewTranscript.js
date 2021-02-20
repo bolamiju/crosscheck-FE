@@ -124,7 +124,6 @@ const NewTranscript = () => {
    ...config,
    text: 'Pay Now!',
    callback: (response) => {
-  console.log(response);
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
     processPayment(response?.transaction_id);

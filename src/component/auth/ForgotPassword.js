@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     }),
   });
   return (
-    <div class="forgot-password">
+    <div className="forgot-password">
       <form>
         {success ? (
           <>

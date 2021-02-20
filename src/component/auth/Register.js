@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
@@ -223,7 +223,6 @@ function Register() {
                       setCountrySelected(e.target.value.toLowerCase());
                     }}
                     onBlur={formik.handleBlur}
-                    ReactFlagsSelect
                   />
 
                   {formik.touched.country && formik.errors.country ? (

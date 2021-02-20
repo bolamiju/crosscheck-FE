@@ -223,7 +223,6 @@ function VerificationForm({
     setActiveTab("qualification-details");
     setPay(false);
   };
-console.log('checked',formik.values.enrollmentStatus)
   const handleDocumentTab = (e) => {
     e.preventDefault()
     if (
@@ -237,7 +236,6 @@ console.log('checked',formik.values.enrollmentStatus)
       return;
     }
     if(formik.values.enrollmentStatus === false && Number(formik.values.admissionYear) > Number(formik.values.graduationYear)){
-      console.log('error out',Number(formik.values.admissionYear) > Number(formik.values.graduationYear))
       toast.error('Please check admission and graduation year');
       return;
     }
@@ -335,11 +333,9 @@ console.log('checked',formik.values.enrollmentStatus)
                 value={formik.values.country}
                 onChange={(_, e) => {
                   formik.handleChange(e);
-                  console.log(e.target.value);
                   setCountry(e.target.value.toLowerCase());
                 }}
                 onBlur={formik.handleBlur}
-                ReactFlagsSelect
               />
             </div>
           </div>
@@ -889,7 +885,6 @@ console.log('checked',formik.values.enrollmentStatus)
                       name="certImage"
                       style={{ cursor: "pointer" }}
                       onChange={(event) => {
-                        console.log("event", event.currentTarget.files[0]);
                         formik.setFieldValue(
                           "certImage",
                           event.currentTarget.files[0]

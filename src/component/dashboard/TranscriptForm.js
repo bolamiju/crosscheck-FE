@@ -64,7 +64,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       const { data } = await Axios.get(
         `https://crosschek.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      // console.log("res", data.institution);
       const {
         totalDocs,
         totalPages,
@@ -118,7 +117,6 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   ]);
 
   const pagesCount = pageInfo?.totalPages;
-  console.log('pages count',pagesCount)
   const convertedUsd = 382
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd))
@@ -302,14 +300,12 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                 value={formik.values.country}
                 onChange={(_, e) => {
                   formik.handleChange(e);
-                  console.log(e.target.value);
                   setCountry(e.target.value.toLowerCase());
                   setByCountryOffset(0)
                   setByCountryandNameOffset(0)
                   setOffset(0)
                 }}
                 onBlur={formik.handleBlur}
-                ReactFlagsSelect
               />
             </div>
           </div>
@@ -594,10 +590,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     value={destination}
                     onChange={(_, e) => {
                       setDestination(e.target.value);
-                      console.log(e.target.value);
                     }}
-                    // onBlur={formik.handleBlur}
-                    ReactFlagsSelect
                   />
                 </>
               </Field>

@@ -172,7 +172,7 @@ const LandingPage = () => {
           )}
         </NavBar>
         <div className={show ? "hide-show" : "hide"}>
-          <img src={Menu} alt="close" onClick={handleMenuIcon} />
+          <img src={Menu} alt="close icon" onClick={handleMenuIcon} />
           <ul>
             <li onClick={handleMenuIcon}>Home</li>
             <li onClick={handleMenuIcon}>
@@ -225,10 +225,10 @@ const LandingPage = () => {
               <button type="button">How it Works</button>
             </div>
           </div>
-          <img src={Computer} alt="headerimage" />
+          <img src={Computer} alt="crosscheck header image" />
         </Main>
       </FirstSection>
-      <a id="about" href={() => false}>
+      <a id="about">
         <About>
           <h1>A few things you should know about us</h1>
           <h3 className="about-us">About Us</h3>
@@ -269,15 +269,15 @@ const LandingPage = () => {
               <p>Local Insights</p>
             </div>
             <div className="sec">
-              <img src={intelligence} alt="intelligence" />
+              <img src={intelligence} alt="crosscheck | intelligence" />
               <p>Expertise and Knowledge</p>
             </div>
             <div className="sec">
-              <img src={knowledge} alt="knowledge" />
+              <img src={knowledge} alt="crosscheck knowledge" />
               <p>Primary source verifications</p>
             </div>
             <div className="sec">
-              <img src={verified} alt="verified" />
+              <img src={verified} alt="verified crosscheck" />
               <p>Technologically relevant</p>
             </div>
           </div>
@@ -292,10 +292,10 @@ const LandingPage = () => {
           and effective ways.
         </p>
       </Div>
-      <a id="work" href={() => false}>
+      <a id="work">
         <Blocks>
           <div className="blocks">
-            <img src={register} alt="regi" />
+            <img src={register} alt="register crosscheck account" />
             <h4>Register</h4>
             <p>
               Create an Individual or Organization Account & activate via email
@@ -336,7 +336,7 @@ const LandingPage = () => {
           </div>
         </Blocks>
       </a>
-      <a id="testimonies" href={() => false}>
+      <a id="testimonies">
         <Testimonies>
           <h2>What people say about us</h2>
           <p>
@@ -351,8 +351,8 @@ const LandingPage = () => {
                 every other applicant.
               </p>
               <div className="profile">
-                <img src={ava2} alt="avatar" />
-                <p>Bertha Johnson</p>
+                <img src={ava2} alt="crosscheck user" />
+                <p>John Kumuyi</p>
                 <p className="role">Herculanum</p>
               </div>
             </div>
@@ -363,8 +363,8 @@ const LandingPage = () => {
                 staying on top of things.
               </p>
               <div className="profile">
-                <img src={ava1} alt="avatar" />
-                <p>Bertha Johnson</p>
+                <img src={ava1} alt="crosscheck user" />
+                <p>Edet Michael</p>
                 <p className="role">Confetti Group</p>
               </div>
             </div>
@@ -376,7 +376,7 @@ const LandingPage = () => {
               </p>
               <div className="profile">
                 <img src={Avatar} alt="avatar" />
-                <p>Bertha Johnson</p>
+                <p>Johnson Ngozi</p>
                 <p className="role">Applicant</p>
               </div>
             </div>
@@ -387,7 +387,7 @@ const LandingPage = () => {
             <div className="w3-container w3-center w3-animate-left">
               <p className="testimony-test">{testimony.text}</p>
               <div className="profile">
-                <img src={testimony?.avatar} alt="avatar" />
+                <img src={testimony?.avatar} alt="crosscheck user" />
                 <span>{testimony?.author?.name}</span>
                 <span>{`${testimony?.author?.position}, ${testimony?.author?.organisation}`}</span>
               </div>
@@ -404,7 +404,7 @@ const LandingPage = () => {
           </div>
         </Testimonies>
       </a>
-      <a id="coverage" href={() => false}>
+      <a id="coverage">
         <Cover>
           <h2>We Cover Over</h2>
           <div className="cover">
@@ -446,7 +446,7 @@ const LandingPage = () => {
           </div>
         </Cover>
       </a>
-      <a id="contact" href={() => false}>
+      <a id="contact">
         <Footer>
           <div className="footer-logo">
             <img src={Logo} alt="crosscheck" />

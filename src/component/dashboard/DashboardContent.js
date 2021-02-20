@@ -265,7 +265,6 @@ const DashboardContent = ({ history }) => {
                   setOffset(0)
                 }}
                 onBlur={formik.handleBlur}
-                ReactFlagsSelect
               />
             </div>
           </div>
