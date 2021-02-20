@@ -130,8 +130,7 @@ const VerificationContent = () => {
                         _id,
                         proof
                       }) => (
-                        <>
-                          <tr>
+                          <tr key={_id}>
                             <td>{date}</td>
                             <td>{`${firstName}  ${lastName}`}</td>
                             <td>{truncateString(institution)}</td>
@@ -152,8 +151,7 @@ const VerificationContent = () => {
                             </td>
                            {proof ? (<td><a target="_blank" rel="noopener noreferrer" href={proof} style={{textDecoration:'none',color:'blue'}}>View</a></td>) : <td>N/A</td>}
                           </tr>
-                          <tr className="space"></tr>
-                        </>
+                         
                       )
                     )
                 : ""}
