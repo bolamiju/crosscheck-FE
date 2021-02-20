@@ -106,12 +106,12 @@ const Receipts = ({ history }) => {
                   <td>{truncateString(item?.institution)}</td>
                           {item['our_charge'] ? (
                             userCountry === 'NG' ? (<td>&#8358;{item['our_charge']}</td>) : (<td>${toDollar(item['our_charge'])}</td>)
-                          ) : item.amount ? (userCountry ==='NG' ? (<td>&#8358;{item.amount}</td>) : (<td>${toDollar(item.amount)}</td>)) : '-'
+                          ) : item.amount ? (userCountry ==='NG' ? (<td>&#8358;{item.amount}</td>) : (<td>${toDollar(item.amount)}</td>)) : <td>-</td>
                         }
                         {
                           item['institute_charge'] ? (
                             userCountry ==='NG' ? (<td>&#8358;{item['institute_charge']}</td>) : (<td>${toDollar(item['institute_charge'])}</td>)
-                          ) : '-'
+                          ) : <td>-</td>
                         }
                   {item.amount ? (
                     userCountry === 'NG' ? (<td>&#8358;{item.amount}</td>) : (<td>${toDollar(item.amount)}</td>)

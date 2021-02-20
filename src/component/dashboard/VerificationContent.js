@@ -244,7 +244,7 @@ const WallWrapper = styled.div`
       text-align: left;
       overflow: hidden;
       font-size: 14px;
-      text-align: center;
+      font-family: "Rubik",sans-serif;
       .mobile-header {
         display: none;
       }
