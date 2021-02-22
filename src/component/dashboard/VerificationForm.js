@@ -1385,6 +1385,12 @@ const SelectSch = styled.div`
     overflow-x: hidden;
     margin-bottom: 10px;
     padding-bottom: 20px;
+    @media (max-width: 400px) {
+      overflow-x: scroll;
+    }
+    @media (max-width: 500px) {
+      overflow-x: scroll;
+    }
     .hide-table {
       display: none;
     }

@@ -119,6 +119,7 @@ body {
 }
 .activated-wrapper button .login-redirect {
   text-decoration: none;
+  color:white
 }
 .activated-wrapper button {
   width: 70%;
