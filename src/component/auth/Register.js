@@ -87,14 +87,14 @@ function Register() {
 
   return (
     <div className="container">
-      {success ? (
+      {!success ? (
         <div className="activated-section">
           <div className="activated-wrapper">
             <h3>Account created successfuly</h3>
             <p>
               We've sent an account activation link to
               <br />
-              <span>{userEmail}. Please check your inbox or spam folder.</span>{" "}
+              <span>{userEmail}. Please check your inbox, spam or promotions folder.</span>{" "}
             </p>
 
             <p>Click on the link to activate your account</p>
