@@ -447,7 +447,7 @@ const LandingPage = () => {
         </Cover>
       </a>
       <a id="contact">
-        <Footer>
+        {/* <Footer>
           <div className="footer-logo">
             <img src={Logo} alt="crosscheck" />
             <ul>
@@ -501,7 +501,7 @@ const LandingPage = () => {
               </li>
             </ul>
           </div>
-        </Footer>
+        </Footer> */}
       </a>
     </div>
   );
@@ -816,10 +816,10 @@ const Testimonies = styled.div`
     opacity: 0.9;
     padding-bottom: 60px;
     @media (max-width: 400px) {
-      width: 80%;
+      width: 90%;
     }
     @media (max-width: 500px) {
-      width: 80%;
+      width: 90%;
     }
   }
   h2 {
@@ -1242,6 +1242,12 @@ const NavBar = styled.nav`
     justify-content: space-between;
     /* max-width: 380px%; */
   }
+  @media (max-width: 800px) {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    /* max-width: 380px%; */
+  }
   display: flex;
   padding-left: 90px;
   align-items: center;
@@ -1254,6 +1260,13 @@ const NavBar = styled.nav`
       font-size: 28px;
     }
     @media (max-width: 500px) {
+      display: block;
+      padding-right: 3px;
+      color: white;
+      font-size: 28px;
+      overflow: hidden;
+    }
+    @media (max-width: 800px) {
       display: block;
       padding-right: 3px;
       color: white;
@@ -1282,6 +1295,9 @@ const NavBar = styled.nav`
       display: none;
     }
     @media only screen and (max-width: 500px) {
+      display: none;
+    }
+    @media only screen and (max-width: 800px) {
       display: none;
     }
 
@@ -1341,6 +1357,18 @@ const Main = styled.main`
   align-items: flex-start;
   padding-top: 100px;
   padding-bottom: 30px;
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p{
+      text-align:center
+    }
+    .register{
+      display:flex;
+      justify-content:center
+    }
+  }
   @media (max-width: 400px) {
     display: flex;
     flex-direction: column;
@@ -1419,6 +1447,13 @@ const Main = styled.main`
     width: 64%;
     height: calc(100vh - 148px);
     margin-right: -98px;
+    @media(max-width:780px){
+    width:80%;
+    height:80%;
+    margin-right: 15px;
+    /*   margin-left: auto; */
+      margin-top: 40px;
+    }
     @media (max-width: 400px) {
       width: 350px;
       height: 200px;
@@ -1446,6 +1481,14 @@ const Main = styled.main`
       padding-left: 0px;
     }
     @media (max-width: 500px) {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-left: 0px;
+    }
+    @media (max-width: 800px) {
       width: 80%;
       display: flex;
       flex-direction: column;
@@ -1515,6 +1558,13 @@ const Main = styled.main`
       @media (max-width: 500px) {
         text-align: center;
         font-size: 18px;
+        line-height: 1.6;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 800px) {
+        text-align: center;
+        font-size: 20px;
         line-height: 1.6;
         margin-top: 15px;
         margin-bottom: 20px;
