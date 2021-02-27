@@ -433,7 +433,7 @@ const LandingPage = () => {
               {/* <h2 className="counter" >200</h2> */}
               <CountUp
                 start={0}
-                end={400}
+                end={2500}
                 duration={5}
                 onStart={checkHeight}
                 className="counter"

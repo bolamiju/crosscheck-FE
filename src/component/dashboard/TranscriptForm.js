@@ -128,7 +128,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const handleSelected = (institute) => {
-    if(institute?.country !== 'Nigeria')
+    if(institute?.country !== 'Nigeria' || institute?.country !== 'Ghana')
     {
       return toast.error('We process transcripts for schools within nigeria alone for now')
     }
