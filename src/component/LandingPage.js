@@ -97,6 +97,9 @@ const LandingPage = () => {
 
   const testimony = testimonies[testimonyIndex];
 
+  const today = new Date();
+  const year = today.getFullYear();
+
   return (
     <div>
       <FirstSection>
@@ -447,7 +450,7 @@ const LandingPage = () => {
         </Cover>
       </a>
       <a id="contact">
-        {/* <Footer>
+        <Footer>
           <div className="footer-logo">
             <img src={Logo} alt="crosscheck" />
             <ul>
@@ -471,13 +474,13 @@ const LandingPage = () => {
               <img src={phone} alt="mail" />
               <div className="text">
                 <p>Phone</p>
-                <p className="text">(01) 479-642-7461 (01)</p>
+                <p className="text">(01) 479-642-7461</p>
               </div>
             </div>
           </div>
           <div className="line"></div>
           <div className="bottom-content">
-            <p>© 2020 Crosscheck. All Rights Reserved</p>
+            <p>© {year} Crosscheck. All Rights Reserved</p>
             <ul>
               <li>Privacy Policy</li>
               <li>
@@ -501,7 +504,7 @@ const LandingPage = () => {
               </li>
             </ul>
           </div>
-        </Footer> */}
+        </Footer>
       </a>
     </div>
   );
@@ -591,10 +594,18 @@ const Footer = styled.div`
     justify-content: space-between;
     margin-left: 70px;
     margin-right: 70px;
+    @media(max-width:800px){
+      margin-left:0px;
+      margin-right:0px
+    }
     .termsof {
       text-decoration: none;
       color: grey;
       cursor: pointer;
+    }
+    @media(max-width:800px){
+      margin-left:20px;
+      margin-right:20px
     }
     @media (max-width: 400px) {
       display: flex;
@@ -624,6 +635,10 @@ const Footer = styled.div`
     padding-top: 40px;
     padding-bottom: 30px;
     margin-left: 550px;
+    @media (max-width: 800px) {
+     width:70%;
+      margin-left: 20px;
+    }
     @media (max-width: 500px) {
       display: block;
       flex-direction: column;
@@ -688,6 +703,13 @@ const Footer = styled.div`
       margin-left: 350px;
       list-style-type: none;
       display: flex;
+      @media (max-width: 800px) {
+        margin-left:20px
+        /* display: flex;
+        flex-direction: column;
+        margin-left: 0px;
+        padding: 0 !important; */
+      }
       @media (max-width: 400px) {
         display: flex;
         flex-direction: column;
@@ -834,12 +856,16 @@ const Testimonies = styled.div`
     display: flex;
     justify-content: space-between;
     width: 90%;
+    @media (max-width: 800px) {
+      width:98%
+    }
     @media (max-width: 400px) {
       display: none;
     }
     @media (max-width: 500px) {
       display: none;
     }
+    
     .testimony {
       width: 300px;
       display: flex;
@@ -850,6 +876,9 @@ const Testimonies = styled.div`
       background: #ffffff 0% 0% no-repeat padding-box;
       padding: 10px;
       border-radius: 8px;
+      @media(max-width:800px){
+        width:200px
+      }
       p {
         font-family: MontserratRegular;
         letter-spacing: 0px;
@@ -935,6 +964,9 @@ const Blocks = styled.div`
       margin-top: 30px;
       margin-bottom: 20px;
       color: #333333;
+      @media(max-width:800px){
+        text-align:center
+      }
     }
     p {
       width: 85%;
@@ -990,6 +1022,9 @@ const About = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 20px;
+  @media(max-width:800px){
+    width:98%
+  }
   .about-us {
     @media (min-width: 500px) {
       display: none;
@@ -1024,7 +1059,10 @@ const About = styled.div`
     display: flex;
     width: 90%;
     justify-content: space-between;
-
+    @media (max-width: 800px) {
+      width:100%;
+      display: flex;
+    }
     @media (max-width: 400px) {
       display: flex;
       flex-direction: column;
@@ -1036,6 +1074,9 @@ const About = styled.div`
       width: auto;
     }
     .card {
+      @media screen and (max-width: 800px) and (min-width: 700px) {
+        width:240px;
+      }
       @media (max-width: 400px) {
         margin-bottom: 25px;
       }
@@ -1181,7 +1222,7 @@ const FirstSection = styled.div`
     0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #00000029;
   .hide-show {
-    @media (min-width: 500px) {
+    @media (min-width: 800px) {
       display: none;
     }
     position: fixed;
@@ -1501,6 +1542,14 @@ const Main = styled.main`
     padding-left: 65px;
     h2 {
       display: none;
+      @media screen and (max-width: 800px) and (min-width: 700px) {
+        display: block;
+        color: #66c8ed;
+        font-weight: lighter;
+        font-size: 46px;
+        text-align: center;
+        width:70%
+      }
       .here {
         color: white;
         cursor: pointer;
@@ -1522,6 +1571,7 @@ const Main = styled.main`
         font-size: 34px;
         text-align: center;
       }
+      
     }
     h1 {
       font-family: orkneyLight;
@@ -1530,6 +1580,9 @@ const Main = styled.main`
         display: none;
       }
       @media (max-width: 500px) {
+        display: none;
+      }
+      @media (max-width: 800px) {
         display: none;
       }
       color: #66c8ed;
@@ -1555,6 +1608,13 @@ const Main = styled.main`
       opacity: 0.8;
       margin-top: 40px;
       margin-bottom: 40px;
+      @media screen and (max-width: 800px) and (min-width: 600px) {
+        text-align: center;
+        font-size: 24px;
+        line-height: 1.6;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
       @media (max-width: 500px) {
         text-align: center;
         font-size: 18px;
@@ -1562,13 +1622,7 @@ const Main = styled.main`
         margin-top: 15px;
         margin-bottom: 20px;
       }
-      @media (max-width: 800px) {
-        text-align: center;
-        font-size: 20px;
-        line-height: 1.6;
-        margin-top: 15px;
-        margin-bottom: 20px;
-      }
+     
     }
   }
 `;
