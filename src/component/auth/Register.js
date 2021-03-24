@@ -87,7 +87,7 @@ function Register() {
 
   return (
     <div className="container">
-      {!success ? (
+      {success ? (
         <div className="activated-section">
           <div className="activated-wrapper">
             <h3>Account created successfuly</h3>

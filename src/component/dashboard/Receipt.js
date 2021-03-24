@@ -11,6 +11,11 @@ const Receipt = ({receiptDetails,userCountry}) => {
       const toDollar = (amount) => {
         return Math.round(Number(amount) / Number(convertedUsd));
       };
+const ourCharge = receiptDetails?.our_charge
+const instituteCharge = receiptDetails?.institute_charge
+const transcriptAmount = receiptDetails?.amount
+
+const total = receiptDetails?.our_charge ? (Number(receiptDetails?.our_charge) + Number(receiptDetails?.institute_charge)) : receiptDetails?.amount
 
     return (
         <>
@@ -46,9 +51,49 @@ const Receipt = ({receiptDetails,userCountry}) => {
                         <p>{receiptDetails?.tranId || 'NA'}</p>
                         <p>{receiptDetails?.amount ? 'Transcript Request' : 'Education Verification'}</p>
                     </div>
+                    
                 </div>
+
             </div>
-            
+            {/* TABLE */}
+                    <div className="new-table">
+                <table
+                  ref={ref}
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className="ideTable"
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Our Charge</th>
+                      <th>Institute Charge</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                          <tr key={receiptDetails.institution}>
+                            <th className="mobile-header">Number</th>
+                            <td>{receiptDetails.institution}</td>
+                           
+                            <th className="mobile-header">Weight</th>
+                            {userCountry === 'NG' ? <td>&#8358;{receiptDetails["our_charge"] ? receiptDetails["our_charge"] : receiptDetails.amount}</td> : <td>${toDollar(receiptDetails["our_charge"] ? receiptDetails["our_charge"] : receiptDetails.amount)}</td>}
+                            <th className="mobile-header">Value</th>
+                        {userCountry === 'NG' ? <td>{receiptDetails["institute_charge"] || '-'}</td> : <td>${receiptDetails["institute_charge"] ? toDollar(receiptDetails["institute_charge"]) : '-'}</td>}
+                            
+                          </tr>
+                    <td></td>
+                    <td></td>
+                    <td style={{ color: "black", fontWeight: "bold" }}>
+                      TOTAL
+                    </td>
+                  {userCountry === 'NG' ? <td style={{ fontWeight: "bold" }}>&#8358;{total}</td> : <td style={{ fontWeight: "bold" }}>${toDollar(total)}</td>}
+                  </tbody>
+                </table>
+                </div>
+                        {/* TABLE */}
         </PdfWrapper>
             <Pdf targetRef={ref} filename="receipt.pdf">
                 {({ toPdf }) => <button style={{ backgroundColor: "#0092e0", border: "none", padding: "0.8rem", color: "#ffffff", float: "right",  marginRight:"1.5rem", borderRadius: "15px", outline: "none", cursor: "pointer" }}
@@ -66,6 +111,63 @@ padding: 1.5rem 18rem 1.5rem 1.5rem;
 @media (max-width: 400px) {
     width: 750px;
 }
+
+.new-table{
+    margin-top: 10px;
+    width: 95% !important;
+    box-shadow:none !important;
+    /* background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px #00000029; *
+
+    /* height: 90%; */
+    overflow-x: hidden;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    .hide-table {
+      display: none;
+    }
+
+    table {
+      margin:2rem 0 !important;
+      width: 95%;
+      border-collapse: collapse;
+      text-align: left;
+      overflow: hidden;
+      font-size: 14px;
+      .mobile-header {
+        display: none;
+      }
+
+      td,
+      th {
+        padding: 10px;
+      }
+
+      td {
+        /* border-left: 1px solid #ecf0f1;
+        border-right: 1px solid #ecf0f1; */
+      }
+
+      th {
+        background-color: #0092e0;
+        color: white;
+      }
+
+      /* tr:nth-of-type(even) td {
+        background-color: lighten(#4ecdc4, 35%);
+      } */
+      tr {
+        cursor: pointer;
+        &:nth-child(odd) {
+          background-color: white !important;
+        }
+        &:hover {
+          background-color: #d9f4f2;
+        }
+      }
+    }
+  }
 .first-section {
     display: flex;
     justify-content: space-between;

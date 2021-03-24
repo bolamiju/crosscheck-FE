@@ -578,7 +578,7 @@ const Footer = styled.div`
   @media only screen and (max-width: 400px) {
     display: flex;
     flex-direction: column;
-    background: #001538 0% 0% no-repeat padding-box;
+    background: #173049 0% 0% no-repeat padding-box;
     height: 100vh;
   }
   width: 100%;

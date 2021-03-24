@@ -656,3 +656,12 @@ label {
     display: none;
   }
 }
+
+@media screen and (max-width: 800px) and (min-width:700px) {
+  .register-button {
+    margin-top:20px
+}
+.fields{
+  margin-bottom:15px
+}
+}
