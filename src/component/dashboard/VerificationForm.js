@@ -176,6 +176,9 @@ function VerificationForm({
       for (var key in values) {
         formData.append(key, values[key]);
       }
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
       updateFormValues(formData);
     },
     validationSchema: Yup.object().shape({
