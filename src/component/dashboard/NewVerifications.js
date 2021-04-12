@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,16 +24,21 @@ import {
 import VerificationForm from "./VerificationForm";
 import Pdf from "react-to-pdf";
 
-import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
-import ipapi from 'ipapi.co'
+import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import ipapi from "ipapi.co";
 
-const request = (data,tranId) =>
+const request = (data, tranId) => {
+  const formData = new FormData();
+  Object.keys(data).forEach((key) => {
+    formData.append(key, data[key]);
+  });
   axios({
-    data,
+    data: formData,
     method: "post",
     url: `https://crosschek.herokuapp.com/api/v1/verifications/request/${tranId}`,
     headers: { "Content-Type": "multipart/form-data" },
   });
+};
 // TODO: CHANGE ID TO THIS DATE-TIME STRING
 // var currentdate = new Date();
 // var datetime = currentdate.getDate()
@@ -52,9 +57,9 @@ const NewVerifications = () => {
 
   const ref = React.createRef();
 
-  useEffect(()=>{
-    ipapi.location((loca)=>setUserCountry(loca),'','','country')
-  },[])
+  useEffect(() => {
+    ipapi.location((loca) => setUserCountry(loca), "", "", "country");
+  }, []);
 
   const formData = {
     firstName: "",
@@ -71,8 +76,8 @@ const NewVerifications = () => {
     enrollmentStatus: false,
   };
   let [isBlocking, setIsBlocking] = useState(true);
-  const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382
+  const [userCountry, setUserCountry] = useState("");
+  const convertedUsd = 382;
 
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
@@ -81,27 +86,35 @@ const NewVerifications = () => {
   const hours = today.getHours();
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
-  const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+  // const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
 
-  const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
+  const initialVerifications = useSelector(
+    (state) => state.verifications.verifications
+  );
+  const [formValues, setFormValues] = useState([
+    { ...formData, id: Date.now() },
+  ]);
 
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
   const verificationsLength = formValues.length;
 
+  useEffect(() => {
+    if (initialVerifications.length) {
+      setFormValues(initialVerifications);
+    }
+  }, [initialVerifications.length]);
+
   const handleCheck = (e) => {
+   
     setChecked(e.target.checked);
   };
   const verify = async () => {
-    for (let i = 0; i < formValues.length; i++) {
-      if (formValues[i] instanceof FormData === false) {
-        for (const key in formValues[i]) {
-          if (!formValues[i][key]) {
-            return toast.error(
-              "Please complete and submit all verification details"
-            );
-          }
+    for(let i = 0; i < formValues.length; i++){
+      for (const property in formValues[i]){
+        if(formValues[i][property] === ""){
+         return toast.error(`please fill all fields and submit details`)
         }
       }
     }
@@ -109,7 +122,7 @@ const NewVerifications = () => {
     setRequestList(true);
   };
   const processPayment = async (tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value,tranId)));
+    await Promise.allSettled(formValues.map((value) => request(value, tranId)));
   };
   const addNewForm = () => {
     setFormValues((values) => [
@@ -120,7 +133,7 @@ const NewVerifications = () => {
 
   const updateFormValues = (id) => (data) => {
     setFormValues((formValues) =>
-      formValues.map((value, index) => (index === id ? data : value))
+      formValues.map((value) => (value.id === id ? data : value))
     );
   };
 
@@ -129,26 +142,29 @@ const NewVerifications = () => {
     setFormValues(vals);
   };
 
-  let verifRequest = [];
-  for (let i = 0; i < verifications.length; i++) {
-    let obj = {};
-    for (var pair of verifications[i].entries()) {
-      obj[pair[0]] = pair[1];
-    }
-    verifRequest.push(obj);
-  }
+
   const toDollar = (amount) => {
-    return  (Number(amount) / Number(convertedUsd)).toFixed(2);;
+    return (Number(amount) / Number(convertedUsd)).toFixed(2);
   };
-  let totalOurCharge = verifRequest?.reduce(
+  let totalOurCharge = verifications?.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(userCountry === 'NG' ? currentValue["our_charge"] : toDollar(currentValue["our_charge"])),
+      accumulator +
+      Number(
+        userCountry === "NG"
+          ? currentValue["our_charge"]
+          : toDollar(currentValue["our_charge"])
+      ),
     0
   );
 
-  let totalInstituteCharge = verifRequest?.reduce(
+  let totalInstituteCharge = verifications?.reduce(
     (accumulator, currentValue) =>
-      accumulator + Number(userCountry === 'NG' ? currentValue["institute_charge"] : toDollar(currentValue["institute_charge"])),
+      accumulator +
+      Number(
+        userCountry === "NG"
+          ? currentValue["institute_charge"]
+          : toDollar(currentValue["institute_charge"])
+      ),
     0
   );
   const total =
@@ -161,41 +177,41 @@ const NewVerifications = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  
-   const config = {
+  const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
     amount: total,
-    currency: userCountry ==='NG' ? 'NGN' : 'USD',
-    payment_options: 'card,mobilemoney,ussd',
+    currency: userCountry === "NG" ? "NGN" : "USD",
+    payment_options: "card,mobilemoney,ussd",
     customer: {
       email: user?.email,
       phonenumber: user?.phone,
-      name: `${user?.firstName} ${ user?.lastName}`,
+      name: `${user?.firstName} ${user?.lastName}`,
     },
     customizations: {
-      title: 'CrossCheck',
-      description: 'Payment for verification',
-      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+      title: "CrossCheck",
+      description: "Payment for verification",
+      logo:
+        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
   };
 
   const fwConfig = {
     ...config,
-    text: 'Pay Now!',
+    text: "Pay Now!",
     callback: (response) => {
-  if(response?.status === 'successful'){
-    closePaymentModal() // this will close the modal programmatically
-      processPayment(response?.transaction_id);
-      dispatch(addVerificationList([]));
-      setRequestList(false);
-      setFormValues([formData]);
-      dispatch(selectSchool({}));
-      toast.success("request submitted");
-      setTimeout(() => {
-        history.push(`/dashboard/${user.id}`);
-      }, 1500)
-    }
+      if (response?.status === "successful") {
+        closePaymentModal(); // this will close the modal programmatically
+        processPayment(response?.transaction_id);
+        dispatch(addVerificationList([]));
+        setRequestList(false);
+        setFormValues([formData]);
+        dispatch(selectSchool({}));
+        toast.success("request submitted");
+        setTimeout(() => {
+          history.push(`/dashboard/${user.id}`);
+        }, 1500);
+      }
     },
     onClose: () => {},
   };
@@ -245,14 +261,14 @@ const NewVerifications = () => {
             <span style={{ paddingRight: "45px" }}>FINISH</span>
           </div>
 
-          {formValues.map((values, idx) => (
-            <div className={requestList ? "none" : ""}  key={values.id}>
+          {formValues.map((value, idx) => (
+            <div className={requestList ? "none" : ""} key={value.id}>
               {" "}
               <VerificationForm
                 verificationsLength={verificationsLength}
-                initialValues={values}
-                updateFormValues={updateFormValues(idx)}
-                id={values.id}
+                initialValues={value}
+                updateFormValues={updateFormValues(value.id)}
+                id={value.id}
                 deleteOneVerification={deleteOneVerification}
               />
             </div>
@@ -302,8 +318,8 @@ const NewVerifications = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {verifRequest.length > 0 &&
-                      verifRequest.map((ver) => {
+                    {verifications.length > 0 &&
+                      verifications.map((ver) => {
                         return (
                           <tr key={ver.name}>
                             <th className="mobile-header">Number</th>
@@ -311,16 +327,22 @@ const NewVerifications = () => {
                             <th className="mobile-header">Market rate</th>
                             <td>{ver.country}</td>
                             <th className="mobile-header">Weight</th>
-                            {userCountry === 'NG' ? <td>&#8358;{ver["our_charge"]}</td> : <td>${toDollar(ver["our_charge"])}</td>}
+                            {userCountry === "NG" ? (
+                              <td>&#8358;{ver["our_charge"]}</td>
+                            ) : (
+                              <td>${toDollar(ver["our_charge"])}</td>
+                            )}
                             <th className="mobile-header">Value</th>
-                        {userCountry === 'NG' ? <td>&#8358;{ver["institute_charge"]}</td> : <td>${toDollar(ver["institute_charge"])}</td>}
+                            {userCountry === "NG" ? (
+                              <td>&#8358;{ver["institute_charge"]}</td>
+                            ) : (
+                              <td>${toDollar(ver["institute_charge"])}</td>
+                            )}
                             <td>
                               <FontAwesomeIcon
                                 icon={faTrash}
                                 // className="menu-icon"
-                                onClick={() =>
-                                  removeVerification(ver.id)
-                                }
+                                onClick={() => removeVerification(ver.id)}
                               />
                             </td>
                           </tr>
@@ -332,7 +354,11 @@ const NewVerifications = () => {
                     <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
-                  {userCountry === 'NG' ? <td style={{ fontWeight: "bold" }}>&#8358;{total}</td> : <td style={{ fontWeight: "bold" }}>${total}</td>}
+                    {userCountry === "NG" ? (
+                      <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
+                    ) : (
+                      <td style={{ fontWeight: "bold" }}>${total}</td>
+                    )}
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
@@ -364,7 +390,7 @@ const NewVerifications = () => {
                   <FontAwesomeIcon icon={faPlus} />
                   Add another Verification &nbsp;{" "}
                 </button>
-                <FlutterWaveButton {...fwConfig} className="btn"/>
+                <FlutterWaveButton {...fwConfig} className="btn" />
               </div>
             </SelectSch>
           )}

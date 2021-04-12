@@ -15,7 +15,7 @@ export default function userReducer(state = initialState, action) {
     case types.ADD_VERIFICATIONS:
       return {
         ...state,
-        verifications: [...action.payload],
+        verifications:action.payload,
       };
     case types.SELECT_SCHOOL:
       return {
@@ -34,17 +34,10 @@ export default function userReducer(state = initialState, action) {
       };
 
     case types.DELETE_VERIFICATION:
-      let newArr = [];
-      state.verifications.filter((verification) => {
-        for (var pair of verification.entries()) {
-          if (pair[0] === "id" && pair[1] !== action.payload) {
-            newArr.push(verification);
-          }
-        }
-      });
-      return {
-        verifications: newArr,
-      };
+     return{
+       ...state,
+       verifications:state.verifications.filter((v)=>v.id !== action.payload)
+     }
     case types.GET_TRANSCRIPT:
       return {
         ...state,
