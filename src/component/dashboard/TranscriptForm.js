@@ -547,11 +547,11 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   ) : null}
                 </>
               </Field>
-
+{/* 
               <Field>
                 <label>Reference ID</label>
                 <input type="text" className="ref-input" />
-              </Field>
+              </Field> */}
               {/* <p className="ref">
                 The reference number will be used to track this case in your
                 internal system if you have one
@@ -597,7 +597,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
               <Field>
                 <label>
-                  Address Line
+                  Destination Address
                   <span>*</span>
                 </label>
                 <>
@@ -669,6 +669,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                         : "destination-input"
                     }
                     name="destinationNumber"
+                    placeholder="Enter destination phone number"
                     value={formik.values.destinationNumber}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -1026,7 +1027,7 @@ const Field = styled.div`
     }
   }
   .address-input {
-    margin-left: 74px;
+    margin-left: 35px;
     @media (max-width: 500px) {
       margin-left: 0px;
     }
