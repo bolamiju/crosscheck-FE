@@ -3,7 +3,10 @@ import ReactPaginate from "react-paginate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faCaretDown,
   faCaretRight,
@@ -26,7 +29,7 @@ import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
 import Institution from "../../asset/institution.svg";
 import { search } from "./utils";
 import Axios from "axios";
-import ipapi from 'ipapi.co'
+import ipapi from "ipapi.co";
 
 function VerificationForm({
   initialValues,
@@ -53,8 +56,8 @@ function VerificationForm({
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
-  const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382
+  const [userCountry, setUserCountry] = useState("");
+  const convertedUsd = 382;
   const user = JSON.parse(localStorage.getItem("user"));
 
   const request = useCallback(
@@ -66,9 +69,9 @@ function VerificationForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [offset, input]
   );
-  useEffect(()=>{
-    ipapi.location((loca)=>setUserCountry(loca),'','','country')
-  },[])
+  useEffect(() => {
+    ipapi.location((loca) => setUserCountry(loca), "", "", "country");
+  }, []);
 
   useEffect(() => {
     // clean up
@@ -157,6 +160,7 @@ function VerificationForm({
     initialValues,
 
     onSubmit: async (values, status) => {
+      console.log("formik values", values);
       for (var propName in values) {
         if (
           values[propName] === null ||
@@ -166,31 +170,58 @@ function VerificationForm({
           delete values[propName];
         }
       }
-      var formData = new FormData();
-      formData.append("email", user.email);
-      formData.append("our_charge", selectedInst["our_charge"]);
-      formData.append("institute_charge", selectedInst["institute_charge"]);
-      formData.append("country", selectedInst.country);
-      formData.append("name", selectedInst.name);
+      const { our_charge, institute_charge, country, name } = selectedInst;
 
-      for (var key in values) {
-        formData.append(key, values[key]);
-      }
-      for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
-      updateFormValues(formData);
+      updateFormValues({
+        ...values,
+        email: user.email,
+        our_charge,
+        institute_charge,
+        country,
+        name,
+      });
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().test('len', 'First Name must be at least 2 characters', val => val?.length >= 2).required("First Name is required"),
-      lastName: Yup.string().test('len', 'First Name must be at least 2 characters', val => val?.length >= 2).required("Last Name is required"),
+      firstName: Yup.string()
+        .test(
+          "len",
+          "First Name must be at least 2 characters",
+          (val) => val?.length >= 2
+        )
+        .required("First Name is required"),
+      lastName: Yup.string()
+        .test(
+          "len",
+          "First Name must be at least 2 characters",
+          (val) => val?.length >= 2
+        )
+        .required("Last Name is required"),
       dateOfBirth: Yup.string().required("DOB required"),
       studentId: Yup.number().required("studentID is required"),
-      course: Yup.string().test('len', 'Course must be at least 3 characters', val => val?.length >= 3).required("Last Name is required").required("course is required"),
-      qualification: Yup.string().test('len', 'Qualification must be at least 3 characters', val => val?.length >= 3).required("Qualification is required"),
-      classification: Yup.string().test('len', 'classification must be at least 3 characters', val => val?.length >= 3).required("classification is required"),
-      admissionYear:Yup.number().typeError('Enter valid year'),
-      graduationYear:Yup.number().typeError('Enter valid year'),
+      course: Yup.string()
+        .test(
+          "len",
+          "Course must be at least 3 characters",
+          (val) => val?.length >= 3
+        )
+        .required("Last Name is required")
+        .required("course is required"),
+      qualification: Yup.string()
+        .test(
+          "len",
+          "Qualification must be at least 3 characters",
+          (val) => val?.length >= 3
+        )
+        .required("Qualification is required"),
+      classification: Yup.string()
+        .test(
+          "len",
+          "classification must be at least 3 characters",
+          (val) => val?.length >= 3
+        )
+        .required("classification is required"),
+      admissionYear: Yup.number().typeError("Enter valid year"),
+      graduationYear: Yup.number().typeError("Enter valid year"),
       enrollmentStatus: Yup.bool().oneOf([true, false]),
     }),
   });
@@ -203,8 +234,6 @@ function VerificationForm({
     }
     formik.handleSubmit("paid");
     toast.success("Verification details saved");
-
-    // updateFormValues(initialValues);
   };
   const handleQualificationTab = (e) => {
     e.preventDefault();
@@ -227,19 +256,24 @@ function VerificationForm({
     setPay(false);
   };
   const handleDocumentTab = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       formik.values.course.length === 0 ||
       formik.values.qualification.length === 0 ||
       formik.values.classification.length === 0 ||
-      formik.values.studentId.length === 0 || (formik.values.enrollmentStatus === false && (formik.values.admissionYear.length === 0 ||
-        formik.values.graduationYear.length === 0))
+      formik.values.studentId.length === 0 ||
+      (formik.values.enrollmentStatus === false &&
+        (formik.values.admissionYear.length === 0 ||
+          formik.values.graduationYear.length === 0))
     ) {
       toast.error("please fill required fields");
       return;
     }
-    if(formik.values.enrollmentStatus === false && Number(formik.values.admissionYear) > Number(formik.values.graduationYear)){
-      toast.error('Please check admission and graduation year');
+    if (
+      formik.values.enrollmentStatus === false &&
+      Number(formik.values.admissionYear) > Number(formik.values.graduationYear)
+    ) {
+      toast.error("Please check admission and graduation year");
       return;
     }
     setActiveTab("documents");
@@ -255,15 +289,14 @@ function VerificationForm({
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd));
   };
-
   return (
     <SingleCheck
       style={{
-        paddingBottom: !details ? "20px" : "",
-        marginBottom: !details ? "40px" : "",
+        paddingBottom: !details ? "20px" : "0",
+        marginBottom: !details ? "40px" : "0",
       }}
     >
-      {formik.values.institution.length > 0 && schCard && (
+      {formik.values?.institution.length > 0 && schCard && (
         <SelectCheck
           onClick={() => {
             setDetails(!details);
@@ -360,25 +393,27 @@ function VerificationForm({
                 </thead>
                 <tbody>
                   {institutions.map((ite) => (
-                    <tr
-                      onClick={() => handleSelected(ite)}
-                      key={ite.name}
-                    >
+                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
                       <th className="mobile-header">Number</th>
                       <td>{truncateString(ite.name)}</td>
                       <th className="mobile-header">Market rate</th>
                       <td>{ite.country}</td>
                       <th className="mobile-header">Weight</th>
-                      {ite['institute_charge'] === 0 ?
-                      (<td>-</td>) : 
-                        userCountry === 'NG' ? (<td>&#8358;{ite['institute_charge'] || 0}</td>)
-                        :  
-                          <td>${toDollar(ite['institute_charge']) }</td>
-                      }
+                      {ite["institute_charge"] === 0 ? (
+                        <td>-</td>
+                      ) : userCountry === "NG" ? (
+                        <td>&#8358;{ite["institute_charge"] || 0}</td>
+                      ) : (
+                        <td>${toDollar(ite["institute_charge"])}</td>
+                      )}
                       <th className="mobile-header">Value</th>
-                      <td>{userCountry === "NG" ? ( <td>&#8358;{ite["our_charge"]}</td>): (
+                      <td>
+                        {userCountry === "NG" ? (
+                          <td>&#8358;{ite["our_charge"]}</td>
+                        ) : (
                           <td>${toDollar(ite["our_charge"]) || 0}</td>
-                        )}</td>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -391,16 +426,20 @@ function VerificationForm({
                   </p>
 
                   <ReactPaginate
-                    previousLabel={<FontAwesomeIcon
-                      className="icon"
-                      icon={faAngleDoubleLeft}
-                      style={{ fontSize: "15px" }}
-                    />}
-                    nextLabel={<FontAwesomeIcon
-                      className="icon"
-                      icon={faAngleDoubleRight}
-                      style={{ fontSize: "15px" }}
-                    />}
+                    previousLabel={
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faAngleDoubleLeft}
+                        style={{ fontSize: "15px" }}
+                      />
+                    }
+                    nextLabel={
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faAngleDoubleRight}
+                        style={{ fontSize: "15px" }}
+                      />
+                    }
                     breakLabel={"..."}
                     breakClassName={"break-me"}
                     pageCount={pagesCount}
@@ -557,7 +596,6 @@ function VerificationForm({
                 </>
               </Field>
 
-             
               <button
                 // disabled={
                 //   formik.values.firstName.length === 0 ||
@@ -824,15 +862,16 @@ function VerificationForm({
                   formik.values.course.length === 0 ||
                   formik.values.qualification.length === 0 ||
                   formik.values.classification.length === 0 ||
-                  (formik.values.enrollmentStatus === false && (formik.values.admissionYear.length === 0 ||
-                    formik.values.graduationYear.length === 0)) ||
+                  (formik.values.enrollmentStatus === false &&
+                    (formik.values.admissionYear.length === 0 ||
+                      formik.values.graduationYear.length === 0)) ||
                   formik.values.studentId.length === 0
                     ? "btn notallowed"
                     : "btn"
                 }
                 type="submmit"
                 onClick={(e) => {
-                  handleDocumentTab(e)
+                  handleDocumentTab(e);
                 }}
               >
                 Next
