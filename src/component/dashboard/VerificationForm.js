@@ -160,7 +160,6 @@ function VerificationForm({
     initialValues,
 
     onSubmit: async (values, status) => {
-      console.log("formik values", values);
       for (var propName in values) {
         if (
           values[propName] === null ||
@@ -197,7 +196,7 @@ function VerificationForm({
         )
         .required("Last Name is required"),
       dateOfBirth: Yup.string().required("DOB required"),
-      studentId: Yup.number().required("studentID is required"),
+      studentId: Yup.string().required("studentID is required"),
       course: Yup.string()
         .test(
           "len",
@@ -657,7 +656,7 @@ function VerificationForm({
               </p>
               <Field>
                 <label>
-                  Student ID
+                  Matric No
                   <span>*</span>
                 </label>
                 <>
