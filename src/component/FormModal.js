@@ -60,7 +60,7 @@ const FormModal = ({ open, onClose, id }) => {
                 <p>Report an issue</p>
 
                 <div className="field">
-                  <label htmlFor="subject">subect</label>
+                  <label htmlFor="subject">subject</label>
                   <input
                     name="subject"
                     type="text"
