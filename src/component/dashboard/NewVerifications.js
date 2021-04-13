@@ -86,13 +86,13 @@ const NewVerifications = () => {
   const hours = today.getHours();
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
-  // const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+  const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
 
   const initialVerifications = useSelector(
     (state) => state.verifications.verifications
   );
   const [formValues, setFormValues] = useState([
-    { ...formData, id: Date.now() },
+    { ...formData, id: date },
   ]);
 
   const [requestList, setRequestList] = useState(false);
@@ -127,7 +127,7 @@ const NewVerifications = () => {
   const addNewForm = () => {
     setFormValues((values) => [
       ...values,
-      { ...formData, id: Date.now(), institution: "" },
+      { ...formData, id: date, institution: "" },
     ]);
   };
 
@@ -261,7 +261,7 @@ const NewVerifications = () => {
             <span style={{ paddingRight: "45px" }}>FINISH</span>
           </div>
 
-          {formValues.map((value, idx) => (
+          {formValues.map((value) => (
             <div className={requestList ? "none" : ""} key={value.id}>
               {" "}
               <VerificationForm
