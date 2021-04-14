@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import arrow from "../../asset/arrow-right.svg";
+import Logo from "../../asset/CrossCheckLogo.png";
 import axios from "axios";
 import "./ver.css";
 import { Prompt, useHistory } from "react-router-dom";
@@ -91,9 +92,7 @@ const NewVerifications = () => {
   const initialVerifications = useSelector(
     (state) => state.verifications.verifications
   );
-  const [formValues, setFormValues] = useState([
-    { ...formData, id: date },
-  ]);
+  const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
 
   const [requestList, setRequestList] = useState(false);
 
@@ -107,14 +106,13 @@ const NewVerifications = () => {
   }, [initialVerifications.length]);
 
   const handleCheck = (e) => {
-   
     setChecked(e.target.checked);
   };
   const verify = async () => {
-    for(let i = 0; i < formValues.length; i++){
-      for (const property in formValues[i]){
-        if(formValues[i][property] === ""){
-         return toast.error(`please fill all fields and submit details`)
+    for (let i = 0; i < formValues.length; i++) {
+      for (const property in formValues[i]) {
+        if (formValues[i][property] === "") {
+          return toast.error(`please fill all fields and submit details`);
         }
       }
     }
@@ -141,7 +139,6 @@ const NewVerifications = () => {
     const vals = formValues.filter((v) => v.id !== id);
     setFormValues(vals);
   };
-
 
   const toDollar = (amount) => {
     return (Number(amount) / Number(convertedUsd)).toFixed(2);
@@ -215,7 +212,7 @@ const NewVerifications = () => {
     },
     onClose: () => {},
   };
- 
+
   return (
     <div>
       <Layout>
@@ -300,9 +297,48 @@ const NewVerifications = () => {
           </div>
           {requestList && (
             <SelectSch>
-              <div className="new-table">
+              <div className="new-table invoice-table" ref={ref}>
+                <div className="first-section">
+                  <div className="img-text">
+                    <img src={Logo} alt="" />
+                    <h6>Crosscheck</h6>
+                  </div>
+                  <h1>Invoice</h1>
+                </div>
+                <div className="second-section">
+                  <div className="customer">
+                    <strong style={{ fontSize: "20px" }}>
+                      Customer Details
+                    </strong>
+                    <p
+                      style={{ margin: "0", color: "black", fontWeight: "500" }}
+                    >
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p>{user?.organizationName || ""}</p>
+                  </div>
+                  <div className="invoice">
+                    <div className="date">
+                      <p>
+                        {" "}
+                        <strong>Invoice Date</strong>
+                      </p>
+                      <p>
+                        {" "}
+                        <strong>Amount</strong>
+                      </p>
+                    </div>
+                    <div className="info">
+                      <p>{date}</p>
+                      {userCountry === "NG" ? (
+                        <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
+                      ) : (
+                        <p style={{ fontWeight: "bold" }}>${total}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <table
-                  ref={ref}
                   cellSpacing="0"
                   cellPadding="0"
                   border="0"
@@ -311,7 +347,6 @@ const NewVerifications = () => {
                   <thead className="table-headers">
                     <tr>
                       <th>Name</th>
-                      <th>Country</th>
                       <th>Our Charge</th>
                       <th>Institute Charge</th>
                       <th></th>
@@ -324,8 +359,6 @@ const NewVerifications = () => {
                           <tr key={ver.name}>
                             <th className="mobile-header">Number</th>
                             <td>{ver.name}</td>
-                            <th className="mobile-header">Market rate</th>
-                            <td>{ver.country}</td>
                             <th className="mobile-header">Weight</th>
                             {userCountry === "NG" ? (
                               <td>&#8358;{ver["our_charge"]}</td>
@@ -350,7 +383,7 @@ const NewVerifications = () => {
                       })}
 
                     <td></td>
-                    <td></td>
+
                     <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
@@ -359,6 +392,7 @@ const NewVerifications = () => {
                     ) : (
                       <td style={{ fontWeight: "bold" }}>${total}</td>
                     )}
+                    <td></td>
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
@@ -574,6 +608,7 @@ const SelectSch = styled.div`
   /* height: 150px; */
   box-shadow: 0px 0px 10px #00000029;
   margin-top: 20px;
+
   .buttons {
     padding-left: 30px;
     margin-bottom: 20px;
@@ -592,6 +627,14 @@ const SelectSch = styled.div`
       border: 1px solid #0092e0;
     }
   }
+  .invoice-table {
+    tr {
+      td,
+      th {
+        width: 30% !important;
+      }
+    }
+  }
   .new-table {
     margin-top: 10px;
     width: 100%;
@@ -603,6 +646,57 @@ const SelectSch = styled.div`
     overflow-x: hidden;
     margin-bottom: 10px;
     padding-bottom: 20px;
+    .first-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-content: center;
+      margin-left: 20px;
+      width: 70%;
+
+      @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .second-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      margin-left: 20px;
+      margin-bottom: 50px;
+      width: 70%;
+    }
+    .customer {
+      margin-top: 0.5rem;
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 16px;
+      }
+    }
+    .invoice {
+      display: flex;
+      justify-content: space-between;
+      margin-left: -7rem;
+    }
+    .date {
+      margin-right: 3rem;
+      text-align: right;
+      @media (max-width: 600px) {
+        margin-right: 0 !important;
+      }
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+    .info {
+      text-align: left;
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 0.8rem;
+      }
+    }
     .hide-table {
       display: none;
     }
