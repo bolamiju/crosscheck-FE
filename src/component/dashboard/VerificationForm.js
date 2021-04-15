@@ -226,9 +226,15 @@ function VerificationForm({
   });
   const submitRequest = (e) => {
     e.preventDefault();
+    const imageFmt = formik.values.certImage.name.split('.')
     if (!formik.values.certImage) {
       return toast.error("please upload a file");
-    } else if (!selectedInst.name) {
+    } 
+    
+    else if(!['pdf','jpg','jpeg','png'].includes(imageFmt[imageFmt.length-1])){
+      return toast.error('file format not supported')
+    }
+    else if (!selectedInst.name) {
       return toast.error("please select a school");
     }
     formik.handleSubmit("paid");

@@ -88,6 +88,7 @@ const NewVerifications = () => {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+  const splitDate = `${month}-${day}-${year}`
 
   const initialVerifications = useSelector(
     (state) => state.verifications.verifications
@@ -329,7 +330,7 @@ const NewVerifications = () => {
                       </p>
                     </div>
                     <div className="info">
-                      <p>{date}</p>
+                      <p>{splitDate}</p>
                       {userCountry === "NG" ? (
                         <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
                       ) : (
