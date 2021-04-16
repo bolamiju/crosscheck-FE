@@ -302,7 +302,6 @@ const NewVerifications = () => {
                 <div className="first-section">
                   <div className="img-text">
                     <img src={Logo} alt="" />
-                    <h6>Crosscheck</h6>
                   </div>
                   <h1>Invoice</h1>
                 </div>
@@ -632,7 +631,7 @@ const SelectSch = styled.div`
     tr {
       td,
       th {
-        width: 30% !important;
+        width: 29% !important;
       }
     }
   }
@@ -653,7 +652,7 @@ const SelectSch = styled.div`
       align-items: flex-start;
       align-content: center;
       margin-left: 20px;
-      width: 70%;
+      width: 65%;
 
       @media (max-width: 600px) {
         display: flex;
@@ -666,7 +665,7 @@ const SelectSch = styled.div`
       margin-top: 1rem;
       margin-left: 20px;
       margin-bottom: 50px;
-      width: 70%;
+      width: 65%;
     }
     .customer {
       margin-top: 0.5rem;
@@ -688,14 +687,16 @@ const SelectSch = styled.div`
       }
       p {
         margin-bottom: -0.5rem;
-        font-size: 0.8rem;
+        font-size: 16px !important;
+        color:black !important
       }
     }
     .info {
       text-align: left;
       p {
         margin-bottom: -0.5rem;
-        font-size: 0.8rem;
+        font-size: 16px !important;
+        color:black !important
       }
     }
     .hide-table {

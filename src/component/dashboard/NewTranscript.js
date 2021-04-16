@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
+import Logo from "../../asset/CrossCheckLogo.png";
 import "./ver.css";
 import styled from "styled-components";
 import Layout from "./DashboardLayout";
@@ -55,6 +56,7 @@ const NewTranscript = () => {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+  const splitDate = `${month}-${day}-${year}`
 
   const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
 
@@ -210,7 +212,46 @@ const NewTranscript = () => {
           </div>
           {requestList && (
             <SelectSch>
-              <div className="new-table">
+               <div className="new-table invoice-table" ref={ref}>
+                <div className="first-section">
+                  <div className="img-text">
+                    <img src={Logo} alt="" />
+                  </div>
+                  <h1>Invoice</h1>
+                </div>
+                <div className="second-section">
+                  <div className="customer">
+                    <strong style={{ fontSize: "20px" }}>
+                      Customer Details
+                    </strong>
+                    <p
+                      style={{ margin: "0", color: "black", fontWeight: "500" }}
+                    >
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p>{user?.organizationName || ""}</p>
+                  </div>
+                  <div className="invoice">
+                    <div className="date">
+                      <p>
+                        {" "}
+                        <strong>Invoice Date</strong>
+                      </p>
+                      <p>
+                        {" "}
+                        <strong>Amount</strong>
+                      </p>
+                    </div>
+                    <div className="info">
+                      <p>{splitDate}</p>
+                      {userCountry === "NG" ? (
+                        <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
+                      ) : (
+                        <p style={{ fontWeight: "bold" }}>${total}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <table
                   ref={ref}
                   cellSpacing="0"
@@ -222,7 +263,6 @@ const NewTranscript = () => {
                   <thead className="table-headers">
                     <tr>
                       <th>Name</th>
-                      <th>Country</th>
                       <th>our charge</th>
                       <th>Institute Charge</th>
                       <th></th>
@@ -234,21 +274,21 @@ const NewTranscript = () => {
                         <tr key={ver.institution}>
                           <th className="mobile-header">Number</th>
                           <td>{ver.institution}</td>
-                          <th className="mobile-header">Market rate</th>
-                          <td>{ver.destination}</td>
                           <th className="mobile-header">Weight</th>
                           <td>  {userCountry === 'NG' ? <td>&#8358;{ver.amount}</td> : <td>${toDollar(ver.amount)}</td>}</td>
                           <th className="mobile-header">Value</th>
                           <td>-</td>
+                          <td></td>
                         </tr>
                       ))}
 
                     <td></td>
-                    <td></td>
-                    <td style={{ color: "black", fontWeight: "bold" }}>
+                     <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
                     <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
+                    <td></td>
+                   
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
@@ -448,6 +488,14 @@ const SelectSch = styled.div`
   /* height: 150px; */
   box-shadow: 0px 0px 10px #00000029;
   margin-top: 20px;
+   .invoice-table {
+    tr {
+      td,
+      th {
+        width: 29% !important;
+      }
+    }
+  }
   .buttons {
     padding-left: 30px;
     margin-bottom: 20px;
@@ -479,6 +527,60 @@ const SelectSch = styled.div`
     padding-bottom: 20px;
     .hide-table {
       display: none;
+    }
+
+    .first-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-content: center;
+      margin-left: 20px;
+      width: 65%;
+
+      @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .second-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      margin-left: 20px;
+      margin-bottom: 50px;
+      width: 65%;
+    }
+    .customer {
+      margin-top: 0.5rem;
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 16px;
+      }
+    }
+    .invoice {
+      display: flex;
+      justify-content: space-between;
+      margin-left: -7rem;
+    }
+    .date {
+      margin-right: 3rem;
+      text-align: right;
+      @media (max-width: 600px) {
+        margin-right: 0 !important;
+      }
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 16px !important;
+        color:black !important
+      }
+    }
+    .info {
+      text-align: left;
+      p {
+        margin-bottom: -0.5rem;
+        font-size: 16px !important;
+        color:black !important
+      }
     }
 
     table {

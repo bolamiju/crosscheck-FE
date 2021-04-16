@@ -200,7 +200,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       return toast.error("please fill all required fields");
     }
     formik.handleSubmit();
-    toast.success("Verification details saved");
+    toast.success("Details saved");
   };
   const handleQualificationTab = (e) => {
     e.preventDefault();
@@ -533,6 +533,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                     }
                     name="graduationYear"
                     value={formik.values.graduationYear}
+                    placeholder="e.g 2012"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
