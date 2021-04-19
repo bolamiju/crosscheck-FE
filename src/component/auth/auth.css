@@ -80,6 +80,9 @@ body {
   color: red;
   font-size: 10px;
 }
+.exist{
+  font-size: 14px !important;
+}
 .image-section {
   background-image: url("../../asset/ManHiRes1.jpg");
   border-radius: 8px;

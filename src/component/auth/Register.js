@@ -114,7 +114,7 @@ function Register() {
               <h5 className="text-header">Create An Account</h5>
 
               {registerError.length > 0 && (
-                <p className="error">{registerError}</p>
+                <p className="error exist">{registerError}</p>
               )}
 
               <div className="name-section fields">
