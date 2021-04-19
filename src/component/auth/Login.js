@@ -42,13 +42,11 @@ const Login = (props) => {
     },
 
     onSubmit: async (values) => {
-      console.log(values);
       dispatch(setLoading(true));
       dispatch(setLoginError(""));
       try {
         const res = await login(values);
 
-        console.log("RES", res.data);
         if (res.data.message && res.data.message === "Logged in successfully") {
           dispatch(setUser(res.data.user));
           localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -76,7 +74,6 @@ const Login = (props) => {
     validationSchema: loginValidation,
   });
   const responseGoogle = (response) => {
-    console.log("response", response);
     axios({
       method: "POST",
       url: `${BASE_URL}/api/v1/users/googlelogin`,
@@ -87,7 +84,6 @@ const Login = (props) => {
         window.location.href = `/dashboard/${response.data.user.id}`;
       })
       .catch((err) => {
-        console.log("error", err);
         if (
           err.response.data.message ===
           "No account associated with this google account"

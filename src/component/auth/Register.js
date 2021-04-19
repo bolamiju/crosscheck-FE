@@ -56,13 +56,11 @@ function Register() {
         }
       }
 
-      console.log(values);
       dispatch(setLoading(true));
       dispatch(setRegisterError(""));
       try {
         const res = await signUp(values);
         formik.resetForm();
-        console.log("RES", res.data);
         if (
           res.data.message === "Please check your email for an activation link"
         ) {
@@ -219,7 +217,6 @@ function Register() {
                     value={formik.values.country}
                     onChange={(_, e) => {
                       formik.handleChange(e);
-                      console.log(e.target.value);
                       setCountrySelected(e.target.value.toLowerCase());
                     }}
                     onBlur={formik.handleBlur}
@@ -240,7 +237,6 @@ function Register() {
                     value={formik.values.phone}
                     onChange={(e) => {
                       formik.setFieldValue("phone", e);
-                      console.log(e);
                     }}
                     onBlur={formik.handleBlur}
                     searchPlaceholder
