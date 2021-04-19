@@ -24,6 +24,9 @@ function TopHeader({ setShow, show }) {
       window.location.href = "/login";
       return <Redirect to="/login" />;
     }
+    else if(["dashboard","receipts","history","new","transcript"].includes(route.url) && !user?.id){
+      return <Redirect to="/login" />;
+    }
   }, [user.id, route.params.id]);
 
   const handleMenuIcon = () => {

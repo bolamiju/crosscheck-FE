@@ -17,7 +17,6 @@ function ResetPassword({ match, location }) {
     params: { token },
   } = match;
   useEffect(() => {
-    console.log("pass token", token);
     setPasswordToken(token);
   }, [token]);
   //   const dispatch = useDispatch();
@@ -27,15 +26,13 @@ function ResetPassword({ match, location }) {
     },
 
     onSubmit: async (values) => {
-      console.log(values);
       //   dispatch(setLoading(true));
       try {
         const res = await resetPassword(passwordToken, values);
-        console.log("RES", res.data);
         //   setSucces(true);
         //   dispatch(setLoading(false));
       } catch (err) {
-        console.log("RES", err.response);
+        return err
         //   if (
         //     err.response.data.message &&
         //     err.response.data.message === "user not found"

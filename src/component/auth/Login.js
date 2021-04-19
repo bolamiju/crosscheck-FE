@@ -148,6 +148,7 @@ const Login = (props) => {
                 className="input logininput"
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {formik.touched.email && formik.errors.email ? (
                 <div className="error">{formik.errors.email}</div>
@@ -167,6 +168,7 @@ const Login = (props) => {
                 className="input passwordinput"
                 value={formik.values.password}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               {!visibility ? (
                 <FontAwesomeIcon
