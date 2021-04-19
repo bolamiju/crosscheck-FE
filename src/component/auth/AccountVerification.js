@@ -8,7 +8,6 @@ function AccountVerification({ match, location }) {
   const {
     params: { email },
   } = match;
-  console.log("EMAIL", email);
   useEffect(() => {
     axios
       .put(`https://crosschek.herokuapp.com/api/v1/users/${email}`)

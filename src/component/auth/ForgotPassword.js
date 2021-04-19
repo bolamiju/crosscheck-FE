@@ -22,17 +22,14 @@ const ForgotPassword = () => {
     },
 
     onSubmit: async (values) => {
-      console.log(values);
       dispatch(setLoginError(""));
       dispatch(setLoading(true));
       try {
         const res = await forgotPassword(values);
-        console.log("RES", res.data);
 
         setSucces(true);
         dispatch(setLoading(false));
       } catch (err) {
-        console.log("RES", err.response);
         if (
           err.response.data.message &&
           err.response.data.message === "user not found"
