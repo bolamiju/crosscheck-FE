@@ -225,7 +225,7 @@ const LandingPage = () => {
                   Sign Up Now
                 </Link>
               </button>
-              <button type="button">How it Works</button>
+              <button type="button">  <a href="#work" className="works">How it works</a></button>
             </div>
           </div>
           <img src={Computer} alt="crosscheck header image" />
@@ -1439,6 +1439,16 @@ const Main = styled.main`
         color: white;
       }
     }
+    .works {
+      color: #0092e0;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: orkneyLight;
+      &:hover {
+        color:  #0092e0;
+      }
+    }
+   
     @media (max-width: 500px) {
       display: flex;
       justify-content: center;
