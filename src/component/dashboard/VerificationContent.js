@@ -47,7 +47,7 @@ const VerificationContent = () => {
       .includes(input.toLocaleLowerCase())
   );
 
-  const pageSize = 15;
+  const pageSize = 10;
 
   const verificationsCount = Math.ceil(filteredItems.length / pageSize);
 

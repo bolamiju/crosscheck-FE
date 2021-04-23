@@ -190,7 +190,7 @@ const NewVerifications = () => {
       title: "CrossCheck",
       description: "Payment for verification",
       logo:
-        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+        "https://i.ibb.co/f048df8/logo.png",
     },
   };
 

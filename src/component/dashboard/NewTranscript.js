@@ -118,7 +118,7 @@ const NewTranscript = () => {
    customizations: {
      title: 'CrossCheck',
      description: 'Payment for Transcript',
-     logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+     logo: 'https://i.ibb.co/f048df8/logo.png',
    },
  };
 
