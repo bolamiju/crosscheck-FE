@@ -322,7 +322,7 @@ label {
   position: absolute;
   left: auto;
   right: 20px;
-  top: 28px;
+  top: 32px;
 }
 
 .visible-icon {
@@ -552,7 +552,7 @@ label {
     height: 40px !important;
   }
   .custom-icon {
-    top: 42px;
+    top: 38px;
   }
   .visible-icon {
     position: absolute;
