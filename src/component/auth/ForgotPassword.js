@@ -98,7 +98,7 @@ const ForgotPassword = () => {
               onClick={formik.handleSubmit}
               style={{ fontSize: "14px" }}
             >
-              {loading ? "Requesting" : "SUBMIT"}
+              {loading ? "Requesting..." : "SUBMIT"}
             </button>
             <div className="reset-create">
               {/* <p>
@@ -191,7 +191,7 @@ const Div = styled.div`
     background: #0092e0 0% 0% no-repeat padding-box;
     border: 2px solid #0092e0;
     border-radius: 35px;
-    font-family: MontserratBold;
+    font-weight: bold;
     letter-spacing: 0.32px;
     color: #ffffff;
     opacity: 1;

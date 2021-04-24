@@ -75,6 +75,7 @@ const NewVerifications = () => {
     admissionYear: "",
     graduationYear: "",
     enrollmentStatus: false,
+    requester:''
   };
   let [isBlocking, setIsBlocking] = useState(true);
   const [userCountry, setUserCountry] = useState("");

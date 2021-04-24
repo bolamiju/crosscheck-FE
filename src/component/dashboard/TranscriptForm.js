@@ -169,6 +169,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
         institution: selectedInst.name,
         amount: selectedInst['transcript_fee'],
         email: user.email,
+        requester: user.firstName,
         destination: destination,
       });
     },

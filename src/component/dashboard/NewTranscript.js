@@ -42,7 +42,7 @@ const NewTranscript = () => {
     graduationYear: "",
     address: "",
     zipCode: "",
-    // destination: "",
+    requester: "",
     destinationNumber: "",
     city: "",
     matricNo: "",
