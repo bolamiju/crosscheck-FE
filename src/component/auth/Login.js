@@ -49,7 +49,7 @@ const Login = (props) => {
 
         if (res.data.message && res.data.message === "Logged in successfully") {
           dispatch(setUser(res.data.user));
-          localStorage.setItem("user", JSON.stringify(res.data.user));
+          localStorage.setItem("crosscheckuser", JSON.stringify(res.data.user));
           formik.resetForm();
 
           // window.location.href = `/dashboard/${res.data.user.id}`;
@@ -80,7 +80,7 @@ const Login = (props) => {
       data: { tokenId: response.tokenId },
     })
       .then((response) => {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("crosscheckuser", JSON.stringify(response.data.user));
         window.location.href = `/dashboard/${response.data.user.id}`;
       })
       .catch((err) => {
@@ -98,7 +98,7 @@ const Login = (props) => {
       url: "https://crosschek.herokuapp.com/api/v1/users/facebooklogin",
       data: { accessToken: response.accessToken, userID: response.userID },
     }).then((response) => {
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("crosscheckuser", JSON.stringify(response.data.user));
       window.location.href = `/dashboard/${response.data.user.id}`;
     });
   };

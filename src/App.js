@@ -18,7 +18,7 @@ import "./component/auth/auth.css";
 
 function App() {
   const withAuthCheck = (Component, props) => {
-    if (JSON.parse(localStorage.getItem("user"))) {
+    if (JSON.parse(localStorage.getItem("crosscheckuser"))) {
       return <Component {...props} />;
     }
     return <Redirect to="/login" />;

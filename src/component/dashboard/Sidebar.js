@@ -13,7 +13,7 @@ import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 function Sidebar({ history }) {
   const [show, setShow] = useState(false);
-  const { id } = JSON.parse(localStorage.getItem("user"));
+  const { id } = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   const logOut = () => {
     localStorage.clear();

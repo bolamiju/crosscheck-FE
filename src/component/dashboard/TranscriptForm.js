@@ -42,7 +42,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const [destination, setDestination] = useState("");
   const [userCountry,setUserCountry] = useState('')
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   const request = useCallback(async (offset, limit) => {
     return await search(

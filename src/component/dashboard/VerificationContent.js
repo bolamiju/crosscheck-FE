@@ -23,7 +23,7 @@ const VerificationContent = () => {
   const [input, setInput] = useState("");
   const [id, setId] = useState("");
   const [searchParameter] = useState("status");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   useEffect(() => {
     dispatch(getUserTranscript(user.email));

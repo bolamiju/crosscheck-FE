@@ -1,45 +1,59 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 import Logo from "../../asset/CrossCheckLogo.png";
 import {
   resetPassword,
-  //   setLoading,
-  //   setLoginError,
+    setLoading,
+    setLoginError,
 } from "../../state/actions/users";
 import * as Yup from "yup";
 
 function ResetPassword({ match, location }) {
   const [passwordToken, setPasswordToken] = useState("");
+  
+  const dispatch = useDispatch()
   const {
     params: { token },
   } = match;
   useEffect(() => {
     setPasswordToken(token);
   }, [token]);
-  //   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    return () => {
+      dispatch(setLoginError(""))
+        dispatch(setLoading(false))
+    };
+  },[])
   const formik = useFormik({
     initialValues: {
-      email: "",
+      newPassword: "",
+      confirmPassword:""
     },
 
     onSubmit: async (values) => {
-      //   dispatch(setLoading(true));
+        dispatch(setLoading(true));
       try {
         const res = await resetPassword(passwordToken, values);
-        //   setSucces(true);
-        //   dispatch(setLoading(false));
+          
+           if(res.status === 200){
+            dispatch(setLoading(false));
+            formik.resetForm()
+            return toast.success('Password reset successful')
+        }
       } catch (err) {
-        return err
-        //   if (
-        //     err.response.data.message &&
-        //     err.response.data.message === "user not found"
-        //   ) {
-        //     dispatch(setLoginError("No account found"));
-        //   }
-        //   dispatch(setLoading(false));
+         dispatch(setLoading(false));
+          if(err?.response?.data.message === "Password reset token is invalid or has expired."){
+              
+          return toast.error('Password reset token is invalid or has expired')
+          }
+       else{
+           toast.error('An error occured')
+       }
       }
     },
     validationSchema: Yup.object({
@@ -52,7 +66,19 @@ function ResetPassword({ match, location }) {
     }),
   });
   return (
-    <div class="forgot-password">
+    <div className="forgot-password">
+      <ToastContainer
+        position="top-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ marginTop: "20px" }}
+      />
       <form>
         <Div>
           <img src={Logo} alt="CrossCheck" className="forgot-pass-img" />
@@ -220,6 +246,7 @@ const Div = styled.div`
     color: #ffffff;
     text-transform: uppercase;
     opacity: 1;
+    font-weight: bold;
     cursor: pointer;
     padding-top: 10px;
     padding-bottom: 10px;

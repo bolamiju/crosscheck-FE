@@ -103,7 +103,7 @@ const NewTranscript = () => {
     (accumulator, currentValue) => accumulator + Number(userCountry && userCountry === 'NG' ? currentValue.amount : toDollar(currentValue.amount)),
     0
   );
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
   const config = {
    public_key: process.env.REACT_APP_PUBLIC_KEY,
    tx_ref: Date.now(),

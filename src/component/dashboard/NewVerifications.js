@@ -174,7 +174,7 @@ const NewVerifications = () => {
     dispatch(deleteVerification(val));
   };
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,

@@ -18,7 +18,7 @@ function TopHeader({ setShow, show }) {
   const [open, setOpen] = useState(true);
   const [font, setFont] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
   useEffect(() => {
     if (route.url.includes("/dashboard") && user?.id !== route?.params?.id) {
       window.location.href = "/login";
@@ -91,16 +91,16 @@ function timeDifference(current, previous) {
           <h5>Dashboard</h5>
         )}
         <div className="right-con">
-          <div className="nots">
+          <div className="nots" onClick={() => setOpen(!open)} style={{ cursor: "pointer"}}>
             <BellFilled
               className="bell"
               style={{
                 fontSize: "1.5em",
                 color: "#2C3E50",
                 width: "20px",
-                cursor: "pointer",
+               
               }}
-              onClick={() => setOpen(!open)}
+              
             />
             {!open && messages?.length > 0 ? (
               <div className="messages">
@@ -109,7 +109,7 @@ function timeDifference(current, previous) {
                   <div key={message.id} className="message">
                     <h5>{message.subject}</h5>
                     <p>{message.message}</p>
-                   <div style={{display:'flex'}}> <span style={{fontSize:'13px'}}>{timeDifferenceForDate(message.date.split(" ")[0])}</span>
+                   <div style={{display:'flex'}}> <span style={{fontSize:'13px',color:'green',fontWeight:'bold'}}>{timeDifferenceForDate(message?.dateTime)}</span>
                     <button
                       onClick={() => {
                         dispatch(deleteMessage(message.id));

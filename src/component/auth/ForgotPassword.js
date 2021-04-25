@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,14 @@ const ForgotPassword = () => {
   const [success, setSucces] = useState(false);
   const { loginError, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+      return () => {
+        dispatch(dispatch(setLoginError(""))); 
+      };
+    
+  },[])
+  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -80,6 +88,7 @@ const ForgotPassword = () => {
             >
               <input
                 type="text"
+                style={{fontWeight:'bold'}}
                 className="forgot-pass-input"
                 name="email"
                 id="email"

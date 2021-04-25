@@ -27,7 +27,7 @@ const Receipts = ({ history }) => {
   const [input, setInput] = useState("");
   const [receiptDetails, setReceiptDetails] = useState({});
   const [searchParameter] = useState("status");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   useEffect(()=>{
     ipapi.location((loca)=>setUserCountry(loca),'','','country')
