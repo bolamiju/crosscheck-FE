@@ -10,11 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormModal = ({ open, onClose, id }) => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
-  const date = `${year}-${month}-${day}`
+  const dateTime = new Date();
+
   return (
     <Modal open={open} onClose={onClose} style={OVERLAY_STYLES}>
       <ModalWrapper>
@@ -31,7 +28,7 @@ const FormModal = ({ open, onClose, id }) => {
           style={{ marginTop: "20px" }}
         />
         <Formik
-          initialValues={{ message: "", subject: "",date }}
+          initialValues={{ message: "", subject: "",dateTime }}
           onSubmit={async (values, { resetForm }) => {
             try {
               const response = await sendMessage({ ...values, id });
