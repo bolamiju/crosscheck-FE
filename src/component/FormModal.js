@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormModal = ({ open, onClose, id }) => {
+  const [loading, setLoading] = useState(false)
   const dateTime = new Date();
 
   return (
@@ -30,9 +31,11 @@ const FormModal = ({ open, onClose, id }) => {
         <Formik
           initialValues={{ message: "", subject: "",dateTime }}
           onSubmit={async (values, { resetForm }) => {
+            setLoading(true)
             try {
               const response = await sendMessage({ ...values, id });
               if (response.data.message === "message sent successfuly") {
+                setLoading(false)
                 toast.success("message sent");
               }
               resetForm({ values: "" });
@@ -40,6 +43,7 @@ const FormModal = ({ open, onClose, id }) => {
                 onClose();
               }, 3000);
             } catch (error) {
+              setLoading(false)
               toast.error("An error occured try again");
             }
           }}
@@ -88,11 +92,12 @@ const FormModal = ({ open, onClose, id }) => {
                   <div className="input-feedback">{errors.message}</div>
                 )}
                 <button className="button" type="submit">
-                  send message{" "}
-                  <FontAwesomeIcon
-                    icon={faLongArrowAltRight}
-                    style={{ marginLeft: "1.5rem", fontSize: "1.5rem" }}
-                  />
+                 {loading ? 'Sending' : "Send message"
+                  // <FontAwesomeIcon
+                  //   icon={faLongArrowAltRight}
+                  //   style={{ marginLeft: "1.5rem", fontSize: "1.5rem" }}
+                  // />
+                  }
                 </button>
               </form>
             );
