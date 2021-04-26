@@ -923,7 +923,7 @@ function VerificationForm({
 
                 <Document className="second-upload">
                   <div className="consent">
-                    <p>Upload a third party document</p>
+                    <p>Upload certificate or statement of result</p>
                     <img src={uparrow} alt="forms_document" />
                   </div>
 
