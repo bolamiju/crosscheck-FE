@@ -415,7 +415,7 @@ const LandingPage = () => {
               {/* <h2 className="counter" >0</h2> */}
               <CountUp
                 start={0}
-                end={100}
+                end={48}
                 duration={5}
                 onStart={checkHeight}
                 className="counter"
@@ -433,7 +433,7 @@ const LandingPage = () => {
               {/* <h2 className="counter" >200</h2> */}
               <CountUp
                 start={0}
-                end={2500}
+                end={1845}
                 duration={5}
                 onStart={checkHeight}
                 className="counter"
@@ -468,13 +468,20 @@ const LandingPage = () => {
                 <p>Email</p>
                 <p className="text">support@crosscheck.africa</p>
               </div>
+              {/* <ul>
+                <li> <i
+                  className="fa fa-twitter"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                ></i></li>
+              </ul> */}
             </div>
 
             <div className="email">
               <img src={phone} alt="mail" />
               <div className="text">
                 <p>Phone</p>
-                <p className="text">(01) 479-642-7461</p>
+                <p className="text">08134662307</p>
               </div>
             </div>
           </div>
@@ -488,6 +495,19 @@ const LandingPage = () => {
                   {" "}
                   Terms of Service
                 </Link>
+              </li>
+              <li>
+                <i
+                  className="fa fa-twitter"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                ></i>
+                &nbsp; &nbsp;
+                <i
+                  className="fa fa-facebook"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                ></i>
               </li>
               <li>
                 <i
