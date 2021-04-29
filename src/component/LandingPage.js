@@ -461,20 +461,50 @@ const LandingPage = () => {
               <li>CONTACT US</li>
             </ul>
           </div>
+         <div>
+           
+         </div>
           <div className="contact">
+          <ul style={{display:'flex', alignItems:'center',listStyleType:'none'}}>
+          <li>
+          <a href="https://www.linkedin.com/company/crosscheckit/" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fa fa-linkedin"
+                  aria-hidden="true"
+                  style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px',cursor:'pointer' }}
+                ></i>
+                </a>
+                </li>
+                &nbsp; &nbsp;
+                <li>
+                <a href="https://www.facebook.com/crosscheck.africa/" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fa fa-facebook"
+                  aria-hidden="true"
+                  style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px', cursor:'pointer'  }}
+                ></i>
+                </a>
+              </li>&nbsp; &nbsp;
+              <li>
+                <a href="https://instagram.com/crosscheck.africa?igshid=hh58fx3b9g1o" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fa fa-instagram"
+                  aria-hidden="true"
+                  style={{ fontSize: "24px",color:'#0092e0', cursor:'pointer' }}
+                ></i></a>
+              </li>
+            </ul>
             <div className="email">
               <img src={Mail} alt="mail" />
               <div>
                 <p>Email</p>
                 <p className="text">support@crosscheck.africa</p>
+                
               </div>
-              {/* <ul>
-                <li> <i
-                  className="fa fa-twitter"
-                  aria-hidden="true"
-                  style={{ fontSize: "16px" }}
-                ></i></li>
-              </ul> */}
+             
+            </div>
+            <div>
+           
             </div>
 
             <div className="email">
@@ -483,6 +513,7 @@ const LandingPage = () => {
                 <p>Phone</p>
                 <p className="text">08134662307</p>
               </div>
+              
             </div>
           </div>
           <div className="line"></div>
@@ -496,32 +527,7 @@ const LandingPage = () => {
                   Terms of Service
                 </Link>
               </li>
-              <li>
-                <i
-                  className="fa fa-twitter"
-                  aria-hidden="true"
-                  style={{ fontSize: "16px" }}
-                ></i>
-                &nbsp; &nbsp;
-                <i
-                  className="fa fa-facebook"
-                  aria-hidden="true"
-                  style={{ fontSize: "16px" }}
-                ></i>
-              </li>
-              <li>
-                <i
-                  className="fa fa-twitter"
-                  aria-hidden="true"
-                  style={{ fontSize: "16px" }}
-                ></i>
-                &nbsp; &nbsp;
-                <i
-                  className="fa fa-facebook"
-                  aria-hidden="true"
-                  style={{ fontSize: "16px" }}
-                ></i>
-              </li>
+              
             </ul>
           </div>
         </Footer>
