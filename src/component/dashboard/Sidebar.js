@@ -68,10 +68,10 @@ function Sidebar({ history }) {
             <img src={histry} alt="history" />
             <li>Verification History</li>
           </Link>
-          <Link className="link">
+          {/* <Link className="link">
             {" "}
             <img src={contact} alt="account" /> <li>My Account</li>
-          </Link>
+          </Link> */}
           <Link to="/receipts" className="link">
             {" "}
             <img src={receipt} alt="receipt" />

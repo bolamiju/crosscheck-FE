@@ -495,7 +495,7 @@ const LandingPage = () => {
               </li>
             </ul>
             <div className="email">
-            <a href="mailto:support@crosscheck.africa"><img src={Mail} alt="mail" /></a>
+            <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
               <div>
                 <p>Email</p>
                 <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
@@ -508,10 +508,10 @@ const LandingPage = () => {
             </div>
 
             <div className="email">
-            <a href="tel:+2348134662307" className="text"><img src={phone} alt="mail" /></a>
+            <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
               <div className="text">
                 <p>Phone</p>
-                <a href="tel:+2348134662307" className="text">08134662307</a>
+                <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
               </div>
               
             </div>
