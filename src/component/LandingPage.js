@@ -495,11 +495,11 @@ const LandingPage = () => {
               </li>
             </ul>
             <div className="email">
-              <img src={Mail} alt="mail" />
+            <a href="mailto:support@crosscheck.africa"><img src={Mail} alt="mail" /></a>
               <div>
                 <p>Email</p>
-                <p className="text">support@crosscheck.africa</p>
-                
+                <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
+
               </div>
              
             </div>
@@ -508,10 +508,10 @@ const LandingPage = () => {
             </div>
 
             <div className="email">
-              <img src={phone} alt="mail" />
+            <a href="tel:+2348134662307" className="text"><img src={phone} alt="mail" /></a>
               <div className="text">
                 <p>Phone</p>
-                <p className="text">08134662307</p>
+                <a href="tel:+2348134662307" className="text">08134662307</a>
               </div>
               
             </div>
@@ -683,6 +683,7 @@ const Footer = styled.div`
       .text {
         color: grey;
         font-size: 16px;
+        text-decoration: none;
         @media (max-width: 400px) {
           font-size: 16px;
         }
