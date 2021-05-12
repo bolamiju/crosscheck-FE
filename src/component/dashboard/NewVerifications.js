@@ -15,7 +15,6 @@ import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
 import finish from "../../asset/finish.svg";
-import bell from "../../asset/details.svg";
 
 import {
   addVerificationList,
@@ -40,14 +39,6 @@ const request = (data, tranId) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
-// TODO: CHANGE ID TO THIS DATE-TIME STRING
-// var currentdate = new Date();
-// var datetime = currentdate.getDate()
-//                 + (currentdate.getMonth()+1)  +
-//                 + currentdate.getFullYear() +
-//                 + currentdate.getHours() +
-//                 + currentdate.getMinutes() +
-//                 + currentdate.getSeconds()
 
 const NewVerifications = () => {
   const history = useHistory();

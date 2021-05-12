@@ -670,6 +670,10 @@ const Footer = styled.div`
       flex-direction: column;
       padding-top: 0px;
       margin-left: 0;
+      ul{
+        padding: 0 !important;
+        margin-left: 15px;
+      }
     }
     .email {
       display: flex;
