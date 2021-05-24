@@ -228,7 +228,7 @@ const LandingPage = () => {
               <button type="button">  <a href="#work" className="works">How it works</a></button>
             </div>
           </div>
-          <img src={Computer} alt="crosscheck header image" />
+          <img src={Computer} alt="crosscheck header" />
         </Main>
       </FirstSection>
       <a id="about">

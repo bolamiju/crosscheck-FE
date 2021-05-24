@@ -8,7 +8,6 @@ import Receipts from "./Receipts";
 
 const MainContent = (props) => {
   const {
-    match: { params },
     history,
   } = props;
 

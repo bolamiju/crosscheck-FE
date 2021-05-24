@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {useHistory} from 'react-router-dom'
+import {useHistory, Prompt} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import arrow from "../../asset/arrow-right.svg";
@@ -15,16 +15,16 @@ import payment from "../../asset/process_payment.svg";
 import finish from "../../asset/finish.svg";
 import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
-
+import jwt_decode from 'jwt-decode';
 import Pdf from "react-to-pdf";
 import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
 import ipapi from 'ipapi.co'
 
-const request = (data,tranId) => {
+const request = (data,paymentId,tranId) => {
   axios({
     data,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${paymentId}/${tranId}`,
   });
 };
 
@@ -33,7 +33,7 @@ const NewTranscript = () => {
 
   const ref = React.createRef();
   const history = useHistory()
-
+  let [isBlocking, setIsBlocking] = useState(true);
 
   const formData = {
     firstName: "",
@@ -90,8 +90,8 @@ const NewTranscript = () => {
     dispatch(addTranscript(formValues));
     setRequestList(true);
   };
-  const processPayment = async (tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value,tranId)));
+  const processPayment = async (paymentId, tranId) => {
+    await Promise.allSettled(formValues.map((value) => request(value, paymentId, tranId)));
   };
 
   const updateFormValues = (id) => (data) => {
@@ -104,6 +104,8 @@ const NewTranscript = () => {
     0
   );
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
+  const decodedToken = jwt_decode(user?.token)
+  const paymentId = decodedToken?.paymentId
   const config = {
    public_key: process.env.REACT_APP_PUBLIC_KEY,
    tx_ref: Date.now(),
@@ -128,7 +130,7 @@ const NewTranscript = () => {
    callback: (response) => {
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
-    processPayment(response?.transaction_id);
+    processPayment(paymentId,response?.transaction_id);
     dispatch(addTranscript([]));
     setRequestList(false);
     setFormValues([formData]);
@@ -156,6 +158,12 @@ const NewTranscript = () => {
             draggable
             pauseOnHover
             style={{ marginTop: "20px" }}
+          />
+              <Prompt
+            when={isBlocking}
+            message={(location) =>
+              `Are you sure you want to go to ${location.pathname}`
+            }
           />
           <div className={requestList ? "none" : ""}>
             {" "}

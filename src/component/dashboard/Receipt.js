@@ -11,10 +11,6 @@ const Receipt = ({ receiptDetails, userCountry }) => {
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd));
   };
-  const ourCharge = receiptDetails?.our_charge;
-  const instituteCharge = receiptDetails?.institute_charge;
-  const transcriptAmount = receiptDetails?.amount;
-
   const total = receiptDetails?.our_charge
     ? Number(receiptDetails?.our_charge) +
       Number(receiptDetails?.institute_charge)

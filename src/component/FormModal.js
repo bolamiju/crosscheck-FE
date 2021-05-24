@@ -2,8 +2,6 @@ import React,{useState} from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 import Modal from "@material-ui/core/Modal";
 import { sendMessage } from "../state/actions/verifications";
 import { ToastContainer, toast } from "react-toastify";
