@@ -20,11 +20,11 @@ import Pdf from "react-to-pdf";
 import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
 import ipapi from 'ipapi.co'
 
-const request = (data,paymentId,tranId) => {
+const request = (data,tranId) => {
   axios({
     data,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${paymentId}/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${tranId}`,
   });
 };
 
@@ -90,8 +90,8 @@ const NewTranscript = () => {
     dispatch(addTranscript(formValues));
     setRequestList(true);
   };
-  const processPayment = async (paymentId, tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value, paymentId, tranId)));
+  const processPayment = async (tranId) => {
+    await Promise.allSettled(formValues.map((value) => request(value, tranId)));
   };
 
   const updateFormValues = (id) => (data) => {
@@ -104,8 +104,6 @@ const NewTranscript = () => {
     0
   );
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
-  const decodedToken = jwt_decode(user?.token)
-  const paymentId = decodedToken?.paymentId
   const config = {
    public_key: process.env.REACT_APP_PUBLIC_KEY,
    tx_ref: Date.now(),
@@ -130,7 +128,7 @@ const NewTranscript = () => {
    callback: (response) => {
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
-    processPayment(paymentId,response?.transaction_id);
+    processPayment(response?.transaction_id);
     dispatch(addTranscript([]));
     setRequestList(false);
     setFormValues([formData]);

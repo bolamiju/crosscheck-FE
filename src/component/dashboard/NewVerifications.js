@@ -15,7 +15,6 @@ import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
 import finish from "../../asset/finish.svg";
-import jwt_decode from 'jwt-decode';
 import {
   addVerificationList,
   deleteVerification,
@@ -27,7 +26,7 @@ import Pdf from "react-to-pdf";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import ipapi from "ipapi.co";
 
-const request = (data,paymentId, tranId) => {
+const request = (data, tranId) => {
   const formData = new FormData();
   Object.keys(data).forEach((key) => {
     formData.append(key, data[key]);
@@ -35,7 +34,7 @@ const request = (data,paymentId, tranId) => {
   axios({
     data: formData,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/verifications/request/${paymentId}/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/verifications/request/${tranId}`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -112,8 +111,8 @@ const NewVerifications = () => {
     dispatch(addVerificationList(formValues));
     setRequestList(true);
   };
-  const processPayment = async (paymentId, tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value, paymentId, tranId)));
+  const processPayment = async (tranId) => {
+    await Promise.allSettled(formValues.map((value) => request(value, tranId)));
   };
   const addNewForm = () => {
     setFormValues((values) => [
@@ -166,8 +165,6 @@ const NewVerifications = () => {
   };
 
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
-  const decodedToken = jwt_decode(user?.token)
-  const paymentId = decodedToken?.paymentId
   const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -193,7 +190,7 @@ const NewVerifications = () => {
     callback: (response) => {
       if (response?.status === "successful") {
         closePaymentModal(); // this will close the modal programmatically
-        processPayment(paymentId,response?.transaction_id);
+        processPayment(response?.transaction_id);
         dispatch(addVerificationList([]));
         setRequestList(false);
         setFormValues([formData]);
