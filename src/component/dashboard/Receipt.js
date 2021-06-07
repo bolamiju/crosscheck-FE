@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const Receipt = ({ receiptDetails, userCountry }) => {
   const ref = React.createRef();
-  const convertedUsd = 382;
+  const convertedUsd = 412;
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   const toDollar = (amount) => {

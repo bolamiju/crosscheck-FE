@@ -117,7 +117,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   ]);
 
   const pagesCount = pageInfo?.totalPages;
-  const convertedUsd = 382
+  const convertedUsd = 412
   const toDollar = (amount) => {
     return Math.round(Number(amount) / Number(convertedUsd))
   }

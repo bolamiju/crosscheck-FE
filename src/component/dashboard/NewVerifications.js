@@ -69,7 +69,7 @@ const NewVerifications = () => {
   };
   let [isBlocking, setIsBlocking] = useState(true);
   const [userCountry, setUserCountry] = useState("");
-  const convertedUsd = 382;
+  const convertedUsd = 412;
 
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");

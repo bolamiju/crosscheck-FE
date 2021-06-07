@@ -42,7 +42,7 @@ const DashboardContent = ({ history }) => {
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
   const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382;
+  const convertedUsd = 412;
 
   useEffect(()=>{
     ipapi.location((loca)=>setUserCountry(loca),'','','country')

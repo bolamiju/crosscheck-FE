@@ -64,7 +64,7 @@ const NewTranscript = () => {
 
   const [checked, setChecked] = useState(false);
   const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382
+  const convertedUsd = 412
 
   const toDollar = (amount) => {
     return (Number(amount) / Number(convertedUsd)).toFixed(2);

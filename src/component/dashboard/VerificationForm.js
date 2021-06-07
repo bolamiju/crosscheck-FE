@@ -57,7 +57,7 @@ function VerificationForm({
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
   const [userCountry, setUserCountry] = useState("");
-  const convertedUsd = 382;
+  const convertedUsd = 412;
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
   const request = useCallback(

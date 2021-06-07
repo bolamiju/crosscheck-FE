@@ -17,7 +17,7 @@ const Receipts = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState("close");
   const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382
+  const convertedUsd = 412
 
   const dispatch = useDispatch();
   const { userVerifications, newTranscript } = useSelector(
