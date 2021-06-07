@@ -292,7 +292,11 @@ const NewTranscript = () => {
                      <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
-                    <td style={{ fontWeight: "bold" }}>&#8358;{total}</td>
+                    {userCountry === "NG" ? (
+                        <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
+                      ) : (
+                        <p style={{ fontWeight: "bold" }}>${total}</p>
+                      )}
                     <td></td>
                    
                   </tbody>
