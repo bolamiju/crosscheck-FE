@@ -61,6 +61,7 @@ const VerificationContent = () => {
   };
 
   function handleInputChange(e) {
+    setCurrentPage(0)
     setInput(e.target.value);
   }
 
