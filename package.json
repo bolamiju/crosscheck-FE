@@ -50,6 +50,7 @@
     "react-facebook-login": "^4.1.1",
     "react-flags-select": "^1.1.13",
     "react-fontawesome": "^1.7.1",
+    "react-ga": "^3.3.0",
     "react-google-login": "^5.1.21",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.10.0",

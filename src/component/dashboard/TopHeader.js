@@ -98,7 +98,6 @@ function timeDifference(current, previous) {
                 fontSize: "1.5em",
                 color: "#2C3E50",
                 width: "20px",
-               
               }}
               
             />
