@@ -110,6 +110,7 @@ const LandingPage = () => {
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
             zIndex: "10",
+            padding: `${navbar ? "0 20px" : "0 20px 0 67px"}`
           }}
         >
           <div>
@@ -120,7 +121,11 @@ const LandingPage = () => {
             />
           </div>
           <div className="navs">
-            <ul>
+            <ul    style={{
+            marginRight: `${navbar ? "40px" : ""}`,
+            padding: `${navbar ? "0" : ""}`
+           
+          }}>
               <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
               <li>
                 <a
@@ -1321,8 +1326,9 @@ const NavBar = styled.nav`
     /* max-width: 380px%; */
   }
   display: flex;
-  padding-left: 90px;
+  padding: 0 20px 0 67px;
   align-items: center;
+  justify-content: space-between;
   .menu-icon {
     display: none;
     @media (max-width: 400px) {
@@ -1528,7 +1534,7 @@ const Main = styled.main`
   img {
     width: 64%;
     height: calc(100vh - 148px);
-    margin-right: -98px;
+    margin-right: -7vw;
     @media(max-width:780px){
     width:80%;
     height:80%;
