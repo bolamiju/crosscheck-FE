@@ -5,10 +5,6 @@ import "./App.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
-import ReactGA from 'react-ga';
-
-ReactGA.initialize('G-S86FQT7MDM')
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
   <Router>
