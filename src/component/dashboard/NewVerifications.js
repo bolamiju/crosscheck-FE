@@ -168,7 +168,7 @@ const NewVerifications = () => {
   const config = {
     public_key: process.env.REACT_APP_PUBLIC_KEY,
     tx_ref: Date.now(),
-    amount: total,
+    amount: 100, //change to total
     currency: userCountry === "NG" ? "NGN" : "USD",
     payment_options: "card,mobilemoney,ussd",
     customer: {
@@ -188,6 +188,7 @@ const NewVerifications = () => {
     ...config,
     text: "Pay Now!",
     callback: (response) => {
+      console.log('RESPONSE', response)
       if (response?.status === "successful") {
         closePaymentModal(); // this will close the modal programmatically
         processPayment(response?.transaction_id);
