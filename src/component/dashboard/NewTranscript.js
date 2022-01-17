@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode';
 import Pdf from "react-to-pdf";
 import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
 import ipapi from 'ipapi.co'
+import { debounce } from "lodash";
 
 const request = (data,tranId) => {
   axios({
@@ -107,7 +108,7 @@ const NewTranscript = () => {
   const config = {
    public_key: process.env.REACT_APP_PUBLIC_KEY,
    tx_ref: Date.now(),
-   amount: 100, //change to total
+   amount: total,
    currency: userCountry ==='NG' ? 'NGN' : 'USD',
    payment_options: 'card,mobilemoney,ussd',
    customer: {
@@ -125,7 +126,7 @@ const NewTranscript = () => {
  const fwConfig = {
    ...config,
    text: 'Pay Now!',
-   callback: (response) => {
+   callback: debounce((response) => {
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
     processPayment(response?.transaction_id);
@@ -137,7 +138,7 @@ const NewTranscript = () => {
         history.push(`/dashboard/${user.id}`);
       }, 1500)
     }
-    },
+    },1000),
     onClose: () => {},
   };
 
