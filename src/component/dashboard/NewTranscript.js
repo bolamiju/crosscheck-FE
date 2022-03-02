@@ -108,7 +108,7 @@ const NewTranscript = () => {
   const config = {
    public_key: process.env.REACT_APP_PUBLIC_KEY,
    tx_ref: Date.now(),
-   amount: total,
+   amount: 100,
    currency: userCountry ==='NG' ? 'NGN' : 'USD',
    payment_options: 'card,mobilemoney,ussd',
    customer: {
