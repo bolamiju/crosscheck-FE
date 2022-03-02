@@ -21,11 +21,11 @@ import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
 import ipapi from 'ipapi.co'
 import { debounce } from "lodash";
 
-const request = (data,tranId) => {
+const request = (data) => {
   axios({
     data,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/transcript/request/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/transcript/request`,
   });
 };
 
@@ -91,8 +91,8 @@ const NewTranscript = () => {
     dispatch(addTranscript(formValues));
     setRequestList(true);
   };
-  const processPayment = async (tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value, tranId)));
+  const processPayment = async () => {
+    await Promise.allSettled(formValues.map((value) => request(value)));
   };
 
   const updateFormValues = (id) => (data) => {
@@ -129,14 +129,14 @@ const NewTranscript = () => {
    callback: debounce((response) => {
   if(response?.status === 'successful'){
     closePaymentModal() // this will close the modal programmatically
-    processPayment(response?.transaction_id);
+    processPayment();
     dispatch(addTranscript([]));
     setRequestList(false);
     setFormValues([formData]);
     toast.success("request submitted");
-      setTimeout(() => {
-        history.push(`/dashboard/${user.id}`);
-      }, 1500)
+      // setTimeout(() => {
+      //   history.push(`/dashboard/${user.id}`);
+      // }, 1500)
     }
     },1000),
     onClose: () => {},

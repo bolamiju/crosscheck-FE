@@ -27,7 +27,7 @@ import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import ipapi from "ipapi.co";
 import { debounce } from "lodash";
 
-const request = (data, tranId) => {
+const request = (data) => {
   const formData = new FormData();
   Object.keys(data).forEach((key) => {
     formData.append(key, data[key]);
@@ -35,7 +35,7 @@ const request = (data, tranId) => {
   axios({
     data: formData,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/verifications/request/${tranId}`,
+    url: `https://crosschek.herokuapp.com/api/v1/verifications/request`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -112,8 +112,8 @@ const NewVerifications = () => {
     dispatch(addVerificationList(formValues));
     setRequestList(true);
   };
-  const processPayment = async (tranId) => {
-    await Promise.allSettled(formValues.map((value) => request(value, tranId)));
+  const processPayment = async () => {
+    await Promise.allSettled(formValues.map((value) => request(value)));
   };
   const addNewForm = () => {
     setFormValues((values) => [
@@ -191,15 +191,15 @@ const NewVerifications = () => {
     callback: debounce((response) => {
       if (response?.status === "successful") {
         closePaymentModal(); // this will close the modal programmatically
-        processPayment(response?.transaction_id);
+        processPayment();
         dispatch(addVerificationList([]));
         setRequestList(false);
         setFormValues([formData]);
         dispatch(selectSchool({}));
         toast.success("request submitted");
-        setTimeout(() => {
-          history.push(`/dashboard/${user.id}`);
-        }, 1500);
+        // setTimeout(() => {
+        //   history.push(`/dashboard/${user.id}`);
+        // }, 1500);
       }
     },1000),
     onClose: () => {},
