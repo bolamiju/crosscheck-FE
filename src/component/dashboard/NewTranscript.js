@@ -134,9 +134,9 @@ const NewTranscript = () => {
     setRequestList(false);
     setFormValues([formData]);
     toast.success("request submitted");
-      // setTimeout(() => {
-      //   history.push(`/dashboard/${user.id}`);
-      // }, 1500)
+      setTimeout(() => {
+        history.push(`/dashboard/${user.id}`);
+      }, 1500)
     }
     },1000),
     onClose: () => {},
