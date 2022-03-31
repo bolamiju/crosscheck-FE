@@ -198,7 +198,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       formik.values.destinationNumber.length === 0 ||
       formik.values.zipCode.length === 0
     ) {
-      return toast.error("please fill all required fields");
+      return toast.error("Please fill all required fields");
     }
     formik.handleSubmit();
     toast.success("Details saved");
@@ -212,7 +212,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       formik.values.graduationYear.length === 0 ||
       formik.values.matricNo.length === 0
     ) {
-      toast.error("please fill required fields");
+      toast.error("Please fill required fields");
       return;
     }
 

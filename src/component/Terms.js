@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +24,11 @@ const Terms = () => {
   };
 
   window.addEventListener("scroll", changeBackground);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <FirstSection>
@@ -49,7 +54,7 @@ const Terms = () => {
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
-                  href="#coverage"
+                  href="/#coverage"
                 >
                   {" "}
                   Coverage
@@ -58,7 +63,7 @@ const Terms = () => {
               <li style={{ color: `${navbar ? "#0092E0 !" : "white"}` }}>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
-                  href="#about"
+                  href="/#about"
                 >
                   {" "}
                   About Us
@@ -67,7 +72,7 @@ const Terms = () => {
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
-                  href="#work"
+                  href="/#work"
                 >
                   How it works
                 </a>
@@ -75,7 +80,7 @@ const Terms = () => {
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
-                  href="#contact"
+                  href="/#contact"
                 >
                   Contact{" "}
                 </a>
