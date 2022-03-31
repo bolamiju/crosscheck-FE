@@ -105,7 +105,7 @@ const NewVerifications = () => {
     for (let i = 0; i < formValues.length; i++) {
       for (const property in formValues[i]) {
         if (formValues[i][property] === "") {
-          return toast.error(`please fill all fields and submit details`);
+          return toast.error(`Please fill all fields and submit details`);
         }
       }
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
@@ -30,6 +30,7 @@ const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const [testimonyIndex, setTestimonyIndex] = useState(0);
+  const history = useHistory()
 
   const testimonies = [
     {
@@ -100,6 +101,12 @@ const LandingPage = () => {
   const today = new Date();
   const year = today.getFullYear();
 
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    history.push('/')
+  }
+
   return (
     <div>
       <FirstSection>
@@ -126,7 +133,7 @@ const LandingPage = () => {
             padding: `${navbar ? "0" : ""}`
            
           }}>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }} onClick={()=>topFunction()}>Home</li>
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
@@ -182,7 +189,7 @@ const LandingPage = () => {
         <div className={show ? "hide-show" : "hide"}>
           <img src={Menu} alt="close icon" onClick={handleMenuIcon} />
           <ul>
-            <li onClick={handleMenuIcon}>Home</li>
+            <li onClick={handleMenuIcon} onClick={()=>topFunction()}>Home</li>
             <li onClick={handleMenuIcon}>
               <a href="#coverage">Coverage</a>{" "}
             </li>
@@ -225,12 +232,13 @@ const LandingPage = () => {
               service for academic qualifications.
             </p>
             <div className="register">
-              <button>
+              
                 <Link className="reg" to="/register">
+                <button>
                   Sign Up Now
-                </Link>
               </button>
-              <button type="button">  <a href="#work" className="works">How it works</a></button>
+                </Link>
+               <a href="#work" className="works"><button type="button"> How it works</button></a>
             </div>
           </div>
           <img src={Computer} alt="crosscheck header" />
@@ -292,6 +300,7 @@ const LandingPage = () => {
         </About>
       </a>
 
+      <a id="work">
       <Div>
         <h2>How it Works</h2>
         <p>
@@ -300,7 +309,7 @@ const LandingPage = () => {
           and effective ways.
         </p>
       </Div>
-      <a id="work">
+        </a>
         <Blocks>
           <div className="blocks">
             <img src={register} alt="register crosscheck account" />
@@ -343,7 +352,6 @@ const LandingPage = () => {
             <p>Submit you request and await feedback.</p>
           </div>
         </Blocks>
-      </a>
       <a id="testimonies">
         <Testimonies>
           <h2>What people say about us</h2>
@@ -459,10 +467,22 @@ const LandingPage = () => {
           <div className="footer-logo">
             <img src={Logo} alt="crosscheck" />
             <ul>
-              <li>HOME</li>
-              <li>ABOUT</li>
-              <li>COVERAGE</li>
-              <li>TESTIMONIALS</li>
+              <li onClick={()=>topFunction()} style={{cursor:'pointer'}}>HOME</li>
+              <li> <a
+                  style={{ color: "grey", textDecoration:'none' }}
+                  href="#about"
+                >ABOUT</a></li>
+              <li> <a
+                  style={{ color: "grey", textDecoration:'none' }}
+                  href="#coverage"
+                >
+                  {" "}
+                  COVERAGE
+                </a></li>
+              <li> <a
+                  style={{ color: "grey", textDecoration:'none' }}
+                  href="#testimonies"
+                >TESTIMONIALS</a></li>
               <li>CONTACT US</li>
             </ul>
           </div>
@@ -1027,8 +1047,9 @@ const Div = styled.div`
 
   align-items: center;
   margin: 0 auto;
-  margin-top: 70px;
-  margin-bottom: 20px;
+  padding: 70px 0 20px 0
+  /* margin-top: 70px;
+  margin-bottom: 20px; */
   h2 {
     font-family: segoebold;
     color: #173049;
@@ -1200,8 +1221,9 @@ const About = styled.div`
   h1 {
     font-family: segoebold;
     font-size: 30px;
-    margin-top: 45px;
-    margin-bottom: 30px;
+    padding: 45px 0 30px 0
+    /* margin-top: 45px;
+    margin-bottom: 30px; */
     @media (max-width: 400px) {
       display: none;
     }

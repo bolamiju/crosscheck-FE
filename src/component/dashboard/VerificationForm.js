@@ -248,7 +248,7 @@ function VerificationForm({
       formik.values.lastName.length === 0 ||
       formik.values.dateOfBirth.length === 0
     ) {
-      toast.error("please fill required fields");
+      toast.error("Please fill required fields");
       return;
     }
     let presentYear = new Date().getFullYear();
@@ -272,7 +272,7 @@ function VerificationForm({
         (formik.values.admissionYear.length === 0 ||
           formik.values.graduationYear.length === 0))
     ) {
-      toast.error("please fill required fields");
+      toast.error("Please fill required fields");
       return;
     }
     if (
