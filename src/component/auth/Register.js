@@ -337,7 +337,7 @@ function Register() {
                 }}
               >
                 <p className="paragraph">
-                  Already have an account?
+                  Already have an account? &nbsp;
                   <Link
                     style={{ color: "#0092e0", textDecoration: "none" }}
                     to="/login"

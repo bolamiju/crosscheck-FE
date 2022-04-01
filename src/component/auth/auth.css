@@ -431,6 +431,9 @@ label {
   color: white;
 }
 
+.terms .accept input[type="checkbox" i] + label:before {
+  background: #ff2600;
+}
 .terms .accept span {
   /* font-size: 14px; */
   font-family: "Roboto";

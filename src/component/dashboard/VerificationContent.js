@@ -113,7 +113,7 @@ const VerificationContent = () => {
                 <th>Name</th>
                 <th>Institution</th>
                 <th>Status</th>
-                <th>message</th>
+                <th>Message</th>
                 <th>Proof</th>
               </tr>
             </thead>

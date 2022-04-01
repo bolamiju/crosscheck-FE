@@ -56,11 +56,11 @@ function Sidebar({ history }) {
                   Transcript
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/new" className="option">
                   Identity Verification
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <Link to="/history" className="link">
