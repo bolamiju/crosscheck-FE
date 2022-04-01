@@ -25,6 +25,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
 import imgUrl from "../asset/map.svg";
+import WhiteCrosscheck from '../asset/crosscheckTMWhite.svg'
+import crosscheckTm from '../asset/crosscheckTm.svg'
+import bertha from '../asset/bertha.png'
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
@@ -123,7 +126,7 @@ const LandingPage = () => {
           <div>
             <img
               className="crosschecklogo"
-              src={navbar ? Logo : whitelogo}
+              src={navbar ? crosscheckTm : WhiteCrosscheck}
               alt=""
             />
           </div>
@@ -269,9 +272,7 @@ const LandingPage = () => {
               <h3>OUR MISSION</h3>
               <div className="line"></div>
               <p>
-                An exceptional team committed to providing innovative solutions
-                and services to our clients for better hiring or engagement
-                decision making.
+              We are committed to providing innovative solutions & services to our clients for better engagement & hiring decisions.
               </p>
             </div>
           </div>
@@ -369,7 +370,8 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava2} alt="crosscheck user" />
                 <p>John Kumuyi</p>
-                <p className="role">Herculanum</p>
+                <p className="role" style={{
+          fontWeight: "100"}}>Herculanum</p>
               </div>
             </div>
             <div className="testimony">
@@ -381,7 +383,8 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava1} alt="crosscheck user" />
                 <p>Edet Michael</p>
-                <p className="role">Confetti Group</p>
+                <p className="role" style={{
+          fontWeight: "100"}}>Confetti Group</p>
               </div>
             </div>
             <div className="testimony">
@@ -391,9 +394,10 @@ const LandingPage = () => {
                 phone calls and emails.
               </p>
               <div className="profile">
-                <img src={Avatar} alt="avatar" />
-                <p>Johnson Ngozi</p>
-                <p className="role">Applicant</p>
+                <img src={bertha} alt="avatar" />
+                <p>Bertha Johnson</p>
+                <p className="role" style={{
+          fontWeight: "100"}}>Applicant</p>
               </div>
             </div>
           </div>
@@ -801,13 +805,13 @@ const Cover = styled.div`
   padding-bottom: 100px;
   background: url(${imgUrl});
   h2 {
-    font-family: segoebold;
+    font-family: "poppins";
   }
   .cover {
     display: flex;
     justify-content: center;
     p {
-      font-family: MontserratLight;
+      font-family: "poppins";
     }
     @media (max-width: 400px) {
       display: flex;
@@ -827,6 +831,7 @@ const Cover = styled.div`
       color: #0092e0;
       font-size: 42px;
       font-weight: bolder;
+      font-family: "poppins";
       border-bottom: 1px solid gray;
     }
     .count {
@@ -888,7 +893,7 @@ const Testimonies = styled.div`
     width: 40%;
     text-align: center;
     letter-spacing: 0px;
-    font-family: MontserratLight;
+    font-family: "poppins";
     font-size: 16px;
     color: #ffffff;
     opacity: 0.9;
@@ -901,7 +906,7 @@ const Testimonies = styled.div`
     }
   }
   h2 {
-    font-family: segoebold;
+    font-family: "poppins";
     letter-spacing: 0.26px;
     word-spacing: 2px;
     color: #ffffff;
@@ -948,12 +953,14 @@ const Testimonies = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .role {
-          color: #676f79;
-        }
+        
         p {
           width: 100%;
           color: white;
+          font-weight: 500
+        }
+        .role  {
+          color: #fff;
         }
         img {
           width: 70px;
@@ -971,7 +978,7 @@ const Testimonies = styled.div`
         text-align: center;
         margin: 0;
         font-size: 14px;
-        font-family: MontserratRegular;
+        font-family: "poppins";
       }
     }
   }
@@ -1015,7 +1022,7 @@ const Blocks = styled.div`
       border: 1px solid #4a86ff;
     }
     h4 {
-      font-family: MontserratSemibold;
+      font-family: "poppins";
       font-size: 21px;
       margin-top: 30px;
       margin-bottom: 20px;
@@ -1028,7 +1035,7 @@ const Blocks = styled.div`
       width: 85%;
       text-align: center;
       color: #676f79;
-      font-family: MontserratLight;
+      font-family: "poppins";
       font-size: 14px;
       opacity: 0.8;
       @media (max-width: 400px) {
@@ -1051,7 +1058,7 @@ const Div = styled.div`
   /* margin-top: 70px;
   margin-bottom: 20px; */
   h2 {
-    font-family: segoebold;
+    font-family: "segoebold";
     color: #173049;
     margin: 0;
   }
@@ -1059,7 +1066,7 @@ const Div = styled.div`
     width: 60%;
     text-align: center;
     color: #676f79;
-    font-family: MontserratLight;
+    font-family: "poppins";
     font-size: 14px;
     opacity: 0.8;
     line-height: 1.7;
@@ -1102,10 +1109,10 @@ const About = styled.div`
     .sec {
       display: flex;
       flex-direction: column;
-      font-family: MontserratLight;
+      font-family: "poppins";
       align-items: center;
       p {
-        font-family: MontserratLight;
+        font-family: "poppins";
         color: #676f79;
         opacity: 0.8;
         font-size: 14px;
@@ -1168,7 +1175,7 @@ const About = styled.div`
         font-size: 14px;
         text-align: left;
         margin-left: 30px;
-        font-family: segoeRegular;
+        font-family: "poppins";
         font-weight: 600;
         @media (max-width: 400px) {
           font-size: 16px;
@@ -1186,7 +1193,7 @@ const About = styled.div`
         opacity: 1;
         margin-left: 30px;
         margin-top: 30px;
-        font-family: segoeSemiBold;
+        font-family: "poppins";
         font-size: 24px;
       }
     }
@@ -1219,9 +1226,9 @@ const About = styled.div`
     margin-top: 30px;
   }
   h1 {
-    font-family: segoebold;
+    font-family: "poppins";
     font-size: 30px;
-    padding: 45px 0 30px 0
+    padding: 45px 0 30px 0;
     /* margin-top: 45px;
     margin-bottom: 30px; */
     @media (max-width: 400px) {
@@ -1408,6 +1415,7 @@ const NavBar = styled.nav`
       list-style-type: none;
       button {
         margin-top: -5px;
+        font-family: "poppins";
         background: #ff0000;
         border-radius: 3px;
         color: white;
@@ -1425,12 +1433,12 @@ const NavBar = styled.nav`
         margin-right: 50px;
         color: white;
         cursor: pointer;
-        font-family: segoeRegular;
+        font-family: 'poppins';
         font-size: 16px;
         a {
           text-decoration: none;
           color: white;
-          font-family: segoeRegular;
+          font-family: "poppins";
           &:hover {
             color: #66c8ed !important;
           }
@@ -1516,6 +1524,7 @@ const Main = styled.main`
     button {
       font-size: 18px;
       outline: none;
+      font-family:'poppins';
       &:nth-child(1) {
         @media (max-width: 500px) {
           margin-right: 0;
@@ -1667,7 +1676,8 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      font-family: segoeRegular !important;
+      /* font-family: segoeRegular !important; */
+      font-family: "poppins";
       font-size: 20px;
       font-weight: normal;
       letter-spacing: 0px;
