@@ -373,7 +373,7 @@ const CardsContainer = styled.div`
   }
   .transcript-card {
     display: block;
-    height: 98px;
+    height: 110px;
     background: transparent linear-gradient(148deg, #0092e0 0%, #0074b3 100%) 0%
       0% no-repeat padding-box;
     box-shadow: 0px 0px 5px #00000017;
@@ -510,6 +510,7 @@ const Card = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 7px;
   height: 110px;
+  padding-bottom: 10px;
   opacity: 3;
   .trans-image{
     margin-left:10px
@@ -528,7 +529,7 @@ const Card = styled.div`
     justify-content: center;
   }
   .num {
-    height: 70%;
+    height: 70% 
     display: flex;
     justify-content: space-around;
     align-items: center;
