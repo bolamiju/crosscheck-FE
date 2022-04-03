@@ -706,7 +706,8 @@ const Footer = styled.div`
   }
   @media (max-width: 800px) {
     flex-direction: column;
-    align-items: flex-start
+    align-items: flex-start;
+    padding: 2rem
     }
 }
   @media only screen and (max-width: 400px) {
@@ -750,6 +751,7 @@ const Footer = styled.div`
     p {
       color: grey;
       font-size: 12px;
+      font-family: "poppins"
     }
     ul {
       display: flex;
@@ -1209,10 +1211,9 @@ const About = styled.div`
       }
       p {
         width: 85%;
-        letter-spacing: 0.32px;
         color: #173049;
         font-size: 14px;
-        text-align: left;
+        text-align: justify;
         margin-left: 30px;
         font-family: "poppins";
         font-weight: 600;
