@@ -468,32 +468,54 @@ const LandingPage = () => {
       </a>
       <a id="contact">
         <Footer>
-          <div className="footer-logo">
-            <img src={Logo} alt="crosscheck" />
+          <div className="main-footer-section">
+            <div> <img src={Logo} alt="crosscheck" /></div>
+            <div className="info-section">
             <ul>
               <li onClick={()=>topFunction()} style={{cursor:'pointer'}}>HOME</li>
               <li> <a
-                  style={{ color: "grey", textDecoration:'none' }}
                   href="#about"
                 >ABOUT</a></li>
               <li> <a
-                  style={{ color: "grey", textDecoration:'none' }}
                   href="#coverage"
                 >
                   {" "}
                   COVERAGE
                 </a></li>
               <li> <a
-                  style={{ color: "grey", textDecoration:'none' }}
                   href="#testimonies"
                 >TESTIMONIALS</a></li>
               <li>CONTACT US</li>
             </ul>
-          </div>
-         <div>
+            <div className="contact">
+            <div className="email">
+            <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
+              <div>
+                <p>Email</p>
+                <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
+
+              </div>
+             
+            </div>
+            <div>
            
-         </div>
-          <div className="contact">
+            </div>
+
+            <div className="email">
+            <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
+              <div className="text">
+                <p>Phone</p>
+                <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
+              </div>
+              
+            </div>
+          </div>
+
+            </div>
+
+          </div>
+          
+          {/* <div className="contact">
           <ul style={{display:'flex', alignItems:'center',listStyleType:'none'}}>
           <li>
           <a href="https://www.linkedin.com/company/crosscheckit/" target="_blank" rel="noopener noreferrer">
@@ -523,28 +545,11 @@ const LandingPage = () => {
                 ></i></a>
               </li>
             </ul>
-            <div className="email">
-            <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
-              <div>
-                <p>Email</p>
-                <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
-
-              </div>
-             
-            </div>
-            <div>
+           */}
+         <div>
            
-            </div>
-
-            <div className="email">
-            <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
-              <div className="text">
-                <p>Phone</p>
-                <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
-              </div>
-              
-            </div>
-          </div>
+         </div>
+          
           <div className="line"></div>
           <div className="bottom-content">
             <p>© {year} Crosscheck. All Rights Reserved</p>
@@ -630,6 +635,80 @@ const Slides = styled.div`
 `;
 
 const Footer = styled.div`
+.main-footer-section{
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 4rem;
+  align-items: center;
+  .info-section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    ul{
+      list-style-type: none;
+      display: flex;
+      gap: 0 15px;
+      margin: 0 0 30px 0;
+      padding: 0;
+      li{
+        font-family: "poppins";
+        color: #fff;
+        @media (max-width: 800px) {
+     margin-top: 20px
+    }
+        a{
+          text-decoration: none;
+          color: #fff
+        }
+      }
+      @media (max-width: 600px) {
+     flex-direction: column
+    }
+  }
+  @media (max-width: 800px) {
+    align-items: flex-start;
+    }
+}
+.contact {
+    display: flex;
+    gap: 30px;
+     @media (max-width: 600px) {
+     flex-direction: column;
+     gap:15px
+
+    }
+   
+    .email {
+      display: flex;
+      font-family: "poppins";
+      align-items: center;
+      img {
+        margin-right: 20px;
+      }
+      p {
+        color: white;
+        margin: 0;
+        margin-bottom: 10px;
+
+      }
+      .text {
+        color: #fff;
+        font-size: 16px;
+        text-decoration: none;
+        @media (max-width: 400px) {
+          font-size: 16px;
+        }
+        @media (max-width: 500px) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start
+    }
+}
   @media only screen and (max-width: 400px) {
     display: flex;
     flex-direction: column;
@@ -655,8 +734,9 @@ const Footer = styled.div`
     }
     .termsof {
       text-decoration: none;
-      color: grey;
+      color: #fff;
       cursor: pointer;
+      font-family: "poppins"
     }
     @media(max-width:800px){
       margin-left:20px;
@@ -674,58 +754,17 @@ const Footer = styled.div`
     ul {
       display: flex;
       list-style-type: none;
+      padding: 0;
 
       li {
         margin-right: 7px;
-        color: grey;
+        color: #fff;
         font-size: 12px;
+        font-family: "poppins"
       }
     }
   }
-  .contact {
-    width: 55%;
-    display: flex;
-    /* margin: 0 auto; */
-    justify-content: space-around;
-    padding-top: 40px;
-    padding-bottom: 30px;
-    margin-left: 550px;
-    @media (max-width: 800px) {
-     width:70%;
-      margin-left: 20px;
-    }
-    @media (max-width: 500px) {
-      display: block;
-      flex-direction: column;
-      padding-top: 0px;
-      margin-left: 0;
-      ul{
-        padding: 0 !important;
-        margin-left: 15px;
-      }
-    }
-    .email {
-      display: flex;
-      font-family: segoeRegular;
-      img {
-        margin-right: 20px;
-      }
-      p {
-        color: white;
-      }
-      .text {
-        color: grey;
-        font-size: 16px;
-        text-decoration: none;
-        @media (max-width: 400px) {
-          font-size: 16px;
-        }
-        @media (max-width: 500px) {
-          font-size: 16px;
-        }
-      }
-    }
-  }
+  
   .footer-logo {
     /* width: 100%; */
     padding-top: 60px;
@@ -1150,7 +1189,7 @@ const About = styled.div`
       background: #ffffff 0% 0% no-repeat padding-box;
       border-radius: 7px;
       box-shadow: 0px 0px 10px #00000029;
-      height: 275px;
+      min-height: 275px;
       width: 300px;
       display: flex;
       flex-direction: column;
@@ -1510,10 +1549,15 @@ const Main = styled.main`
       color: #0092e0;
       text-decoration: none;
       cursor: pointer;
-      font-family: orkneyLight;
+      font-family: "poppins";
       &:hover {
         color:  #0092e0;
       }
+      @media (max-width: 500px) {
+      display: none
+    }
+
+      
     }
    
     @media (max-width: 500px) {

@@ -170,7 +170,7 @@ const DashboardContent = ({ history }) => {
         <h2
           style={{
             color: "#0092E0",
-            fontFamily: "segoebold",
+            fontFamily: "poppins",
             // fontSize: "16px",
           }}
         >
@@ -250,7 +250,7 @@ const DashboardContent = ({ history }) => {
                   outline: "none",
                   borderRadius: "14px",
                   fontSize: "14px",
-                  fontFamily: "MontserratItalic",
+                  fontFamily: "poppins",
                 }}
                 name="country"
                 id="country"
@@ -410,7 +410,7 @@ const SelectSch = styled.div`
         height: 28px;
         border: 2px solid #e2e2e2;
         outline: none;
-        font-family: MontserratItalic;
+        font-family: "poppins";
         border-radius: 14px;
         padding-left: 5px;
         padding-left: 15px;
@@ -433,7 +433,7 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-        font-family: MontserratRegular;
+        font-family: "MontserratRegular";
         font-size: 12px;
         text-transform: uppercase;
         color: #707070;
@@ -463,14 +463,14 @@ const SelectSch = styled.div`
     .paragraph {
       p {
         &:nth-child(1) {
-          font-family: segoebold;
+          font-family: "poppins";
           font-size: 15px;
           letter-spacing: 0.44px;
           color: #173049;
           text-transform: capitalize;
         }
         &:nth-child(2) {
-          font-family: MontserratRegular;
+          font-family: "poppins";
           font-size: 14px;
           letter-spacing: 0.44px;
           color: #707070;
@@ -521,7 +521,7 @@ const Card = styled.div`
     height: 30%;
     background: #ef0a0a;
     color: white;
-    font: normal normal bold 16px/18px Open Sans;
+    font: normal normal bold 16px/18px "poppins";
     width: 100%;
     display: flex;
     align-items: center;
@@ -555,7 +555,8 @@ const Card = styled.div`
           letter-spacing: 0.44px;
           color: #000000;
           margin: 0;
-          font-family: segoebold;
+          font-family: "poppins";
+          font-weight: bold
         }
       }
       p {
@@ -564,7 +565,7 @@ const Card = styled.div`
           letter-spacing: 0.32px;
           font-weight: normal;
           color: #707070;
-          font-family: MontserratRegular;
+          font-family: "poppins";
           margin: 0;
         }
       }
@@ -589,7 +590,7 @@ const DashboardBody = styled.div`
   overflow-y: scroll;
   padding-right: 30px;
   background: #fafafb;
-  font-family: "Rubik", sans-serif;
+  font-family: "poppins";
   ::-webkit-scrollbar {
     display: none;
   }
@@ -649,7 +650,7 @@ const DashboardBody = styled.div`
     }
     .history {
       margin-left: 50px;
-      font-family: MontserratBold;
+      font-family: "poppins";
       letter-spacing: 0.44px;
       color: #173049;
       opacity: 1;
@@ -679,7 +680,7 @@ const DashboardBody = styled.div`
       }
 
       .showing {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0.44px;
         color: #707070;
         opacity: 1;

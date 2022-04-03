@@ -342,9 +342,9 @@ const VerificationBody = styled.div`
   overflow-y: scroll;
   padding-right: 30px;
   background: #fafafb;
-  font-family: "Rubik", sans-serif;
+  font-family: "poppins";
   .new-heading {
-    font-family: MontserratRegular;
+    font-family: "poppins";
     letter-spacing: 0px;
     color: #0092e0;
     opacity: 1;
@@ -383,6 +383,7 @@ const VerificationBody = styled.div`
     box-shadow: 0px 0px 10px #00000029;
     padding-top: 30px;
     padding-bottom: 30px;
+    font-family: "poppins";
     button {
       margin-left: 40px;
     }

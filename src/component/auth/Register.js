@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
@@ -9,6 +9,7 @@ import { CountryDropdown } from "react-country-region-selector";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { signUpValidation } from "./Validation";
+import ipapi from 'ipapi.co'
 
 //import css module
 import "react-flags-select/css/react-flags-select.css";
@@ -28,6 +29,12 @@ function Register() {
   const dispatch = useDispatch();
 
   const { registerError, loading } = useSelector((state) => state.user);
+
+  useEffect(()=>{
+    ipapi.location((loca) => {
+      setCountrySelected(loca.toLowerCase())
+    }, "", "", "country");
+  },[])
 
   const formik = useFormik({
     initialValues: {

@@ -310,7 +310,7 @@ function VerificationForm({
         >
           <div style={{ width: "100%" }}>
             <img src={cap} alt="graduation cap" />
-            <h3>Education Check - {formik.values.institution}</h3>
+            <h3 style={{fontFamily:"poppins"}}>Education Check - {formik.values.institution}</h3>
           </div>
           <FontAwesomeIcon
             icon={details ? faCaretDown : faCaretRight}
@@ -366,7 +366,7 @@ function VerificationForm({
                   outline: "none",
                   borderRadius: "14px",
                   fontSize: "14px",
-                  fontFamily: "MontserratItalic",
+                  fontFamily: "poppins",
                 }}
                 name="country"
                 id="country"
@@ -1073,6 +1073,7 @@ const FormContainer = styled.div`
     height: 30px;
     outline: none;
     border-color: #0092e0;
+    font-family: "poppins"
   }
   .btn-prev {
     display: none;
@@ -1116,6 +1117,7 @@ const FormContainer = styled.div`
         list-style-type: none;
         margin-right: 45px;
         cursor: pointer;
+        font-family: "poppins";
 
         &.activeTab {
           border-bottom: 2px solid #0092e0;
@@ -1123,6 +1125,7 @@ const FormContainer = styled.div`
           color: #0092e0;
           opacity: 1;
           text-transform: capitalize;
+          font-family: "Poppins"
         }
       }
     }
@@ -1494,7 +1497,7 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         font-size: 14px;
         color: #707070;
       }
@@ -1532,7 +1535,7 @@ const SelectSch = styled.div`
     padding-left: 30px;
     width: 46%;
     label {
-      font-family: MontserratRegular;
+      font-family: "poppins";
       font-size: 14px;
       color: #707070;
     }
@@ -1545,7 +1548,7 @@ const SelectSch = styled.div`
       outline: none;
       width: 100%;
       border-radius: 14px;
-      font-family: MontserratItalic;
+      font-family: "poppins";
       color: #707070;
       padding-left: 5px;
       @media (max-width: 500px) {
@@ -1574,7 +1577,7 @@ const SelectSch = styled.div`
         &:nth-child(1) {
           font-size: 16px;
           text-transform: capitalize;
-          font-family: MontserratBold;
+          font-family: "poppins";
           font-size: 16px;
           letter-spacing: 0.44px;
           color: #173049;
@@ -1582,7 +1585,7 @@ const SelectSch = styled.div`
         &:nth-child(2) {
           font-size: 16px;
           font-weight: normal;
-          font-family: MonserratRegular;
+          font-family: "poppins";
           color: #707070;
           margin: 0;
         }

@@ -1235,7 +1235,7 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         font-size: 14px;
         color: #707070;
       }
@@ -1311,7 +1311,7 @@ const SelectSch = styled.div`
     }
     .select-inst {
       p {
-        font-family: "Roboto";
+        font-family: "poppins";
         &:nth-child(1) {
           font-size: 16px;
         }
@@ -1329,13 +1329,13 @@ const SelectSch = styled.div`
       &:nth-child(1) {
         font-weight: bold;
         margin-bottom: 3px;
-        font-family: MontserratBold;
+        font-family: "poppins";
         font-size: 16px;
         letter-spacing: 0.44px;
         color: #173049;
       }
       &:nth-child(2) {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         font-size: 16px;
         letter-spacing: 0.44px;
         color: #707070;
