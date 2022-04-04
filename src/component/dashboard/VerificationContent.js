@@ -204,8 +204,8 @@ const WallWrapper = styled.div`
 
   overflow-y: scroll;
   height: 100%;
-  padding: 2rem;
-  background: var(--mainWhite);
+  padding: 2rem 0;
+  /* background: var(--mainWhite); */
   h6 {
     font-family: MontserratRegular;
     letter-spacing: 0px;
@@ -245,7 +245,7 @@ const WallWrapper = styled.div`
       text-align: left;
       overflow: hidden;
       font-size: 14px;
-      font-family: "Rubik",sans-serif;
+      font-family: "poppins";
       .mobile-header {
         display: none;
       }
@@ -296,6 +296,7 @@ const WallWrapper = styled.div`
       justify-content: space-between;
       align-items: center;
       margin-right: 4rem;
+      font-family:"poppins";
       @media (max-width: 400px) {
         display: flex;
         flex-direction: column;
@@ -312,7 +313,7 @@ const WallWrapper = styled.div`
       }
 
       .showing {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0.44px;
         color: #707070;
         opacity: 1;

@@ -187,7 +187,7 @@ const HeadContainer = styled.div`
     opacity: 1;
     font-weight: 500;
     font-size: 14px;
-    font-family: MontserratLight;
+    font-family: "poppins";
     @media screen and (max-width: 400px) {
       display: none;
     }
@@ -343,14 +343,14 @@ const HeadContainer = styled.div`
         letter-spacing: 0.24px;
         letter-spacing: 0.44px;
         color: #173049;
-        font-family: segoebold;
+        font-family: "poppins";
         font-size: 14px;
         margin: 0;
       }
 
       &:nth-child(2) {
         letter-spacing: 0.21px;
-        font-family: MontserratRegular;
+        font-family: "poppins";
         color: #707070;
         opacity: 0.95;
         font-weight: 500;

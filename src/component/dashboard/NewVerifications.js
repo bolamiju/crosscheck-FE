@@ -438,7 +438,7 @@ const VerificationBody = styled.div`
     padding-left: 25px;
   }
   .new-heading {
-    font-family: MontserratRegular;
+    font-family: "poppins";
     letter-spacing: 0px;
     color: #0092e0;
     opacity: 1;
@@ -446,7 +446,7 @@ const VerificationBody = styled.div`
     font-weight: lighter;
   }
   .new-para {
-    font-family: segoebold;
+    font-family: "poppins";
     letter-spacing: 0.44px;
     color: #707070;
     opacity: 1;
@@ -461,7 +461,7 @@ const VerificationBody = styled.div`
     margin-top: 20px;
     text-align: center;
     opacity: 1;
-    font-family: MontserratRegular;
+    font-family: "poppins";
     color: #707070;
     @media (max-width: 500px) {
       display: none;
@@ -480,6 +480,7 @@ const VerificationBody = styled.div`
     box-shadow: 0px 0px 10px #00000029;
     padding-top: 30px;
     padding-bottom: 30px;
+    font-family: "poppins";
     .line {
       border-bottom: 1px solid grey;
       width: 95%;
@@ -493,6 +494,7 @@ const VerificationBody = styled.div`
     }
     button {
       margin-left: 40px;
+      font-family: "poppins";
     }
     .consent {
       border-left: 3px solid #0092e0;
@@ -509,14 +511,14 @@ const VerificationBody = styled.div`
       span {
         font-size: 13px;
         margin-left: 15px;
-        font-family: MontserratRegular;
+        font-family: "poppins";
         color: #707070;
       }
     }
   }
 
   p {
-    font: normal normal bold 14px Segoe UI;
+    font: normal normal bold 14px "poppins";
     letter-spacing: 0.44px;
     color: #707070;
     opacity: 1;

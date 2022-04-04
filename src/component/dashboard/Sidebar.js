@@ -150,7 +150,7 @@ const ListSection = styled.div`
     color: white;
     letter-spacing: 0.4px;
     /* font-size: 14px; */
-    font: normal normal normal 14px/16px Open Sans;
+    font: normal normal normal 14px/16px "poppins";
     letter-spacing: 0.4px;
     color: #ffffff;
     padding-left: 10px;
