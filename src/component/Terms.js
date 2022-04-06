@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Menu from "../asset/Menu.svg";
 import whitelogo from "../asset/whitelogo.png";
 import Logo from "../asset/CrossCheckLogo.png";
-import Mail from "../asset/mail.svg";
-import phone from "../asset/phone.svg";
+import { FooterComponent } from "./LandingPage";
 
 const Terms = () => {
+  const history = useHistory()
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const handleMenuIcon = () => {
@@ -50,7 +50,7 @@ const Terms = () => {
           </div>
           <div className="navs">
             <ul>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }}>Home</li>
+              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }} onClick={()=>history.push('/')}>Home</li>
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
@@ -302,40 +302,7 @@ const Terms = () => {
         information.
       </Paragraph>
       <Footer>
-        <div className="footer-logo">
-          <img src={Logo} alt="crosscheck" />
-          <ul>
-            <li>HOME</li>
-            <li>ABOUT</li>
-            <li>COVERAGE</li>
-            <li>TESTIMONIALS</li>
-            <li>CONTACT US</li>
-          </ul>
-        </div>
-        <div className="contact">
-          <div className="email">
-            <img src={Mail} alt="mail" />
-            <div>
-              <p>Email</p>
-              <p className="text">support@crosscheck.africa</p>
-            </div>
-          </div>
-
-          <div className="email">
-            <img src={phone} alt="mail" />
-            <div className="text">
-              <p>Phone</p>
-              <p className="text">(01) 479-642-7461 (01)</p>
-            </div>
-          </div>
-        </div>
-        <div className="bottom-content">
-          <p>© 2020 Crosscheck. All Rights Reserved</p>
-          <ul>
-            <li>Privacy Policy</li>
-            <li>Terms of Service</li>
-          </ul>
-        </div>
+        <FooterComponent/>
       </Footer>
     </div>
   );
@@ -559,7 +526,7 @@ const Footer = styled.div`
 
       li {
         margin-right: 7px;
-        color: grey;
+        color: #fff;
         font-size: 12px;
       }
     }

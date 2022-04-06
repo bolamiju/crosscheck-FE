@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import { Link, useHistory } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../asset/CrossCheckLogo.png";
 import Avatar from "../asset/Avatar.png";
@@ -29,11 +30,136 @@ import WhiteCrosscheck from '../asset/crosscheckTMWhite.svg'
 import crosscheckTm from '../asset/crosscheckTm.svg'
 import bertha from '../asset/bertha.png'
 
+export const FooterComponent = () => {
+  const history = useHistory()
+  const today = new Date();
+  const year = today.getFullYear();
+  const route = useRouteMatch()
+
+  const topFunction = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    history.push('/')
+  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return(
+  <Footer>
+        <div className="main-footer-section">
+          <div> <img src={Logo} alt="crosscheck" /></div>
+          <div className="info-section">
+          <ul>
+            <li onClick={()=>topFunction()} style={{cursor:'pointer'}}>HOME</li>
+            <li> <a
+                href={route?.url === "/terms" ? "/#about" : "#about"}
+              >ABOUT</a></li>
+            <li> <a
+                href={route?.url === "/terms" ? "/#coverage" : "#coverage"}
+              >
+                {" "}
+                COVERAGE
+              </a></li>
+            <li> <a
+                href={route?.url === "/terms" ? "/#testimonies" : "#testimonies"}
+              >TESTIMONIALS</a></li>
+            <li>CONTACT US</li>
+          </ul>
+          <div className="contact">
+          <div className="email">
+          <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
+            <div>
+              <p>Email</p>
+              <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
+
+            </div>
+           
+          </div>
+          <div>
+         
+          </div>
+
+          <div className="email">
+          <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
+            <div className="text">
+              <p>Phone</p>
+              <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
+            </div>
+            
+          </div>
+        </div>
+
+          </div>
+
+        </div>
+        
+        {/* <div className="contact">
+        <ul style={{display:'flex', alignItems:'center',listStyleType:'none'}}>
+        <li>
+        <a href="https://www.linkedin.com/company/crosscheckit/" target="_blank" rel="noopener noreferrer">
+              <i
+                className="fa fa-linkedin"
+                aria-hidden="true"
+                style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px',cursor:'pointer' }}
+              ></i>
+              </a>
+              </li>
+              &nbsp; &nbsp;
+              <li>
+              <a href="https://www.facebook.com/crosscheck.africa/" target="_blank" rel="noopener noreferrer">
+              <i
+                className="fa fa-facebook"
+                aria-hidden="true"
+                style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px', cursor:'pointer'  }}
+              ></i>
+              </a>
+            </li>&nbsp; &nbsp;
+            <li>
+              <a href="https://instagram.com/crosscheck.africa?igshid=hh58fx3b9g1o" target="_blank" rel="noopener noreferrer">
+              <i
+                className="fa fa-instagram"
+                aria-hidden="true"
+                style={{ fontSize: "24px",color:'#0092e0', cursor:'pointer' }}
+              ></i></a>
+            </li>
+          </ul>
+         */}
+       <div>
+         
+       </div>
+        
+        <div className="line"></div>
+        <div className="bottom-content">
+          <p>© {year} Crosscheck. All Rights Reserved</p>
+          <ul>
+            <li>Privacy Policy</li>
+            <li>
+              {route?.url !== "/terms" &&<Link to="/terms" className="termsof">
+                {" "}
+                Terms of Service
+              </Link>}
+            </li>
+            
+          </ul>
+        </div>
+      </Footer>
+  )
+}
+
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const [testimonyIndex, setTestimonyIndex] = useState(0);
+
   const history = useHistory()
+
+  const topFunction = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    history.push('/')
+  }
+  
 
   const testimonies = [
     {
@@ -100,15 +226,7 @@ const LandingPage = () => {
   };
 
   const testimony = testimonies[testimonyIndex];
-
-  const today = new Date();
-  const year = today.getFullYear();
-
-  function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    history.push('/')
-  }
+  
 
   return (
     <div>
@@ -467,104 +585,7 @@ const LandingPage = () => {
         </Cover>
       </a>
       <a id="contact">
-        <Footer>
-          <div className="main-footer-section">
-            <div> <img src={Logo} alt="crosscheck" /></div>
-            <div className="info-section">
-            <ul>
-              <li onClick={()=>topFunction()} style={{cursor:'pointer'}}>HOME</li>
-              <li> <a
-                  href="#about"
-                >ABOUT</a></li>
-              <li> <a
-                  href="#coverage"
-                >
-                  {" "}
-                  COVERAGE
-                </a></li>
-              <li> <a
-                  href="#testimonies"
-                >TESTIMONIALS</a></li>
-              <li>CONTACT US</li>
-            </ul>
-            <div className="contact">
-            <div className="email">
-            <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
-              <div>
-                <p>Email</p>
-                <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
-
-              </div>
-             
-            </div>
-            <div>
-           
-            </div>
-
-            <div className="email">
-            <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
-              <div className="text">
-                <p>Phone</p>
-                <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
-              </div>
-              
-            </div>
-          </div>
-
-            </div>
-
-          </div>
-          
-          {/* <div className="contact">
-          <ul style={{display:'flex', alignItems:'center',listStyleType:'none'}}>
-          <li>
-          <a href="https://www.linkedin.com/company/crosscheckit/" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fa fa-linkedin"
-                  aria-hidden="true"
-                  style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px',cursor:'pointer' }}
-                ></i>
-                </a>
-                </li>
-                &nbsp; &nbsp;
-                <li>
-                <a href="https://www.facebook.com/crosscheck.africa/" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fa fa-facebook"
-                  aria-hidden="true"
-                  style={{ fontSize: "24px",color:'#0092e0', marginRight:'20px', cursor:'pointer'  }}
-                ></i>
-                </a>
-              </li>&nbsp; &nbsp;
-              <li>
-                <a href="https://instagram.com/crosscheck.africa?igshid=hh58fx3b9g1o" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fa fa-instagram"
-                  aria-hidden="true"
-                  style={{ fontSize: "24px",color:'#0092e0', cursor:'pointer' }}
-                ></i></a>
-              </li>
-            </ul>
-           */}
-         <div>
-           
-         </div>
-          
-          <div className="line"></div>
-          <div className="bottom-content">
-            <p>© {year} Crosscheck. All Rights Reserved</p>
-            <ul>
-              <li>Privacy Policy</li>
-              <li>
-                <Link to="/terms" className="termsof">
-                  {" "}
-                  Terms of Service
-                </Link>
-              </li>
-              
-            </ul>
-          </div>
-        </Footer>
+        <FooterComponent/>
       </a>
     </div>
   );
