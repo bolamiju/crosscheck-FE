@@ -172,7 +172,7 @@ const ReceiptBody = styled.div`
   overflow-y: scroll;
   padding-right: 30px;
   background: #fafafb;
-  font-family: "Rubik", sans-serif;
+  font-family: "poppins";
   ::-webkit-scrollbar {
     display: none;
   }
@@ -236,14 +236,15 @@ const ReceiptBody = styled.div`
     }
     .history {
       margin-left: 50px;
-      font-family: MontserratBold;
+      font-family: "poppins";
+      font-weight: bold;
       letter-spacing: 0.44px;
       color: #173049;
       opacity: 1;
     }
 
     .showing {
-      font-family: MontserratRegular;
+      font-family: "poppins";
       letter-spacing: 0.44px;
       color: #707070;
       opacity: 1;

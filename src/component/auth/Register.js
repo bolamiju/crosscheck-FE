@@ -117,7 +117,7 @@ function Register() {
       ) : (
         <div className="form-section">
           <div className="form-wrapper">
-            <form className="form-surround">
+            <form className="form-surround" onSubmit={formik.handleSubmit}>
               <h5 className="text-header">Create An Account</h5>
 
               {registerError.length > 0 && (
@@ -328,9 +328,9 @@ function Register() {
                 </div>
               </div>
               <button
-                type="button"
+                type="submit"
                 className="register-button"
-                onClick={formik.handleSubmit}
+                // onClick={formik.handleSubmit}
               >
                 {loading ? "CREATING..." : "REGISTER"}
               </button>

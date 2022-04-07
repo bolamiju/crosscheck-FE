@@ -292,7 +292,8 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   outline: "none",
                   borderRadius: "14px",
                   fontSize: "14px",
-                  fontFamily: "MontserratItalic",
+                  fontStyle: "italic",
+                  fontFamily: "poppins",
                 }}
                 name="country"
                 id="country"
@@ -1116,13 +1117,13 @@ const SelectSch = styled.div`
     padding-bottom: 40px;
     span {
       &:nth-child(1) {
-        font: normal normal bold 12px/14px Montserrat;
+        font: normal normal bold 12px/14px "poppins";
         letter-spacing: 0.32px;
         color: #707070;
       }
       &:nth-child(2) {
         padding-left: 100px;
-        font: normal normal normal 12/14px Montserrat;
+        font: normal normal normal 12/14px "poppins";
         letter-spacing: 0.32px;
         color: #707070;
       }
@@ -1139,13 +1140,13 @@ const SelectSch = styled.div`
     }
     span {
       &:nth-child(1) {
-        font: normal normal bold 12px/14px Montserrat;
+        font: normal normal bold 12px/14px "poppins";
         letter-spacing: 0.32px;
         color: #707070;
       }
       &:nth-child(2) {
         padding-left: 40px;
-        font: normal normal normal 12/14px Montserrat;
+        font: normal normal normal 12/14px "poppins";
         letter-spacing: 0.32px;
         color: #707070;
         @media (max-width: 500px) {
@@ -1161,7 +1162,7 @@ const SelectSch = styled.div`
       padding-right: 5px;
       cursor: pointer;
       small {
-        font: normal normal bold 12px/14px Montserrat;
+        font: normal normal bold 12px/14px "poppins";
         letter-spacing: 0.24px;
         color: #b30000;
         opacity: 1;
@@ -1258,7 +1259,8 @@ const SelectSch = styled.div`
       border: 2px solid #e2e2e2;
       outline: none;
       width: 100%;
-      font-family: MontserratItalic;
+      font-family: "poppins";
+      font-style: italic;
       border-radius: 14px;
       color: #707070;
     }
@@ -1273,7 +1275,7 @@ const SelectSch = styled.div`
     padding-left: 30px;
     width: 46%;
     label {
-      font-family: MontserratRegular;
+      font-family: "poppins";
       font-size: 14px;
       color: #707070;
     }
@@ -1286,7 +1288,8 @@ const SelectSch = styled.div`
       outline: none;
       width: 100%;
       border-radius: 14px;
-      font-family: MontserratItalic;
+      font-family: "poppins";
+      font-style: italic;
       padding-left: 5px;
       @media (max-width: 500px) {
         height: 30px;

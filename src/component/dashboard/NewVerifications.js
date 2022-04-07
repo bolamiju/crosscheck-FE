@@ -567,6 +567,7 @@ const VerificationBody = styled.div`
     opacity: 1;
     outline: none;
     border: 1px solid #0092e0;
+    font-family: "poppins";
   }
   .notallowed {
     cursor: not-allowed;

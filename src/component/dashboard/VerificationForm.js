@@ -1162,7 +1162,8 @@ const FormDiv = styled.div`
     padding-left: 40px;
     padding-bottom: 40px;
     label {
-      font-family: MontserratBold;
+      font-family: "poppins";
+      font-weight: bold;
       letter-spacing: 0.32px;
       color: #707070;
       opacity: 1;
@@ -1176,7 +1177,7 @@ const FormDiv = styled.div`
     .enr-status {
       display: flex;
       align-items: center;
-      font-family: MontserratRegular;
+      font-family: "poppins";
       letter-spacing: 0.32px;
       color: #707070;
       opacity: 1;
@@ -1365,7 +1366,8 @@ const SelectSch = styled.div`
       &:nth-child(1) {
         font-weight: normal;
         font-size: 14px;
-        font-family: MontserratBold;
+        font-family: "poppins";
+        font-weight: bold;
         letter-spacing: 0.32px;
         color: #707070;
       }
@@ -1373,7 +1375,7 @@ const SelectSch = styled.div`
         padding-left: 105px;
         font-weight: normal;
         font-size: 14px;
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0.32px;
         color: #707070;
       }
@@ -1392,7 +1394,8 @@ const SelectSch = styled.div`
       &:nth-child(1) {
         font-weight: normal;
         font-size: 14px;
-        font-family: MontserratBold;
+        font-family: "poppins";
+        font-weight: bold;
         letter-spacing: 0.32px;
         color: #707070;
       }
@@ -1400,7 +1403,7 @@ const SelectSch = styled.div`
         padding-left: 40px;
         font-weight: normal;
         font-size: 14px;
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0.32px;
         color: #707070;
         @media (max-width: 500px) {
@@ -1417,7 +1420,7 @@ const SelectSch = styled.div`
       cursor: pointer;
       opacity: 0.6;
       small {
-        font: normal normal bold 12px/14px Montserrat;
+        font: normal normal bold 12px/14px "poppins";
         letter-spacing: 0.24px;
         color: black;
         opacity: 1;
@@ -1519,7 +1522,8 @@ const SelectSch = styled.div`
       height: 34px;
       border: 2px solid #e2e2e2;
       outline: none;
-      font-family: MontserratItalic;
+      font-family: "poppins";
+      font-style: italic;
       color: #707070;
       width: 100%;
       border-radius: 14px;

@@ -352,7 +352,7 @@ const DashboardContent = ({ history }) => {
             <p style={{ marginLeft: "40px" }}>No institutions found</p>
           )}
         </SelectSch>
-        <div className="spacer"></div>
+        {/* <div className="spacer"></div> */}
         <VerificationContent />
       </DashboardBody>
     </DashboardLayout>
@@ -401,7 +401,7 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         font-size: 12px;
         text-transform: uppercase;
         color: #707070;
@@ -433,7 +433,7 @@ const SelectSch = styled.div`
       padding-left: 20px;
       width: 46%;
       label {
-        font-family: "MontserratRegular";
+        font-family: "poppins";
         font-size: 12px;
         text-transform: uppercase;
         color: #707070;
@@ -489,7 +489,7 @@ const SelectSch = styled.div`
       }
       &:nth-child(2) {
         font-size: 14px;
-        font: normal normal medium 15px/19px Montserrat;
+        font: normal normal medium 15px/19px "poppins";
         letter-spacing: 0.3px;
         color: #707070;
         margin: 0;
@@ -535,8 +535,8 @@ const Card = styled.div`
     align-items: center;
     p {
       color: white;
-      font: normal normal medium 22px/30px Montserrat;
-      font-family: Montserrat;
+      font: normal normal medium 22px/30px "poppins";
+      font-family: "poppins";
       font-weight: normal;
       letter-spacing: 1.04px;
       font-size: 22px;
