@@ -170,7 +170,7 @@ const Div = styled.div`
       text-align: center;
       letter-spacing: 0.32px;
       color: #707070;
-      font-family: MontserratRegular;
+      font-family: "poppins";
       opacity: 1;
       font-weight: lighter;
       font-size: 10px;
@@ -183,7 +183,7 @@ const Div = styled.div`
   .enter-email {
     width: 80%;
     text-align: center;
-    font: normal normal normal 12px Montserrat;
+    font: normal normal normal 12px "poppins";
     letter-spacing: 0.4px;
     color: #707070;
     opacity: 0.8;
@@ -241,7 +241,8 @@ const Div = styled.div`
     background: #0092e0 0% 0% no-repeat padding-box;
     border: 2px solid #0092e0;
     border-radius: 35px;
-    font-family: MontserratBold;
+    font-family: "poppins";
+    font-weight: bold;
     letter-spacing: 0.32px;
     color: #ffffff;
     text-transform: uppercase;

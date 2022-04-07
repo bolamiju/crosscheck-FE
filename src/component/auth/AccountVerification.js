@@ -75,7 +75,8 @@ const Container = styled.div`
     font-weight: normal;
   }
   .link {
-    font-family: MontserratBold;
+    font-family: "poppins";
+    font-weight: bold;
     text-transform: capitalize;
     text-decoration: none;
     background: #0092e0;

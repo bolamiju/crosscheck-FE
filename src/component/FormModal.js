@@ -135,7 +135,7 @@ const ModalWrapper = styled.div`
       margin-top: 0 !important;
       margin-bottom: 10px !important;
       padding: 0.3rem 0 0.5rem 0;
-      font-family: MontserratRegular;
+      font-family: "poppins";
       font-size: 20px;
       text-align: center !important;
       font-weight: normal;
@@ -153,7 +153,7 @@ const ModalWrapper = styled.div`
         margin-left: 1rem;
       }
       label {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0.32px;
         color: #707070;
         text-transform: capitalize;
@@ -181,7 +181,8 @@ const ModalWrapper = styled.div`
       }
     }
     .button {
-      font-family: MontserratBold;
+      font-family: "poppins";
+      font-weight: bold;
       width: 250px;
       text-transform: capitalize;
       margin: 0 auto;

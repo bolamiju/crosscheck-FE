@@ -1003,7 +1003,7 @@ const Testimonies = styled.div`
         width:200px
       }
       p {
-        font-family: MontserratRegular;
+        font-family: "poppins";
         letter-spacing: 0px;
         color: #676f79;
         opacity: 1;
@@ -1562,7 +1562,7 @@ const Main = styled.main`
       color: #0092e0;
       text-decoration: none;
       cursor: pointer;
-      font-family: orkneyLight;
+      font-family: "poppins";
       &:hover {
         color: white;
       }
@@ -1616,7 +1616,7 @@ const Main = styled.main`
         border: 1px solid white;
         color: white;
         background: none;
-        font-family: orkneyLight;
+        font-family: "poppins";
         padding: 10px 40px 10px 40px;
         border-radius: 5px;
         &:hover {

@@ -153,7 +153,7 @@ const Div = styled.div`
   }
   .enter-email {
     width: 80%;
-    font-family: MontserratRegular;
+    font-family: "poppins";
     text-align: center;
     letter-spacing: 0.4px;
     color: #707070;
@@ -177,7 +177,8 @@ const Div = styled.div`
       border: 2px solid #70707061;
       border-radius: 35px;
       padding-left: 20px;
-      font-family: MontserratItalic;
+      font-family: "poppins";
+      font-style: italic;
       letter-spacing: 0.32px;
       color: #707070;
       opacity: 1;
@@ -211,7 +212,7 @@ const Div = styled.div`
     }
   }
   .reset-create {
-    font-family: MontserratRegular;
+    font-family: "poppins";
     letter-spacing: 0.4px;
     opacity: 1;
     text-align: center;

@@ -61,7 +61,7 @@ const Login = (props) => {
           err.response.data.message &&
           err.response.data.message === "invalid email or password"
         ) {
-          dispatch(setLoginError("invalid email or password"));
+          dispatch(setLoginError("Invalid email or password"));
         } else if (
           err.response.data.message &&
           err.response.data.message === "Account not activated"
@@ -118,13 +118,13 @@ const Login = (props) => {
       />
       <div className="form-section">
         <div className="form-wrapper login-wrapper">
-          <form className="form-surround">
+          <form className="form-surround" onSubmit={formik.handleSubmit}>
             <div className="info-container">
               <h3 className="great">Great to See you again</h3>
               <p
                 style={{
                   fontSize: "14px",
-                  fontFamily: "MontserratRegular",
+                  fontFamily: "poppins",
                   color: "#707070",
                 }}
               >
@@ -184,8 +184,7 @@ const Login = (props) => {
               ) : null}
             </div>
             <button
-              type="button"
-              onClick={formik.handleSubmit}
+              type="submit"
               className="register-button loginbtn"
             >
               {loading ? "Signing in..." : "LOGIN"}

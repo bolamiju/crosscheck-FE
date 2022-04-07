@@ -16,7 +16,7 @@ height: 100vh;
 font-size: 1.5rem;
 align-items: center;
 text-align: center;
-font-family: MontserratRegular;
+font-family: "poppins";
 font-weight: normal;
 letter-spacing: 0.32px;
 opacity: 1;

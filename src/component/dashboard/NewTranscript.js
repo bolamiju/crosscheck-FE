@@ -364,7 +364,7 @@ const VerificationBody = styled.div`
     font-size: 12px;
     margin-top: 20px;
     opacity: 1;
-    font-family: MontserratRegular;
+    font-family: "poppins";
     color: #707070;
     @media (max-width: 500px) {
       display: none;
@@ -408,7 +408,7 @@ const VerificationBody = styled.div`
         margin-left: 15px;
         color: #707070;
         font-weight: normal;
-        font-family: MonserratRegular;
+      font-family: "poppins";;
         @media (max-width: 500px) {
           margin-left: 0;
         }
@@ -435,6 +435,7 @@ const VerificationBody = styled.div`
     height: 30px;
     outline: none;
     border: 1px solid #0092e0;
+    font-family: "poppins"
   }
   .add-btn {
     width: 250px;
@@ -466,6 +467,7 @@ const VerificationBody = styled.div`
     opacity: 1;
     outline: none;
     border: 1px solid #0092e0;
+    font-family: "poppins";
   }
   .notallowed {
     cursor: not-allowed;

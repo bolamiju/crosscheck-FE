@@ -200,14 +200,12 @@ const VerificationContent = () => {
 };
 
 const WallWrapper = styled.div`
-  margin-top: 30px;
-
   overflow-y: scroll;
   height: 100%;
   padding: 2rem 0;
   /* background: var(--mainWhite); */
   h6 {
-    font-family: MontserratRegular;
+    font-family: "poppins";
     letter-spacing: 0px;
     color: #0092e0;
     opacity: 1;
@@ -283,7 +281,8 @@ const WallWrapper = styled.div`
     }
     .history {
       margin-left: 50px;
-      font-family: MontserratBold;
+      font-family: "poppins";
+      font-weight: bold;
       letter-spacing: 0.44px;
       color: #173049;
       opacity: 1;
