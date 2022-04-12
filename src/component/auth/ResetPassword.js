@@ -157,8 +157,9 @@ const Div = styled.div`
   flex-direction: column;
   align-items: center;
   h3 {
-    font-family: segoebold;
+    font-family: "poppins";
     letter-spacing: 0px;
+    font-weight: bold;
     color: #707070;
     opacity: 1;
     @media (max-width: 400px) {
@@ -197,7 +198,8 @@ const Div = styled.div`
     .confirm-label {
       font-weight: bold !important;
       margin-left: 15px;
-      font-family: segoebold;
+      font-family: "poppins";
+      font-weight: bold;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;

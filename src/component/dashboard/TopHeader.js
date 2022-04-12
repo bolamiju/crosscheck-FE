@@ -256,7 +256,7 @@ const HeadContainer = styled.div`
       box-shadow: 0px 0px 10px #00000029;
         .new-msg{
           margin:10px !important;
-          font-family:segoebold;
+          font-family:"poppins";
           font-size:14px
         }
       p{
@@ -281,7 +281,7 @@ const HeadContainer = styled.div`
         h5{
           margin:0 !important;
           font-weight:bold;
-          font-family:segoebold !important;
+          font-family:"poppins" !important;
         }
         p{
           margin-top:5px !important;

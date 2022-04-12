@@ -1351,7 +1351,7 @@ const SelectSch = styled.div`
     margin-left: 30px;
     border-bottom: 1px solid gray;
     width: 90%;
-    font-family: segoebold;
+    font-family: "poppins";
     font-size: 15px;
     color: #173049;
     p {

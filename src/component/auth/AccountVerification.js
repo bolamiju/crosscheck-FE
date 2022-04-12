@@ -68,7 +68,7 @@ const Container = styled.div`
   p {
     text-transform: capitalize;
     font-size: 24px;
-    font-family: SegoeRegular;
+    font-family: "poppins";
     letter-spacing: 0px;
     color: #707070;
     opacity: 1;

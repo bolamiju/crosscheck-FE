@@ -848,7 +848,7 @@ const Footer = styled.div`
         margin-right: 15px;
         color: grey;
         font-size: 12px;
-        font-family: segoeRegular;
+        font-family: "poppins";
         @media (max-width: 400px) {
           margin-bottom: 20px;
         }
@@ -1120,7 +1120,7 @@ const Div = styled.div`
   /* margin-top: 70px;
   margin-bottom: 20px; */
   h2 {
-    font-family: "segoebold";
+    font-family: "poppins";
     color: #173049;
     margin: 0;
   }
@@ -1458,7 +1458,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
-    font-family: segoeRegular;
+    font-family: "poppins";
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -1488,7 +1488,7 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
-        font-family: segoeRegular;
+        font-family: "poppins";
       }
       li {
         margin-right: 50px;
@@ -1742,7 +1742,6 @@ const Main = styled.main`
     p {
       width: 100%;
       text-align: left;
-      /* font-family: segoeRegular !important; */
       font-family: "poppins";
       font-size: 20px;
       font-weight: normal;
