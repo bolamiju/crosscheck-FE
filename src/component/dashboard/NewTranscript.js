@@ -3,15 +3,26 @@ import { useDispatch } from "react-redux";
 import {useHistory, Prompt} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import { StepIconProps } from '@mui/material/StepIcon';
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
 import Logo from "../../asset/CrossCheckLogo.png";
 import "./ver.css";
 import styled from "styled-components";
 import Layout from "./DashboardLayout";
+import {ReactComponent as Start} from "../../asset/start.svg";
+import {ReactComponent as Details} from "../../asset/details.svg";
+import {ReactComponent as Payment} from "../../asset/process_payment.svg";
+import {ReactComponent as Finish} from "../../asset/process_payment.svg";
 import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
+import Qualification from '../../asset/qualification.svg'
+// import {ReactComponent as Qualification } from '../../asset/qualification.svg'
 import finish from "../../asset/finish.svg";
 import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
@@ -29,8 +40,70 @@ const request = (data) => {
   });
 };
 
+// const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+//   [`&.${stepConnectorClasses.alternativeLabel}`]: {
+//     top: 22,
+//   },
+//   [`&.${stepConnectorClasses.active}`]: {
+//     [`& .${stepConnectorClasses.line}`]: {
+//       backgroundColor:'#43496a',
+//     },
+//   },
+//   [`&.${stepConnectorClasses.completed}`]: {
+//     [`& .${stepConnectorClasses.line}`]: {
+//       backgroundColor: '#43496a'
+//     },
+//   },
+//   [`& .${stepConnectorClasses.line}`]: {
+//     height: 3,
+//     border: 0,
+//     backgroundColor:'#D7DADB',
+//     borderRadius: 1,
+//   },
+// }));
+
+// const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+//   backgroundColor: '#0092e0',
+//   zIndex: 1,
+//   color: '#fff',
+//   width: 50,
+//   height: 50,
+//   display: 'flex',
+//   borderRadius: '50%',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   ...(ownerState.active && {
+//     backgroundImage:
+//       'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+//     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+//   }),
+//   ...(ownerState.completed && {
+//     backgroundImage:
+//       'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,146,224,1) 0%, rgba(0,212,255,1) 100%);',
+//   }),
+// }));
+
+// function ColorlibStepIcon(props) {
+//   const { active, completed, className } = props;
+
+//   const icons = {
+//     1: <Qualification />,
+//     2: <Details />,
+//     3: <Payment />,
+//     4: <Finish/>
+//   };
+
+//   return (
+//     <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+//       {icons[String(props.icon)]}
+//     </ColorlibStepIconRoot>
+//   );
+// }
+// const steps = ['START', 'VERIFICATON DETAILS', 'PROCESS PAYMENT', 'FINISH'];
+
 const NewTranscript = () => {
   const dispatch = useDispatch();
+  const [activeStep, setActiveStep] = useState(1)
 
   const ref = React.createRef();
   const history = useHistory()
@@ -167,6 +240,15 @@ const NewTranscript = () => {
           <div className={requestList ? "none" : ""}>
             {" "}
             <h2 className="new-heading">New Transcript Order</h2>
+
+
+{/* <Stepper alternativeLabel activeStep={2} connector={<ColorlibConnector />}>
+  {steps.map((label) => (
+    <Step key={label}>
+      <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+    </Step>
+  ))}
+</Stepper> */}
           </div>
           <IconDiv>
             <div>
@@ -193,6 +275,8 @@ const NewTranscript = () => {
                 key={id}
                 initialValues={values}
                 updateFormValues={updateFormValues(id)}
+                // setActiveStep={setActiveStep}
+                // activeStep={activeStep}
               />
             </div>
           ))}
@@ -210,7 +294,10 @@ const NewTranscript = () => {
               </span>
             </div>
             <button
-              onClick={verify}
+              onClick={()=>{
+                setActiveStep(3)
+                verify()
+              }}
               className={!checked ? "notallowed proceed" : "proceed"}
               disabled={!checked}
             >
@@ -417,7 +504,7 @@ const VerificationBody = styled.div`
   }
 
   p {
-    font: normal normal bold 14px Segoe UI;
+    font: normal normal bold 14px "poppins";
     letter-spacing: 0.44px;
     color: #707070;
     opacity: 1;

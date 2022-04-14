@@ -321,7 +321,7 @@ const FirstSection = styled.div`
   box-shadow: 0px 10px 30px #00000029;
   h1 {
     padding-left: 90px;
-    font: normal normal bold 28px/36px Segoe UI;
+    font: normal normal bold 28px/36px "poppins";
     letter-spacing: 0px;
     color: #ffffff;
     /* padding-bottom:20px */
@@ -417,7 +417,7 @@ const NavBar = styled.nav`
   }
 
   .navs {
-    font-family: segoeRegular;
+    font-family: "poppins";
     @media only screen and (max-width: 400px) {
       display: none;
     }
@@ -443,18 +443,18 @@ const NavBar = styled.nav`
       .link-to {
         color: white;
         text-decoration: none;
-        font-family: segoeRegular;
+        font-family: "poppins";
       }
       li {
         margin-right: 50px;
         color: white;
         cursor: pointer;
-        font-family: segoeRegular;
+        font-family: "poppins";
         font-size: 16px;
         a {
           text-decoration: none;
           color: white;
-          font-family: segoeRegular;
+          font-family: "poppins";
           &:hover {
             color: #66c8ed !important;
           }
@@ -467,7 +467,7 @@ const NavBar = styled.nav`
   }
 `;
 const Paragraph = styled.div`
-  font-family: segoeRegular;
+  font-family: "poppins";
   text-align: left;
   letter-spacing: 0.32px;
   color: #707070;
@@ -547,7 +547,7 @@ const Footer = styled.div`
     }
     .email {
       display: flex;
-      font-family: segoeRegular;
+      font-family: "poppins";
       img {
         margin-right: 20px;
       }
@@ -619,7 +619,7 @@ const Footer = styled.div`
         margin-right: 15px;
         color: grey;
         font-size: 12px;
-        font-family: segoeRegular;
+        font-family: "poppins";
         @media (max-width: 400px) {
           margin-bottom: 20px;
         }

@@ -145,7 +145,7 @@ const Div = styled.div`
   flex-direction: column;
   align-items: center;
   h3 {
-    font-family: segoeSemiBold;
+    font-family: "poppins";
     letter-spacing: 0px;
     color: #707070;
     opacity: 1;

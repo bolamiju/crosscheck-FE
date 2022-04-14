@@ -217,6 +217,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
     }
 
     setActiveTab("destination-details");
+    // setActiveStep(2)
     setPay(true);
   };
 
