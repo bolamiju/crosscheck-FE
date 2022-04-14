@@ -36,6 +36,13 @@ function Register() {
     }, "", "", "country");
   },[])
 
+  useEffect(()=>{
+    ipapi.location((loca) => {
+      formik.setFieldValue("country", loca)
+    }, "", "", "country");
+    
+  },[])
+
   const formik = useFormik({
     initialValues: {
       firstName: "",

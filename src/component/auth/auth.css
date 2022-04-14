@@ -178,7 +178,7 @@ body {
 
 .logininput, .passwordinput {
   height: 40px !important;
-  font-size:16px
+  font-size:14px
 }
 
 .form-surround {
@@ -195,7 +195,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-top: -10px;
 }
 .login-container {
@@ -221,7 +221,6 @@ label {
   border-radius: 9px;
   height: 28px;
   font-family: "poppins" !important;
-  font-size: 16px;
 }
 .firstname-input {
   width: 48%;
@@ -325,14 +324,14 @@ label {
   position: absolute;
   left: auto;
   right: 20px;
-  top: 32px;
+  top: 36px;
 }
 
 .visible-icon {
   position: absolute;
   left: auto;
   right: 20px;
-  top: 36px;
+  top: 42px;
   cursor: pointer;
 }
 
@@ -438,7 +437,7 @@ label {
   background: #ff2600;
 }
 .terms .accept span {
-  /* font-size: 14px; */
+  font-size: 14px;
   font-family: "poppins";
 }
 .fot-pass {

@@ -199,7 +199,7 @@ const Login = (props) => {
                 />
                 <span>Remember me</span>
               </div>
-              <Link to="/forgotpassword">Forgot password</Link>
+              <Link to="/forgotpassword">Forgot password?</Link>
             </div>
             <div
               style={{
@@ -278,7 +278,7 @@ const Login = (props) => {
                     color: "#0092e0",
                   }}
                 >
-                 &nbsp; Create one here
+                 &nbsp; Create One Here
                 </Link>
               </p>
             </div>
