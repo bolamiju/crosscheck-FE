@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactComponent as Check } from '../../asset/check.svg'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useFormik } from "formik";
@@ -24,6 +25,7 @@ import "react-flags-select/css/react-flags-select.css";
 
 const Login = (props) => {
   const [visibility, setVisibility] = useState(false);
+  const [ remember, setRemember ] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -189,7 +191,7 @@ const Login = (props) => {
             >
               {loading ? "Signing in..." : "LOGIN"}
             </button>
-            <div className="terms">
+            {/* <div className="terms">
               <div className="accept">
                 <input
                   type="checkbox"
@@ -200,7 +202,17 @@ const Login = (props) => {
                 <span>Remember me</span>
               </div>
               <Link to="/forgotpassword">Forgot password?</Link>
-            </div>
+            </div> */}
+            <div className="terms" style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <div className="accept" onClick={()=>setRemember(!remember)}>
+                  
+                  <div className="agree-box" style={{background: remember ? '#0092e0' : '', borderColor: remember ? "#0092e0" : "#e2e2e2"}}>
+                 {remember && <Check/>}
+                  </div>
+                  <span>Remember me</span>
+                </div>
+                <Link to="/forgotpassword">Forgot password?</Link>
+              </div>
             <div
               style={{
                 width: "100%",

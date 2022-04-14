@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
+import { ReactComponent as Check } from '../../asset/check.svg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
@@ -72,27 +73,28 @@ function Register() {
 
       dispatch(setLoading(true));
       dispatch(setRegisterError(""));
-      try {
-        const res = await signUp(values);
-        formik.resetForm();
-        if (
-          res.data.message === "Please check your email for an activation link"
-        ) {
-          setSuccess(true);
-          setUserEmail(values.email);
-        }
-        dispatch(setLoading(false));
+      console.log('values',values)
+      // try {
+      //   const res = await signUp(values);
+      //   formik.resetForm();
+      //   if (
+      //     res.data.message === "Please check your email for an activation link"
+      //   ) {
+      //     setSuccess(true);
+      //     setUserEmail(values.email);
+      //   }
+      //   dispatch(setLoading(false));
 
-        // window.location.href = "/login";
-      } catch (err) {
-        if (
-          err.response.data.message &&
-          err.response.data.message === "user already exist"
-        ) {
-          dispatch(setRegisterError("Email already exist"));
-        }
-        dispatch(setLoading(false));
-      }
+      //   // window.location.href = "/login";
+      // } catch (err) {
+      //   if (
+      //     err.response.data.message &&
+      //     err.response.data.message === "user already exist"
+      //   ) {
+      //     dispatch(setRegisterError("Email already exist"));
+      //   }
+      //   dispatch(setLoading(false));
+      // }
     },
     validationSchema: signUpValidation,
   });
@@ -316,23 +318,17 @@ function Register() {
                 </div>
               )}
               <div className="terms">
-                <div className="accept">
-                  <input
-                    type="checkbox"
-                    name="accept"
-                    id="terms"
-                    className="check"
-                    style={{ marginRight: "10px" }}
-                    onChange={(e) => {
-                      formik.handleChange(e);
-                      setTerms(!terms);
-                    }}
-                  />
-                  <span>I agree to the <a href='/terms' target="_blank" rel="noopener noreferrer" style={{color:"rgb(0, 146, 224)"}}>terms and conditions</a></span>
-                  {formik.touched.accept && formik.errors.accept ? (
-                    <div className="error">{formik.errors.accept}</div>
-                  ) : null}
+                <div className="accept" onClick={()=>{
+                    formik.setFieldValue("accept",!formik.values.accept)}}>
+                  
+                  <div className="agree-box" style={{background: formik.values.accept ? '#0092e0' : '', borderColor: formik.values.accept ? "#0092e0" : "#e2e2e2"}}>
+                 {formik.values.accept && <Check/>}
+                  </div>
+                  <span>I agree to the <a href='/terms' target="_blank" rel="noopener noreferrer" style={{color:"rgb(0, 146, 224)"}} onClick={(e)=>e.stopPropagation()}>terms and conditions</a></span>
                 </div>
+                  {formik.touched.accept && formik.errors.accept ? (
+                    <div className="error" style={{textAlign:'center'}}>{formik.errors.accept}</div>
+                  ) : null}
               </div>
               <button
                 type="submit"

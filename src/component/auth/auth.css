@@ -371,12 +371,12 @@ label {
 
 .terms {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   font-family: "poppins";
   letter-spacing: 0.24px;
   color: #707070;
   opacity: 1;
-  align-items: center;
   margin-top: 10px;
 }
 
@@ -432,9 +432,10 @@ label {
 .google span {
   color: white;
 }
+.terms .accept{
+display: flex;
+cursor: pointer
 
-.terms .accept input[type="checkbox" i] + label:before {
-  background: #ff2600;
 }
 .terms .accept span {
   font-size: 14px;
@@ -448,6 +449,16 @@ label {
   font-size: 12px;
   font-family: "poppins";
   color: #707070;
+}
+.terms .accept .agree-box{
+  width: 16px;
+  height: 16px;
+  border: 1px solid #e2e2e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .terms a {
@@ -560,7 +571,7 @@ label {
     height: 40px !important;
   }
   .custom-icon {
-    top: 38px;
+    top: 45px;
   }
   .visible-icon {
     position: absolute;
