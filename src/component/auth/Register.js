@@ -55,8 +55,7 @@ function Register() {
       country: "",
       companyWebsite: "",
       organizationName: "",
-      accept: false,
-      // ...(employeeStatus === "DISABLED" ? { employmentStartDate: "" } : null),
+      accept: false
     },
 
     onSubmit: async (values) => {
@@ -73,28 +72,27 @@ function Register() {
 
       dispatch(setLoading(true));
       dispatch(setRegisterError(""));
-      console.log('values',values)
-      // try {
-      //   const res = await signUp(values);
-      //   formik.resetForm();
-      //   if (
-      //     res.data.message === "Please check your email for an activation link"
-      //   ) {
-      //     setSuccess(true);
-      //     setUserEmail(values.email);
-      //   }
-      //   dispatch(setLoading(false));
+      try {
+        const res = await signUp(values);
+        formik.resetForm();
+        if (
+          res.data.message === "Please check your email for an activation link"
+        ) {
+          setSuccess(true);
+          setUserEmail(values.email);
+        }
+        dispatch(setLoading(false));
 
-      //   // window.location.href = "/login";
-      // } catch (err) {
-      //   if (
-      //     err.response.data.message &&
-      //     err.response.data.message === "user already exist"
-      //   ) {
-      //     dispatch(setRegisterError("Email already exist"));
-      //   }
-      //   dispatch(setLoading(false));
-      // }
+        // window.location.href = "/login";
+      } catch (err) {
+        if (
+          err.response.data.message &&
+          err.response.data.message === "user already exist"
+        ) {
+          dispatch(setRegisterError("Email already exist"));
+        }
+        dispatch(setLoading(false));
+      }
     },
     validationSchema: signUpValidation,
   });
