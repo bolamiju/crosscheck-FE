@@ -204,6 +204,7 @@ const LandingPage = () => {
 
   const handleMenuIcon = () => {
     setShow(!show);
+    topFunction()
   };
 
   const changeBackground = () => {
@@ -310,7 +311,7 @@ const LandingPage = () => {
         <div className={show ? "hide-show" : "hide"}>
           <img src={Menu} alt="close icon" onClick={handleMenuIcon} />
           <ul>
-            <li onClick={handleMenuIcon} onClick={()=>topFunction()}>Home</li>
+            <li onClick={handleMenuIcon}>Home</li>
             <li onClick={handleMenuIcon}>
               <a href="#coverage">Coverage</a>{" "}
             </li>
