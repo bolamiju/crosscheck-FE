@@ -85,6 +85,7 @@ body {
   border-bottom: 1px solid rgb(234, 234, 234);
   opacity: 1;
   padding: 10px;
+  padding-left: 30px;
 }
 
 .top-nav img{
