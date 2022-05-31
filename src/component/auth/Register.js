@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
 import { CountryDropdown } from "react-country-region-selector";
+import crosscheckTm from '../../asset/crosscheckTm.svg'
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { signUpValidation } from "./Validation";
@@ -99,6 +100,14 @@ function Register() {
 
   return (
     <div className="container">
+      <div className="top-nav">
+            <img
+              className="crosschecklogo"
+              src={ crosscheckTm }
+              alt=""
+            />
+          </div>
+      <div className="main-sec">
       {success ? (
         <div className="activated-section">
           <div className="activated-wrapper">
@@ -296,7 +305,7 @@ function Register() {
               {formik.values.accountType === "organization" && (
                 <div
                   className="password-input fields"
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: "15px" }}
                 >
                   <label>Company's website</label>
 
@@ -359,6 +368,7 @@ function Register() {
         </div>
       )}
       <div className="image-section"></div>
+      </div>
     </div>
   );
 }
