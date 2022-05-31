@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import crosscheckTm from '../../asset/crosscheckTm.svg'
 import { ReactComponent as Check } from '../../asset/check.svg'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -118,6 +119,14 @@ const Login = (props) => {
         draggable
         pauseOnHover
       />
+       <div className="top-nav">
+            <img
+              className="crosschecklogo"
+              src={ crosscheckTm }
+              alt=""
+            />
+          </div>
+      <div className="main-sec">
       <div className="form-section">
         <div className="form-wrapper login-wrapper">
           <form className="form-surround" onSubmit={formik.handleSubmit}>
@@ -221,13 +230,14 @@ const Login = (props) => {
                 alignItems: "center",
               }}
             >
-              <p className="signup-with">Login with</p>
+              {/* <p className="signup-with">Login with</p> */}
 
               <div
                 style={{
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
+                  marginTop:"15px"
                 }}
               >
                 <FacebookLogin
@@ -243,7 +253,7 @@ const Login = (props) => {
                           fontSize: "16px",
                         }}
                       />
-                      <span>&nbsp;Facebook</span>
+                      <span>&nbsp;Continue with Facebook</span>
                     </>
                   }
                   buttonStyle={{
@@ -278,7 +288,7 @@ const Login = (props) => {
                       fontSize: "16px",
                     }}
                   />{" "}
-                  <span>Google</span>
+                  <span>Continue with Google</span>
                 </GoogleLogin>
               </div>
               <p className="paragraph">
@@ -298,6 +308,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="image-section"></div>
+      </div>
     </div>
   );
 };
