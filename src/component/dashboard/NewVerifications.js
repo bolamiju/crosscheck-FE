@@ -26,6 +26,7 @@ import Pdf from "react-to-pdf";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import ipapi from "ipapi.co";
 import { debounce } from "lodash";
+import { BASE_URL } from "../../state/constant/constants";
 
 const request = (data) => {
   const formData = new FormData();
@@ -35,7 +36,7 @@ const request = (data) => {
   axios({
     data: formData,
     method: "post",
-    url: `https://crosscheck-be-dev.onrender.com/api/v1/verifications/request`,
+    url: `${BASE_URL}/api/v1/verifications/request`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 };

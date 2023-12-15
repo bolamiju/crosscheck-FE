@@ -26,6 +26,7 @@ import uparrow from "../../asset/format.svg";
 import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
+import { BASE_URL } from "../../state/constant/constants";
 import Institution from "../../asset/institution.svg";
 import { search } from "./utils";
 import Axios from "axios";
@@ -63,7 +64,7 @@ function VerificationForm({
   const request = useCallback(
     async (offset, limit) => {
       return await search(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +84,7 @@ function VerificationForm({
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
       const { totalDocs, totalPages, hasPrevPage, hasNextPage, page } =
         data.institution;
@@ -98,7 +99,7 @@ function VerificationForm({
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

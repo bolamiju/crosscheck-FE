@@ -27,6 +27,7 @@ import { search } from "./utils";
 import Axios from "axios";
 import VerificationContent from "./VerificationContent";
 import ipapi from "ipapi.co";
+import { BASE_URL } from "../../state/constant/constants";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const DashboardContent = ({ history }) => {
   const request = useCallback(
     async (offset, limit) => {
       return await search(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +74,7 @@ const DashboardContent = ({ history }) => {
     async (country, offset, limit) => {
       dispatch(setLoading(true));
       const { data } = await Axios.get(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
       const { totalDocs, totalPages, hasPrevPage, hasNextPage, page } =
         data.institution;
@@ -92,7 +93,7 @@ const DashboardContent = ({ history }) => {
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
