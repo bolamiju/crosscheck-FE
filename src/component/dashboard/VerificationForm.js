@@ -26,6 +26,7 @@ import uparrow from "../../asset/format.svg";
 import cap from "../../asset/graduation-cap.svg";
 import { CountryDropdown } from "react-country-region-selector";
 import { fetchInstitutes, setPageInfo } from "../../state/actions/institutions";
+import { BASE_URL } from "../../state/constant/constants";
 import Institution from "../../asset/institution.svg";
 import { search } from "./utils";
 import Axios from "axios";
@@ -63,7 +64,7 @@ function VerificationForm({
   const request = useCallback(
     async (offset, limit) => {
       return await search(
-        `https://crosschek.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,15 +84,10 @@ function VerificationForm({
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
-        `https://crosschek.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      const {
-        totalDocs,
-        totalPages,
-        hasPrevPage,
-        hasNextPage,
-        page,
-      } = data.institution;
+      const { totalDocs, totalPages, hasPrevPage, hasNextPage, page } =
+        data.institution;
       dispatch(fetchInstitutes(data.institution.docs));
       dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
@@ -103,7 +99,7 @@ function VerificationForm({
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://crosschek.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -174,7 +170,7 @@ function VerificationForm({
       updateFormValues({
         ...values,
         email: user.email,
-        requester:user?.firstName,
+        requester: user?.firstName,
         our_charge,
         institute_charge,
         country,
@@ -227,15 +223,14 @@ function VerificationForm({
   });
   const submitRequest = (e) => {
     e.preventDefault();
-    const imageFmt = formik.values.certImage.name.split('.')
+    const imageFmt = formik.values.certImage.name.split(".");
     if (!formik.values.certImage) {
       return toast.error("please upload a file");
-    } 
-    
-    else if(!['pdf','jpg','jpeg','png'].includes(imageFmt[imageFmt.length-1])){
-      return toast.error('file format not supported')
-    }
-    else if (!selectedInst.name) {
+    } else if (
+      !["pdf", "jpg", "jpeg", "png"].includes(imageFmt[imageFmt.length - 1])
+    ) {
+      return toast.error("file format not supported");
+    } else if (!selectedInst.name) {
       return toast.error("please select a school");
     }
     formik.handleSubmit("paid");
@@ -310,7 +305,9 @@ function VerificationForm({
         >
           <div style={{ width: "100%" }}>
             <img src={cap} alt="graduation cap" />
-            <h3 style={{fontFamily:"poppins"}}>Education Check - {formik.values.institution}</h3>
+            <h3 style={{ fontFamily: "poppins" }}>
+              Education Check - {formik.values.institution}
+            </h3>
           </div>
           <FontAwesomeIcon
             icon={details ? faCaretDown : faCaretRight}
@@ -381,85 +378,86 @@ function VerificationForm({
               />
             </div>
           </div>
-          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
-            <div className="new-table">
-              <table
-                cellSpacing="0"
-                cellPadding="0"
-                border="0"
-                className={hideTable ? "hide-table" : ""}
-              >
-                <thead className="table-headers">
-                  <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>Institute charge</th>
-                    <th>Our charge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {institutions.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                      <th className="mobile-header">Number</th>
-                      <td>{truncateString(ite.name)}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      {ite["institute_charge"] === 0 ? (
-                        <td>-</td>
-                      ) : userCountry === "NG" ? (
-                        <td>&#8358;{ite["institute_charge"] || 0}</td>
-                      ) : (
-                        <td>${toDollar(ite["institute_charge"])}</td>
-                      )}
-                      <th className="mobile-header">Value</th>
-                      <td>
-                        {userCountry === "NG" ? (
-                          <td>&#8358;{ite["our_charge"]}</td>
-                        ) : (
-                          <td>${toDollar(ite["our_charge"]) || 0}</td>
-                        )}
-                      </td>
+          {(input.length > 0 || country.length > 0) &&
+            institutions.length > 0 && (
+              <div className="new-table">
+                <table
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className={hideTable ? "hide-table" : ""}
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>Institute charge</th>
+                      <th>Our charge</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              {!hideTable && (
-                <div className="pagination-line">
-                  <p>
-                    Showing {institutions.length} of {pageInfo.totalDocs} of
-                    entries
-                  </p>
+                  </thead>
+                  <tbody>
+                    {institutions.map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{truncateString(ite.name)}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        {ite["institute_charge"] === 0 ? (
+                          <td>-</td>
+                        ) : userCountry === "NG" ? (
+                          <td>&#8358;{ite["institute_charge"] || 0}</td>
+                        ) : (
+                          <td>${toDollar(ite["institute_charge"])}</td>
+                        )}
+                        <th className="mobile-header">Value</th>
+                        <td>
+                          {userCountry === "NG" ? (
+                            <td>&#8358;{ite["our_charge"]}</td>
+                          ) : (
+                            <td>${toDollar(ite["our_charge"]) || 0}</td>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!hideTable && (
+                  <div className="pagination-line">
+                    <p>
+                      Showing {institutions.length} of {pageInfo.totalDocs} of
+                      entries
+                    </p>
 
-                  <ReactPaginate
-                    previousLabel={
-                      <FontAwesomeIcon
-                        className="icon"
-                        icon={faAngleDoubleLeft}
-                        style={{ fontSize: "15px" }}
-                      />
-                    }
-                    nextLabel={
-                      <FontAwesomeIcon
-                        className="icon"
-                        icon={faAngleDoubleRight}
-                        style={{ fontSize: "15px" }}
-                      />
-                    }
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pagesCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(e) => institutionNavs(e)}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                  />
-                </div>
-              )}
-            </div>
-          )}
+                    <ReactPaginate
+                      previousLabel={
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faAngleDoubleLeft}
+                          style={{ fontSize: "15px" }}
+                        />
+                      }
+                      nextLabel={
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faAngleDoubleRight}
+                          style={{ fontSize: "15px" }}
+                        />
+                      }
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pagesCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={(e) => institutionNavs(e)}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
         </SelectSch>
       )}
       <FormContainer style={{ display: !details ? "none" : "" }}>
@@ -1073,7 +1071,7 @@ const FormContainer = styled.div`
     height: 30px;
     outline: none;
     border-color: #0092e0;
-    font-family: "poppins"
+    font-family: "poppins";
   }
   .btn-prev {
     display: none;
@@ -1125,7 +1123,7 @@ const FormContainer = styled.div`
           color: #0092e0;
           opacity: 1;
           text-transform: capitalize;
-          font-family: "Poppins"
+          font-family: "Poppins";
         }
       }
     }

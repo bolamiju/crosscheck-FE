@@ -26,75 +26,100 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import VisibilitySensor from "react-visibility-sensor";
 import imgUrl from "../asset/map.svg";
-import WhiteCrosscheck from '../asset/crosscheckTMWhite.svg'
-import crosscheckTm from '../asset/crosscheckTm.svg'
-import bertha from '../asset/bertha.png'
-
+import WhiteCrosscheck from "../asset/crosscheckTMWhite.svg";
+import crosscheckTm from "../asset/crosscheckTm.svg";
+import bertha from "../asset/bertha.png";
 export const FooterComponent = () => {
-  const history = useHistory()
+  const history = useHistory();
   const today = new Date();
   const year = today.getFullYear();
-  const route = useRouteMatch()
+  const route = useRouteMatch();
 
   const topFunction = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    history.push('/')
-  }
+    history.push("/");
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  return(
-  <Footer>
-        <div className="main-footer-section">
-          <div> <img src={Logo} alt="crosscheck" /></div>
-          <div className="info-section">
+  return (
+    <Footer>
+      <div className="main-footer-section">
+        <div>
+          {" "}
+          <img src={Logo} alt="crosscheck" />
+        </div>
+        <div className="info-section">
           <ul>
-            <li onClick={()=>topFunction()} style={{cursor:'pointer'}}>HOME</li>
-            <li> <a
-                href={route?.url === "/terms" ? "/#about" : "#about"}
-              >ABOUT</a></li>
-            <li> <a
-                href={route?.url === "/terms" ? "/#coverage" : "#coverage"}
-              >
+            <li onClick={() => topFunction()} style={{ cursor: "pointer" }}>
+              HOME
+            </li>
+            <li>
+              {" "}
+              <a href={route?.url === "/terms" ? "/#about" : "#about"}>ABOUT</a>
+            </li>
+            <li>
+              {" "}
+              <a href={route?.url === "/terms" ? "/#coverage" : "#coverage"}>
                 {" "}
                 COVERAGE
-              </a></li>
-            <li> <a
-                href={route?.url === "/terms" ? "/#testimonies" : "#testimonies"}
-              >TESTIMONIALS</a></li>
+              </a>
+            </li>
+            <li>
+              {" "}
+              <a
+                href={
+                  route?.url === "/terms" ? "/#testimonies" : "#testimonies"
+                }
+              >
+                TESTIMONIALS
+              </a>
+            </li>
             <li>CONTACT US</li>
           </ul>
           <div className="contact">
-          <div className="email">
-          <a href="mailto:support@crosscheck.africa" style={{cursor:'pointer'}}><img src={Mail} alt="mail" style={{cursor:'pointer'}}/></a>
-            <div>
-              <p>Email</p>
-              <a className="text" href="mailto:support@crosscheck.africa">support@crosscheck.africa</a>
-
+            <div className="email">
+              <a
+                href="mailto:support@crosscheck.africa"
+                style={{ cursor: "pointer" }}
+              >
+                <img src={Mail} alt="mail" style={{ cursor: "pointer" }} />
+              </a>
+              <div>
+                <p>Email</p>
+                <a className="text" href="mailto:support@crosscheck.africa">
+                  support@crosscheck.africa
+                </a>
+              </div>
             </div>
-           
-          </div>
-          <div>
-         
-          </div>
+            <div></div>
 
-          <div className="email">
-          <a href="tel:+2348134662307" className="text" style={{cursor:'pointer'}}><img src={phone} alt="mail" style={{cursor:'pointer'}} /></a>
-            <div className="text">
-              <p>Phone</p>
-              <a href="tel:+2348134662307" style={{cursor:'pointer'}} className="text">08134662307</a>
+            <div className="email">
+              <a
+                href="tel:+2348134662307"
+                className="text"
+                style={{ cursor: "pointer" }}
+              >
+                <img src={phone} alt="mail" style={{ cursor: "pointer" }} />
+              </a>
+              <div className="text">
+                <p>Phone</p>
+                <a
+                  href="tel:+2348134662307"
+                  style={{ cursor: "pointer" }}
+                  className="text"
+                >
+                  08134662307
+                </a>
+              </div>
             </div>
-            
           </div>
         </div>
+      </div>
 
-          </div>
-
-        </div>
-        
-        {/* <div className="contact">
+      {/* <div className="contact">
         <ul style={{display:'flex', alignItems:'center',listStyleType:'none'}}>
         <li>
         <a href="https://www.linkedin.com/company/crosscheckit/" target="_blank" rel="noopener noreferrer">
@@ -125,46 +150,43 @@ export const FooterComponent = () => {
             </li>
           </ul>
          */}
-       <div>
-         
-       </div>
-        
-        <div className="line"></div>
-        <div className="bottom-content">
-          <p>© {year} Crosscheck. All Rights Reserved</p>
-          <ul>
-            <li>Privacy Policy</li>
-            <li>
-              {route?.url !== "/terms" &&<Link to="/terms" className="termsof">
+      <div></div>
+
+      <div className="line"></div>
+      <div className="bottom-content">
+        <p>© {year} Crosscheck. All Rights Reserved</p>
+        <ul>
+          <li>Privacy Policy</li>
+          <li>
+            {route?.url !== "/terms" && (
+              <Link to="/terms" className="termsof">
                 {" "}
                 Terms of Service
-              </Link>}
-            </li>
-            
-          </ul>
-        </div>
-      </Footer>
-  )
-}
+              </Link>
+            )}
+          </li>
+        </ul>
+      </div>
+    </Footer>
+  );
+};
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
   const [testimonyIndex, setTestimonyIndex] = useState(0);
 
-  const history = useHistory()
+  const history = useHistory();
 
   const topFunction = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    history.push('/')
-  }
-  
+    history.push("/");
+  };
 
   const testimonies = [
     {
-      text:
-        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      text: "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
       author: {
         name: "Adetola Akere",
         organisation: "Lambda School",
@@ -173,8 +195,7 @@ const LandingPage = () => {
       avatar: ava1,
     },
     {
-      text:
-        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      text: "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
       author: {
         name: "Mike Attara",
         organisation: "Lambda School",
@@ -183,8 +204,7 @@ const LandingPage = () => {
       avatar: ava2,
     },
     {
-      text:
-        "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
+      text: "Just used CrossCheck for the first time, and It’s was amazing! I was able to order my transcript almost immediately and before every other applicant.",
       author: {
         name: "Babatunde",
         organisation: "Paystack",
@@ -204,7 +224,7 @@ const LandingPage = () => {
 
   const handleMenuIcon = () => {
     setShow(!show);
-    topFunction()
+    topFunction();
   };
 
   const changeBackground = () => {
@@ -227,7 +247,17 @@ const LandingPage = () => {
   };
 
   const testimony = testimonies[testimonyIndex];
-  
+
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      console.log("location", location);
+      console.log("action", action);
+    });
+
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   return (
     <div>
@@ -239,7 +269,7 @@ const LandingPage = () => {
             background: `${navbar ? "white" : ""}`,
             color: `${navbar ? "blue" : "white"}`,
             zIndex: "10",
-            padding: `${navbar ? "0 20px" : "0 20px 0 67px"}`
+            padding: `${navbar ? "0 20px" : "0 20px 0 67px"}`,
           }}
         >
           <div>
@@ -250,12 +280,18 @@ const LandingPage = () => {
             />
           </div>
           <div className="navs">
-            <ul    style={{
-            marginRight: `${navbar ? "40px" : ""}`,
-            padding: `${navbar ? "0" : ""}`
-           
-          }}>
-              <li style={{ color: `${navbar ? "#0092E0" : "white"}` }} onClick={()=>topFunction()}>Home</li>
+            <ul
+              style={{
+                marginRight: `${navbar ? "40px" : ""}`,
+                padding: `${navbar ? "0" : ""}`,
+              }}
+            >
+              <li
+                style={{ color: `${navbar ? "#0092E0" : "white"}` }}
+                onClick={() => topFunction()}
+              >
+                Home
+              </li>
               <li>
                 <a
                   style={{ color: `${navbar ? "#0092E0" : "white"}` }}
@@ -354,13 +390,12 @@ const LandingPage = () => {
               service for academic qualifications.
             </p>
             <div className="register">
-              
-                <Link className="reg" to="/register">
-                <button>
-                  Sign Up Now
-              </button>
-                </Link>
-               <a href="#work" className="works"><button type="button"> How it works</button></a>
+              <Link className="reg" to="/register">
+                <button>Sign Up Now</button>
+              </Link>
+              <a href="#work" className="works">
+                <button type="button"> How it works</button>
+              </a>
             </div>
           </div>
           <img src={Computer} alt="crosscheck header" />
@@ -391,7 +426,8 @@ const LandingPage = () => {
               <h3>OUR MISSION</h3>
               <div className="line"></div>
               <p>
-              We are committed to providing innovative solutions & services to our clients for better engagement & hiring decisions.
+                We are committed to providing innovative solutions & services to
+                our clients for better engagement & hiring decisions.
               </p>
             </div>
           </div>
@@ -421,57 +457,57 @@ const LandingPage = () => {
       </a>
 
       <a id="work">
-      <Div>
-        <h2>How it Works</h2>
-        <p>
-          Our clients can order verifications anytime and our research teams
-          start working on the same from multiple locations in highly efficient
-          and effective ways.
-        </p>
-      </Div>
-        </a>
-        <Blocks>
-          <div className="blocks">
-            <img src={register} alt="register crosscheck account" />
-            <h4>Register</h4>
-            <p>
-              Create an Individual or Organization Account & activate via email
-              within a few minutes.
-            </p>
-          </div>
-          <div className="blocks">
-            <img src={service} alt="regi" />
-            <h4>Select Service</h4>
-            <p>
-              Select from a host of services ranging from Educational Checks to
-              Identity Verification.
-            </p>
-          </div>
-          <div className="blocks">
-            <img src={enquiry} alt="enq" />
-            <h4>Search institution</h4>
-            <p>
-              Initiate a quick, seamless search of the institution you wish to
-              conduct a check with.
-            </p>
-          </div>
-          <div className="blocks">
-            <img src={enquiry} alt="enq" />
-            <h4>Enter Enquiry Details</h4>
-            <p>Enter all the necessary verification details.</p>
-          </div>
+        <Div>
+          <h2>How it Works</h2>
+          <p>
+            Our clients can order verifications anytime and our research teams
+            start working on the same from multiple locations in highly
+            efficient and effective ways.
+          </p>
+        </Div>
+      </a>
+      <Blocks>
+        <div className="blocks">
+          <img src={register} alt="register crosscheck account" />
+          <h4>Register</h4>
+          <p>
+            Create an Individual or Organization Account & activate via email
+            within a few minutes.
+          </p>
+        </div>
+        <div className="blocks">
+          <img src={service} alt="regi" />
+          <h4>Select Service</h4>
+          <p>
+            Select from a host of services ranging from Educational Checks to
+            Identity Verification.
+          </p>
+        </div>
+        <div className="blocks">
+          <img src={enquiry} alt="enq" />
+          <h4>Search institution</h4>
+          <p>
+            Initiate a quick, seamless search of the institution you wish to
+            conduct a check with.
+          </p>
+        </div>
+        <div className="blocks">
+          <img src={enquiry} alt="enq" />
+          <h4>Enter Enquiry Details</h4>
+          <p>Enter all the necessary verification details.</p>
+        </div>
 
-          <div className="blocks">
-            <img src={cash} alt="pay" />
-            <h4>Pay</h4>
-            <p>Pay the rate</p>
-          </div>
-          <div className="blocks">
-            <img src={pay} alt="paysend" />
-            <h4>Send</h4>
-            <p>Submit you request and await feedback.</p>
-          </div>
-        </Blocks>
+        <div className="blocks">
+          <img src={cash} alt="pay" />
+          <h4>Pay</h4>
+          <p>Pay the rate</p>
+        </div>
+        <div className="blocks">
+          <img src={pay} alt="paysend" />
+          <h4>Send</h4>
+          <p>Submit you request and await feedback.</p>
+        </div>
+      </Blocks>
       <a id="testimonies">
         <Testimonies>
           <h2>What people say about us</h2>
@@ -489,8 +525,14 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava2} alt="crosscheck user" />
                 <p>John Kumuyi</p>
-                <p className="role" style={{
-          fontWeight: "100"}}>Herculanum</p>
+                <p
+                  className="role"
+                  style={{
+                    fontWeight: "100",
+                  }}
+                >
+                  Herculanum
+                </p>
               </div>
             </div>
             <div className="testimony">
@@ -502,8 +544,14 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={ava1} alt="crosscheck user" />
                 <p>Edet Michael</p>
-                <p className="role" style={{
-          fontWeight: "100"}}>Confetti Group</p>
+                <p
+                  className="role"
+                  style={{
+                    fontWeight: "100",
+                  }}
+                >
+                  Confetti Group
+                </p>
               </div>
             </div>
             <div className="testimony">
@@ -515,8 +563,14 @@ const LandingPage = () => {
               <div className="profile">
                 <img src={bertha} alt="avatar" />
                 <p>Bertha Johnson</p>
-                <p className="role" style={{
-          fontWeight: "100"}}>Applicant</p>
+                <p
+                  className="role"
+                  style={{
+                    fontWeight: "100",
+                  }}
+                >
+                  Applicant
+                </p>
               </div>
             </div>
           </div>
@@ -586,7 +640,7 @@ const LandingPage = () => {
         </Cover>
       </a>
       <a id="contact">
-        <FooterComponent/>
+        <FooterComponent />
       </a>
     </div>
   );
@@ -657,81 +711,79 @@ const Slides = styled.div`
 `;
 
 const Footer = styled.div`
-.main-footer-section{
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem 4rem;
-  align-items: center;
-  .info-section{
+  .main-footer-section {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    ul{
-      list-style-type: none;
+    justify-content: space-between;
+    padding: 2rem 4rem;
+    align-items: center;
+    .info-section {
       display: flex;
-      gap: 0 15px;
-      margin: 0 0 30px 0;
-      padding: 0;
-      li{
-        font-family: "poppins";
-        color: #fff;
-        @media (max-width: 800px) {
-     margin-top: 20px
-    }
-        a{
-          text-decoration: none;
-          color: #fff
+      flex-direction: column;
+      align-items: flex-end;
+      ul {
+        list-style-type: none;
+        display: flex;
+        gap: 0 15px;
+        margin: 0 0 30px 0;
+        padding: 0;
+        li {
+          font-family: "poppins";
+          color: #fff;
+          @media (max-width: 800px) {
+            margin-top: 20px;
+          }
+          a {
+            text-decoration: none;
+            color: #fff;
+          }
+        }
+        @media (max-width: 600px) {
+          flex-direction: column;
         }
       }
+      @media (max-width: 800px) {
+        align-items: flex-start;
+      }
+    }
+    .contact {
+      display: flex;
+      gap: 30px;
       @media (max-width: 600px) {
-     flex-direction: column
-    }
-  }
-  @media (max-width: 800px) {
-    align-items: flex-start;
-    }
-}
-.contact {
-    display: flex;
-    gap: 30px;
-     @media (max-width: 600px) {
-     flex-direction: column;
-     gap:15px
-
-    }
-   
-    .email {
-      display: flex;
-      font-family: "poppins";
-      align-items: center;
-      img {
-        margin-right: 20px;
+        flex-direction: column;
+        gap: 15px;
       }
-      p {
-        color: white;
-        margin: 0;
-        margin-bottom: 10px;
 
-      }
-      .text {
-        color: #fff;
-        font-size: 16px;
-        text-decoration: none;
-        @media (max-width: 400px) {
-          font-size: 16px;
+      .email {
+        display: flex;
+        font-family: "poppins";
+        align-items: center;
+        img {
+          margin-right: 20px;
         }
-        @media (max-width: 500px) {
+        p {
+          color: white;
+          margin: 0;
+          margin-bottom: 10px;
+        }
+        .text {
+          color: #fff;
           font-size: 16px;
+          text-decoration: none;
+          @media (max-width: 400px) {
+            font-size: 16px;
+          }
+          @media (max-width: 500px) {
+            font-size: 16px;
+          }
         }
       }
     }
-  }
-  @media (max-width: 800px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2rem;
     }
-}
+  }
   @media only screen and (max-width: 400px) {
     display: flex;
     flex-direction: column;
@@ -751,19 +803,19 @@ const Footer = styled.div`
     justify-content: space-between;
     margin-left: 70px;
     margin-right: 70px;
-    @media(max-width:800px){
-      margin-left:0px;
-      margin-right:0px
+    @media (max-width: 800px) {
+      margin-left: 0px;
+      margin-right: 0px;
     }
     .termsof {
       text-decoration: none;
       color: #fff;
       cursor: pointer;
-      font-family: "poppins"
+      font-family: "poppins";
     }
-    @media(max-width:800px){
-      margin-left:20px;
-      margin-right:20px
+    @media (max-width: 800px) {
+      margin-left: 20px;
+      margin-right: 20px;
     }
     @media (max-width: 400px) {
       display: flex;
@@ -773,7 +825,7 @@ const Footer = styled.div`
     p {
       color: grey;
       font-size: 12px;
-      font-family: "poppins"
+      font-family: "poppins";
     }
     ul {
       display: flex;
@@ -784,11 +836,11 @@ const Footer = styled.div`
         margin-right: 7px;
         color: #fff;
         font-size: 12px;
-        font-family: "poppins"
+        font-family: "poppins";
       }
     }
   }
-  
+
   .footer-logo {
     /* width: 100%; */
     padding-top: 60px;
@@ -827,7 +879,7 @@ const Footer = styled.div`
       list-style-type: none;
       display: flex;
       @media (max-width: 800px) {
-        margin-left:20px
+        margin-left: 20px;
         /* display: flex;
         flex-direction: column;
         margin-left: 0px;
@@ -981,7 +1033,7 @@ const Testimonies = styled.div`
     justify-content: space-between;
     width: 90%;
     @media (max-width: 800px) {
-      width:98%
+      width: 98%;
     }
     @media (max-width: 400px) {
       display: none;
@@ -989,7 +1041,7 @@ const Testimonies = styled.div`
     @media (max-width: 500px) {
       display: none;
     }
-    
+
     .testimony {
       width: 300px;
       display: flex;
@@ -1000,8 +1052,8 @@ const Testimonies = styled.div`
       background: #ffffff 0% 0% no-repeat padding-box;
       padding: 10px;
       border-radius: 8px;
-      @media(max-width:800px){
-        width:200px
+      @media (max-width: 800px) {
+        width: 200px;
       }
       p {
         font-family: "poppins";
@@ -1016,13 +1068,13 @@ const Testimonies = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
         p {
           width: 100%;
           color: white;
-          font-weight: 500
+          font-weight: 500;
         }
-        .role  {
+        .role {
           color: #fff;
         }
         img {
@@ -1090,8 +1142,8 @@ const Blocks = styled.div`
       margin-top: 30px;
       margin-bottom: 20px;
       color: #333333;
-      @media(max-width:800px){
-        text-align:center
+      @media (max-width: 800px) {
+        text-align: center;
       }
     }
     p {
@@ -1117,10 +1169,8 @@ const Div = styled.div`
 
   align-items: center;
   margin: 0 auto;
-  padding: 70px 0 20px 0
-  /* margin-top: 70px;
-  margin-bottom: 20px; */
-  h2 {
+  padding: 70px 0 20px 0 /* margin-top: 70px;
+  margin-bottom: 20px; */ h2 {
     font-family: "poppins";
     color: #173049;
     margin: 0;
@@ -1149,8 +1199,8 @@ const About = styled.div`
   align-items: center;
   margin: 0 auto;
   margin-top: 20px;
-  @media(max-width:800px){
-    width:98%
+  @media (max-width: 800px) {
+    width: 98%;
   }
   .about-us {
     @media (min-width: 500px) {
@@ -1187,7 +1237,7 @@ const About = styled.div`
     width: 90%;
     justify-content: space-between;
     @media (max-width: 800px) {
-      width:100%;
+      width: 100%;
       display: flex;
     }
     @media (max-width: 400px) {
@@ -1202,7 +1252,7 @@ const About = styled.div`
     }
     .card {
       @media screen and (max-width: 800px) and (min-width: 700px) {
-        width:240px;
+        width: 240px;
       }
       @media (max-width: 400px) {
         margin-bottom: 25px;
@@ -1495,7 +1545,7 @@ const NavBar = styled.nav`
         margin-right: 50px;
         color: white;
         cursor: pointer;
-        font-family: 'poppins';
+        font-family: "poppins";
         font-size: 16px;
         a {
           text-decoration: none;
@@ -1531,12 +1581,12 @@ const Main = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
-    p{
-      text-align:center
+    p {
+      text-align: center;
     }
-    .register{
-      display:flex;
-      justify-content:center
+    .register {
+      display: flex;
+      justify-content: center;
     }
   }
   @media (max-width: 400px) {
@@ -1574,15 +1624,13 @@ const Main = styled.main`
       cursor: pointer;
       font-family: "poppins";
       &:hover {
-        color:  #0092e0;
+        color: #0092e0;
       }
       @media (max-width: 500px) {
-      display: none
+        display: none;
+      }
     }
 
-      
-    }
-   
     @media (max-width: 500px) {
       display: flex;
       justify-content: center;
@@ -1591,7 +1639,7 @@ const Main = styled.main`
     button {
       font-size: 18px;
       outline: none;
-      font-family:'poppins';
+      font-family: "poppins";
       &:nth-child(1) {
         @media (max-width: 500px) {
           margin-right: 0;
@@ -1633,11 +1681,11 @@ const Main = styled.main`
     width: 64%;
     height: calc(100vh - 148px);
     margin-right: -7vw;
-    @media(max-width:780px){
-    width:80%;
-    height:80%;
-    margin-right: 15px;
-    /*   margin-left: auto; */
+    @media (max-width: 780px) {
+      width: 80%;
+      height: 80%;
+      margin-right: 15px;
+      /*   margin-left: auto; */
       margin-top: 40px;
     }
     @media (max-width: 400px) {
@@ -1693,7 +1741,7 @@ const Main = styled.main`
         font-weight: lighter;
         font-size: 46px;
         text-align: center;
-        width:70%
+        width: 70%;
       }
       .here {
         color: white;
@@ -1716,7 +1764,6 @@ const Main = styled.main`
         font-size: 34px;
         text-align: center;
       }
-      
     }
     h1 {
       font-family: orkneyLight;
@@ -1767,7 +1814,6 @@ const Main = styled.main`
         margin-top: 15px;
         margin-bottom: 20px;
       }
-     
     }
   }
 `;

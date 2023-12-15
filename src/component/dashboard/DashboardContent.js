@@ -11,7 +11,10 @@ import EduVer from "../../asset/EduVeri.svg";
 import wavy from "../../asset/wavy.svg";
 import Institution from "../../asset/institution.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleLeft,faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import {
   fetchInstitutes,
@@ -23,7 +26,8 @@ import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
 import VerificationContent from "./VerificationContent";
-import ipapi from 'ipapi.co'
+import ipapi from "ipapi.co";
+import { BASE_URL } from "../../state/constant/constants";
 
 const DashboardContent = ({ history }) => {
   const dispatch = useDispatch();
@@ -34,20 +38,18 @@ const DashboardContent = ({ history }) => {
     (state) => state.verifications
   );
 
-
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
   const [offset, setOffset] = useState(0);
   const [byCountryOffset, setByCountryOffset] = useState(0);
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
-  const [userCountry,setUserCountry] = useState('')
+  const [userCountry, setUserCountry] = useState("");
   const convertedUsd = 382;
 
-  useEffect(()=>{
-    ipapi.location((loca)=>setUserCountry(loca),'','','country')
-  },[])
-  
+  useEffect(() => {
+    ipapi.location((loca) => setUserCountry(loca), "", "", "country");
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +63,7 @@ const DashboardContent = ({ history }) => {
   const request = useCallback(
     async (offset, limit) => {
       return await search(
-        `https://crosschek.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,15 +74,10 @@ const DashboardContent = ({ history }) => {
     async (country, offset, limit) => {
       dispatch(setLoading(true));
       const { data } = await Axios.get(
-        `https://crosschek.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      const {
-        totalDocs,
-        totalPages,
-        hasPrevPage,
-        hasNextPage,
-        page,
-      } = data.institution;
+      const { totalDocs, totalPages, hasPrevPage, hasNextPage, page } =
+        data.institution;
       if (data.institution.docs > 1) {
         dispatch(noInstitute(false));
       }
@@ -96,13 +93,13 @@ const DashboardContent = ({ history }) => {
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://crosschek.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `${BASE_URL}/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [country, offset, input]
   );
- 
+
   useEffect(() => {
     dispatch(fetchInstitutes([]));
     dispatch(setPageInfo({}));
@@ -179,7 +176,7 @@ const DashboardContent = ({ history }) => {
 
         <CardsContainer>
           <Card>
-            <img src={Transcript} alt="tran" className="trans-image"/>
+            <img src={Transcript} alt="tran" className="trans-image" />
             <div className="tran-text">
               <div className="transcript">
                 <p>Transcript Check</p>
@@ -260,9 +257,9 @@ const DashboardContent = ({ history }) => {
                 onChange={(_, e) => {
                   formik.handleChange(e);
                   setCountry(e.target.value.toLowerCase());
-                  setByCountryOffset(0)
-                  setByCountryandNameOffset(0)
-                  setOffset(0)
+                  setByCountryOffset(0);
+                  setByCountryandNameOffset(0);
+                  setOffset(0);
                 }}
                 onBlur={formik.handleBlur}
               />
@@ -270,84 +267,88 @@ const DashboardContent = ({ history }) => {
           </div>
           {loading && <p>loading</p>}
 
-          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
-            <div className="new-table open">
-              <table
-                cellSpacing="0"
-                cellPadding="0"
-                border="0"
-                className={hideTable ? "hide-table" : ""}
-              >
-                <thead className="table-headers">
-                  <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>Institute charge</th>
-                    <th>Our charge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {institutions.length > 0 &&
-                    institutions.map((ite) => (
-                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                        <th className="mobile-header">Number</th>
-                        <td>{truncateString(ite.name)}</td>
-                        <th className="mobile-header">Market rate</th>
-                        <td>{truncateString(ite.country)}</td>
-                        <th className="mobile-header">Value</th>
-                        {ite['institute_charge'] === 0 ? <td>-</td> :
-                        userCountry === "NG" ? (
-                          <td>&#8358;{ite["institute_charge"] || 0}</td>
-                        ) :
-                          <td>${toDollar(ite["institute_charge"]) || 0}</td>
-                        }
-                        <th className="mobile-header">Weight</th>
-                        {userCountry === "NG" && (
-                          <td>&#8358;{ite["our_charge"] || 0}</td>
-                        )}
-                        {userCountry !== "NG" && (
-                          <td>${toDollar(ite["our_charge"]) || 0}</td>
-                        )}
+          {(input.length > 0 || country.length > 0) &&
+            institutions.length > 0 && (
+              <div className="new-table open">
+                <table
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className={hideTable ? "hide-table" : ""}
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>Institute charge</th>
+                      <th>Our charge</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {institutions.length > 0 &&
+                      institutions.map((ite) => (
+                        <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                          <th className="mobile-header">Number</th>
+                          <td>{truncateString(ite.name)}</td>
+                          <th className="mobile-header">Market rate</th>
+                          <td>{truncateString(ite.country)}</td>
+                          <th className="mobile-header">Value</th>
+                          {ite["institute_charge"] === 0 ? (
+                            <td>-</td>
+                          ) : userCountry === "NG" ? (
+                            <td>&#8358;{ite["institute_charge"] || 0}</td>
+                          ) : (
+                            <td>${toDollar(ite["institute_charge"]) || 0}</td>
+                          )}
+                          <th className="mobile-header">Weight</th>
+                          {userCountry === "NG" && (
+                            <td>&#8358;{ite["our_charge"] || 0}</td>
+                          )}
+                          {userCountry !== "NG" && (
+                            <td>${toDollar(ite["our_charge"]) || 0}</td>
+                          )}
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
 
-                        
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+                {!hideTable && (
+                  <div className="pagination-line">
+                    <p>
+                      Showing {institutions.length} of {pageInfo.totalDocs} of
+                      entries
+                    </p>
 
-              {!hideTable && (
-                <div className="pagination-line">
-                  <p>
-                    Showing {institutions.length} of {pageInfo.totalDocs} of
-                    entries
-                  </p>
-
-                  <ReactPaginate
-                    previousLabel={<FontAwesomeIcon
-                      className="icon"
-                      icon={faAngleDoubleLeft}
-                      style={{ fontSize: "15px" }}
-                    />}
-                    nextLabel={<FontAwesomeIcon
-                      className="icon"
-                      icon={faAngleDoubleRight}
-                      style={{ fontSize: "15px" }}
-                    />}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pagesCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(e) => handleNext(e)}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                    initialPage={0}
-                  /> 
-                </div>
-              )}
-            </div>
-          )}
+                    <ReactPaginate
+                      previousLabel={
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faAngleDoubleLeft}
+                          style={{ fontSize: "15px" }}
+                        />
+                      }
+                      nextLabel={
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faAngleDoubleRight}
+                          style={{ fontSize: "15px" }}
+                        />
+                      }
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pagesCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={(e) => handleNext(e)}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                      initialPage={0}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           {noInstitutes && institutions.length < 1 && (
             <p style={{ marginLeft: "40px" }}>No institutions found</p>
           )}
@@ -497,10 +498,6 @@ const SelectSch = styled.div`
     }
   }
 `;
-
-// const Table = styled.div`
-
-// `;
 
 const Card = styled.div`
   width: 300px;

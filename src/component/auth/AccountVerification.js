@@ -3,19 +3,18 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import Activated from "../../asset/activated.svg";
+import { BASE_URL } from "../../state/constant/constants";
 
 function AccountVerification({ match, location }) {
   const {
     params: { email },
   } = match;
   useEffect(() => {
-    axios
-      .put(`https://crosschek.herokuapp.com/api/v1/users/${email}`)
-      .then((data) => {
-        return data
-      });
+    axios.put(`${BASE_URL}/api/v1/users/${email}`).then((data) => {
+      return data;
+    });
   }, [email]);
- 
+
   return (
     <Div>
       <Container>
@@ -81,7 +80,7 @@ const Container = styled.div`
     text-decoration: none;
     background: #0092e0;
     letter-spacing: 0.32px;
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 1;
     font-size: 14px;
     border-radius: 3px;

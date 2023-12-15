@@ -1,42 +1,45 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {useHistory, Prompt} from 'react-router-dom'
+import { useHistory, Prompt } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import { StepIconProps } from '@mui/material/StepIcon';
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import { StepIconProps } from "@mui/material/StepIcon";
 import arrow from "../../asset/arrow-right.svg";
 import axios from "axios";
 import Logo from "../../asset/CrossCheckLogo.png";
 import "./ver.css";
 import styled from "styled-components";
 import Layout from "./DashboardLayout";
-import {ReactComponent as Start} from "../../asset/start.svg";
-import {ReactComponent as Details} from "../../asset/details.svg";
-import {ReactComponent as Payment} from "../../asset/process_payment.svg";
-import {ReactComponent as Finish} from "../../asset/process_payment.svg";
+import { ReactComponent as Start } from "../../asset/start.svg";
+import { ReactComponent as Details } from "../../asset/details.svg";
+import { ReactComponent as Payment } from "../../asset/process_payment.svg";
+import { ReactComponent as Finish } from "../../asset/process_payment.svg";
 import start from "../../asset/start.svg";
 import details from "../../asset/details.svg";
 import payment from "../../asset/process_payment.svg";
-import Qualification from '../../asset/qualification.svg'
+import Qualification from "../../asset/qualification.svg";
 // import {ReactComponent as Qualification } from '../../asset/qualification.svg'
 import finish from "../../asset/finish.svg";
 import { addTranscript } from "../../state/actions/verifications";
 import TranscriptForm from "./TranscriptForm";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 import Pdf from "react-to-pdf";
-import { FlutterWaveButton,closePaymentModal } from 'flutterwave-react-v3';
-import ipapi from 'ipapi.co'
+import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import ipapi from "ipapi.co";
 import { debounce } from "lodash";
+import { BASE_URL } from "../../state/constant/constants";
 
 const request = (data) => {
   axios({
     data,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/transcript/request`,
+    url: `${BASE_URL}/api/v1/transcript/request`,
   });
 };
 
@@ -103,10 +106,10 @@ const request = (data) => {
 
 const NewTranscript = () => {
   const dispatch = useDispatch();
-  const [activeStep, setActiveStep] = useState(1)
+  const [activeStep, setActiveStep] = useState(1);
 
   const ref = React.createRef();
-  const history = useHistory()
+  const history = useHistory();
   let [isBlocking, setIsBlocking] = useState(true);
 
   const formData = {
@@ -130,23 +133,22 @@ const NewTranscript = () => {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
-  const splitDate = `${month}-${day}-${year}`
+  const splitDate = `${month}-${day}-${year}`;
 
   const [formValues, setFormValues] = useState([{ ...formData, id: date }]);
 
   const [requestList, setRequestList] = useState(false);
 
   const [checked, setChecked] = useState(false);
-  const [userCountry,setUserCountry] = useState('')
-  const convertedUsd = 382
+  const [userCountry, setUserCountry] = useState("");
+  const convertedUsd = 382;
 
   const toDollar = (amount) => {
     return (Number(amount) / Number(convertedUsd)).toFixed(2);
   };
-  useEffect(()=>{
-    ipapi.location((loca)=>setUserCountry(loca),'','','country')
-  },[])
- 
+  useEffect(() => {
+    ipapi.location((loca) => setUserCountry(loca), "", "", "country");
+  }, []);
 
   const handleCheck = (e) => {
     setChecked(e.target.checked);
@@ -172,46 +174,52 @@ const NewTranscript = () => {
     setFormValues((formValues) =>
       formValues.map((value, index) => (index === id ? data : value))
     );
-  }
+  };
   let total = formValues.reduce(
-    (accumulator, currentValue) => accumulator + Number(userCountry && userCountry === 'NG' ? currentValue.amount : toDollar(currentValue.amount)),
+    (accumulator, currentValue) =>
+      accumulator +
+      Number(
+        userCountry && userCountry === "NG"
+          ? currentValue.amount
+          : toDollar(currentValue.amount)
+      ),
     0
   );
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
   const config = {
-   public_key: process.env.REACT_APP_PUBLIC_KEY,
-   tx_ref: Date.now(),
-   amount: total,
-   currency: userCountry ==='NG' ? 'NGN' : 'USD',
-   payment_options: 'card,mobilemoney,ussd',
-   customer: {
-     email: user?.email,
-     phonenumber: user?.phone,
-     name: `${user?.firstName} ${ user?.lastName}`,
-   },
-   customizations: {
-     title: 'CrossCheck',
-     description: 'Payment for Transcript',
-     logo: 'https://i.ibb.co/f048df8/logo.png',
-   },
- };
+    public_key: process.env.REACT_APP_PUBLIC_KEY,
+    tx_ref: Date.now(),
+    amount: total,
+    currency: userCountry === "NG" ? "NGN" : "USD",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user?.email,
+      phonenumber: user?.phone,
+      name: `${user?.firstName} ${user?.lastName}`,
+    },
+    customizations: {
+      title: "CrossCheck",
+      description: "Payment for Transcript",
+      logo: "https://i.ibb.co/f048df8/logo.png",
+    },
+  };
 
- const fwConfig = {
-   ...config,
-   text: 'Pay Now!',
-   callback: debounce((response) => {
-  if(response?.status === 'successful'){
-    closePaymentModal() // this will close the modal programmatically
-    processPayment();
-    dispatch(addTranscript([]));
-    setRequestList(false);
-    setFormValues([formData]);
-    toast.success("request submitted");
-      setTimeout(() => {
-        history.push(`/dashboard/${user.id}`);
-      }, 1500)
-    }
-    },1000),
+  const fwConfig = {
+    ...config,
+    text: "Pay Now!",
+    callback: debounce((response) => {
+      if (response?.status === "successful") {
+        closePaymentModal(); // this will close the modal programmatically
+        processPayment();
+        dispatch(addTranscript([]));
+        setRequestList(false);
+        setFormValues([formData]);
+        toast.success("request submitted");
+        setTimeout(() => {
+          history.push(`/dashboard/${user.id}`);
+        }, 1500);
+      }
+    }, 1000),
     onClose: () => {},
   };
 
@@ -231,7 +239,7 @@ const NewTranscript = () => {
             pauseOnHover
             style={{ marginTop: "20px" }}
           />
-              <Prompt
+          <Prompt
             when={isBlocking}
             message={(location) =>
               `Are you sure you want to go to ${location.pathname}`
@@ -240,9 +248,7 @@ const NewTranscript = () => {
           <div className={requestList ? "none" : ""}>
             {" "}
             <h2 className="new-heading">New Transcript Order</h2>
-
-
-{/* <Stepper alternativeLabel activeStep={2} connector={<ColorlibConnector />}>
+            {/* <Stepper alternativeLabel activeStep={2} connector={<ColorlibConnector />}>
   {steps.map((label) => (
     <Step key={label}>
       <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
@@ -294,9 +300,9 @@ const NewTranscript = () => {
               </span>
             </div>
             <button
-              onClick={()=>{
-                setActiveStep(3)
-                verify()
+              onClick={() => {
+                setActiveStep(3);
+                verify();
               }}
               className={!checked ? "notallowed proceed" : "proceed"}
               disabled={!checked}
@@ -306,7 +312,7 @@ const NewTranscript = () => {
           </div>
           {requestList && (
             <SelectSch>
-               <div className="new-table invoice-table" ref={ref}>
+              <div className="new-table invoice-table" ref={ref}>
                 <div className="first-section">
                   <div className="img-text">
                     <img src={Logo} alt="" />
@@ -369,7 +375,14 @@ const NewTranscript = () => {
                           <th className="mobile-header">Number</th>
                           <td>{ver.institution}</td>
                           <th className="mobile-header">Weight</th>
-                          <td>  {userCountry === 'NG' ? <td>&#8358;{ver.amount}</td> : <td>${toDollar(ver.amount)}</td>}</td>
+                          <td>
+                            {" "}
+                            {userCountry === "NG" ? (
+                              <td>&#8358;{ver.amount}</td>
+                            ) : (
+                              <td>${toDollar(ver.amount)}</td>
+                            )}
+                          </td>
                           <th className="mobile-header">Value</th>
                           <td>-</td>
                           <td></td>
@@ -377,16 +390,15 @@ const NewTranscript = () => {
                       ))}
 
                     <td></td>
-                     <td style={{ color: "black", fontWeight: "bold" }}>
+                    <td style={{ color: "black", fontWeight: "bold" }}>
                       TOTAL
                     </td>
                     {userCountry === "NG" ? (
-                        <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
-                      ) : (
-                        <p style={{ fontWeight: "bold" }}>${total}</p>
-                      )}
+                      <p style={{ fontWeight: "bold" }}>&#8358;{total}</p>
+                    ) : (
+                      <p style={{ fontWeight: "bold" }}>${total}</p>
+                    )}
                     <td></td>
-                   
                   </tbody>
                 </table>
                 <Pdf targetRef={ref} filename="receipt.pdf">
@@ -411,7 +423,7 @@ const NewTranscript = () => {
                 </Pdf>
               </div>
               <div className="buttons">
-              <FlutterWaveButton {...fwConfig} className="btn"/>
+                <FlutterWaveButton {...fwConfig} className="btn" />
               </div>
             </SelectSch>
           )}
@@ -495,7 +507,7 @@ const VerificationBody = styled.div`
         margin-left: 15px;
         color: #707070;
         font-weight: normal;
-      font-family: "poppins";;
+        font-family: "poppins";
         @media (max-width: 500px) {
           margin-left: 0;
         }
@@ -522,7 +534,7 @@ const VerificationBody = styled.div`
     height: 30px;
     outline: none;
     border: 1px solid #0092e0;
-    font-family: "poppins"
+    font-family: "poppins";
   }
   .add-btn {
     width: 250px;
@@ -589,7 +601,7 @@ const SelectSch = styled.div`
   /* height: 150px; */
   box-shadow: 0px 0px 10px #00000029;
   margin-top: 20px;
-   .invoice-table {
+  .invoice-table {
     tr {
       td,
       th {
@@ -672,7 +684,7 @@ const SelectSch = styled.div`
       p {
         margin-bottom: -0.5rem;
         font-size: 16px !important;
-        color:black !important
+        color: black !important;
       }
     }
     .info {
@@ -680,7 +692,7 @@ const SelectSch = styled.div`
       p {
         margin-bottom: -0.5rem;
         font-size: 16px !important;
-        color:black !important
+        color: black !important;
       }
     }
 
