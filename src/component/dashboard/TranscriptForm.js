@@ -21,7 +21,7 @@ import Institution from "../../asset/institution.svg";
 import { selectSchool } from "../../state/actions/verifications";
 import { search } from "./utils";
 import Axios from "axios";
-import ipapi from 'ipapi.co'
+import ipapi from "ipapi.co";
 
 function TranscriptForm({ initialValues, updateFormValues }) {
   const [activeTab, setActiveTab] = useState("individual-details");
@@ -30,7 +30,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
 
   const dispatch = useDispatch();
   const { institutions, pageInfo } = useSelector((state) => state.institutions);
-  
+
   const [selectedInst, setSelectedInst] = useState({});
   const [input, setInput] = useState("");
   const [hideTable, setHideTable] = useState(false);
@@ -40,19 +40,22 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const [byCountryandNameoffset, setByCountryandNameOffset] = useState(0);
   const [country, setCountry] = useState("");
   const [destination, setDestination] = useState("");
-  const [userCountry,setUserCountry] = useState('')
+  const [userCountry, setUserCountry] = useState("");
 
   const user = JSON.parse(localStorage.getItem("crosscheckuser"));
 
-  const request = useCallback(async (offset, limit) => {
-    return await search(
-      `https://crosschek.herokuapp.com/api/v1/institutions/${input}/${offset}/${limit}`
-    );
-  },[offset,input])
+  const request = useCallback(
+    async (offset, limit) => {
+      return await search(
+        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/${input}/${offset}/${limit}`
+      );
+    },
+    [offset, input]
+  );
 
-  useEffect(()=>{
-    ipapi.location((location)=>setUserCountry(location),'','','country')
-  },[])
+  useEffect(() => {
+    ipapi.location((location) => setUserCountry(location), "", "", "country");
+  }, []);
   useEffect(() => {
     if (input.length > 0) {
       request(offset, 15);
@@ -62,15 +65,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const institutionByCountry = useCallback(
     async (country, offset, limit) => {
       const { data } = await Axios.get(
-        `https://crosschek.herokuapp.com/api/v1/institutions/country/${country}/${offset}/${limit}`
+        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/country/${country}/${offset}/${limit}`
       );
-      const {
-        totalDocs,
-        totalPages,
-        hasPrevPage,
-        hasNextPage,
-        page,
-      } = data.institution;
+      const { totalDocs, totalPages, hasPrevPage, hasNextPage, page } =
+        data.institution;
       dispatch(fetchInstitutes(data.institution.docs));
       dispatch(
         setPageInfo({ totalDocs, totalPages, hasPrevPage, hasNextPage, page })
@@ -82,7 +80,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   const countryAndName = useCallback(
     async (country, offset, limit, input) => {
       await search(
-        `https://crosschek.herokuapp.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
+        `https://crosscheck-be-dev.onrender.com/api/v1/institutions/countryandName/${country}/${input}/${offset}/${limit}`
       );
     },
     [country, offset, input]
@@ -117,10 +115,10 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   ]);
 
   const pagesCount = pageInfo?.totalPages;
-  const convertedUsd = 382
+  const convertedUsd = 382;
   const toDollar = (amount) => {
-    return Math.round(Number(amount) / Number(convertedUsd))
-  }
+    return Math.round(Number(amount) / Number(convertedUsd));
+  };
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -128,11 +126,12 @@ function TranscriptForm({ initialValues, updateFormValues }) {
   };
 
   const handleSelected = (institute) => {
-    if(!(institute?.country === 'Nigeria' || institute?.country  === 'Ghana'))
-    {
-      return toast.error('We process transcripts for schools within nigeria alone for now')
+    if (!(institute?.country === "Nigeria" || institute?.country === "Ghana")) {
+      return toast.error(
+        "We process transcripts for schools within nigeria alone for now"
+      );
     }
-    setSelectedInst(institute)
+    setSelectedInst(institute);
     formik.setFieldValue("institution", institute.name);
     dispatch(selectSchool(institute));
     setHideTable(true);
@@ -167,7 +166,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
       updateFormValues({
         ...formik.values,
         institution: selectedInst.name,
-        amount: selectedInst['transcript_fee'],
+        amount: selectedInst["transcript_fee"],
         email: user.email,
         requester: user.firstName,
         destination: destination,
@@ -304,75 +303,76 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                 onChange={(_, e) => {
                   formik.handleChange(e);
                   setCountry(e.target.value.toLowerCase());
-                  setByCountryOffset(0)
-                  setByCountryandNameOffset(0)
-                  setOffset(0)
+                  setByCountryOffset(0);
+                  setByCountryandNameOffset(0);
+                  setOffset(0);
                 }}
                 onBlur={formik.handleBlur}
               />
             </div>
           </div>
-          {(input.length > 0 || country.length > 0) && institutions.length > 0 && (
-            <div className="new-table">
-              <table
-                cellSpacing="0"
-                cellPadding="0"
-                border="0"
-                className={hideTable ? "hide-table" : ""}
-              >
-                <thead className="table-headers">
-                  <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>Institute charge</th>
-                    <th>Our Charge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {institutions.map((ite) => (
-                    <tr onClick={() => handleSelected(ite)} key={ite.name}>
-                      <th className="mobile-header">Number</th>
-                      <td>{ite.name}</td>
-                      <th className="mobile-header">Market rate</th>
-                      <td>{ite.country}</td>
-                      <th className="mobile-header">Weight</th>
-                      <td>-</td>
-                      <th className="mobile-header">Value</th>
-                      {userCountry !== "NG" && (
-                          <td>${toDollar(ite['transcript_fee']) }</td>
+          {(input.length > 0 || country.length > 0) &&
+            institutions.length > 0 && (
+              <div className="new-table">
+                <table
+                  cellSpacing="0"
+                  cellPadding="0"
+                  border="0"
+                  className={hideTable ? "hide-table" : ""}
+                >
+                  <thead className="table-headers">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>Institute charge</th>
+                      <th>Our Charge</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {institutions.map((ite) => (
+                      <tr onClick={() => handleSelected(ite)} key={ite.name}>
+                        <th className="mobile-header">Number</th>
+                        <td>{ite.name}</td>
+                        <th className="mobile-header">Market rate</th>
+                        <td>{ite.country}</td>
+                        <th className="mobile-header">Weight</th>
+                        <td>-</td>
+                        <th className="mobile-header">Value</th>
+                        {userCountry !== "NG" && (
+                          <td>${toDollar(ite["transcript_fee"])}</td>
                         )}
                         {userCountry === "NG" && (
-                          <td>&#8358;{ite['transcript_fee'] || 0}</td>
+                          <td>&#8358;{ite["transcript_fee"] || 0}</td>
                         )}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {!hideTable && (
-                <div className="pagination-line">
-                  <p>
-                    Showing {institutions.length} of {pageInfo.totalDocs} of
-                    entries
-                  </p>
-                 
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pagesCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(e) => handleNext(e)}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                    initialPage={0}
-                  />
-                </div>
-              )}
-            </div>
-          )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!hideTable && (
+                  <div className="pagination-line">
+                    <p>
+                      Showing {institutions.length} of {pageInfo.totalDocs} of
+                      entries
+                    </p>
+
+                    <ReactPaginate
+                      previousLabel={"previous"}
+                      nextLabel={"next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pagesCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={(e) => handleNext(e)}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
+                      initialPage={0}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
         </SelectSch>
       )}
       <FormContainer style={{ display: !details ? "none" : "" }}>
@@ -551,7 +551,7 @@ function TranscriptForm({ initialValues, updateFormValues }) {
                   ) : null}
                 </>
               </Field>
-{/* 
+              {/* 
               <Field>
                 <label>Reference ID</label>
                 <input type="text" className="ref-input" />

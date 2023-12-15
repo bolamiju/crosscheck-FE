@@ -35,7 +35,7 @@ const request = (data) => {
   axios({
     data: formData,
     method: "post",
-    url: `https://crosschek.herokuapp.com/api/v1/verifications/request`,
+    url: `https://crosscheck-be-dev.onrender.com/api/v1/verifications/request`,
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -66,7 +66,7 @@ const NewVerifications = () => {
     admissionYear: "",
     graduationYear: "",
     enrollmentStatus: false,
-    requester:''
+    requester: "",
   };
   let [isBlocking, setIsBlocking] = useState(true);
   const [userCountry, setUserCountry] = useState("");
@@ -80,7 +80,7 @@ const NewVerifications = () => {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
-  const splitDate = `${month}-${day}-${year}`
+  const splitDate = `${month}-${day}-${year}`;
 
   const initialVerifications = useSelector(
     (state) => state.verifications.verifications
@@ -180,8 +180,7 @@ const NewVerifications = () => {
     customizations: {
       title: "CrossCheck",
       description: "Payment for verification",
-      logo:
-        "https://i.ibb.co/f048df8/logo.png",
+      logo: "https://i.ibb.co/f048df8/logo.png",
     },
   };
 
@@ -201,7 +200,7 @@ const NewVerifications = () => {
           history.push(`/dashboard/${user.id}`);
         }, 1500);
       }
-    },1000),
+    }, 1000),
     onClose: () => {},
   };
 
@@ -682,7 +681,7 @@ const SelectSch = styled.div`
       p {
         margin-bottom: -0.5rem;
         font-size: 16px !important;
-        color:black !important
+        color: black !important;
       }
     }
     .info {
@@ -690,7 +689,7 @@ const SelectSch = styled.div`
       p {
         margin-bottom: -0.5rem;
         font-size: 16px !important;
-        color:black !important
+        color: black !important;
       }
     }
     .hide-table {
